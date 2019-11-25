@@ -23,7 +23,6 @@ define( "CF_CALLS_PE", false );
 define( "CF_CALLS_TYPE2", false );
 // Три
 define( "CF_CALLS_TYPE3", true );
-///////////////////////////
 
 // Рубрикатор (все)
 define( "CF_RUBRICATOR", false );
