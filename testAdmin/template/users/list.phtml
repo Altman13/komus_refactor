@@ -1,0 +1,37 @@
+<? $data = $this -> get_data( $inc );     
+   $param = $this -> get_data( "param" );
+?>
+<table cellpadding="5" cellspacing="0" width="100%" border="0">
+<tr valign="top">
+ <td align="left" width="20%" nowrap>
+ <a href="index.php?menu=user&action=add">Добавить администратора</a>
+ </td>
+ <td align="left" width="20%" nowrap>
+ <form action="index.php?menu=user" name="search" method="post">
+ <input type="text" name="filter" value="<?= $param["filter"] ?>">&nbsp;&nbsp;
+ <input type="submit" value="Найти">
+ </form>
+ </td>
+ <td width="60%" align="right">Страниц : <?= HTML :: pages_ext( $param["limit"], $param["record_count"], $param["group_limit"], $param["pages"] ,  "index.php?menu=user" ) ?></td>
+</tr>
+</table>
+  <b><?= $param["message"]  ?></b><br />
+  <table class="article_table" cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+  <th>Логин</th><th>ФИО</th><th>E-mail</th><th>Коментарий</th><th>&nbsp;</th><th>&nbsp;</th>
+ <?
+   if( count( $data ) > 0 ) { 
+    foreach( $data as $item) {
+  ?> 
+  
+  </tr>
+   <tr>
+   <td><?= $item["login"] ?></td><td><?= $item["fio"] ?></td><td><?= $item["email"] ?></td><td><?= $item["comment"] ?></td>
+   <td width="10%"><a href="index.php?menu=user&action=edit&id=<?= $item["id_user"] ?>" class="menu">Редактировать</a></td>
+   <td width="10%"><a href="index.php?menu=user&action=list&cmd=del&id=<?= $item["id_user"] ?>" class="menu" onclick="return ConfirmDelete()">Удалить</a></td>
+   <tr>
+   
+  <? 
+     }  
+   } ?> 
+ </table>

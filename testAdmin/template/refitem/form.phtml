@@ -1,0 +1,33 @@
+<? 
+  $data = $this -> get_data( $inc );   
+  $message      = $this -> get_data( "message" );
+  $param = $this -> get_data( "param" );
+  $references = $this -> get_data( "references" );
+  $references_all = $this -> get_data( "references_all" );
+ 
+?>
+  <p class="caption" align="center"><?= Util :: s_param('action')=="add" ? "Добавить" : "Редактировать" ?> значение "<?= $references -> title ?>"</p>
+
+<form method="POST" action="index.php?menu=refitem&cmd=<?= Util :: s_param('action') ?>&id=<?= $data -> id ?>&item_id=<?= $param["item_id"] ?>" onsubmit="return validateComplete(this)">
+<b><?= $message  ?></b><br />
+<table bgcolor="#efefef" cellspacing="0" cellpadding="5" border="0" align="center" width="100%">
+
+  <tr><td width="15%">Reference:</td>
+  <td>
+   <select name="reference_id">
+    <? foreach ( $references_all as $item) { ?>
+    <option value="<?= $item["id"] ?>" <?= $item["id"] == $references -> id ? 'selected' : '' ?>>
+	<?= $item["title"] ?>
+	</option>
+    <? } ?>
+   </select>
+  </td></tr>
+ 
+  <tr><td>Титл:</td><td><input type="text" name="title" value="<?= $data -> title ?>" style="width: 100%;"></td></tr>
+  <tr><td>Значение:</td><td><input type="text" name="value" value="<?= $data -> value ?>" style="width: 100%;"></td></tr>
+  <tr><td>Сортировка:</td><td><input type="text" name="sort" value="<?= $data -> sort ?>" style="width: 10%;"></td></tr>
+    
+  <tr><td colspan="2"><input type="submit" value="<?= Util :: s_param('action')=="add" ? "Добавить" : "Сохранить" ?>"></td></tr>
+  </table>
+  <p align="left"><a href="?menu=refitem&item_id=<?= $param["item_id"] ?>">Все refernces</a></p>
+</form>

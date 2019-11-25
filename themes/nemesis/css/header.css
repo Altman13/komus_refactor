@@ -1,0 +1,20 @@
+/* 1. Main Navigation
+-------------------------------------------------- */
+
+#nav				{ line-height: 1.4em; width: 100%; background: #ddd; }
+#nav td				{ width:20%; height: 60px; padding: 10px 20px; border-right: 1px solid #f8f8f8; }
+#nav td:hover       { color: #fff; background: #667e72; }
+#nav a				{ text-shadow: 0 1px 0 #fff; display: block; height: 100%; }
+#nav a:hover		{ color: #fff; text-decoration: none; text-shadow: 0 -1px 0 #000; background: #667e72; }
+
+/* 2. H1 Heading
+-------------------------------------------------- */
+
+h1	{ color:#333; font-size:2.2em; font-weight:normal; margin:10px 0 20px 0; padding:10px; border-bottom: 1px solid #000000}
+.subtitle	{ position:absolute; top:15px; left:650px; width:300px; }
+
+/* 3. Misc
+-------------------------------------------------- */
+
+#slider		{ margin-top:30px; }
+#slider img	{ padding:1px; border:4px solid #ddd; }

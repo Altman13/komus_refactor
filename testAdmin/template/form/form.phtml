@@ -1,0 +1,53 @@
+<? 
+  $data = $this -> get_data( $inc );   
+  $message      = $this -> get_data( "message" );
+  $data_project = $this -> get_data( "data_project" );
+  $data_node    = $this -> get_data( "data_node" );
+  $param = $this -> get_data( "param" );
+?>
+  <p class="caption" align="center"><?= Util :: s_param('action')=="add" ? "Добавить" : "Редактировать" ?> форму ID = <?= $data -> id ?></p>
+
+<form method="POST" action="index.php?menu=form&cmd=<?= Util :: s_param('action') ?>&id=<?= $data -> id ?>&item_id=<?= $param["item_id"] ?>" onsubmit="return validateComplete(this)">
+<b><?= $message  ?></b><br />
+<table bgcolor="#efefef" cellspacing="0" cellpadding="5" border="0" align="center" width="100%">
+
+  <tr><td width="15%">Проект:</td>
+  <td>
+   <select name="project_id">
+    <? foreach ( $data_project as $item) { ?>
+    <option value="<?= $item["id"] ?>" <?= $data -> project_id == $item["id"] ? 'selected' : '' ?>>
+	<?= $item["title"] ?>
+	</option>
+    <? } ?>
+   </select>
+  </td></tr>
+  
+  <tr><td>Узел:</td>
+  <td>
+   <select name="node_id">
+    <option value="0">Нет</option> 
+    <? foreach ( $data_node as $item) { ?>
+    <? if (empty($param["item_id"])) { ?>
+    <option value="<?= $item["id"] ?>" <?= $data -> node_id == $item["id"] ? 'selected' : '' ?>><?= $item["id"] ?></option>
+    <? } else { ?>
+    <option value="<?= $item["id"] ?>" <?= $param["item_id"] == $item["id"] ? 'selected' : '' ?>><?= $item["id"] ?></option>
+    <? } ?>
+    <? } ?>
+   </select>
+  </td></tr>
+  
+  <tr><td>Титл:</td><td><input type="text" name="title" value="<?= $data -> title ?>" style="width: 100%;"></td></tr>
+  <tr><td>Сохранять:</td>
+  <td>
+   <select name="save">
+    <option value="0" <?= !$data -> save ? "selected" : "" ?>>Нет</option> 
+    <option value="1" <?= $data -> save ? "selected" : "" ?>>Да</option>    
+   </select>
+  </td>
+  </tr>
+  <tr><td>Описание:</td><td><textarea name="description" style="width: 100%;"><?= $data -> description ?></textarea></td></tr> 
+    
+  <tr><td colspan="2"><input type="submit" value="<?= Util :: s_param('action')=="add" ? "Добавить" : "Сохранить" ?>"></td></tr>
+  </table>
+  <p align="left"><a href="?menu=form&item_id=<?= $param["item_id"] ?>">Все формы</a></p>
+</form>

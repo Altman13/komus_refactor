@@ -1,0 +1,92 @@
+<? $data = $this -> get_data( $inc );     
+   $param = $this ->  get_data( "param" );
+   $projects = $this ->  get_data( "projects" );
+?>
+<table cellpadding="5" cellspacing="0" width="100%" border="0">
+<tr valign="top">
+  
+ <td align="left" width="20%" nowrap>
+ <form action="index.php?menu=node" name="search" method="post">
+ <input type="text" name="filter" value="<?= $param["filter"] ?>">&nbsp;&nbsp;
+ <input type="submit" value="Найти">
+ </form>
+ </td>
+ 
+</tr>
+</table>
+
+<h1>Узлы</h1>
+  <b><?= $param["message"]  ?></b>
+
+    <table width="90%">
+    <tr>
+     <td width="100%" align="right"> Страниц: <?= HTML :: pages_ext( $param["limit"], $param["record_count"], $param["group_limit"], $param["pages"] ,  "index.php?menu=node&" ) ?></td>
+    </tr>
+    </table>
+
+  
+  <table cellspacing="2" cellpadding="5" border="0" width="100%">
+  <form method="POST" action="index.php?menu=node&action=edit&pages=<?= $param["pages"] ?>">
+  <tr bgcolor="silver">
+  <th width="5%">Id узла</th><th width="70%">Узел</th><th width="15%">Проект</th><th width="10%">&nbsp;</th>
+  
+ <?
+   if( count( $data ) > 0 ) { 
+    foreach( $data as $item) {
+  ?> 
+  
+  </tr>
+  
+   <tr bgcolor="#efefef">
+    <td><?= $item["id"] ?></td>
+    <!-- <td><input type="text" name="all_spr[<?= $item["id"] ?>]" value="<?= $item["node_text"] ?>" style="width:100%;"></td>  -->
+    <td><textarea name="all_spr[<?= $item["id"] ?>]" style="width:100%; height: 75px;"><?= $item["node_text"] ?></textarea>
+    <? if ( $item["form_id"] ) { ?>
+    <p><a href="?menu=form&item_id=<?= $item["id"] ?>">Форма</a>: <b>Id = <?= $item["form_id"] ?></b><?= !empty( $item["form_title"] ) ? ', '.$item["form_title"] : '' ?></p>
+    <? } else { ?>
+    <p><a href="?menu=form&item_id=<?= $item["id"] ?>">Форма</a> нет</p>
+    <? } ?>
+    </td>
+	<td>
+	<select name="all_node[<?= $item["id"] ?>]" style="width:100%">
+    <? foreach ( $projects as $item_project) { ?>
+    <option value="<?= $item_project["id"] ?>" <?= $item_project["id"] == $item["project_id"] ? "selected" : "" ?> ><?= $item_project["title"] ?></option>
+    <? } ?>
+    </select>
+	
+	</td>
+    <td align="center"><a href="index.php?menu=node&cmd=del&id=<?= $item["id"] ?>" class="menu" onclick="return ConfirmDelete()">Удалить</a></td>
+   <tr>
+   
+  <? 
+     }  
+   } ?>
+   <tr>
+    <td colspan="4" width="15%" align="right"><input type="submit" value="Сохранить"></td>
+   </tr>
+   </form>
+</table>    
+
+   <table width="90%">
+    <tr>
+     <td width="100%" align="right">Страниц: <?= HTML :: pages_ext( $param["limit"], $param["record_count"], $param["group_limit"], $param["pages"] ,  "index.php?menu=projects&" ) ?></td>
+    </tr>
+    </table>
+  
+  <h2>Добавить узел</h2> 
+  <form method="POST" action="index.php?menu=node&cmd=add&pages=<?= $param["pages"] ?>"> 
+  <table cellspacing="2" cellpadding="5" border="0" width="100%"> 
+   <tr>
+    <td width="70%"><textarea name="node_text" style="width:100%; height: 100px;"></textarea></td>
+	<td width="15%">
+	<select name="project_id" style="width: 100%">
+    <? foreach ( $projects as $item) { ?>
+    <option value="<?= $item["id"] ?>"><?= $item["title"] ?></option>
+    <? } ?>
+	
+	</td>
+    <td width="15%" align="right"><input type="submit" value="Добавить"></td>
+   </tr> 
+ </table>
+ </form>
+ <p>&nbsp;</p>

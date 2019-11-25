@@ -1,0 +1,49 @@
+<? $data = $this -> get_data( $inc );     
+   $param = $this -> get_data( "param" );
+ 
+?>
+<table cellpadding="5" cellspacing="0" width="100%" border="0">
+<tr valign="top">
+ <td align="left" width="15%" nowrap>
+ <a href="index.php?menu=field&action=add&item_id=<?= $param["item_id"] ?>">Добавить поле</a>
+ </td>
+ <td align="left" width="20%" nowrap>
+ <form action="index.php?menu=field&item_id=<?= $param["item_id"] ?>" name="search" method="post">
+ <input type="text" name="filter" value="<?= $param["filter"] ?>">&nbsp;&nbsp;
+ <input type="submit" value="Найти">
+ </form>
+ </td>
+ <td width="65%" align="right">Страниц : <?= HTML :: pages_ext( $param["limit"], $param["record_count"], $param["group_limit"], $param["pages"] ,  "index.php?menu=field&" ) ?></td>
+</tr>
+</table>
+  <?= !empty($param["item_id"]) ? '<h1>Поля для формы ID = '.$param["item_id"].'</h1>' : '' ?>
+  <b><?= $param["message"]  ?></b><br />
+   <form method="POST" action="index.php?menu=field&action=update&item_id=<?= $param["item_id"] ?>&pages=<?= $param["pages"] ?>">
+  <table cellspacing="2" cellpadding="5" border="0" width="100%">
+  <tr bgcolor="silver">
+  <th width="5%">Id</th><th width="20%">Титл</th><th width="15%">Имя</th><th width="15%">Тип</th><th width="5%">Форма</th><th width="10%">Сохранение</th><th width="10%">Референс</th><th width="10%">Сортировка</th><th width="10%">&nbsp;</th><th width="10%">&nbsp;</th>
+ <?
+   if( count( $data ) > 0 ) { 
+    foreach( $data as $item) {
+  ?> 
+  </tr>
+   <tr bgcolor="#efefef">
+   <td><?= $item["id"] ?></td>
+   <td><?= empty( $item["title"] ) ? "нет титла" :  $item["title"] ?></td>
+   <td><?= $item["name"] ?></td>
+   <td><?= $item["typefield"] ?></td>
+   <td><?= $item["form_id"] ?></td>
+   <td><?= $item["save"] == 0 ? "Не сохранять" : "Сохранять" ?></td>
+   <td><?= !empty($item["reference"]) ? '<a href="?menu=refitem&item_id='.$item["reference_id"].'">'.$item["reference"].'</a>' : '' ?></td>
+   <td align="center"><input type="hidden" name="all_id[<?= $item["id"] ?>]" value="<?= $item["id"] ?>"><input type="text" name="all_sort[<?= $item["id"] ?>]" value="<?= $item["sort"] ?>" style="width:50%;"></td>
+   <td><a href="index.php?menu=field&action=edit&id=<?= $item["id"] ?>&item_id=<?= $param["item_id"] ?>" class="menu">редактировать</a></td>
+   <td><a href="index.php?menu=field&action=list&cmd=del&id=<?= $item["id"] ?>&item_id=<?= $param["item_id"] ?>" class="menu" onclick="return ConfirmDelete()">удалить</a></td>
+   <tr>
+  <? 
+     }  
+   } ?> 
+ </table>
+ <p align="right"><input type="submit" value="Сохранить"></p>
+ </form>
+ <?= !empty($param["item_id"]) ? '<p align="left"><a href="?menu=form">Все формы</a></p>' : '' ?>
+<p>&nbsp;</p>

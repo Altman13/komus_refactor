@@ -1,0 +1,155 @@
+<title>Администрирование</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+</head>
+<body topmargin="0" leftmargin="0" rightmargin="0">
+<script type="text/javascript">
+//проверка, пусто ли поле
+function emptyField(textObj)
+{
+ if(textObj.value.length==0) return true;
+ for(var i=0;i<textObj.value.length;++i)
+ {
+  var ch=textObj.value.charAt(i);
+  if(ch!=' ' && ch!='\t') return false;
+ }
+ return true;
+}
+
+//Подтверждение удаления
+function ConfirmDelete()
+{
+  if (confirm("Удалить текущую запись?")) return true;
+  return false;
+}
+
+//Только цифры
+function IsInt(textObj)
+{
+ for(var i=0;i<textObj.value.length;++i)
+ {
+  var ch=textObj.value.charAt(i);
+  if(ch<"0" || ch>"9") return false;
+ }
+ return true;
+}
+</script>
+<style type="text/css">
+a,a.link,a.visited, a.active {
+   font-size:12px;
+   text-decoration:none;
+   font-weight:bold;
+   color:blue;
+  }
+
+a.menu:hover {
+ color:red;
+ }
+
+a.menu:active{
+ color:brown;
+ }
+
+ td{
+ padding-left:10px;
+ padding-right:10px;
+ font-size:12px;
+
+ }
+
+th{
+ padding-left:10px;
+ padding-right:10px;
+ font-size:12px;
+
+ }
+.caption{
+ color:black;
+ background-color:#DA70D6;
+ font-size:14px;
+ font-weight:bold;
+
+}
+
+.MainMenu{
+ color:yellow;
+ font-size:12px;
+ font-weight:bold;
+ background-color:#c0c0c0;
+
+}
+
+.content{
+ color:black;
+ font-size:12px;
+ background-color:white;
+
+}
+input{
+border: 1px solid black;
+}
+
+textarea{
+border: 1px solid black;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var name_old;
+var visit=0;
+
+function clickMenu(layerRef)
+{
+
+ var blockElement=document.getElementById(layerRef);
+ blockElement.style.visibility='visible';
+
+ name_old=document.getElementById(layerRef);
+ visit=1;
+}
+
+function hiddenMenu()
+{
+ if(visit==1)
+  name_old.style.visibility='hidden';
+}
+
+</script>
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr onMouseOver="hiddenMenu()">
+ <td colspan="5" align="center"  class="caption">
+  Главное меню администрирования
+ </td>
+</tr>
+<tr class="MainMenu">
+ <td width="10%">
+  <a href="?menu=user&action=list"  class="menu">&nbsp;Администраторы</a>
+ </td>
+ <td width="10%">
+  <a href="?menu=news"  class="menu">&nbsp;Новости</a>
+ </td>
+  
+ <td width="10%">
+  <a href="?menu=articles"  class="menu">&nbsp;Статьи</a>
+ </td>
+ 
+ <td width="10%">
+  <a href="?menu=baners"  class="menu">&nbsp;Банеры</a>
+ </td>
+ 
+ <td align="right" width="60%">
+  <a href="?menu=exit" onMouseOver="hiddenMenu()" class="menu"> &nbsp;&nbsp;Выход</a>
+ </td>
+</tr>
+<tr class="MainMenu"><td colspan="5">&nbsp;</td></tr>
+<tr>
+ <td class="content" colspan="5" height="500px" valign="top" onMouseOver="hiddenMenu()">
+<?  $this  -> show_inc( "admin" ); ?>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

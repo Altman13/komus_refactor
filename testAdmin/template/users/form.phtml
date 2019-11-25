@@ -1,0 +1,61 @@
+  <? $data = $this -> get_data( $inc );   
+     $message = $this -> get_data( "message" );
+   ?>
+  <p class="caption" align="center"><?= Util :: s_param('action')=="add" ? "Добавить" : "Редактировать" ?> админа</p>
+
+<form method="POST" action="index.php?menu=user&cmd=<?= Util :: s_param('action') ?>&id=<?= $data -> id_user ?>" onsubmit="return validateComplete(this)">
+<b><?= $message  ?></b><br />
+<table class="reg_form" cellspacing="0" cellpadding="5" border="0" align="center">
+
+  <tr><td>Логин:</td><td><input type="text" name="login" value="<?= $data -> login ?>"></td></tr>
+  <tr><td>Пароль:</td><td><input type="password" name="password" ></td></tr>
+  <tr><td>Подтверждение пароля:</td><td><input type="password" name="password1" ></td></tr>
+  <tr><td>ФИО:</td><td><input type="text" name="fio" value="<?= $data -> fio ?>"></td></tr>
+  <tr><td>E-mail:</td><td><input type="text" name="email" value="<?= $data -> email ?>"></td></tr>
+  <tr><td>Коментарий:</td><td><textarea name="comment"><?= $data -> comment ?></textarea></td></tr>
+  
+  <tr><td colspan="2"><input type="submit" value="<?= Util :: s_param('action')=="add" ? "Добавить" : "Редактировать" ?>"></td></tr>
+  </table>
+  <p align="left"><a href="?menu=user">Все пользователи</a></p>
+</form>
+<script type="text/javascript">
+//Заполнены ли обязательные поля
+function validateComplete(formObj)
+{
+ if(emptyField(formObj.login))
+ {
+  alert("Введите свой логин!");
+  formObj.login.select();
+ }
+ else if(emptyField(formObj.password))
+ {
+  alert("Введите пароль!");
+  formObj.password.select();
+ }
+ else if(emptyField(formObj.password1))
+ {
+  alert("Введите подтверждение пароля!");
+  formObj.password1.select();
+ }
+ else if(emptyField(formObj.fio))
+ {
+  alert("Введите ФИО!");
+  formObj.fio.select();
+ }
+ else if(emptyField(formObj.email))
+ {
+  alert("Введите свой e-mail!");
+  formObj.email.select();
+ }
+ else if(formObj.password.value!=formObj.password1.value)
+ {
+  alert("Подтверждения пароля не совпадает");
+  formObj.password.select();
+ }
+
+ else return true;
+ return false;
+}
+
+
+</script>
