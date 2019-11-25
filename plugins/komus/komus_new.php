@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Komus Plugin for Cotonti CMF
  *
@@ -23,7 +22,6 @@ $edit_groups = array();
 
 $sql_user_string = "SELECT gru_groupid group_id FROM {$db_x}groups_users WHERE gru_userid = {$usr['id']}";
 $sql_user = $db->query($sql_user_string);
-
 $call_access = false;
 $edit_access = false;
 foreach ($sql_user as $groups) {
@@ -55,7 +53,6 @@ $FieldSinhrArray = array(
     'question4',
     'question5'
 );
-////////////////////////////////
 
 switch ($mode) {
     case 'continue':
@@ -185,30 +182,23 @@ switch ($mode) {
         $project_id = cot_import('project', 'G', 'INT');
         $base_id = cot_import('id', 'G', 'INT');
         $is_edit = cot_import('edit', 'G', 'INT');
-
         $sql_project_string = "SELECT first_node_id FROM {$db_x}komus_projects WHERE id = $project_id";
         $sql_project = $db->query($sql_project_string);
-
         $first_node_id = $sql_project->fetchColumn();
-
         $begin_time = date('Y-m-d H:i:s', $sys['now_offset'] + 3 * 3600);
         $time_now =  date('H:i:s', $sys['now_offset'] + 3 * 3600);
-
         $insert_contact['in_work']          = 1;
         $insert_contact['user_id']          = $usr['id'];
         $insert_contact['recall_time']      = '';
         $insert_contact['creation_time']    = $begin_time;
         $insert_contact['project_id']       = $project_id;
-
         $sql_insert = $db->insert($db_x . 'komus_contacts', $insert_contact);
         $contact_id = $db->lastInsertId();
-
         $insert_call = array(
             'contact_id'    => $contact_id,
             'begin_time'    => $begin_time,
             'user_id'       => $usr['id']
         );
-
         $sql_insert = $db->insert($db_x . 'komus_calls', $insert_call);
         $call_id = $db->lastInsertId();
         $_SESSION['call_id'] = $call_id;
@@ -216,32 +206,24 @@ switch ($mode) {
         //Выборка записи для обзвона
         //выбираем свободные записи is_block = 1
         if ($base_id == null) {
-            $sql_base_string = "
-            SELECT *
-            FROM {$db_x}komus_base            
-            WHERE is_block = 1 AND status = 0
-            LIMIT 1
-        ";
-            $sql_base        = $db->query($sql_base_string);
-            $base_data       = $sql_base->fetch();
+            $sql_base_string = "SELECT * FROM {$db_x}komus_base            
+                                    WHERE is_block = 1 AND status = 0
+                                    LIMIT 1";
+            $sql_base = $db->query($sql_base_string);
+            $base_data = $sql_base->fetch();
 
             //Все записи прошли
             if ($base_data['id'] == null) {
                 //Выбираем недозвоны
                 $sql_base_string = "SELECT * FROM {$db_x}komus_base            
-                                    WHERE (is_block = 1 AND status = 1 AND kolvo_call < 3)  
-                                    ORDER BY kolvo_call LIMIT 1";
+                                        WHERE (is_block = 1 AND status = 1 AND kolvo_call < 3)  
+                                        ORDER BY kolvo_call LIMIT 1";
                 $sql_base        = $db->query($sql_base_string);
                 $base_data       = $sql_base->fetch();
             }
         } else {
             //Перезвоны
-            $sql_base_string = "
-            SELECT *
-            FROM {$db_x}komus_base            
-            WHERE id = {$base_id} 
-            
-        ";
+            $sql_base_string = "SELECT * FROM {$db_x}komus_base WHERE id = {$base_id}";
             $sql_base        = $db->query($sql_base_string);
             $base_data       = $sql_base->fetch();
         }
@@ -442,12 +424,11 @@ switch ($mode) {
                         $sql_step_update = $db->update($db_x . 'komus_calls', $update_call, 'id = ' . $_SESSION['call_id']);
                     }
 
-                    $sql_node_string = "
-                    SELECT c.if_visited_node, c.if_field, c.if_field_value, c.to_node, ff.name field_name
-                    FROM cot_komus_conditions c
-                    LEFT JOIN cot_komus_forms_fields ff ON ff.id = c.if_field
-                    WHERE c.node_id = $old_node_id
-                    ORDER BY if_field_value
+                    $sql_node_string = "SELECT c.if_visited_node, c.if_field, c.if_field_value, c.to_node, ff.name field_name
+                                        FROM cot_komus_conditions c
+                                        LEFT JOIN cot_komus_forms_fields ff ON ff.id = c.if_field
+                                        WHERE c.node_id = $old_node_id
+                                        ORDER BY if_field_value
                 ";
                     $sql_node = $db->query($sql_node_string);
 
@@ -524,11 +505,10 @@ switch ($mode) {
             $operator_name   = $sql_user->fetchColumn();
 
 
-            $sql_call_string = "
-            SELECT contacts.*, calls.call_status
-            FROM {$db_x}komus_contacts contacts
-            LEFT JOIN {$db_x}komus_calls calls ON calls.contact_id = contacts.id
-            WHERE contacts.id = $contact_id
+            $sql_call_string = "SELECT contacts.*, calls.call_status
+                                FROM {$db_x}komus_contacts contacts
+                                LEFT JOIN {$db_x}komus_calls calls ON calls.contact_id = contacts.id
+                                WHERE contacts.id = $contact_id
         ";
             $sql_call        = $db->query($sql_call_string);
             $call_data       = $sql_call->fetch();
@@ -564,24 +544,22 @@ switch ($mode) {
                 }
             }
 
-            $sql_form_string = "
-            SELECT f.id, f.title, ff.type, ff.title, ff.name, ff.required, c.if_field_value, c.to_node
-            FROM cot_komus_forms f
-            LEFT JOIN cot_komus_forms_fields ff ON ff.form_id = f.id
-            LEFT JOIN cot_komus_references_items ri ON ri.reference_id = ff.reference_id
-            LEFT JOIN cot_komus_conditions c ON c.if_field_value = ri.id
-            WHERE f.node_id = $node_id
-            ORDER BY ff.sort, ri.sort
+            $sql_form_string = "SELECT f.id, f.title, ff.type, ff.title, ff.name, ff.required, c.if_field_value, c.to_node
+                                    FROM cot_komus_forms f
+                                    LEFT JOIN cot_komus_forms_fields ff ON ff.form_id = f.id
+                                    LEFT JOIN cot_komus_references_items ri ON ri.reference_id = ff.reference_id
+                                    LEFT JOIN cot_komus_conditions c ON c.if_field_value = ri.id
+                                    WHERE f.node_id = $node_id
+                                    ORDER BY ff.sort, ri.sort
         ";
             $sql_form = $db->query($sql_form_string);
 
             if ($sql_form->fetchColumn() > 0) {
-                $sql_fields_string = "
-                SELECT ff.*, f.title form_title
-                FROM cot_komus_forms_fields ff 
-                LEFT JOIN cot_komus_forms f ON f.id = ff.form_id 
-                WHERE f.node_id = $node_id
-                ORDER BY ff.sort
+                $sql_fields_string = "SELECT ff.*, f.title form_title
+                                        FROM cot_komus_forms_fields ff 
+                                        LEFT JOIN cot_komus_forms f ON f.id = ff.form_id 
+                                        WHERE f.node_id = $node_id
+                                        ORDER BY ff.sort
             ";
                 $sql_fields = $db->query($sql_fields_string);
 

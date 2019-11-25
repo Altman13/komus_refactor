@@ -362,6 +362,3 @@ default:
     ));
     $t->parse('MAIN.HOME');
 }
-
-
-?>
