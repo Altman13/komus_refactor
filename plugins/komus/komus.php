@@ -1,5 +1,5 @@
 <?php
-/* ====================
+/**  ====================
 [BEGIN_COT_EXT]
 Hooks=standalone
 [END_COT_EXT]
@@ -8,11 +8,11 @@ Hooks=standalone
 /**
  * Komus Plugin for Cotonti CMF
  *
- * @package komus
- * @version 1.0.0
- * @author Larion Lushnikov
+ * @package   komus
+ * @version   1.0.0
+ * @author    Larion Lushnikov
  * @copyright (c) Komus
- * @license BSD
+ * @license   BSD
  */
 
 defined('COT_CODE') or die('Wrong URL');
@@ -51,7 +51,6 @@ if (empty($call_id) && !empty($_SESSION['call_id'])) {
 ///////
 
 switch ($mode) {
-
     case 'continue':
         if (cot_import('submit', 'P', 'INT') == 1) {
             header('Location: ' . cot_url('users', 'm=logout&' . cot_xg(), '', true));
@@ -112,7 +111,7 @@ switch ($mode) {
             if (CF_TYPE_PROJECT) {
                 include_once cot_incfile("komus", "plug", "outend");
             }
-            // Отправка почты              
+            // Отправка почты
             if (CF_EMAIL) {
                 include_once cot_incfile("komus", "plug", "email");
                 SendMail($contact_id);
@@ -229,7 +228,7 @@ switch ($mode) {
         break;
     case 'splash':
         $action = cot_import('action', 'P', 'INT');
-        if ($action == NULL) {
+        if ($action == null) {
             $action_ie = $_POST["action"];
             if ($action_ie == "Перерыв") {
                 $action = -1;
@@ -244,7 +243,7 @@ switch ($mode) {
                 break;
             default:
                 if ($action > 0) {
-                    // Фильтр        	
+                    // Фильтр
                     $_SESSION['filtr'] = cot_import('filtr', 'P', 'TXT');
                     if ($usr['id'] == 0) {
                         header('Location: ' . cot_url('users', 'm=auth&avaya=1', '', true));
@@ -320,7 +319,8 @@ switch ($mode) {
                         if (Trim($dt) <> '') {
                             list($day, $month, $year, $hh, $mm) = sscanf($dt, '%02d.%02d.%04d %02d:%02d');
                             $update_contact[$key] = $year . '-' . $month . '-' . $day . ' ' . $hh . ':' . $mm;
-                        } else $update_contact[$key] = '';
+                        }
+                        $update_contact[$key] = '';
                         continue;
                     }
                     if ($field['required'] > 0 && empty($_POST[$key])) {
@@ -473,7 +473,7 @@ switch ($mode) {
                     $required_case_js = '';
                     $required_names_array = array();
                     $required_titles_array = array();
-                    $required_array_js = 
+                    $required_array_js =
                     <<<JS
                         var required = Array(
                     JS;
@@ -503,12 +503,12 @@ switch ($mode) {
                         }
                     }
                     $required_names_items = implode("', '", $required_names_array);
-                    $required_names_js = 
+                    $required_names_js =
                     <<<JS
                         var requiredNames = Array('{$required_names_items}');
                     JS;
                     $required_titles_items = implode("', '", $required_titles_array);
-                    $required_titles_js = 
+                    $required_titles_js =
                     <<<JS
                         var requiredTitles = Array('{$required_titles_items}');
                     JS;
@@ -552,7 +552,7 @@ HTML;
                             case 5:
                                 $value = htmlspecialchars($call_data[$field_name]);
                                 if ($field_name == 'question') $detaillist = ' list="answers" ';
-                                else  $detaillist = '';
+                                else $detaillist = '';
                                 $field_html = <<<HTML
     <label><span class="label">{$form_fields[$field_name]['title']}</span>{$required} <input type="text" name="{$field_name}"  value="{$value}" {$detaillist}/></label>\n
 	<datalist id="answers">
@@ -653,9 +653,9 @@ HTML;
                                 $hidden_field = 1;
                                 $field_html = <<<HTML
 							<div><label><span class="label">{$form_fields[$field_name]['title']}{$required}</span></label>\n
-							 <input style=" vertical-align:top; font: 9pt Arial; width: 120px" type="text" name = "{$field_name}" id="{$field_name}"  size="7"/>
-		      <img src="jscal/date_.gif" style="cursor:pointer" width="23" height="18" id="{$field_name}_img" 
-			      alt="Выбрать дату" title="Выбрать дату"><br><br><hr></div>&nbsp;\n
+							<input style=" vertical-align:top; font: 9pt Arial; width: 120px" type="text" name = "{$field_name}" id="{$field_name}"  size="7"/>
+                            <img src="jscal/date_.gif" style="cursor:pointer" width="23" height="18" id="{$field_name}_img" 
+                        alt="Выбрать дату" title="Выбрать дату"><br><br><hr></div>&nbsp;\n
 HTML;
                                 break;
 

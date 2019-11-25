@@ -226,14 +226,11 @@ switch ($mode) {
             $base_data       = $sql_base->fetch();
 
             //Все записи прошли
-            if ($base_data['id'] == NULL) {
+            if ($base_data['id'] == null) {
                 //Выбираем недозвоны
-                $sql_base_string = "
-            SELECT *
-            FROM {$db_x}komus_base            
-            WHERE (is_block = 1 AND status = 1 AND kolvo_call < 3)  
-            ORDER BY kolvo_call LIMIT 1
-         ";
+                $sql_base_string = "SELECT * FROM {$db_x}komus_base            
+                                    WHERE (is_block = 1 AND status = 1 AND kolvo_call < 3)  
+                                    ORDER BY kolvo_call LIMIT 1";
                 $sql_base        = $db->query($sql_base_string);
                 $base_data       = $sql_base->fetch();
             }
@@ -250,7 +247,7 @@ switch ($mode) {
         }
 
         //Запись использована
-        if ($base_data['id'] != NULL) {
+        if ($base_data['id'] != null) {
             $update_data['is_block'] = 0;
             //Для редактирования
             if (!isset($is_edit)) {
@@ -323,7 +320,7 @@ switch ($mode) {
 
     case 'splash':
         $action = cot_import('action', 'P', 'INT');
-        if ($action == NULL) {
+        if ($action == null) {
             $action_ie = $_POST["action"];
             if ($action_ie == "Перерыв") {
                 $action = -1;
@@ -593,7 +590,7 @@ switch ($mode) {
                     $required_names_array = array();
                     $required_titles_array = array();
                     $required_array_js = <<<JS
-                 var required = Array(
+                    var required = Array(
 JS;
 
                     $form_fields = array();

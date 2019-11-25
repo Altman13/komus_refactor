@@ -15,7 +15,7 @@ Hooks=index.tags
  * @license BSD
  */
 defined('COT_CODE') or die('Wrong URL');
- 
+
 require_once cot_langfile('komus', 'plug');
 require_once cot_incfile('komus', 'plug');
 
@@ -35,52 +35,47 @@ if ($sql_user->rowCount($sql_user) > 0) {
 }
 
 if ($call_access == true) {
-  if (CF_TYPE_PROJECT) {	
-  //Фильтр отбора записей]
-  if (CF_FILTER) {
-  	  include_once cot_incfile("komus", "plug", "filter");
-  	  Filter();
-  }    	 
-  /////////////////////////////////
-  
-  //Кол-во звонков
-  if (CF_COUNT) {
-  	  include_once cot_incfile("komus", "plug", "count2");
-  	  ShowCount($usr['id'], 1);
-  }
-  ////////////////////////////////
+    if (CF_TYPE_PROJECT) {
+        //Фильтр отбора записей]
+        if (CF_FILTER) {
+            include_once cot_incfile("komus", "plug", "filter");
+            Filter();
+        }
+        /////////////////////////////////
 
-  //Записи для перезвонов и недозвонов
-  if (CF_CALLS) {
-    if (CF_CALLS_TYPE1) {	
-  	   include_once cot_incfile("komus", "plug", "calls");
-  	   Calls();
-    }   
-    if (CF_CALLS_TYPE2){
-  	   include_once cot_incfile("komus", "plug", "calls2");	
-  	   Calls2();
-    }  
-    if (CF_CALLS_TYPE3){
-  	   include_once cot_incfile("komus", "plug", "calls3");	
-  	   Calls3();
-    }  	
-  } 
-  
-  ///////////////////////////////  
-  }
-  
-  $t->assign(array(
+        //Кол-во звонков
+        if (CF_COUNT) {
+            include_once cot_incfile("komus", "plug", "count2");
+            ShowCount($usr['id'], 1);
+        }
+        ////////////////////////////////
+
+        //Записи для перезвонов и недозвонов
+        if (CF_CALLS) {
+            if (CF_CALLS_TYPE1) {
+                include_once cot_incfile("komus", "plug", "calls");
+                Calls();
+            }
+            if (CF_CALLS_TYPE2) {
+                include_once cot_incfile("komus", "plug", "calls2");
+                Calls2();
+            }
+            if (CF_CALLS_TYPE3) {
+                include_once cot_incfile("komus", "plug", "calls3");
+                Calls3();
+            }
+        }
+    }
+    $t->assign(array(
         'KOMUS_SPLASH_USER_ID'          => $usr['id'],
         'KOMUS_SPLASH_ACTION'           => cot_url('plug', 'e=komus&mode=splash'),
         'KOMUS_SPLASH_NEW_CALL_ACTION'  => cot_url('plug', 'e=komus&part=web&mode=new_call'),
         'KOMUS_CF_CALLS'                => CF_CALLS,
         'KOMUS_CF_CALLS_TYPE1'          => CF_CALLS_TYPE1,
         'KOMUS_CF_CALLS_TYPE2'          => CF_CALLS_TYPE2,
-		'KOMUS_CF_CALLS_TYPE3'          => CF_CALLS_TYPE3,
+        'KOMUS_CF_CALLS_TYPE3'          => CF_CALLS_TYPE3,
         'KOMUS_CF_TYPE_PROJECT'         => CF_TYPE_PROJECT
     ));
-    
-     
     $t->parse('MAIN.OPERATOR');
 } else {
     $t->assign(array(
@@ -91,4 +86,3 @@ if ($call_access == true) {
     ));
     $t->parse('MAIN.GUEST');
 }
-?>

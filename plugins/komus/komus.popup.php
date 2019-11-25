@@ -1,4 +1,4 @@
-<?php
+<?php 
 /* ====================
 [BEGIN_COT_EXT]
 Hooks=popup
@@ -22,14 +22,12 @@ list($usr['auth_read'], $usr['auth_write'], $usr['isadmin']) = cot_auth('users',
 
 $mode = cot_import('mode', 'G', 'ALP');
 switch ($mode) {
-case 'page':
-    $alias = cot_import('al', 'G', 'ALP');
-    $sql_page_string = "SELECT page_title, page_text FROM {$db_x}pages WHERE page_alias = '$alias'";
-    $sql_page = $db->query($sql_page_string);
-    $page = $sql_page->fetch();
-    $popup_body = $page['page_text'];
-    $t->assign('POPUP_TITLE', $page['page_title']);
-    break;
+    case 'page':
+        $alias = cot_import('al', 'G', 'ALP');
+        $sql_page_string = "SELECT page_title, page_text FROM {$db_x}pages WHERE page_alias = '$alias'";
+        $sql_page = $db->query($sql_page_string);
+        $page = $sql_page->fetch();
+        $popup_body = $page['page_text'];
+        $t->assign('POPUP_TITLE', $page['page_title']);
+        break;
 }
-
-?>
