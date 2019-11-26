@@ -5,7 +5,7 @@ function Filter()
 
     //Фильтр по сфере деятельности
     $sql_filtr_string = "SELECT DISTINCT segment FROM {$db_x}komus_contacts
-                         ORDER BY segment ";
+                        ORDER BY segment";
     $sql_filtr = $db->query($sql_filtr_string);
     $field_html1 = "<select name=\"filtr1\">\n";
     $field_html1 .= "<option value=\"0\"> </option>\n";

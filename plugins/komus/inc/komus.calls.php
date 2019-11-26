@@ -5,13 +5,13 @@ function Calls()
 
      if (CF_CALLS_PE) {
           //Записи для перезвона
-          $sql_base_string = 
-          "SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call, DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
-               u.user_lastname, u.user_firstname        
-          FROM {$db_x}komus_contacts AS contacts
-          LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id                      
-          WHERE contacts.status = 4
-          ORDER BY data_recall";
+          $sql_base_string ="SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call, 
+                                             DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
+                              u.user_lastname, u.user_firstname
+                              FROM {$db_x}komus_contacts AS contacts
+                              LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id                      
+                              WHERE contacts.status = 4
+                              ORDER BY data_recall";
           $sql_base = $db->query($sql_base_string);
           foreach ($sql_base->fetchAll() as $item) {
                $status  = getReferenceItem($item['status']);

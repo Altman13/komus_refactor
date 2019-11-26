@@ -36,6 +36,6 @@ function ShowCount($usr_id, $item_id)
         $t->parse('MAIN.OPERATOR.COUNT_STATUS');
     }
     $t->assign(array(
-        'KOMUS_COUNT_SHOW'       =>  true
+        'KOMUS_COUNT_SHOW' => true
     ));
 }

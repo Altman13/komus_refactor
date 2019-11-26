@@ -46,7 +46,6 @@ function send_mail($param = false)
     }
     return $mail_ok;
 }
-
 function get_reference_select($reference_id, $alias, $call_id = '')
 {
     global $db, $db_x;
@@ -55,22 +54,22 @@ function get_reference_select($reference_id, $alias, $call_id = '')
     $value = $sql_call->fetchColumn();
     $sql_reference_string = "SELECT id, title FROM {$db_x}komus_references_items WHERE reference_id = $reference_id ORDER BY sort";
     $sql_reference = $db->query($sql_reference_string);
-    $reference_html = 
-    <<<HTML
-        <select name="{$alias}">\n
-    HTML;
+    $reference_html =
+        <<<HTML
+            <select name="{$alias}">\n
+        HTML;
     foreach ($sql_reference->fetchAll() as $reference) {
         $selected = ($value == $reference['id']) ?
             ' selected="true"' : '';
-        $reference_html .= 
-    <<<HTML
-        <option value="{$reference['id']}"{$selected}>{$reference['title']}</option>\n
-    HTML;
+        $reference_html .=
+        <<<HTML
+            <option value="{$reference['id']}"{$selected}>{$reference['title']}</option>\n
+        HTML;
     }
-    $reference_html .= 
-    <<<HTML
-        </select>\n
-    HTML;
+    $reference_html .=
+        <<<HTML
+            </select>\n
+        HTML;
     return $reference_html;
 }
 
@@ -155,21 +154,21 @@ function getReferenceSelect($refID, $name, $val = 0, $addEmpty = false)
     $sql_ref_string = "SELECT id, title FROM {$db_x}komus_references_items WHERE reference_id = $refID
                         ORDER BY sort";
     $sql_ref = $db->query($sql_ref_string);
-    $out = 
-    <<<HTML
-        <select name={$name}>\n
-    HTML;
+    $out =
+        <<<HTML
+            <select name={$name}>\n
+        HTML;
     foreach ($sql_ref as $item) {
         $selected = ($item['id'] == $val) ?
             ' selected="selected"' : '';
-        $out .= 
-    <<<HTML
-        <option value="{$item['id']}"{$selected}>{$item['title']}</option>\n
-    HTML;
+        $out .=
+        <<<HTML
+            <option value="{$item['id']}"{$selected}>{$item['title']}</option>\n
+        HTML;
     }
-    $out .= 
-    <<<HTML
-        </select>\n
-    HTML;
+    $out .=
+        <<<HTML
+            </select>\n
+        HTML;
     return $out;
 }

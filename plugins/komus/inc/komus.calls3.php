@@ -72,12 +72,13 @@ HTML;
 	));
 	//Записи для перезвона
 	if (!empty($filtr_status)) {
-		$sql_base_string = "SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call1, DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
-                    UNIX_TIMESTAMP(data_recall) data_recall2, u.user_lastname, u.user_firstname        
-            FROM {$db_x}komus_contacts AS contacts
-            LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id            
-            WHERE {$filtr_status} {$operator_select}
-            ORDER BY creation_time";
+		$sql_base_string = "SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call1, 
+								DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
+								UNIX_TIMESTAMP(data_recall) data_recall2, u.user_lastname, u.user_firstname        
+							FROM {$db_x}komus_contacts AS contacts
+								LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id            
+								WHERE {$filtr_status} {$operator_select}
+								ORDER BY creation_time";
 		$sql_base = $db->query($sql_base_string);
 		foreach ($sql_base->fetchAll() as $item) {
 			$status = getReferenceItem($item['status']);
