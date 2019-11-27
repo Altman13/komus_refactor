@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Contact Plugin API
  *
@@ -84,15 +83,15 @@ function komus_selectbox_date($utime = '', $mode = 'long', $name = '', $max_year
         list($s_year, $s_month, $s_day, $s_hour, $s_minute) = explode('-', @date('Y-m-d-H-i', $utime));
     }
     $months = array();
-    $months[1] = $L['January'];
-    $months[2] = $L['February'];
-    $months[3] = $L['March'];
-    $months[4] = $L['April'];
-    $months[5] = $L['May'];
-    $months[6] = $L['June'];
-    $months[7] = $L['July'];
-    $months[8] = $L['August'];
-    $months[9] = $L['September'];
+    $months[1]  = $L['January'];
+    $months[2]  = $L['February'];
+    $months[3]  = $L['March'];
+    $months[4]  = $L['April'];
+    $months[5]  = $L['May'];
+    $months[6]  = $L['June'];
+    $months[7]  = $L['July'];
+    $months[8]  = $L['August'];
+    $months[9]  = $L['September'];
     $months[10] = $L['October'];
     $months[11] = $L['November'];
     $months[12] = $L['December'];

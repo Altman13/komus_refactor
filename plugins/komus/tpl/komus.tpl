@@ -164,29 +164,29 @@
         Клиент ФИО: <b>{KOMUS_STEP_FIO}</b><br />               
         Полис Номер:  <b>{KOMUS_STEP_POLICENUMBER}</b><br />
         Продукт Номер:  <b>{KOMUS_STEP_PRODUCTNUMBER}</b><br />
-		Продукт Наименование:  <b>{KOMUS_STEP_PRODUCTNAME}</b><br />
-		Валюта:  <b>{KOMUS_STEP_CURRENCY}</b><br />
-		Договор Дата Заключения:  <b>{KOMUS_STEP_CONTRACTDATE}</b><br />
-		Покрытие Дата Окончания:  <b>{KOMUS_STEP_DATEEND}</b><br />
-		Срок действия программы:  <b>{KOMUS_STEP_PERIOD}</b><br /><br />
-		Покрытие Премия :  <b>{KOMUS_STEP_PREMIUM}</b><br /><br />
-		Сумма выплат по дожитиям :  <b>{KOMUS_STEP_SUMM}</b><br /><br />
-		Доходность текущая :  <b>{KOMUS_STEP_PROFIT}</b><br /><br />
-		Доходность в год % :  <b>{KOMUS_STEP_PROFITYEAR}</b><br /><br />
-		Банк:  <b>{KOMUS_STEP_BANK}</b><br /><br />
-		Сегмент:  <b>{KOMUS_STEP_SEGMENT}</b><br /><br />
-		Стратегия:  <b>{KOMUS_STEP_STRATEGY}</b><br /><br />
-		Маркетинговое наименование:  <b>{KOMUS_STEP_MARKETNAME}</b><br /><br />
-		Регион выдачи полиса:  <b>{KOMUS_STEP_REGION}</b><br /><br />
-		Город выдачи полиса:  <b>{KOMUS_STEP_CITY}</b><br /><br />
-		Клиент Дата Рождения:  <b>{KOMUS_STEP_BIRTHDATE}</b><br /><br />
-		Клиент Адрес Регистрации:  <b>{KOMUS_STEP_ADDRESS}</b><br /><br />
-		Клиент Телефон Домашний:  <b>{KOMUS_STEP_PHONE1}</b><br /><br />
-		Клиент Телефон Мобильный:  <b>{KOMUS_STEP_PHONE2}</b><br /><br />
-		Клиент Email:  <b>{KOMUS_STEP_EMAIL}</b><br /><br />
-		Офис Выдачи Наименование:  <b>{KOMUS_STEP_OFFICE}</b><br /><br />
-    Статус звонка: <b><span style="color: red;">{KOMUS_STEP_STATUS}</span></b>&nbsp;&nbsp;&nbsp;
-    Кол-во звонков: <b><span style="color: red;">{KOMUS_STEP_QUANTITY_CALL}</span></b><br /> 
+        Продукт Наименование:  <b>{KOMUS_STEP_PRODUCTNAME}</b><br />
+        Валюта:  <b>{KOMUS_STEP_CURRENCY}</b><br />
+        Договор Дата Заключения:  <b>{KOMUS_STEP_CONTRACTDATE}</b><br />
+        Покрытие Дата Окончания:  <b>{KOMUS_STEP_DATEEND}</b><br />
+        Срок действия программы:  <b>{KOMUS_STEP_PERIOD}</b><br /><br />
+        Покрытие Премия :  <b>{KOMUS_STEP_PREMIUM}</b><br /><br />
+        Сумма выплат по дожитиям :  <b>{KOMUS_STEP_SUMM}</b><br /><br />
+        Доходность текущая :  <b>{KOMUS_STEP_PROFIT}</b><br /><br />
+        Доходность в год % :  <b>{KOMUS_STEP_PROFITYEAR}</b><br /><br />
+        Банк:  <b>{KOMUS_STEP_BANK}</b><br /><br />
+        Сегмент:  <b>{KOMUS_STEP_SEGMENT}</b><br /><br />
+        Стратегия:  <b>{KOMUS_STEP_STRATEGY}</b><br /><br />
+        Маркетинговое наименование:  <b>{KOMUS_STEP_MARKETNAME}</b><br /><br />
+        Регион выдачи полиса:  <b>{KOMUS_STEP_REGION}</b><br /><br />
+        Город выдачи полиса:  <b>{KOMUS_STEP_CITY}</b><br /><br />
+        Клиент Дата Рождения:  <b>{KOMUS_STEP_BIRTHDATE}</b><br /><br />
+        Клиент Адрес Регистрации:  <b>{KOMUS_STEP_ADDRESS}</b><br /><br />
+        Клиент Телефон Домашний:  <b>{KOMUS_STEP_PHONE1}</b><br /><br />
+        Клиент Телефон Мобильный:  <b>{KOMUS_STEP_PHONE2}</b><br /><br />
+        Клиент Email:  <b>{KOMUS_STEP_EMAIL}</b><br /><br />
+        Офис Выдачи Наименование:  <b>{KOMUS_STEP_OFFICE}</b><br /><br />
+        Статус звонка: <b><span style="color: red;">{KOMUS_STEP_STATUS}</span></b>&nbsp;&nbsp;&nbsp;
+        Кол-во звонков: <b><span style="color: red;">{KOMUS_STEP_QUANTITY_CALL}</span></b><br /> 
         </div>
         <!-- ENDIF -->
         <!-- IF {KOMUS_STEP_RUBRICATOR} -->

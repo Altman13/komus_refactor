@@ -10,7 +10,8 @@ function Calls2()
     }
     //Фильтр по дате звонка
     if (!empty($_SESSION['calls_data']) && $_SESSION['calls_data'] != '--') {
-        $calls_data_filtr = " AND creation_time >= '" . $_SESSION['calls_data'] . "  00:00:00' AND creation_time <= '" . $_SESSION['calls_data'] . "  23:59:59'";
+        $calls_data_filtr = " AND creation_time >= '" . $_SESSION['calls_data'] . "  00:00:00'
+                            AND creation_time <= '" . $_SESSION['calls_data'] . "  23:59:59'";
         $tmp_date = explode('-', $_SESSION['calls_data']);
         $calls_data_ts = mktime(0, 0, 0, $tmp_date[1], $tmp_date[2], $tmp_date[0]);
     } else {
@@ -36,9 +37,10 @@ function Calls2()
     foreach ($statusArr as $key => $st) {
         $selected = ($_SESSION['filtr_status'] == $key) ?
             ' selected="true"' : '';
-        $field_status .= <<<HTML
-    <option value="{$key}"{$selected}>{$st}</option>\n
-HTML;
+        $field_status .=
+        <<<HTML
+            <option value="{$key}"{$selected}>{$st}</option>\n
+        HTML;
     }
     $field_status .= "</select>\n";
     $t->assign(array(
@@ -47,13 +49,13 @@ HTML;
     ));
     //Записи для перезвона
     if (!empty($filtr_status)) {
-        $sql_base_string = 
-            "SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call1, DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
-                u.user_lastname, u.user_firstname        
-            FROM {$db_x}komus_contacts AS contacts
-            LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id            
-            WHERE {$filtr_status}
-            ORDER BY creation_time";
+        $sql_base_string ="SELECT contacts.*, DATE_FORMAT(creation_time, '%d.%m.%Y %H:%i') data_call1,
+                                            DATE_FORMAT(data_recall, '%d.%m.%Y %H:%i') data_recall1,
+                                            u.user_lastname, u.user_firstname        
+                            FROM {$db_x}komus_contacts AS contacts
+                                            LEFT JOIN {$db_x}users AS u ON u.user_id = contacts.user_id            
+                                            WHERE {$filtr_status}
+                                            ORDER BY creation_time";
         $sql_base = $db->query($sql_base_string);
         foreach ($sql_base->fetchAll() as $item) {
             $status  = getReferenceItem($item['status']);

@@ -13,9 +13,10 @@ function Filter()
         $field['segment'] = trim($field['segment']);
         $selected = ($_SESSION['filtr1'] == $field['segment']) ?
             ' selected="true"' : '';
-        $field_html1 .= <<<HTML
-    <option value="{$field['segment']}"{$selected}>{$field['segment']}</option>\n
-HTML;
+        $field_html1 .=
+        <<<HTML
+            <option value="{$field['segment']}"{$selected}>{$field['segment']}</option>\n
+        HTML;
     }
     $field_html1 .= "</select>\n";
 
@@ -28,7 +29,8 @@ HTML;
         $field['city'] = trim($field['city']);
         $selected = ($_SESSION['filtr'] == $field['city']) ?
             ' selected="true"' : '';
-        $field_html .= <<<HTML
+        $field_html .=
+        <<<HTML
             <option value="{$field['city']}"{$selected}>{$field['city']}</option>\n
         HTML;
     }

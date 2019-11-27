@@ -2,7 +2,6 @@
 function ShowCount($usr_id, $item_id)
 {
     global $db, $db_x, $t;
-
     // Статусы звонка
     $refArray = array();
     $sql_ref_string = "SELECT * FROM {$db_x}komus_references_items 

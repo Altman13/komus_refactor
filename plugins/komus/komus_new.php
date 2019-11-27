@@ -64,7 +64,8 @@ switch ($mode) {
                 'user_status' => 1
             );
             $sql_pause = $db->update($db_x . 'users', $update, 'user_id = ' . $usr['id']);
-            $sql_select_pause_string = "SELECT id, MAX(begin_time) FROM {$db_x}komus_calls WHERE end_time IS NULL AND call_status = 16 AND user_id = {$usr['id']}";
+            $sql_select_pause_string = "SELECT id, MAX(begin_time) FROM {$db_x}komus_calls 
+                                    WHERE end_time IS NULL AND call_status = 16 AND user_id = {$usr['id']}";
             $sql_select_pause = $db->query($sql_select_pause_string);
             $select_pause = $sql_select_pause->fetch();
             $pause_time = date('Y-m-d H:i', $sys['now_offset'] + 3 * 3600);
@@ -256,7 +257,8 @@ switch ($mode) {
         break;
 
     case 'pause':
-        $sql_pause_string = "SELECT COUNT(*) FROM {$db_x}users WHERE user_id = {$usr['id']} AND user_status = 2";
+        $sql_pause_string = "SELECT COUNT(*) FROM {$db_x}users 
+                        WHERE user_id = {$usr['id']} AND user_status = 2";
         $sql_pause = $db->query($sql_pause_string);
         $has_pause = ($sql_pause->fetchColumn() > 0) ?
             true : false;
@@ -348,7 +350,8 @@ switch ($mode) {
             if ($edit_access) {
                 $contact_id = cot_import('id', 'G', 'INT');
             } else {
-                $sql_contact_string = "SELECT contact_id FROM {$db_x}komus_calls WHERE id = {$_SESSION['call_id']}";
+                $sql_contact_string = "SELECT contact_id FROM {$db_x}komus_calls 
+                                WHERE id = {$_SESSION['call_id']}";
                 $sql_contact = $db->query($sql_contact_string);
                 $contact_id = $sql_contact->fetchColumn();
             }

@@ -46,7 +46,6 @@ foreach ($sql_user->fetchAll() as $group) {
 }
 
 $plugin_title = $L['komus_reports_title'];
-
 $mode = cot_import('mode', 'G', 'ALP');
 
 switch ($mode) {
@@ -77,36 +76,30 @@ switch ($mode) {
                 $tmp['value'] = $row['value'];
                 $references[$row['id']] = $tmp;
             }
-
             require_once 'Spreadsheet/Excel/Writer.php';
-
             /*===========================================================*/
             /*=============== Отчеты ====================================*/
             /*===========================================================*/
-
             switch ($rep) {
                     /*---------------------------------------------*/
                     /*---------- Основной отчет -------------------*/
                     /*---------------------------------------------*/
                 case 1:
                     $rep_name = 'base';
-
-                    $sql_report_string = "SELECT contact.*, DATE_FORMAT(contact.creation_time, '%d.%m.%Y') begin_date, u.user_lastname, u.user_firstname,
+                    $sql_report_string = "SELECT contact.*, DATE_FORMAT(contact.creation_time, '%d.%m.%Y') begin_date, 
+                                            u.user_lastname, u.user_firstname,
                                             DATE_FORMAT(contact.creation_time, '%H:%i') begin_time,
                                             DATE_FORMAT(contact.date_meat, '%d.%m.%Y %H:%i') date_meat                                              
                                         FROM {$db_x}komus_contacts AS contact                
                                         LEFT JOIN {$db_x}users AS u ON u.user_id = contact.user_id                               
                                         ORDER BY contact.id";
                     $sql_report = $db->query($sql_report_string);
-
                     $xls_filename = 'report_' . $rep_name . '.xls';
-
                     $xls = new Spreadsheet_Excel_Writer('reports/' . $xls_filename);
                     $xls->setVersion(8);
                     $sheet = &$xls->addWorksheet(iconv('utf-8', 'windows-1251', 'Base'));
                     $sheet->setInputEncoding('windows-1251');
                     $xls->setCustomColor(10, 153, 204, 0);
-
                     $formatHeader = &$xls->addFormat();
                     $formatHeader->setBorder(1);
                     $formatHeader->setHAlign('center');
@@ -114,13 +107,11 @@ switch ($mode) {
                     $formatHeader->setBold();
                     $formatHeader->setTextWrap();
                     $formatHeader->setFgColor(10);
-
                     $formatCell = &$xls->addFormat();
                     $formatCell->setHAlign('center');
                     $formatCell->setVAlign('top');
                     $formatCell->setBorder(1);
                     $formatCell->setTextWrap();
-
                     $sheet->setColumn(0, 40, 20);
                     $sheet->write(0, 0, iconv('utf-8', 'windows-1251', 'Клиент ФИО'), $formatHeader);
                     $sheet->write(0, 1, iconv('utf-8', 'windows-1251', 'Полис Номер'), $formatHeader);
@@ -200,15 +191,12 @@ switch ($mode) {
                         $sheet->write(1 + $key, 34, iconv('utf-8', 'windows-1251', $row['begin_time']), $formatCell);  // время звонка
                         $sheet->write(1 + $key, 35, iconv('utf-8', 'windows-1251', $row['user_lastname'] . ' ' . $row['user_firstname']), $formatCell);
                         $sheet->write(1 + $key, 36, iconv('utf-8', 'windows-1251', $row['id']), $formatCell);
-
                         $count++;
                     }
                     $xls->close();
                     break;
-
                 case 3:
                     $rep_name = 'work';
-
                     $data_begin_mktime = mktime(0, 0, 0, $from['month'], $from['day'], $from['year']);
                     $date_end_mktime   = mktime(0, 0, 0, $to['month'], $to['day'], $to['year']);
                     $count = 0;
@@ -252,15 +240,17 @@ switch ($mode) {
                     $summa_day = 0;
                     $summa_all = 0;
                     foreach ($interval as $key => $day) {
-                        $sql_report_string = "SELECT id, UNIX_TIMESTAMP(MIN(begin_time)) AS mintime, UNIX_TIMESTAMP(MAX(begin_time)) AS maxtime, users.user_lastname, users.user_firstname                                              
+                        $sql_report_string = "SELECT id, UNIX_TIMESTAMP(MIN(begin_time)) AS mintime, 
+                                                        UNIX_TIMESTAMP(MAX(begin_time)) AS maxtime, 
+                                                users.user_lastname, users.user_firstname                                              
                                                 FROM {$db_x}komus_calls AS calls
                                                 LEFT JOIN {$db_x}users AS users ON calls.user_id = users.user_id
-                                                WHERE calls.user_id > 0 AND
-                                                    calls.begin_time >= '{$day["mysql"]} 00:00:00' AND calls.begin_time <= '{$day["mysql"]} 23:59:59'
+                                                WHERE calls.user_id > 0 
+                                                AND calls.begin_time >= '{$day["mysql"]} 00:00:00' 
+                                                    AND calls.begin_time <= '{$day["mysql"]} 23:59:59'
                                                 GROUP BY calls.user_id
                                                 ORDER BY users.user_lastname";
                         $sql_report = $db->query($sql_report_string);
-
                         $sheet->write($row_num, 0, iconv('utf-8', 'windows-1251', $day["data"]), $formatDay);
                         $sheet->write($row_num++, 1, iconv('utf-8', 'windows-1251', ''), $formatDay);
                         $sheet->write($row_num, 0, iconv('utf-8', 'windows-1251', 'Оператор'), $formatHeader);
@@ -277,7 +267,6 @@ switch ($mode) {
                                 $worktimeminut = '00';
                             }
                             $time = $worktimehours . ':' . $worktimeminut;
-
                             $sheet->write($row_num, 0, iconv('utf-8', 'windows-1251', $row['user_lastname'] . ' ' . $row['user_firstname']), $formatCell);
                             $sheet->write($row_num, 1, iconv('utf-8', 'windows-1251', round($worktime / 3600, 2)), $formatCell);
                         }
@@ -293,13 +282,11 @@ switch ($mode) {
                     $xls->close();
                     break;
             }
-
             if ($gr_operator_access) {
                 $t->assign(array(
                     'KOMUS_REPORTS_XLS_FILENAME' => $xls_filename
                 ));
             }
-
             $t->assign(array(
                 'KOMUS_REPORTS_SELECT_DATE' => $select_date,
                 'KOMUS_REPORTS_XLS_OUT'     => $xls_out,
@@ -308,7 +295,6 @@ switch ($mode) {
             $t->parse('MAIN.XLS_OUT');
         }
         break;
-
     default:
         if ($gr_operator_access) {
             $t->assign(array(
@@ -319,7 +305,6 @@ switch ($mode) {
             ));
             $t->parse('MAIN.HOME.GRAND_OPERATOR');
         }
-
         if ($operator_access) {
             $t->assign(array());
             $t->parse('MAIN.HOME.OPERATOR');

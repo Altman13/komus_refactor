@@ -5,8 +5,8 @@ function CountCalls($user_id, $status_call)
 	$operator_id = $user_id;
 	$countArr = array("nocall" => 0, "recall" => 0, "badcall" => 0, "anketa1" => 0, "anketa2" => 0, "anketa3" => 0, "anketa5" => 0);
 	$sql_count_string = "SELECT * FROM {$db_x}komus_count_calls WHERE operator = $operator_id";
-	$sql_count        = $db->query($sql_count_string);
-	$count_data       = $sql_count->fetch();
+	$sql_count = $db->query($sql_count_string);
+	$count_data = $sql_count->fetch();
 	switch ($status_call) {
 		case 1:
 			$countArr["nocall"] = 1;

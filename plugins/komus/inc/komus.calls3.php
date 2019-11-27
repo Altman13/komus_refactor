@@ -41,7 +41,7 @@ function Calls3()
 	foreach ($sql_operators->fetchAll() as $oper) {
 		$selected = ($_SESSION['operator_select'] == $oper['user_id']) ?
 			' selected="true"' : '';
-		$operator_fio .= 
+		$operator_fio .=
 		<<<HTML
             <option value="{$oper['user_id']}"{$selected}>{$oper['fio']}</option>\n
         HTML;
@@ -51,7 +51,7 @@ function Calls3()
 	$statusArr = array();
 	$statusArr[1] = "Недозвон1";
 	$statusArr[2] = "Недозвон2";
-	$statusArr[4] = "Перезвон не  Клиент";
+	$statusArr[4] = "Перезвон не Клиент";
 	$statusArr[5] = "Перезвон Клиент( не удобно говорить)";
 	$statusArr[6] = "Думает";
 	//$statusArr[74] = "Секретарь";

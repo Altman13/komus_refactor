@@ -9,7 +9,7 @@ $call_data = $sql_call->fetch();
 //Недозвоны
 $notcalling = array(111, 112, 113, 114, 115, 116);
 if ((in_array($call_data['status1'], $notcalling)) && ($call_data['count_calls'] < 3)) {
-    //	$update_data['is_block'] = 1; 
+    // $update_data['is_block'] = 1;
     $call_data['count_calls']++;
     $update_data['count_calls'] = $call_data['count_calls'];
 }
