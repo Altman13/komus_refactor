@@ -551,8 +551,11 @@ HTML;
 
                             case 5:
                                 $value = htmlspecialchars($call_data[$field_name]);
-                                if ($field_name == 'question') $detaillist = ' list="answers" ';
-                                else $detaillist = '';
+                                if ($field_name == 'question') {
+                                    $detaillist = ' list="answers" ';
+                                } else {
+                                    $detaillist = '';
+                                }
                                 $field_html = <<<HTML
     <label><span class="label">{$form_fields[$field_name]['title']}</span>{$required} <input type="text" name="{$field_name}"  value="{$value}" {$detaillist}/></label>\n
 	<datalist id="answers">

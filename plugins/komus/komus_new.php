@@ -576,7 +576,6 @@ JS;
 
                     $form_fields = array();
                     foreach ($sql_fields->fetchAll() as $field) {
-
                         $field_title = $field['title'];
                         if (strpos($field_title, '{komus_') !== false) {
                             unset($p_match);

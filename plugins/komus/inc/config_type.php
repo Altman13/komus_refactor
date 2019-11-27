@@ -27,4 +27,3 @@ define("CF_RUBRICATOR", false);
 define("CF_EMAIL", false);
 // Вклки
 define("CF_TABS_INFO", false);
-?>

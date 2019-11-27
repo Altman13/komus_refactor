@@ -60,14 +60,14 @@ function Calls2()
         foreach ($sql_base->fetchAll() as $item) {
             $status  = getReferenceItem($item['status']);
             $t->assign(array(
-                'KOMUS_CALLS_COMPANY'              =>  $item['company'],
-                'KOMUS_CALLS_PHONE'                =>  $item['phone'],
-                'KOMUS_CALLS_CALL'                 =>  $item['data_call1'],
-                'KOMUS_CALLS_RECALL'               =>  $item['data_recall1'],
-                'KOMUS_CALLS_COMMENT'              =>  $item['comment'],
-                'KOMUS_CALLS_STATUS'               =>  "Перезвонить",
-                'KOMUS_OPERATOR_NAME'              =>  $item['user_lastname'] . ' ' . $item['user_firstname'],
-                'KOMUS_CALLS_URL'                  =>  cot_url('plug', 'e=komus&mode=new_call&project=1&id=' . $item['id'])
+                'KOMUS_CALLS_COMPANY' => $item['company'],
+                'KOMUS_CALLS_PHONE'   => $item['phone'],
+                'KOMUS_CALLS_CALL'    => $item['data_call1'],
+                'KOMUS_CALLS_RECALL'  => $item['data_recall1'],
+                'KOMUS_CALLS_COMMENT' => $item['comment'],
+                'KOMUS_CALLS_STATUS'  => "Перезвонить",
+                'KOMUS_OPERATOR_NAME' => $item['user_lastname'] . ' ' . $item['user_firstname'],
+                'KOMUS_CALLS_URL'     => cot_url('plug', 'e=komus&mode=new_call&project=1&id=' . $item['id'])
             ));
             $t->parse('MAIN.OPERATOR.CALLS2');
         }
