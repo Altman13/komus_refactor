@@ -153,7 +153,6 @@ switch ($mode) {
 
                     $count = 1;
                     foreach ($sql_report as $key => $row) {
-
                         $sheet->write(1 + $key, 0, iconv('utf-8', 'windows-1251', clear_simbol($row['fio'])), $formatCell);
                         $sheet->write(1 + $key, 1, iconv('utf-8', 'windows-1251', clear_simbol($row['policenumber'])), $formatCell);
                         $sheet->write(1 + $key, 2, iconv('utf-8', 'windows-1251', clear_simbol($row['productnumber'])), $formatCell);
