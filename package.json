@@ -1,0 +1,20 @@
+{
+  "name": "alfastrahlife-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Altman13/komus_refactor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Altman13/komus_refactor/issues"
+  },
+  "homepage": "https://github.com/Altman13/komus_refactor#readme"
+}

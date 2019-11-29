@@ -1,0 +1,12 @@
+{
+    "name": "nonename/alfastrahlife-dev",
+    "authors": [
+        {
+            "name": "hromov.ga",
+            "email": "consent71@gmail.com"
+        }
+    ],
+    "require": {
+        "fzaninotto/faker": "^1.9"
+    }
+}
