@@ -7,9 +7,9 @@ for ($i = 0; $i < 100; $i++) {
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
                                 `comment`, `regions_id`, `users_user_id`) 
-                            VALUES (NOW(), :city, :company, 
-                            :streetAddress, :name, :phoneNumber, :email, :category, :subcategory,
-                            :question, :comment, '1','6')");
+                                VALUES (NOW(), :city, :company, 
+                                :streetAddress, :name, :phoneNumber, :email, :category, :subcategory,
+                                :question, :comment, '1','6')");
     $cont_insert->bindParam(':city', $city, PDO::PARAM_STR);
     $cont_insert->bindParam(':company', $company, PDO::PARAM_STR);
     $cont_insert->bindParam(':streetAddress', $streetAddress, PDO::PARAM_STR);
