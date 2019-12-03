@@ -1,9 +1,10 @@
 <?php
-require "../../config/config.php";
-require "../../vendor/autoload.php";
+require "config/config.php";
+require "vendor/autoload.php";
 $faker = Faker\Factory::create();
 
 for ($i = 0; $i < 100; $i++) {
+
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
                                 `comment`, `regions_id`, `users_user_id`) 
@@ -31,11 +32,41 @@ for ($i = 0; $i < 100; $i++) {
     $subcategory = "subcategory " . $faker->word;
     $question = "question " . $faker->word;
     $comment = "comment " . $faker->word;
-
     try {
         $cont_insert->execute();
     } catch (\Throwable $th) {
-        echo 'Произошла ошибка при добавлении записей ' . $th->getMessage();
+        die('Произошла ошибка при добавлении записей ' . $th->getMessage());
     }
     echo 'данные добавлены' . "<br/>";
 }
+
+$timezone = array(
+    'Africa/Abidjan',
+    'Africa/Accra',
+    'Africa/Addis_Ababa',
+    'Africa/Algiers',
+    'Africa/Asmara',
+    'Africa/Bamako',
+    'Africa/Bangui',
+);
+foreach ($timezone as $tz) {
+    $tzone = $db->prepare("INSERT INTO `komus_new`.`timezones` (`zone`) VALUES (:tz)");
+    $tzone->bindParam(':tz', $tz, PDO::PARAM_STR);
+    try {
+        $tzone->execute();
+    } catch (\Throwable $th) {
+        die('Произошла ошибка при добавлении временной зоны ' . $th->getMessage());
+    }
+}
+$groups_user = array('оператор', 'старший оператор', 'администратор');
+
+foreach ($groups_user as $gr_user) {
+    $groups_user_insert = $db->prepare("INSERT INTO `komus_new`.`groups_users` (`groups`) VALUES (:gr_u)");
+    $groups_user_insert->bindParam(':gr_u', $gr_user, PDO::PARAM_STR);
+    try {
+        $groups_user_insert->execute();
+    } catch (\Throwable $th) {
+        die('Произошла ошибка при добавлении групп пользователей ' . $th->getMessage());
+    }
+}
+echo 'Группы пользователей добавлены';

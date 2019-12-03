@@ -45,7 +45,5 @@ $insert_users->bindParam(':depass', $depassword, PDO::PARAM_STR);
 try {
     $insert_users->execute();
 } catch (\Throwable $th) {
-    echo 'Произошла ошибка при регистрации нового пользователя' .$th->getMessage();
+    die('Произошла ошибка при регистрации нового пользователя ' . $th->getMessage());
 }
-
-

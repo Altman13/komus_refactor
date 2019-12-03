@@ -13,7 +13,7 @@ if ($_POST['username'] and $_POST['password']) {
     try {
         $select->execute();
     } catch (\Throwable $th) {
-        echo 'Произошла ошибка при выборе пользователя из базы ' . $th->getMessage();
+        die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
     }
     $data = $select->fetch(PDO::PARAM_STR);
     $login_ok = false;
@@ -33,7 +33,7 @@ if ($_POST['username'] and $_POST['password']) {
         try {
             $oper = $operator_select->fetch();
         } catch (\Throwable $th) {
-            echo 'Произошла ошибка при выборе оператора из базы '. $th->getMessage();
+            die('Произошла ошибка при выборе оператора из базы '. $th->getMessage());
         }
         
         if ($oper) {
@@ -46,10 +46,10 @@ if ($_POST['username'] and $_POST['password']) {
         } else {
             //если не оператор-значит входит старший оператор
             $st_operator_select = $db->prepare("SELECT user.fio as fio, users.password as pass, users.cookie as cookie
-                                        FROM users, user
-                                        WHERE user.users_iduser=users.idusers
-                                        AND users.username=:username
-                                        AND groups_users.id= ");
+                                                FROM users, user
+                                                WHERE user.users_iduser=users.idusers
+                                                AND users.username=:username
+                                                AND groups_users.id= ");
             $st_operator_select->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
             try {
                 $st_operator_select->execute();
