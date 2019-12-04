@@ -145,6 +145,18 @@ for ($i = 0; $i < 100; $i++) {
 }
 echo 'Пользователи добавлены ' . PHP_EOL;
 for ($i = 0; $i < 100; $i++) {
+    $regions_id = $faker->numberBetween($min = $min_rg_id, $max = $max_rg_id);
+    $city = $faker->city;
+    $company = $faker->company;
+    $streetAddress = $faker->streetAddress;
+    $name = $faker->name;
+    $phoneNumber = $faker->phoneNumber;
+    $email = $faker->email;
+    $category = "category " . $faker->word;
+    $subcategory = "subcategory " . $faker->word;
+    $question = "question " . $faker->word;
+    $comment = "comment " . $faker->word;
+
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
                                 `comment`, `regions_id`, `users_user_id`) 
@@ -163,17 +175,6 @@ for ($i = 0; $i < 100; $i++) {
     $cont_insert->bindParam(':comment', $comment, PDO::PARAM_STR);
     $cont_insert->bindParam(':regions_id', $regions_id, PDO::PARAM_STR);
     $cont_insert->bindParam(':users_user_id', $groups_users_id, PDO::PARAM_STR);
-
-    $city = $faker->city;
-    $company = $faker->company;
-    $streetAddress = $faker->streetAddress;
-    $name = $faker->name;
-    $phoneNumber = $faker->phoneNumber;
-    $email = $faker->email;
-    $category = "category " . $faker->word;
-    $subcategory = "subcategory " . $faker->word;
-    $question = "question " . $faker->word;
-    $comment = "comment " . $faker->word;
     try {
         $cont_insert->execute();
     } catch (\Throwable $th) {
@@ -210,4 +211,29 @@ for ($i = 0; $i < 100; $i++) {
         echo 'Произошла ошибка при добавлении лога почты ' . $th->getMessage();
     }
 }
-echo 'Лог отправленных писем добавлен'. PHP_EOL;
+echo 'Лог отправленных писем добавлен' . PHP_EOL;
+for ($i = 0; $i < 100; $i++) {
+    $contact_id = $faker->numberBetween($min = $min_ct_id, $max = $max_ct_id);
+    $begin_time = $faker->dateTime($max = 'now', $timezone = null);
+    $b_time = date_format($begin_time, 'Y-m-d H:i:s');
+    $end_time = $faker->dateTime($max = 'now', $timezone = null);
+    $e_time = date_format($end_time, 'Y-m-d H:i:s');
+    $recall_time = $faker->dateTime($max = 'now', $timezone = null);
+    $r_time = date_format($recall_time, 'Y-m-d H:i:s');
+    $status_call = 'перезвон';
+    $call_insert = $db->prepare("INSERT INTO `komus_new`.`calls` (`begin_time`, `end_time`, `recall_time`, 
+                                                                `status`, `contacts_id`) 
+                                VALUES (:b_time, :e_time, 
+                                :r_time, :status_call, :contact_id)");
+    $call_insert->bindParam(':b_time', $b_time, PDO::PARAM_STR);
+    $call_insert->bindParam(':e_time', $e_time, PDO::PARAM_STR);
+    $call_insert->bindParam(':r_time', $r_time, PDO::PARAM_STR);
+    $call_insert->bindParam(':status_call', $status_call, PDO::PARAM_STR);
+    $call_insert->bindParam(':contact_id', $contact_id, PDO::PARAM_STR);
+    try {
+        $call_insert->execute();
+    } catch (\Throwable $th) {
+        die('Произошла ошибка при добавлении звонков' . $th->getMessage() . PHP_EOL);
+    }
+}
+echo 'Звонки добавлены' . PHP_EOL;
