@@ -38,6 +38,7 @@ if ($_POST['username'] and $_POST['password']) {
         if ($oper) {
             $cookie_name = 'user';
             $cookie_value = $oper['cookie'];
+            //TODO: решить вопрос с куки, так как оператор может быть на разных рабочих местах
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             $_SESSION['operator'] = $oper['fio'];
             //TODO: точка входа после авторизации
