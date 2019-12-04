@@ -4,21 +4,21 @@ require "vendor/autoload.php";
 
 $faker = Faker\Factory::create();
 
-$user_login = $faker->name;
-$user_password = $faker->password();
-$user_email = $faker->email;
-$user_firstname = $faker->name();
-$user_lastname = $faker->lastName;
-$user_gender = 'не указано';
-$user_birthdate = $faker->dateTime($max = 'now', $timezone = null);
-$u_birthdate = date_format($user_birthdate, 'Y-m-d H:i:s');
-$user_lastvisit = $faker->dateTime($max = 'now', $timezone = null);
-$u_last_visit = date_format($user_lastvisit, 'Y-m-d H:i:s');
-$user_ban = null;
-//TODO: добавить запросы на получение текущих значений ключей для таблиц timezone и group_users
-$timezones_id = $faker->numberBetween($min = 1, $max = 8);
-$groups_users_id = $faker->numberBetween($min = 1, $max = 3);
 for ($i = 0; $i < 100; $i++) {
+    $user_login = $faker->name;
+    $user_password = $faker->password();
+    $user_email = $faker->email;
+    $user_firstname = $faker->name();
+    $user_lastname = $faker->lastName;
+    $user_gender = 'не указано';
+    $user_birthdate = $faker->dateTime($max = 'now', $timezone = null);
+    $u_birthdate = date_format($user_birthdate, 'Y-m-d H:i:s');
+    $user_lastvisit = $faker->dateTime($max = 'now', $timezone = null);
+    $u_last_visit = date_format($user_lastvisit, 'Y-m-d H:i:s');
+    $user_ban = null;
+    //TODO: добавить запросы на получение текущих значений ключей для таблиц timezone и group_users
+    $timezones_id = $faker->numberBetween($min = 1, $max = 8);
+    $groups_users_id = $faker->numberBetween($min = 1, $max = 3);
     $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
                                                             `user_firstname`, `user_lastname`, `user_gender`,
                                                             `user_birthdate`, `user_lastvisit`, `user_ban`,
