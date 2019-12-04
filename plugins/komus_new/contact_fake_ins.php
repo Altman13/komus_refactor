@@ -111,8 +111,6 @@ for ($i = 0; $i < 100; $i++) {
     $user_lastvisit = $faker->dateTime($max = 'now', $timezone = null);
     $u_last_visit = date_format($user_lastvisit, 'Y-m-d H:i:s');
     $user_ban = null;
-
-
     $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
                                                             `user_firstname`, `user_lastname`, `user_gender`,
                                                             `user_birthdate`, `user_lastvisit`, `user_ban`,
@@ -139,12 +137,8 @@ for ($i = 0; $i < 100; $i++) {
         die();
     }
 }
-
 echo 'Пользователи добавлены ' . PHP_EOL;
 for ($i = 0; $i < 100; $i++) {
-
-
-
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
                                 `comment`, `regions_id`, `users_user_id`) 
