@@ -16,9 +16,34 @@ for ($i = 0; $i < 100; $i++) {
     $user_lastvisit = $faker->dateTime($max = 'now', $timezone = null);
     $u_last_visit = date_format($user_lastvisit, 'Y-m-d H:i:s');
     $user_ban = null;
-    //TODO: добавить запросы на получение текущих значений ключей для таблиц timezone и group_users
-    $timezones_id = $faker->numberBetween($min = 1, $max = 8);
-    $groups_users_id = $faker->numberBetween($min = 1, $max = 3);
+    
+    //Выбираем значения по внешним ключам из связанной таблицы для заполнения
+    $select_timezone_id=$db->prepare("SELECT timezones.id FROM timezones");
+    try {
+        $select_timezone_id->execute();
+    } catch (\Throwable $th) {
+        echo 'Произошла ошибка при выборе внешних ключей из таблицы timezone ' .$th->getMessage()."<br/>";
+    }
+    $tz_id=$select_timezone_id->fetchAll(PDO::FETCH_ASSOC);
+    $min_tz_id=($tz_id[0]['id']);
+    end($tz_id);
+    $last_key = key($tz_id);
+    $max_tz_id=($tz_id[$last_key]['id']);
+    $timezones_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
+    
+    //Выбираем значения по внешним ключам из связанной таблицы для заполнения
+    $select_groups_users_id=$db->prepare("SELECT groups_users.id FROM groups_users");
+    try {
+        $select_groups_users_id->execute();
+    } catch (\Throwable $th) {
+        echo 'Произошла ошибка при выборе внешних ключей из таблицы groups_users ' .$th->getMessage()."<br/>";
+    }
+    $gu_id=$select_groups_users_id->fetchAll(PDO::FETCH_ASSOC);
+    $min_gu_id=($gu_id[0]['id']);
+    end($gu_id);
+    $last_key = key($gu_id);
+    $max_gu_id=($gu_id[$last_key]['id']);
+    $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
     $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
                                                             `user_firstname`, `user_lastname`, `user_gender`,
                                                             `user_birthdate`, `user_lastvisit`, `user_ban`,
