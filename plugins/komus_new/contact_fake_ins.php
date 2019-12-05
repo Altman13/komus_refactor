@@ -5,7 +5,7 @@ require "vendor/autoload.php";
 $faker = Faker\Factory::create();
 
 global $groups_users_id;
-global $timezones_id;
+global $timezone_id;
 global $regions_id;
 global $contact_id;
 global $mail_log;
@@ -20,37 +20,35 @@ $timezone = array(
     'Africa/Bangui',
 );
 foreach ($timezone as $tz) {
-    $tzone = $db->prepare("INSERT INTO `komus_new`.`timezones` (`zone`) VALUES (:tz)");
+    $tzone = $db->prepare("INSERT INTO `komus_new`.`timezone` (`zone`) VALUES (:tz)");
     $tzone->bindParam(':tz', $tz, PDO::PARAM_STR);
     try {
         $tzone->execute();
     } catch (\Throwable $th) {
-        die('Произошла ошибка при добавлении временной зоны ' . $th->getMessage() . PHP_EOL);
+        die('Произошла ошибка при добавлении временной зоны ' . $th->getMessage());
     }
 }
 echo 'Временные зоны добавлены ' . PHP_EOL;
 
 //Выбираем значения по внешним ключам из связанной таблицы для заполнения
-$select_timezone_id = $db->prepare("SELECT timezones.id FROM timezones");
+$select_timezone_id = $db->prepare("SELECT timezone.id FROM timezone");
 try {
     $select_timezone_id->execute();
 } catch (\Throwable $th) {
-    echo 'Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage() . PHP_EOL;
+    die('Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage());
 }
 $tz_id = $select_timezone_id->fetchAll(PDO::FETCH_ASSOC);
 $min_tz_id = ($tz_id[0]['id']);
 end($tz_id);
 $last_key = key($tz_id);
 $max_tz_id = ($tz_id[$last_key]['id']);
-$timezones_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
-
 for ($i = 0; $i < 100; $i++) {
     $region_name = $faker->city;
     $region_code = $faker->citySuffix;
     $region_subcode = $faker->randomNumber();
-    $timezone_id = $faker->numberBetween($min = 1, $max = 1);
+    $timezone_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
     $regions_insert = $db->prepare("INSERT INTO `komus_new`.`regions` 
-                                (`name`, `code`, `subcode`, `timezones_id`) 
+                                (`name`, `code`, `subcode`, `timezone_id`) 
                     VALUES (:region_name, :region_code, :region_subcode, :timezone_id)");
     $regions_insert->bindParam(':region_name', $region_name, PDO::PARAM_STR);
     $regions_insert->bindParam(':region_code', $region_code, PDO::PARAM_STR);
@@ -60,7 +58,7 @@ for ($i = 0; $i < 100; $i++) {
     try {
         $regions_insert->execute();
     } catch (\Throwable $th) {
-        die('Произошла ошибка при добавлении регионов ' . $th->getMessage() . PHP_EOL);
+        die('Произошла ошибка при добавлении регионов ' . $th->getMessage());
     }
 }
 echo 'Регионы добавлены ' . PHP_EOL;
@@ -70,23 +68,22 @@ $select_regions_id = $db->prepare("SELECT regions.id FROM regions");
 try {
     $select_regions_id->execute();
 } catch (\Throwable $th) {
-    echo 'Произошла ошибка при выборе внешних ключей из таблицы regions ' . $th->getMessage() . PHP_EOL;
+    die('Произошла ошибка при выборе внешних ключей из таблицы regions ' . $th->getMessage());
 }
 $rg_id = $select_regions_id->fetchAll(PDO::FETCH_ASSOC);
 $min_rg_id = ($rg_id[0]['id']);
 end($rg_id);
 $last_key = key($rg_id);
 $max_rg_id = ($rg_id[$last_key]['id']);
-$regions_id = $faker->numberBetween($min = $min_rg_id, $max = $max_rg_id);
-
 $groups_user = array('оператор', 'старший оператор', 'администратор');
 foreach ($groups_user as $gr_user) {
+    $regions_id = $faker->numberBetween($min = $min_rg_id, $max = $max_rg_id);
     $groups_user_insert = $db->prepare("INSERT INTO `komus_new`.`groups_users` (`groups`) VALUES (:gr_u)");
     $groups_user_insert->bindParam(':gr_u', $gr_user, PDO::PARAM_STR);
     try {
         $groups_user_insert->execute();
     } catch (\Throwable $th) {
-        die('Произошла ошибка при добавлении групп пользователей ' . $th->getMessage() . PHP_EOL);
+        die('Произошла ошибка при добавлении групп пользователей ' . $th->getMessage());
     }
 }
 echo 'Группы пользователей добавлены ' . PHP_EOL;
@@ -96,16 +93,28 @@ $select_groups_users_id = $db->prepare("SELECT groups_users.id FROM groups_users
 try {
     $select_groups_users_id->execute();
 } catch (\Throwable $th) {
-    echo 'Произошла ошибка при выборе внешних ключей из таблицы groups_users ' . $th->getMessage() . PHP_EOL;
+    die('Произошла ошибка при выборе внешних ключей из таблицы groups_users ' . $th->getMessage());
 }
 $gu_id = $select_groups_users_id->fetchAll(PDO::FETCH_ASSOC);
 $min_gu_id = ($gu_id[0]['id']);
 end($gu_id);
 $last_key = key($gu_id);
 $max_gu_id = ($gu_id[$last_key]['id']);
-$groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
-
+//Выбираем значения по внешним ключам из связанной таблицы для заполнения
+$select_timezone_id = $db->prepare("SELECT timezone.id FROM timezone");
+try {
+    $select_timezone_id->execute();
+} catch (\Throwable $th) {
+    die('Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage());
+}
+$tz_id = $select_timezone_id->fetchAll(PDO::FETCH_ASSOC);
+$min_tz_id = ($tz_id[0]['id']);
+end($tz_id);
+$last_key = key($tz_id);
+$max_tz_id = ($tz_id[$last_key]['id']);
 for ($i = 0; $i < 100; $i++) {
+    $timezone_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
+    $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
     $user_login = $faker->name;
     $user_password = $faker->password();
     $user_email = $faker->email;
@@ -120,11 +129,11 @@ for ($i = 0; $i < 100; $i++) {
     $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
                                                             `user_firstname`, `user_lastname`, `user_gender`,
                                                             `user_birthdate`, `user_lastvisit`, `user_ban`,
-                                                            `timezones_id`, `groups_users_id`) 
+                                                            `timezone_id`, `groups_users_id`) 
                             VALUES (:user_login, :user_password, :user_email, 
                                     :user_firstname, :user_lastname, :user_gender, 
                                     :user_birthdate, :user_lastvisit, 
-                                    :user_ban, :timezones_id, :groups_users_id)");
+                                    :user_ban, :timezone_id, :groups_users_id)");
     $insert_user->bindParam(':user_login', $user_login, PDO::PARAM_STR);
     $insert_user->bindParam(':user_password', $user_password, PDO::PARAM_STR);
     $insert_user->bindParam(':user_email', $user_email, PDO::PARAM_STR);
@@ -134,13 +143,12 @@ for ($i = 0; $i < 100; $i++) {
     $insert_user->bindParam(':user_birthdate', $u_birthdate, PDO::PARAM_STR);
     $insert_user->bindParam(':user_lastvisit', $u_last_visit, PDO::PARAM_STR);
     $insert_user->bindParam(':user_ban', $user_ban, PDO::PARAM_STR);
-    $insert_user->bindParam(':timezones_id', $timezones_id, PDO::PARAM_STR);
+    $insert_user->bindParam(':timezone_id', $timezone_id, PDO::PARAM_STR);
     $insert_user->bindParam(':groups_users_id', $groups_users_id, PDO::PARAM_STR);
     try {
         $insert_user->execute();
     } catch (\Throwable $th) {
-        echo 'Произошла ошибка при добавлении пользователей ' . $th->getMessage() . PHP_EOL;
-        die();
+        die('Произошла ошибка при добавлении пользователей ' . $th->getMessage());
     }
 }
 echo 'Пользователи добавлены ' . PHP_EOL;
@@ -156,7 +164,7 @@ for ($i = 0; $i < 100; $i++) {
     $subcategory = "subcategory " . $faker->word;
     $question = "question " . $faker->word;
     $comment = "comment " . $faker->word;
-
+    $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
                                 `comment`, `regions_id`, `users_user_id`) 
@@ -178,7 +186,7 @@ for ($i = 0; $i < 100; $i++) {
     try {
         $cont_insert->execute();
     } catch (\Throwable $th) {
-        die('Произошла ошибка при добавлении контактов ' . $th->getMessage() . PHP_EOL);
+        die('Произошла ошибка при добавлении контактов ' . $th->getMessage());
     }
 }
 echo 'Контакты добавлены ' . PHP_EOL;
@@ -187,7 +195,7 @@ $contacts_id = $db->prepare("SELECT contacts.id FROM contacts");
 try {
     $contacts_id->execute();
 } catch (\Throwable $th) {
-    echo 'Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage() . PHP_EOL;
+    die('Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage());
 }
 $ct_id = $contacts_id->fetchAll(PDO::FETCH_ASSOC);
 $min_ct_id = ($ct_id[0]['id']);
@@ -208,7 +216,7 @@ for ($i = 0; $i < 100; $i++) {
     try {
         $maillog_insert->execute();
     } catch (\Throwable $th) {
-        echo 'Произошла ошибка при добавлении лога почты ' . $th->getMessage();
+        die('Произошла ошибка при добавлении лога почты ' . $th->getMessage());
     }
 }
 echo 'Лог отправленных писем добавлен' . PHP_EOL;
@@ -233,7 +241,7 @@ for ($i = 0; $i < 100; $i++) {
     try {
         $call_insert->execute();
     } catch (\Throwable $th) {
-        die('Произошла ошибка при добавлении звонков' . $th->getMessage() . PHP_EOL);
+        die('Произошла ошибка при добавлении звонков' . $th->getMessage());
     }
 }
 echo 'Звонки добавлены' . PHP_EOL;
