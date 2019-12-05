@@ -100,18 +100,7 @@ $min_gu_id = ($gu_id[0]['id']);
 end($gu_id);
 $last_key = key($gu_id);
 $max_gu_id = ($gu_id[$last_key]['id']);
-//Выбираем значения по внешним ключам из связанной таблицы для заполнения
-$select_timezone_id = $db->prepare("SELECT timezone.id FROM timezone");
-try {
-    $select_timezone_id->execute();
-} catch (\Throwable $th) {
-    die('Произошла ошибка при выборе внешних ключей из таблицы timezone ' . $th->getMessage());
-}
-$tz_id = $select_timezone_id->fetchAll(PDO::FETCH_ASSOC);
-$min_tz_id = ($tz_id[0]['id']);
-end($tz_id);
-$last_key = key($tz_id);
-$max_tz_id = ($tz_id[$last_key]['id']);
+
 for ($i = 0; $i < 100; $i++) {
     $timezone_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
     $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
