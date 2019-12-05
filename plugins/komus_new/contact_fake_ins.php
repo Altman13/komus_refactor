@@ -103,7 +103,7 @@ $max_gu_id = ($gu_id[$last_key]['id']);
 
 for ($i = 0; $i < 100; $i++) {
     $timezone_id = $faker->numberBetween($min = $min_tz_id, $max = $max_tz_id);
-    $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
+    $groups_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
     $user_login = $faker->name;
     $user_password = $faker->password();
     $user_email = $faker->email;
@@ -118,11 +118,11 @@ for ($i = 0; $i < 100; $i++) {
     $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
                                                             `user_firstname`, `user_lastname`, `user_gender`,
                                                             `user_birthdate`, `user_lastvisit`, `user_ban`,
-                                                            `timezone_id`, `groups_users_id`) 
+                                                            `timezone_id`, `groups_id`) 
                             VALUES (:user_login, :user_password, :user_email, 
                                     :user_firstname, :user_lastname, :user_gender, 
                                     :user_birthdate, :user_lastvisit, 
-                                    :user_ban, :timezone_id, :groups_users_id)");
+                                    :user_ban, :timezone_id, :groups_id)");
     $insert_user->bindParam(':user_login', $user_login, PDO::PARAM_STR);
     $insert_user->bindParam(':user_password', $user_password, PDO::PARAM_STR);
     $insert_user->bindParam(':user_email', $user_email, PDO::PARAM_STR);
@@ -133,7 +133,7 @@ for ($i = 0; $i < 100; $i++) {
     $insert_user->bindParam(':user_lastvisit', $u_last_visit, PDO::PARAM_STR);
     $insert_user->bindParam(':user_ban', $user_ban, PDO::PARAM_STR);
     $insert_user->bindParam(':timezone_id', $timezone_id, PDO::PARAM_STR);
-    $insert_user->bindParam(':groups_users_id', $groups_users_id, PDO::PARAM_STR);
+    $insert_user->bindParam(':groups_id', $groups_id, PDO::PARAM_STR);
     try {
         $insert_user->execute();
     } catch (\Throwable $th) {
