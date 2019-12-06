@@ -33,7 +33,7 @@ if ($_POST['username'] and $_POST['password']) {
         try {
             $oper = $operator_select->fetch();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборе оператора из базы '. $th->getMessage());
+            die('Произошла ошибка при выборе оператора из базы ' . $th->getMessage());
         }
         if ($oper) {
             $cookie_name = 'user';
@@ -54,7 +54,7 @@ if ($_POST['username'] and $_POST['password']) {
             try {
                 $st_operator_select->execute();
             } catch (\Throwable $th) {
-                echo 'Произошла ошибка при выборе старшего оператора из базы '. $th->getMessage();
+                echo 'Произошла ошибка при выборе старшего оператора из базы ' . $th->getMessage();
             }
             $st_oper = $st_operator_select->fetch();
             if ($st_oper) {

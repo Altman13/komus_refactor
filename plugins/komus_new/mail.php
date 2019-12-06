@@ -1,12 +1,18 @@
 <?php
 
-class Calls
+class Mail
 {
     private $db;
+    
     public function __construct($db)
     {
         $this->db = $db;
     }
+    /**
+     * Create
+     *
+     * @return void
+     */
     public function Create()
     {
         # code...
@@ -18,15 +24,14 @@ class Calls
      */
     public function Read()
     {
-        $all_calls = $this->db->prepare("SELECT * FROM calls");
+        $mailslog = $this->db->prepare("SELECT * FROM mailog");
         try {
-            $all_calls->execute();
+            $mailslog->execute();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборке звонков ' . $th->getMessage());
+            die('Произошла ошибка при выборке почтовых отправлений ' . $th->getMessage());
         }
-        $calls = $all_calls->fetchAll();
-        //echo json_encode($calls);
-        return json_encode($calls);
+        $mails = $mailslog->fetchAll();
+        return json_encode($mails);
     }
     /**
      * Update
