@@ -19,7 +19,7 @@ class Contacts
         $new_contacts = json_decode($contact);
         //TODO: дописать запрос на инсерт контактов
         $this->db->prepare("INSERT INTO ");
-        foreach ($new_contacts as $contact) { }
+        foreach ($new_contacts as $ct) { }
     }
     /**
      * Read

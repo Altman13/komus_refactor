@@ -19,7 +19,7 @@ class Users
         $new_user = json_decode($users);
         //TODO: дописать запрос на инсерт пользователей
         $this->db->prepare("INSERT INTO ");
-        foreach ($new_user as $users) { }
+        foreach ($new_user as $us) { }
     }
     /**
      * Read

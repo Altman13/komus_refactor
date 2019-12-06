@@ -16,10 +16,10 @@ class TimeZone
      */
     public function Create($timezone)
     {
-        $new_contacts = json_decode($timezone);
+        $timezones = json_decode($timezone);
         //TODO: дописать запрос на инсерт временных зон
         $this->db->prepare("INSERT INTO ");
-        foreach ($new_contacts as $timezone) { }
+        foreach ($timezones as $tz) { }
     }
     /**
      * Read

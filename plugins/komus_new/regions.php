@@ -19,7 +19,7 @@ class Regions
         $new_region = json_decode($regions);
         //TODO: дописать запрос на инсерт регионов
         $this->db->prepare("INSERT INTO ");
-        foreach ($new_region as $regions) { }
+        foreach ($new_region as $rs) { }
     }
     /**
      * Read
