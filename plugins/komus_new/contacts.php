@@ -28,7 +28,7 @@ class Contacts
      */
     public function Read()
     {
-        $all_contacDDD = $this->db->prepare("SELECT * FROM contacts");
+        $all_contacts = $this->db->prepare("SELECT * FROM contacts");
         try {
             $all_contacts->execute();
         } catch (\Throwable $th) {
