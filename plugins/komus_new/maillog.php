@@ -1,9 +1,9 @@
 <?php
 
-class Mail
+class MailLog
 {
     private $db;
-    
+
     public function __construct($db)
     {
         $this->db = $db;
