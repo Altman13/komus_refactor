@@ -1,10 +1,4 @@
 <?php
-/* ====================
-[BEGIN_COT_EXT]
-Hooks=standalone
-[END_COT_EXT]
-==================== */
-
 /**
  * Komus Reports Plugin for Cotonti CMF
  *
@@ -15,38 +9,6 @@ Hooks=standalone
  * @license BSD
  */
 set_time_limit(1800);
-defined('COT_CODE') or die('Wrong URL');
-
-/*========================================*/
-$max_calls = 4;
-/*========================================*/
-
-require_once cot_incfile('forms');
-require_once cot_langfile('komus');
-require_once cot_langfile('komus_reports');
-
-list($usr['auth_read'], $usr['auth_write'], $usr['isadmin']) = cot_auth('users', 'w');
-
-$gr_operator_groups = array(5, 6);
-$operator_groups = array();
-
-$gr_operator_access = false;
-$operator_access = false;
-
-$sql_user_string = "SELECT gru_groupid FROM {$db_x}groups_users WHERE gru_userid = {$usr['id']}";
-$sql_user = $db->query($sql_user_string);
-
-foreach ($sql_user->fetchAll() as $group) {
-    if (in_array($group['gru_groupid'], $gr_operator_groups)) {
-        $gr_operator_access = true;
-    }
-    if (in_array($group['gru_groupid'], $operator_groups)) {
-        $operator_access = true;
-    }
-}
-
-$plugin_title = $L['komus_reports_title'];
-$mode = cot_import('mode', 'G', 'ALP');
 
 switch ($mode) {
     case 'report':
