@@ -28,7 +28,7 @@ try {
 } catch (\Throwable $th) {
     die('Произошла ошибка при выборке истории звонков по оператору ' . $th->getMessage());
 }
-$oper_histroy = $operator_calls_history->fetchAll(PDO::FETCH_ASSOC);
+$oper_history = $operator_calls_history->fetchAll(PDO::FETCH_ASSOC);
 
 //история звоноков по всем операторам
 $history_calls_all_oper = $db->prepare("SELECT calls.contacts_id, calls.status, contacts.id, contacts.phone
