@@ -1,4 +1,4 @@
-class InfoComponent extends Component {
+class infoComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -7,4 +7,4 @@ class InfoComponent extends Component {
         return ( <div>InfoComponents</div> );
     }
 }
-export default InfoComponent;
+export default infoComponent;

@@ -5,5 +5,5 @@ require 'config\config.php';
 
 $call = new Calls($db);
 $call->Read();
-$contacts = new Contacts($db);
-$contacts->Read();
+// $contacts = new Contacts($db);
+// $contacts->Read();

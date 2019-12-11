@@ -10,9 +10,10 @@ class HelloWorld extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/todos/10')
+    fetch('/react/php/komus_new/test.php')
       .then(response => response.json())
       .then(json => console.log(json))
+      console.log(json)
   }
 
   render() {

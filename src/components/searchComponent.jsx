@@ -1,4 +1,4 @@
-class SearchComponent extends Component {
+class searchComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -7,5 +7,4 @@ class SearchComponent extends Component {
         return ( <div>SearchComponent</div> );
     }
 }
- 
-export default SearchComponent;
+export default searchComponent;
