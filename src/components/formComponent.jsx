@@ -1,4 +1,4 @@
-class formComponent extends Component {
+class FormComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -7,4 +7,4 @@ class formComponent extends Component {
         return ( <div>FormComponent</div> );
     }
 }
-export default formComponent;
+export default FormComponent;

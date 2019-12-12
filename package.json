@@ -20,13 +20,7 @@
   },
   "homepage": "https://github.com/Altman13/komus_refactor#readme",
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "react-redux": "^6.0.0",
-    "react-router": "^4.3.1",
-    "redux": "^4.0.1",
-    "redux-actions": "^2.6.4"
+    "@babel/runtime": "^7.7.6"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
@@ -34,16 +28,19 @@
     "@babel/preset-react": "^7.7.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
-    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.1",
-    "html-webpack-plugin": "^3.2.0",
     "style-loader": "^1.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.41.2",
     "webpack-dev-server": "^3.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-hot-loader": "^4.6.3",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
+    "redux-actions": "^2.6.4",
     "redux-devtools-extension": "^2.13.7",
+    "react-hot-loader": "^4.6.3",
     "webpack-cli": "^3.3.10"
   }
 }

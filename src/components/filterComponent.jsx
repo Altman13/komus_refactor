@@ -1,4 +1,4 @@
-class filterComponent extends Component {
+class FilterComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -7,4 +7,4 @@ class filterComponent extends Component {
         return ( <div>FilterComponent</div>  );
     }
 }
-export default filterComponent;
+export default FilterComponent;

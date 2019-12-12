@@ -11,9 +11,8 @@ class HelloWorld extends React.Component {
 
   componentDidMount() {
     fetch('/react/php/komus_new/test.php')
-      .then(response => response.json())
-      .then(json => console.log(json))
-      console.log(json)
+      .then( response => response.json() )
+      .then( json => console.log(json) )
   }
 
   render() {

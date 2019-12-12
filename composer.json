@@ -7,6 +7,7 @@
         }
     ],
     "require": {
-        "fzaninotto/faker": "^1.9"
+        "fzaninotto/faker": "^1.9",
+        "phpoffice/phpspreadsheet": "^1.10"
     }
 }

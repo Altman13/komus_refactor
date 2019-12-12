@@ -17,21 +17,6 @@ Hooks=standalone
 set_time_limit(1800);
 defined('COT_CODE') or die('Wrong URL');
 
-/*========================================*/
-$max_calls = 4;
-/*========================================*/
-
-require_once cot_langfile('komus_load');
-require_once cot_incfile('forms');
-
-list($usr['auth_read'], $usr['auth_write'], $usr['isadmin']) = cot_auth('users', 'w');
-
-$gr_operator_groups = array(5, 6);
-$operator_groups = array();
-
-$gr_operator_access = false;
-$operator_access = false;
-
 $sql_user_string = "SELECT gru_groupid FROM {$db_x}groups_users WHERE gru_userid = {$usr['id']}";
 $sql_user = $db->query($sql_user_string);
 
