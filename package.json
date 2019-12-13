@@ -40,7 +40,7 @@
     "react-router": "^4.3.1",
     "redux-actions": "^2.6.4",
     "redux-devtools-extension": "^2.13.7",
-    "react-hot-loader": "^4.6.3",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "mdbreact": "^4.23.1"
   }
 }

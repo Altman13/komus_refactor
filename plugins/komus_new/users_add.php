@@ -21,7 +21,12 @@ $objReader = PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
 if ($inputFileType == 'OOCalc') {
     $objReader->setLoadSheetsOnly('Операторы');
 }
-$objPHPExcel = $objReader->load($operators_file);
+try {
+    $objPHPExcel = $objReader->load($operators_file);
+} catch (\Throwable $th) {
+    die('Произошла ошибка при попытке чтения файла с операторами ' . $th->getMessage() . PHP_EOL);
+}
+
 $operators = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
 foreach ($operators as $operator) {
     $operator_fist_name = $operator['C'] . ' ' . $operator['D'];
@@ -46,3 +51,4 @@ foreach ($operators as $operator) {
         die('Произошла ошибка при добавлении оператора в базу ' . $th->getMessage());
     }
 }
+echo 'Операторы добавлены. ' . PHP_EOL;

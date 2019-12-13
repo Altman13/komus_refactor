@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `groups_users` (
 -- Дамп структуры для таблица komus_new.maillog
 CREATE TABLE IF NOT EXISTS `maillog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `DATETIME_` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `log` text NOT NULL,
   `contacts_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -113,6 +113,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_firstname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `user_lastname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `user_gender` enum('мужчина','женщина','не указано') CHARACTER SET utf8 NOT NULL DEFAULT 'не указано',
+  `salt` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'не указано',
+  `depass` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'не указано',
   `user_birthdate` date DEFAULT NULL,
   `user_lastvisit` datetime DEFAULT NULL,
   `user_ban` tinyint(1) DEFAULT NULL,
