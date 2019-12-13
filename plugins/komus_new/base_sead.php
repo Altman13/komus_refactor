@@ -197,7 +197,7 @@ for ($i = 0; $i < 100; $i++) {
     $mail_send = $faker->dateTime($max = 'now', $timezone = null);
     $mail_send_date = date_format($mail_send, 'Y-m-d H:i:s');
     $contact_id = $faker->numberBetween($min = $min_ct_id, $max = $max_ct_id);
-    $maillog_insert = $db->prepare("INSERT INTO `komus_new`.`maillog` (`DATETIME_`, `log`, `contacts_id`) 
+    $maillog_insert = $db->prepare("INSERT INTO `komus_new`.`maillog` (`date`, `log`, `contacts_id`) 
                                 VALUES (:mail_send_date, :mail_log, :contact_id);");
     $maillog_insert->bindParam(':mail_send_date', $mail_send_date, PDO::PARAM_STR);
     $maillog_insert->bindParam(':mail_log', $mail_log, PDO::PARAM_STR);
