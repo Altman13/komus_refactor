@@ -15,6 +15,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"]
+    },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ["babel-loader"]
@@ -42,11 +47,10 @@ module.exports = {
           {
             loader: 'image-webpack-loader',
             options: {
-              bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-            },
-          },
-        ],
+              disable: true
+            }
+          }
+        ]
       }
     ]
   },
@@ -70,5 +74,8 @@ module.exports = {
       title: "Hot Module Replacement",
       template: "./src/index.html"
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.js', '.ts', '.jsx']
+}
 };

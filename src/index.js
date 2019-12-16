@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import FormComponent from './components/FormComponent'
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -13,7 +14,7 @@ class HelloWorld extends React.Component {
       data: []
     };
   }
-
+  
   componentDidMount() {
     fetch('/react/php/komus_new/test.php')
       .then( response => response.json() )
@@ -22,7 +23,8 @@ class HelloWorld extends React.Component {
 
   render() {
     return ( <div>
-      Hello, React!
+      Тестовое название проекта
+      <FormComponent/>
       </div>
     )
   }
