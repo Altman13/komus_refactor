@@ -2,32 +2,34 @@ import React from "react";
 import { MDBContainer, MDBInputGroup } from "mdbreact";
 import { MDBInput } from 'mdbreact';
 import { MDBBtn } from "mdbreact";
+import MailSendComponent from './MailSendComponent'
 
 class FormComponent extends React.Component {
   render() {
     return (
     <MDBContainer>
-        <MDBInputGroup
+        <MDBInput
             material
             containerClassName="mb-2 mt-0"
-            prepend="Организация"/>
-        <MDBInputGroup
+            label="Организация"/>
+        <MDBInput
             material
             containerClassName="mb-2 mt-0"
-            prepend="Фио ЛПР"/>    
-        <MDBInputGroup
+            label="Фио ЛПР"/>    
+        <MDBInput
             material
             containerClassName="mb-2 mt-0"
-            prepend="Телефон ЛПР"/>    
-        <MDBInputGroup
+            label="Телефон ЛПР"/>    
+        <MDBInput
             material
             containerClassName="mb-2 mt-0"
-            prepend="Почта ЛПР"/>    
-        <MDBInputGroup
+            label="Почта ЛПР"/>    
+        <MDBInput
             material
             containerClassName="mb-2 mt-0"
-            prepend="Контакты"/>    
+            label="Контакты"/>    
                 <div style={{ display: "flex" }}>
+        <MailSendComponent/>
         <MDBBtn outline color="success" style={{ marginLeft: "auto", float: "right" }}>Продолжить</MDBBtn>
         </div>
         <MDBInput type="textarea" label="Комментарий оператора" rows="5" />
