@@ -1,4 +1,3 @@
-im
 class FilterComponent extends Component {
     constructor(props) {
         super(props);

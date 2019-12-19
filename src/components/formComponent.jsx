@@ -1,12 +1,12 @@
 import React from "react";
-import { MDBContainer, MDBInputGroup } from "mdbreact";
-import { MDBInput } from 'mdbreact';
-import { MDBBtn } from "mdbreact";
-import MailSendComponent from './MailSendComponent'
+import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
+import MailSendComponent from "./MailSendComponent";
 
 class FormComponent extends React.Component {
-  render() {
-    return (
+
+render() {
+
+  return (
     <MDBContainer>
         <MDBInput
             material
