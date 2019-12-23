@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { RootState } from './state';
-import { CallReducer } from './calls';
+import { callReducer } from './calls';
 
 export { RootState };
 
