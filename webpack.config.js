@@ -14,11 +14,16 @@ module.exports = {
   },
   module: {
     rules: [
+      { 
+        test: /\.tsx?$/, 
+        exclude: /node_modules/,
+        use: ['babel-loader','ts-loader'], 
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: ["babel-loader"]
-    },
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -32,10 +37,10 @@ module.exports = {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
+              name: "[name].[ext]",
+              outputPath: "fonts/"
             }
           }
         ]
@@ -43,9 +48,9 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
-          'file-loader',
+          "file-loader",
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               disable: true
             }
@@ -76,6 +81,6 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.jsx']
-}
+    extensions: [".js", ".ts", ".jsx"]
+  }
 };

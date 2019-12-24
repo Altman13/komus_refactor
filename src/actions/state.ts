@@ -1,4 +1,4 @@
-import { CallModel } from 'app/models';
+import { CallModel } from '../models';
 
 export interface RootState {
   calls: RootState.CallState;
