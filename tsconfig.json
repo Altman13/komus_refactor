@@ -11,8 +11,9 @@
     },
     "files": [
         "./typings/index.d.ts",
-        "./src/components/Hello.tsx",
+        "./src/components/MailSendComponent.tsx",
         "./src/index.tsx"
+
     ],
     "exclude": [
         "node_modules",

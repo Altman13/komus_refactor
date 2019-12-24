@@ -1,4 +1,3 @@
-/** TodoMVC model definitions **/
 
 export interface CallModel {
   id: number;

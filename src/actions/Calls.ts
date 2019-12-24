@@ -1,13 +1,11 @@
-import { handleActions } from 'redux-actions';
-import { RootState } from './state';
-import { CallActions } from '../actions/calls';
-import { CallModel } from '../models';
-
-
+import { handleActions } from "redux-actions";
+import { RootState } from "./state";
+import { CallActions } from "../actions/calls";
+import { CallModel } from "../models";
 const initialState: RootState.CallState = [
   {
-    id: '',
-    text: '',
+    id: "",
+    text: ""
   }
 ];
 
@@ -27,26 +25,17 @@ export const callReducer = handleActions<RootState.CallState, CallModel>(
       return state;
     },
     [CallActions.Type.DELETE_CALL]: (state, action) => {
-      return state.filter((call) => call.id !== (action.payload as any));
+      return state.filter(call => call.id !== (action.payload as any));
     },
     [CallActions.Type.EDIT_CALL]: (state, action) => {
-      return state.map((call) => {
+      return state.map(call => {
         if (!call || !action || !action.payload) {
           return call;
         }
-        return (call.id || 0) === action.payload.id ? { ...call, text: action.payload.text } : call;
+        return (call.id || 0) === action.payload.id
+          ? { ...call, text: action.payload.text }
+          : call;
       });
-    },
-    [CallActions.Type.COMPLETE_CALL]: (state, action) => {
-      return state.map((call) =>
-        call.id === (action.payload as any) ? { ...call, completed: !call.completed } : call
-      );
-    },
-    [CallActions.Type.COMPLETE_ALL]: (state, action) => {
-      return state.map((call) => ({ ...call, completed: true }));
-    },
-    [CallActions.Type.CLEAR_COMPLETED]: (state, action) => {
-      return state.filter((call) => call.completed === false);
     }
   },
   initialState

@@ -1,16 +1,19 @@
-import React, { Component } from "react";
-
-export class MailCendComponent extends Component {
-  state = {
-    switch1: true
-  };
-  handleSwitchChange = (nr: number) => () => {
-    let switchNumber = `switch${nr}`;
-    this.setState({
-      [switchNumber]: !this.state[switchNumber]
-    });
-  };
-
+import React, { Component } from "react"
+export interface MailComponentProps {}
+export interface MailComponentState {
+  switch: boolean;
+}
+class MailComponent extends React.Component<
+  MailComponentProps,
+  MailComponentState
+> {
+  constructor(props: MailComponentProps) {
+    super(props);
+    this.state = { switch: false }
+  }
+  handleSwitchChange = () => {
+    this.setState({ switch: !this.state.switch })
+  }
   render() {
     return (
       <div className="custom-control custom-switch">
@@ -18,16 +21,16 @@ export class MailCendComponent extends Component {
           type="checkbox"
           className="custom-control-input"
           id="customSwitches"
-          checked={this.state.switch1}
-          onChange={this.handleSwitchChange(1)}
+          checked={this.state.switch}
+          onChange={() => this.handleSwitchChange()}
           readOnly
         />
         <label className="custom-control-label" htmlFor="customSwitches">
           Отправить коммерческое предложение
         </label>
       </div>
-    );
+    )
   }
 }
 
-export default MailCendComponent;
+export default  MailComponent;

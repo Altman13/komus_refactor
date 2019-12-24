@@ -6,8 +6,7 @@ import { CallModel } from '../models';
 const initialState: RootState.CallState = [
   {
     id: 1,
-    text: 'Use Redux',
-    completed: false
+    text: 'test',
   }
 ];
 
@@ -18,7 +17,6 @@ export const callReducer = handleActions<RootState.CallState, CallModel>(
         return [
           {
             id: state.reduce((max, call) => Math.max(call.id || 1, max), 0) + 1,
-            completed: false,
             text: action.payload.text
           },
           ...state
@@ -42,12 +40,6 @@ export const callReducer = handleActions<RootState.CallState, CallModel>(
         call.id === (action.payload as any) ? { ...call, completed: !call.completed } : call
       );
     },
-    [CallActions.Type.COMPLETE_ALL]: (state, action) => {
-      return state.map((call) => ({ ...call, completed: true }));
-    },
-    [CallActions.Type.CLEAR_COMPLETED]: (state, action) => {
-      return state.filter((call) => call.completed === false);
-    }
   },
   initialState
 );

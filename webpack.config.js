@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: [
-    path.join(__dirname, "./src", "index.js"),
+    path.join(__dirname, "./src", "index.tsx"),
     path.join(__dirname, "./src", "App.css")
   ],
   output: {
@@ -17,7 +17,7 @@ module.exports = {
       { 
         test: /\.tsx?$/, 
         exclude: /node_modules/,
-        use: ['babel-loader','ts-loader'], 
+        use: ['babel-loader','ts-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -51,7 +51,7 @@ module.exports = {
           "file-loader",
           {
             loader: "image-webpack-loader",
-            options: {
+              options: {
               disable: true
             }
           }

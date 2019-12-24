@@ -2,7 +2,7 @@ import React from "react";
 //import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
 const mdbreact = require("mdbreact");
 const { MDBContainer, MDBInput, MDBBtn } = mdbreact;
-import MailSendComponent from "MailSendComponent";
+import MailSendComponent from "./MailSendComponent";
 
 export class FormComponent extends React.Component {
   render() {
