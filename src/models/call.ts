@@ -1,10 +1,13 @@
 
-export interface CallModel {
+export interface call {
   id: number;
-  text: string;
+  fio_lpr: string;
+  mail_lpr:string;
+  name: string;
+  comment: string;
 }
 
-export namespace CallModel {
+export namespace Call {
   export enum Filter {
     SHOW_ALL = 'all',
     SHOW_RECALL= 'recall',

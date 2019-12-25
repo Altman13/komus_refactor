@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { RootState } from './state';
-import { CallActions } from '../actions/calls';
-import { CallModel } from '../models';
+import * as CallActions from '../actions';
+import { call } from '../models';
 
 const initialState: RootState.CallState = [
   {
@@ -10,9 +10,9 @@ const initialState: RootState.CallState = [
   }
 ];
 
-export const callReducer = handleActions<RootState.CallState, CallModel>(
+export const callReducer = handleActions<RootState.CallState, call>(
   {
-    [CallActions.Type.ADD_CALL]: (state, action) => {
+    [CallActions.addCall]: (state, action) => {
       if (action.payload && action.payload.text) {
         return [
           {
