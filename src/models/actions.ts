@@ -4,11 +4,10 @@ import { call } from "./call";
 export const ADD_CALL = "ADD_CALL";
 export const EDIT_CALL = "EDIT_CALL";
 export const REMOVE_CALL = "REMOVE_CALL";
-export const SET_CALL = "SET_CALL";
-
+export const SET_CALLS = "SET_CALLS";
 export interface AddCallAction {
-    type: typeof SET_CALL;
-    call: call[];
+    type: typeof SET_CALLS;
+    calls: call[];
 }
 
 export interface EditCallAction {

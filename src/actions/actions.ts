@@ -5,9 +5,10 @@ import {
     ADD_CALL,
     REMOVE_CALL,
     EDIT_CALL,
-    SET_CALL,
+    SET_CALLS,
 } from "../models/actions"
-import { Dispatch } from "redux"
+import { Dispatch } from "redux";
+import { AppState } from "../store";
 export const addCall = (call: call): AppActions => ({
     type: ADD_CALL,
     call
@@ -23,9 +24,9 @@ export const editCall = (call: call): AppActions => ({
     call
 })
 
-export const setCall = (call: call[]): AppActions => ({
-    type: SET_CALL,
-    call
+export const setCall = (calls: call[]): AppActions => ({
+    type: SET_CALLS,
+    calls
 })
 
 export const startRemoveCall = (id: string) => {
@@ -40,8 +41,8 @@ export const startEditCall = (call: call) => {
   }
 }
 
-export const startUpdateCall = (call: call[]) => {
+export const startUpdateCall = (calls: call[]) => {
   return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
-    dispatch(editCall(call))
+    dispatch(setCall(calls))
   }
 }
