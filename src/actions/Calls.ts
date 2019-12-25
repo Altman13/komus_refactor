@@ -1,10 +1,10 @@
 import { handleActions } from "redux-actions";
 import { RootState } from "./state";
-import { CallActions } from "../actions/calls";
+import { CallActions } from "./calls";
 import { CallModel } from "../models";
 const initialState: RootState.CallState = [
   {
-    id: "",
+    id: 1,
     text: ""
   }
 ];

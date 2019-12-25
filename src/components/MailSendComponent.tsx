@@ -22,7 +22,7 @@ class MailComponent extends React.Component<
           className="custom-control-input"
           id="customSwitches"
           checked={this.state.switch}
-          onChange={() => this.handleSwitchChange()}
+          onChange={this.handleSwitchChange}
           readOnly
         />
         <label className="custom-control-label" htmlFor="customSwitches">

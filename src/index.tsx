@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { RootState } from './store';
+import { store } from './store';
 import './App.css';
 
-const store = createStore<RootState>({
-  languageName: 'TypeScript',
-});
+//import { RootState } from './reducers';
+//import { Action } from 'redux-actions';
+
 
 ReactDOM.render(
   <Provider store={store}>
