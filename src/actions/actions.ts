@@ -1,3 +1,4 @@
+import { AppActions } from './../models/actions';
 //import uuid from "uuid"
 import { call } from "../models"
 import {
@@ -7,40 +8,40 @@ import {
     SET_CALL,
 } from "../models/actions"
 import { Dispatch } from "redux"
-export const addCall = (call: call): any => ({
+export const addCall = (call: call): AppActions => ({
     type: ADD_CALL,
     call
 })
 
-export const removeCall = (id: string): any => ({
+export const removeCall = (id: string): AppActions => ({
     type: REMOVE_CALL,
     id
 })
 
-export const editCall = (call: call): any => ({
+export const editCall = (call: call): AppActions => ({
     type: EDIT_CALL,
     call
 })
 
-export const setCall = (call: call[]): any => ({
+export const setCall = (call: call[]): AppActions => ({
     type: SET_CALL,
     call
 })
 
 export const startRemoveCall = (id: string) => {
-  return (dispatch: Dispatch<any>, getState: () => AppState) => {
+  return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
     dispatch(removeCall(id))
   }
 }
 
-export const startEditCall = (call: Call) => {
-  return (dispatch: Dispatch<any>, getState: () => AppState) => {
+export const startEditCall = (call: call) => {
+  return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
     dispatch(editCall(call))
   }
 }
 
-export const startUpdateCall = (call: Call[]) => {
-  return (dispatch: Dispatch<any>, getState: () => AppState) => {
+export const startUpdateCall = (call: call[]) => {
+  return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
     dispatch(editCall(call))
   }
 }
