@@ -6,14 +6,12 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "target": "es6",
+        "target": "es5",
         "jsx": "react",
         "moduleResolution": "node"
     },
     "files": [
-        "./typings/index.d.ts",
-        "./src/components/MailSendComponent.tsx",
-        "./src/index.tsx"
+        "src/index.tsx"
 
     ],
     "exclude": [

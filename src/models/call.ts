@@ -1,6 +1,6 @@
 
 export interface call {
-  id: number;
+  id: string;
   fio_lpr: string;
   mail_lpr:string;
   name: string;

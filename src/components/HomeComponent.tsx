@@ -34,7 +34,7 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
               <p>{call.id}</p>
               <p>{call.fio_lpr}</p>
               <p>{call.mail_lpr}</p>
-              <button onClick={() => this.onRemove(String(call.id))}>
+              <button onClick={() => this.onRemove(call.id)}>
                 Remove call
               </button>
               <button onClick={() => this.onEdit(call)}>Edit call</button>
@@ -50,7 +50,7 @@ interface LinkStateProps {
   call: call[];
 }
 interface LinkDispatchProps {
-  start: (call: call) => void;
+  startEditCall: (call: call) => void;
   startRemoveCall: (id: string) => void;
 }
 
