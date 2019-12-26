@@ -1,7 +1,6 @@
 import  React from 'react';
 import ReactDOM from 'react-dom';
-//import './App.css';
-import App from './App';
+import FormComponent from './components/FormComponent';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<FormComponent />, document.getElementById('root'));
 
