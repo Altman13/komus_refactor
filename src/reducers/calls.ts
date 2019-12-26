@@ -3,7 +3,7 @@ import { call } from '../models';
 
 const callsReducerDefaultState: call[] = [];
 
-const callReducer = (
+const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes
 ): call[] => {
@@ -30,4 +30,4 @@ const callReducer = (
   }
 };
 
-export { callReducer };
+export { CallReducer };

@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk, { ThunkMiddleware } from "redux-thunk";
-import { CallReducer } from "../reducers/calls";
+import  { CallReducer }  from "../reducers/calls";
 import { AppActions } from "../models/actions";
 
 export const rootReducer = combineReducers({
-  calls: callReducer
+  calls: CallReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
