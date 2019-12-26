@@ -1,4 +1,4 @@
-import { CallModel } from '../models/CallModel';
+import { call } from '../models/call';
 
 export interface RootState {
   calls: RootState.CallState;
@@ -6,5 +6,5 @@ export interface RootState {
 }
 
 export namespace RootState {
-  export type CallState = CallModel[];
+  export type CallState = call[];
 }

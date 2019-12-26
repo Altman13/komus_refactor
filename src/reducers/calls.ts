@@ -1,45 +1,33 @@
-import { handleActions } from 'redux-actions';
-import { RootState } from './state';
-import * as CallActions from '../actions';
+import { CallActionTypes } from './../models/actions';
 import { call } from '../models';
 
-const initialState: RootState.CallState = [
-  {
-    id: 1,
-    text: 'test',
-  }
-];
+const callsReducerDefaultState: call[] = [];
 
-export const callReducer = handleActions<RootState.CallState, call>(
-  {
-    [CallActions.addCall]: (state, action) => {
-      if (action.payload && action.payload.text) {
-        return [
-          {
-            id: state.reduce((max, call) => Math.max(call.id || 1, max), 0) + 1,
-            text: action.payload.text
-          },
-          ...state
-        ];
-      }
-      return state;
-    },
-    [CallActions.Type.DELETE_CALL]: (state, action) => {
-      return state.filter((call) => call.id !== (action.payload as any));
-    },
-    [CallActions.Type.EDIT_CALL]: (state, action) => {
-      return state.map((call) => {
-        if (!call || !action || !action.payload) {
+const callReducer = (
+  state = callsReducerDefaultState,
+  action: CallActionTypes
+): call[] => {
+  switch (action.type) {
+    case "ADD_CALL":
+      return [...state, action.call];
+    case "REMOVE_CALL":
+      return state.filter(({ id }) => String(id) !== action.id);
+    case "EDIT_CALL":
+      return state.map(call => {
+        if (call.id === action.call.id) {
+          return {
+            ...call,
+            ...action.call
+          };
+        } else {
           return call;
         }
-        return (call.id || 0) === action.payload.id ? { ...call, text: action.payload.text } : call;
       });
-    },
-    [CallActions.Type.COMPLETE_CALL]: (state, action) => {
-      return state.map((call) =>
-        call.id === (action.payload as any) ? { ...call, completed: !call.completed } : call
-      );
-    },
-  },
-  initialState
-);
+    case "SET_CALLS":
+      return action.calls;
+    default:
+      return state;
+  }
+};
+
+export { callReducer };
