@@ -4,20 +4,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: [
-    path.join(__dirname, "./src", "index.tsx"),
-    path.join(__dirname, "./src", "App.css")
-  ],
+  entry: [path.join(__dirname, "./src", "index.tsx")],
   output: {
     path: path.join(__dirname, "./src", "./../public"),
     filename: "index.js"
   },
   module: {
     rules: [
-      
-        {test: /\.tsx?$/, 
-          loader: 'ts-loader',
-        },
+      { test: /\.tsx?$/, loader: "ts-loader" },
 
       {
         test: /\.jsx?$/,
@@ -51,7 +45,7 @@ module.exports = {
           "file-loader",
           {
             loader: "image-webpack-loader",
-              options: {
+            options: {
               disable: true
             }
           }
