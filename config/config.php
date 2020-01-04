@@ -1,7 +1,7 @@
 <?php
 $username = "root";
 $password = "";
-$host = "localhost";
+$host = "127.0.0.1";
 $dbname = "komus_new";
 
 $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
