@@ -36,4 +36,5 @@ export class FormComponent extends React.Component {
     );
   }
 }
+
 export default FormComponent;

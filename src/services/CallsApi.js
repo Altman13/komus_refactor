@@ -8,5 +8,6 @@ const CallsApi = {};
 
 CallsApi.getCalls = () => client.get(`/calls${JSON_QUERY}`);
 CallsApi.getCall = id => client.get(`/calls/${id}${JSON_QUERY}`);
+CallsApi.postCall = id => client.post(`/calls/${JSON_QUERY}`);
 
 export default CallsApi;
