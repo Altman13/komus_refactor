@@ -1,48 +1,49 @@
-import { contact } from "./call";
+import { Contact } from "./contact";
 
-// action strings
-// export const ADD_CALL = "ADD_CALL";
-// export const EDIT_CALL = "EDIT_CALL";
-// export const REMOVE_CALL = "REMOVE_CALL";
-// export const SET_CALLS = "SET_CALLS";
-
-export const MAKE_CALL = "MAKE_CALL"
-export const RECEIVE_CALL ="RECEIVE_CALL"
-
-// export interface AddCallAction {
-//     type: typeof SET_CALLS;
-//     contact: contact[];
-// }
-
-// export interface EditCallAction {
-//     type: typeof EDIT_CALL;
-//     contact: contact;
-// }
-
-// export interface RemoveCallAction {
-//     type: typeof REMOVE_CALL;
-//     id: string;
-// }
-
-// export interface SetCallAction {
-//     type: typeof ADD_CALL;
-//     contact: contact;
-// }
+export const MAKE_CALL = "MAKE_CALL";
+export const RECEIVE_CALL = "RECEIVE_CALL";
 
 export interface ReceiveCallAction {
-    type: typeof RECEIVE_CALL;
-    contact: contact;
+  type: typeof RECEIVE_CALL;
+  contact: Contact;
 }
 export interface MakeCallAction {
-    type: typeof MAKE_CALL;
-    contact: contact;
+  type: typeof MAKE_CALL;
+  contact: Contact;
 }
-
-export type CallActionTypes =
-    // | SetCallAction
-    // | EditCallAction
-    // | RemoveCallAction
-    // | AddCallAction
-    ReceiveCallAction | MakeCallAction
-
+export type CallActionTypes = ReceiveCallAction | MakeCallAction;
 export type AppActions = CallActionTypes;
+// const create = actionCreatorFactory('examples');
+/** The typescript-fsa-redux-thunk async action creator factory function */
+// const createAsync = asyncFactory<State>(create);
+// /** The typescript-fsa action creator factory function */
+// const create = actionCreatorFactory('examples');
+
+// /** The typescript-fsa-redux-thunk async action creator factory function */
+// const createAsync = asyncFactory<State>(create);
+
+// /** Normal synchronous action */
+// const changeTitle = create<string>('Change the title');
+
+// /** The asynchronous login action; Error type is optional */
+// const login = createAsync<LoginParams, UserToken, CustomError>(
+// 	'Login',
+// 	async (params, dispatch) => {
+// 		const url = `https://reqres.in/api/login`;
+// 		const options: RequestInit = {
+// 			method: 'POST',
+// 			body: JSON.stringify(params),
+// 			headers: {
+// 				'Content-Type': 'application/json; charset=utf-8'
+// 			}
+// 		};
+// 		const res = await fetch(url, options);
+// 		if (!res.ok) {
+// 			throw new CustomError(`Error ${res.status}: ${res.statusText}`);
+// 		}
+
+// 		dispatch(changeTitle('You are logged-in'));
+
+// 		return res.json();
+// 	}
+// );

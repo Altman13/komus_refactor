@@ -1,1 +1,1 @@
-export * from './call';
+export * from './contact';

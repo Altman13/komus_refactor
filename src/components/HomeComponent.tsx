@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { startRemoveCall, startEditCall } from "../actions/";
-import { call } from "../models";
+import { makeCall, receiveCall } from "../actions/";
+import { Contact } from "../models";
 import { AppState } from "../store"
 import { Dispatch, bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
@@ -13,31 +13,34 @@ interface HomePageProps {
 }
 
 interface HomePageState {}
-
 type Props = HomePageProps & LinkStateProps & LinkDispatchProps;
 
 export class HomePagePage extends React.Component<Props, HomePageState> {
-  onEdit = (call: call) => {
-    this.props.startEditCall(call);
+  // constructor(props: Props) {
+  //   super(props);
+  //   this.state = { contact : '' };
+  // }
+  ReceiveCall = (contact: Contact) : void => {
+    this.props.receiveCall(contact);
   };
-  onRemove = (id: string) => {
-    this.props.startRemoveCall(id);
+  MakeCall = (contact: Contact) => {
+    this.props.makeCall(contact);
   };
   render() {
-    const { call } = this.props;
+    const { contacts } = this.props;
     return (
       <div>
         <h1>call Page</h1>
         <div>
-          {call.map(call => (
+          {contacts.map(contact => (
             <div>
-              <p>{call.id}</p>
-              <p>{call.fio_lpr}</p>
-              <p>{call.mail_lpr}</p>
-              <button onClick={() => this.onRemove(call.id)}>
-                Remove call
+              <p>{contact.id}</p>
+              <p>{contact.fio_lpr}</p>
+              <p>{contact.mail_lpr}</p>
+              <button onClick={() => this.MakeCall(contact)}>
+                Remove contact
               </button>
-              <button onClick={() => this.onEdit(call)}>Edit call</button>
+              <button onClick={() => this.ReceiveCall(contact)}>Edit contact</button>
             </div>
           ))}
         </div>
@@ -47,26 +50,25 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
 }
 
 interface LinkStateProps {
-  call: call[];
+  contacts: Contact[];
 }
 interface LinkDispatchProps {
-  startEditCall: (call: call) => void;
-  startRemoveCall: (id: string) => void;
+  makeCall: (contacts: Contact) => void;
+  receiveCall: (contacts: Contact) => void;
 }
-
 const mapStateToProps = (
   state: AppState,
   ownProps: HomePageProps
 ): LinkStateProps => ({
-    call: state.calls
+  contacts: state.contacts
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   ownProps: HomePageProps
 ): LinkDispatchProps => ({
-    startEditCall: bindActionCreators(startEditCall, dispatch),
-  startRemoveCall: bindActionCreators(startRemoveCall, dispatch)
+  makeCall: bindActionCreators(makeCall, dispatch),
+  receiveCall: bindActionCreators(receiveCall, dispatch)
 });
 
 export default connect(
