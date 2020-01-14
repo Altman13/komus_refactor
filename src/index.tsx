@@ -1,4 +1,12 @@
 import  React from 'react';
 import ReactDOM from 'react-dom';
-import FormComponent from './components/FormComponent.tsx';
-ReactDOM.render(<FormComponent />, document.getElementById('root'));
+import { Provider } from 'react-redux'
+import FormComponent from './components/FormComponent'
+import { store } from './store';
+
+ReactDOM.render(
+<Provider store = {store}>
+<FormComponent />
+</Provider>,
+document.getElementById('root')
+)

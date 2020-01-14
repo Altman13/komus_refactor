@@ -6,11 +6,10 @@ export interface Contact{
   mail_lpr?:string,
   comment?: string
 }
-export namespace Contact {
+
   export enum Filter {
     SHOW_ALL = 'all',
     SHOW_RECALL= 'recall',
     SHOW_NORECALL = 'norecall',
     SHOW_FINISHCALL = 'finishcall'
   }
-}
