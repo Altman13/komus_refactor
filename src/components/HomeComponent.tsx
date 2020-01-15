@@ -7,21 +7,22 @@ import { Dispatch, bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 
-interface HomePageProps {
-  id?: string;
-  color?: string;
-}
+// interface HomePageProps {
+//   id?: string;
+//   color?: string;
+// }
 
 interface HomePageState {}
-type Props = HomePageProps & LinkStateProps & LinkDispatchProps;
+//type Props = HomePageProps & 
+type Props = LinkStateProps & LinkDispatchProps;
 
 export class HomePagePage extends React.Component<Props, HomePageState> {
   // constructor(props: Props) {
   //   super(props);
   //   this.state = { contact : '' };
   // }
-  rec_call = (contact: Contact) : void => {
-    this.props.receiveCall(contact);
+  rec_call = () : void => {
+    this.props.receiveCall();
   };
   // MakeCall = (contact: Contact) : void => {
   //   this.props.makeCall(contact);
@@ -38,9 +39,10 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
               <p>{contact.fio_lpr}</p>
               <p>{contact.mail_lpr}</p>
                 Remove contact
-              <button onClick={() => this.rec_call(contact)}>Edit contact</button>
+              
             </div>
           ))}
+          <button onClick={() => this.rec_call()}>Edit contact</button>
         </div>
       </div>
     );
@@ -52,18 +54,18 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   //makeCall: (contacts: Contact ) => void;
-  receiveCall: (contacts: Contact) => void;
+  receiveCall: () => void;
 }
 const mapStateToProps = (
   state: AppState,
-  ownProps: HomePageProps
+  //ownProps: HomePageProps
 ): LinkStateProps => ({
   contacts: state.contacts
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
-  ownProps: HomePageProps
+  //ownProps: HomePageProps
 ): LinkDispatchProps => ({
   receiveCall: bindActionCreators(rec_call, dispatch)
 });
@@ -72,3 +74,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(HomePagePage);
+

@@ -1,7 +1,4 @@
-
-//import { MAKE_CALL, RECEIVE_CALL } from './../components/test';
 import { Contact } from "./contact";
-;
 
 export const MAKE_CALL = "MAKE_CALL";
 export const RECEIVE_CALL = "RECEIVE_CALL";
