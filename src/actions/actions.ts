@@ -17,10 +17,10 @@ export const rec_call = createAsync<any, any>(
       if (!response.ok) {
         throw new Error(response.statusText)
       }
-      let body = await response.json()
-      console.table(body)
-      return dispatch(call_make)
-    } catch (err) {
+      let contacts = await response.json()
+      console.table(contacts)
+      return dispatch({ type: 'MAKE_CALL', contact: contacts });
+        } catch (err) {
       console.log(err)
     }
   }

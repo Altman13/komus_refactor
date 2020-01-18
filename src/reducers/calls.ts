@@ -11,6 +11,7 @@ const CallReducer = (
     case "MAKE_CALL":
       return [...state, action.contact]
     case "RECEIVE_CALL":
+
       return [...state, action.contact]
     default:
       return state
