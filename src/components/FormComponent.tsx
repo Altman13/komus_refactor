@@ -8,9 +8,9 @@ import { buildRequestCreator } from "../utils";
 export class FormComponent extends React.Component {
   componentDidMount() {
     //fetch("https://jsonplaceholder.typicode.com/todos/1")
-    fetch("http://localhost/react/php/komus_new/test.php")
-      .then(response => response.json())
-      .then(json => console.table(json));
+    // fetch("http://localhost/react/php/komus_new/test.php")
+    //   .then(response => response.json())
+    //   .then(json => console.table(json));
   }
   render() {
     return (

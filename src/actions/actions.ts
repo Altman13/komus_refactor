@@ -9,10 +9,11 @@ const createAsync = asyncFactory<AppState>(create)
 const call_make = create<Contact>(MAKE_CALL)
 
 export const rec_call = createAsync<any, any>(
-  "CALL_MAKE",
+  "MAKE_CALL",
   async (params, dispatch) => {
     try {
-      let response = await fetch("https://jsonplaceholder.typicode.com/users")
+      //let response = await fetch("https://jsonplaceholder.typicode.com/users")
+      let response = await fetch("http://localhost/react/php/komus_new/test.php")
       if (!response.ok) {
         throw new Error(response.statusText)
       }

@@ -36,8 +36,8 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
           {contacts.map(contact => (
             <div>
               <p>{contact.id}</p>
-              <p>{contact.fio_lpr}</p>
-              <p>{contact.mail_lpr}</p>
+              <p>{contact.fio}</p>
+              <p>{contact.email}</p>
                 Remove contact
               
             </div>

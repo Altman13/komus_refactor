@@ -1,9 +1,9 @@
 export interface Contact{
   id: number,
   name: string,
-  fio_lpr: string,
-  phone_lpr : number,
-  mail_lpr?:string,
+  fio: string,
+  phone : number,
+  email?:string,
   comment?: string
 }
 
