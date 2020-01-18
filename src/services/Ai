@@ -1,0 +1,78 @@
+import axios from "axios";
+import { Contact } from "../models/contact";
+
+// Default API will be your root
+const API_ROOT = process.env.URL || "http://localhost:80/";
+const TIMEOUT = 20000;
+const HEADERS = {
+  "Content-Type": "application/json",
+  Accept: "application/json"
+};
+interface IinitAxios {
+  baseURL : string,
+  timeout : number,
+  headers : object,
+  auth: boolean,
+}
+var anObject: IinitAxios = {
+  baseURL: API_ROOT,
+  timeout: TIMEOUT,
+  headers: HEADERS,
+  auth: false
+};
+class ApiService {
+  constructor({
+    baseURL = API_ROOT,
+    timeout = TIMEOUT,
+    headers = HEADERS,
+    auth = false
+  }) {
+    const client = axios.create({
+      baseURL,
+      timeout,
+      headers,
+      auth
+    });
+
+    client.interceptors.response.use(this.handleSuccess, this.handleError);
+    this.client = client;
+  }
+
+  handleSuccess(response: Contact) {
+    return response;
+  }
+
+  handleError(error: string) {
+    return Promise.reject(error);
+  }
+
+  get(path: string) {
+    return this.client
+      .get(path)
+      .then((response: Contact): Contact[] => response.data);
+  }
+
+  post(path: string, payload: any) {
+    return this.client
+      .post(path, payload)
+      .then((response: any) => response.data);
+  }
+
+  put(path: string, payload: any) {
+    return this.client
+      .put(path, payload)
+      .then((response: Contact): string => response.data);
+  }
+
+  patch(path: string, payload: any) {
+    return this.client
+      .patch(path, payload)
+      .then((response: any) => response.data);
+  }
+
+  delete(path: string) {
+    return this.client.delete(path).then(response => response.data);
+  }
+}
+
+export default ApiService;
