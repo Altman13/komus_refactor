@@ -1,13 +1,10 @@
 import React from "react";
-//import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
-const mdbreact = require("mdbreact");
-//const { MDBContainer, MDBInput, MDBBtn } = mdbreact;
 import MailSendComponent from "./MailSendComponent";
-import { buildRequestCreator } from "../utils";
+import { Button, Dialog, DialogActions, DialogTitle, TextField } from "@material-ui/core";
 
 export class FormComponent extends React.Component {
+  
   componentDidMount() {
-    //fetch("https://jsonplaceholder.typicode.com/todos/1")
     // fetch("http://localhost/react/php/komus_new/test.php")
     //   .then(response => response.json())
     //   .then(json => console.table(json));
@@ -31,6 +28,11 @@ export class FormComponent extends React.Component {
           className=""
           type="button"
           value="Продолжить"
+        />
+        <br/> 
+        <TextField
+          id="multiline-flexible"
+          multiline
         />
       </div>
     );
