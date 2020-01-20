@@ -6,8 +6,17 @@ export interface Contact{
   email?:string,
   comment?: string
 }
-
-  export enum Filter {
+interface Call{
+  date_call: number,
+  count_calls: number,
+  status_call: string,
+  operator: string,
+}
+export interface Report{
+  call: Call,
+  contact: Contact
+}
+    export enum Filter {
     SHOW_ALL = 'all',
     SHOW_RECALL= 'recall',
     SHOW_NORECALL = 'norecall',

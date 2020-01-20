@@ -49,7 +49,7 @@ class ApiService {
   get(path: string) {
     return this.client
       .get(path)
-      .then((response: Contact): Contact[] => response.data);
+      .then((response: any): Promise<void> => response.data);
   }
 
   post(path: string, payload: any) {
