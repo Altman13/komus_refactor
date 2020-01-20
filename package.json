@@ -21,6 +21,8 @@
   "homepage": "https://github.com/Altman13/komus_refactor#readme",
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "@material-ui/core": "^4.0.0-rc.0",
+    "@material-ui/icons": "^4.5.1",
     "@types/material-ui": "^0.21.7",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -51,8 +53,6 @@
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^6.0.0",
     "redux-devtools-extension": "^2.13.8",
-    "redux-promise-middleware": "^6.1.2",
-    "redux-promise-middleware-actions": "^3.0.1",
     "redux-thunk": "^2.3.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.1",

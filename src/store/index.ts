@@ -3,7 +3,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk, { ThunkMiddleware } from "redux-thunk";
 import { CallReducer } from "../reducers/calls";
 import { AppActions } from "../models/actions";
-import promiseMiddleware from 'redux-promise-middleware';
 
 export const rootReducer = combineReducers({
   contacts: CallReducer
@@ -14,7 +13,7 @@ export type AppState = ReturnType<typeof rootReducer>;
 export const store = createStore(
   rootReducer,
   composeWithDevTools(
-    applyMiddleware(thunk as ThunkMiddleware<AppState, AppActions>, promiseMiddleware)
+    applyMiddleware(thunk as ThunkMiddleware<AppState, AppActions>)
   )
   
 );

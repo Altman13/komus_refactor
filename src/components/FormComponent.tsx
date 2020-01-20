@@ -1,7 +1,6 @@
 import React from "react";
 import MailSendComponent from "./MailSendComponent";
 import { Button, Dialog, DialogActions, DialogTitle, TextField } from "@material-ui/core";
-
 export class FormComponent extends React.Component {
   
   componentDidMount() {
@@ -10,7 +9,9 @@ export class FormComponent extends React.Component {
     //   .then(json => console.table(json));
   }
   render() {
+
     return (
+      
       <div className="container-fluid">
         <input className="" placeholder="Организация" />
         <br />
