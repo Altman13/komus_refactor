@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import { withRouter } from 'react-router-dom'
 
 import { session, openSession }  from '../models/actions';
-import AppState from '../store';
+import { AppState } from '../store';
 
 //import { AppState, openSession, session } from './Store'
 //import { styles } from './LoginStyles'
@@ -108,7 +108,7 @@ class Login extends React.Component<Props, State> {
                     }
                     this.props.history.push(from)
                 }
-            })
+            }) 
     }
 
     render() {
