@@ -1,213 +1,115 @@
-import * as React from "react"
-import { connect } from 'react-redux'
-import Container from '@material-ui/core/Container'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core/styles'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import { withRouter } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import CardHeader from '@material-ui/core/CardHeader';
 
-import { session, openSession }  from '../models/actions';
-import { AppState } from '../store';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      width: 400,
+      margin: `${theme.spacing(0)} auto`
+    },
+    loginBtn: {
+      marginTop: theme.spacing(2),
+      flexGrow: 1
+    },
+    header: {
+      textAlign: 'center',
+      background: '#00e676',
+      color: '#fff'
+    },
+    card: {
+      marginTop: theme.spacing(10)
+    }
 
-//import { AppState, openSession, session } from './Store'
-//import { styles } from './LoginStyles'
-//import { Configuration } from './api/configuration'
-//import { LoginApi } from './api'
+  }),
+);
 
-//import Logo from '../assets/Logo-large.png'
+const Login = () => {
+  const classes = useStyles();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [helperText, setHelperText] = useState('');
+  const [error, setError] = useState(false);
 
-interface Props {
-    classes: any
-    openSession: typeof openSession
-    history: any
-    location: any
-    session: session
+  useEffect(() => {
+    if (username.trim() && password.trim()) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [username, password]);
+
+  const handleLogin = () => {
+    if (username === 'abc@email.com' && password === 'password') {
+      setError(false);
+      setHelperText('Login Successfully');
+    } else {
+      setError(true);
+      setHelperText('Incorrect username or password')
+    }
+  };
+
+  const handleKeyPress = (e:any) => {
+    if (e.keyCode === 13 || e.which === 13) {
+      isButtonDisabled || handleLogin();
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <form className={classes.container} noValidate autoComplete="off">
+        <Card className={classes.card}>
+          <CardHeader className={classes.header} title="КОМУС" />
+          <CardContent>
+            <div>
+              <TextField
+                error={error}
+                fullWidth
+                id="username"
+                type="email"
+                label="Логин"
+                placeholder="Имя оператора"
+                margin="normal"
+                onChange={(e)=>setUsername(e.target.value)}
+                onKeyPress={(e)=>handleKeyPress(e)}
+              />
+              <TextField
+                error={error}
+                fullWidth
+                id="password"
+                type="password"
+                label="Пароль"
+                placeholder="Пароль оператора"
+                margin="normal"
+                helperText={helperText}
+                onChange={(e)=>setPassword(e.target.value)}
+                onKeyPress={(e)=>handleKeyPress(e)}
+              />
+            </div>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              className={classes.loginBtn}
+              onClick={()=>handleLogin()}
+              disabled={isButtonDisabled}>
+              Вход
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    </React.Fragment>
+  );
 }
 
-interface State {
-    endpoint: string
-    username: string
-    password: string
-    submitted: boolean
-    failure: boolean
-    persistent: boolean
-}
-
-class Login extends React.Component<Props, State> {
-
-    state: State
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            endpoint: this.props.session.endpoint,
-            username: "",
-            password: "",
-            submitted: false,
-            failure: false,
-            persistent: false
-        }
-    }
-
-    handleChange(e) {
-        const { name, value } = e.target;
-        switch (name) {
-            case "endpoint":
-                this.setState({ endpoint: value })
-                break
-            case "username":
-                this.setState({ username: value })
-                break
-            case "password":
-                this.setState({ password: value })
-                break
-            case "persistent":
-                this.setState({ persistent: Boolean(value) })
-                break
-        }
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        this.setState({ submitted: true })
-
-        if (!this.state.username || !this.state.password) {
-            return
-        }
-
-        var endpoint = this.state.endpoint || this.props.session.endpoint
-
-        var conf = new Configuration({ basePath: endpoint })
-        var api = new LoginApi(conf)
-        
-        api.login(this.state.username, this.state.password)
-            .catch(() => {
-                this.setState({ failure: true })
-            })
-            .then(response => {
-                if (response) {
-                    this.setState({ failure: false })
-                    return response.json()
-                } else {
-                    this.setState({ failure: true })
-                }
-            })
-            .then(data => {
-                if (data) {
-                    this.props.openSession(endpoint, this.state.username, data.Token, data.Permissions, this.state.persistent)
-
-                    var from = "/"
-                    if (this.props.location.state && this.props.location.state.from !== "/login") {
-                        from = this.props.location.state.from
-                    }
-                    this.props.history.push(from)
-                }
-            }) 
-    }
-
-    render() {
-        const { classes } = this.props
-
-        return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.logo}>
-                    <img src={Logo} alt="logo" className={classes.logoImg} />
-                    <Typography className={classes.logoTitle} variant="h3" component="h3">
-                        SKYDIVE
-                    </Typography>
-                </div>
-                <div className={classes.paper}>
-                    {this.state.failure &&
-                        <React.Fragment>
-                            <div className={classes.failure}>Login failure</div>
-                            <div className={classes.failure}>bad Endpoint, Username or Password</div>
-                        </React.Fragment>
-                    }
-                    <form className={classes.form} noValidate onSubmit={this.handleSubmit.bind(this)}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="endpoint"
-                            label="Endpoint"
-                            name="endpoint"
-                            autoComplete="endpoint"
-                            autoFocus
-                            value={this.state.endpoint}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        {this.state.submitted && !this.state.endpoint &&
-                            <div className={classes.error}>Endpoint is required</div>
-                        }
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                            value={this.state.username}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        {this.state.submitted && !this.state.username &&
-                            <div className={classes.error}>Username is required</div>
-                        }
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            value={this.state.password}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        {this.state.submitted && !this.state.password &&
-                            <div className={classes.error}>Password is required</div>
-                        }
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                            name="persistent"
-                            value={true}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
-                    </form>
-                </div>
-            </Container>
-        )
-    }
-}
-
-export const mapStateToProps = (state: AppState) => ({
-    session: state.session
-})
-
-export const mapDispatchToProps = ({
-    openSession
-})
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(Login)))
+export default Login;
