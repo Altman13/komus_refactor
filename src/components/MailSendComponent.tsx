@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 export interface MailComponentProps {}
 export interface MailComponentState {
   switch: boolean;
@@ -16,18 +18,18 @@ class MailComponent extends React.Component<
   }
   render() {
     return (
+      
       <div className="custom-control custom-switch">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="customSwitches"
-          checked={this.state.switch}
-          onChange={this.handleSwitchChange}
-          readOnly
-        />
-        <label className="custom-control-label" htmlFor="customSwitches">
-          Отправить коммерческое предложение
-        </label>
+            <FormControlLabel
+              className="custom-control-input"
+              id="customSwitches"
+              checked={this.state.switch}
+              onChange={this.handleSwitchChange}
+              value="end"
+              control={<Checkbox color="primary" />}
+              label="Отправить коммерческое предложение"
+              labelPlacement="end"
+            />
       </div>
     )
   }

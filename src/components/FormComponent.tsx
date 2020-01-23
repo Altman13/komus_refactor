@@ -1,20 +1,9 @@
 import React from "react";
 import MailSendComponent from "./MailSendComponent";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import CustomizedSelects from './SelectComponent'
+import CustomizedSelects from "./SelectComponent";
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  TextField
-} from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import Login from "./LoginComponent";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -63,7 +52,7 @@ export class FormComponent extends React.Component<Props, State> {
       return;
     }
   }
-  
+
   componentDidMount() {
     // fetch("http://localhost/react/php/komus_new/test.php")
     //   .then(response => response.json())
@@ -130,13 +119,13 @@ export class FormComponent extends React.Component<Props, State> {
               label="почта организации"
               name="company_mail"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               value="end"
               control={<Checkbox color="primary" />}
               label="Отправить коммерческое предложение"
               labelPlacement="end"
-            />
-            <CustomizedSelects/>
+            /> */}
+            <CustomizedSelects />
             <MailSendComponent />
             <TextareaAutosize
               aria-label="minimum height"
