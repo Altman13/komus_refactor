@@ -1,6 +1,11 @@
 import React from "react";
 import MailSendComponent from "./MailSendComponent";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import {
   Button,
   Dialog,
@@ -77,7 +82,7 @@ export class FormComponent extends React.Component<Props, State> {
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
-  {/* 
+            {/* 
     id: number;
     name: string;
     fio: string;
@@ -121,14 +126,26 @@ export class FormComponent extends React.Component<Props, State> {
               label="почта организации"
               name="company_mail"
             />
-            <TextareaAutosize aria-label="minimum height"  rowsMin={3} placeholder="Комментарий оператора" style={{ width: '100%' }}/>
+            <FormControlLabel
+              value="end"
+              control={<Checkbox color="primary" />}
+              label="Отправить коммерческое предложение"
+              labelPlacement="end"
+            />
+            <MailSendComponent />
+            <TextareaAutosize
+              aria-label="minimum height"
+              rowsMin={3}
+              placeholder="Комментарий оператора"
+              style={{ width: "100%" }}
+            />
             <Button
               type="submit"
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-            Продолжить
+              Продолжить
             </Button>
           </form>
         </div>
