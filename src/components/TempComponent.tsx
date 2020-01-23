@@ -40,7 +40,6 @@ class LoginTemp extends React.Component<Props, State> {
 
     constructor(props : Props) {
         super(props)
-
         this.state = {
             //endpoint: this.props.session.endpoint,
             username: "",

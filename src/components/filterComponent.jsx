@@ -3,7 +3,6 @@ class FilterComponent extends Component {
         super(props);
         this.state = {  }
     }
-
     render() { 
         return ( <div>FilterComponent</div> );
     }

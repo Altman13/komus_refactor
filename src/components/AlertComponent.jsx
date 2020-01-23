@@ -7,5 +7,4 @@ class AlertComponent extends Component {
         return ( <div>AlertComponent</div> );
     }
 }
-
 export default AlertComponent;
