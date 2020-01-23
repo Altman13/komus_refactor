@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import CardHeader from '@material-ui/core/CardHeader';
+import React, { useState, useEffect } from "react";
+import TextField from "@material-ui/core/TextField";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      display: 'flex',
-      flexWrap: 'wrap',
+      display: "flex",
+      flexWrap: "wrap",
       width: 400,
       margin: `${theme.spacing(0)} auto`
     },
@@ -20,23 +20,22 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1
     },
     header: {
-      textAlign: 'center',
-      background: '#00e676',
-      color: '#fff'
+      textAlign: "center",
+      background: "#1e88e5",
+      color: "#fff"
     },
     card: {
       marginTop: theme.spacing(10)
     }
-
-  }),
+  })
 );
 
 const Login = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [helperText, setHelperText] = useState('');
+  const [helperText, setHelperText] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -48,16 +47,16 @@ const Login = () => {
   }, [username, password]);
 
   const handleLogin = () => {
-    if (username === 'abc@email.com' && password === 'password') {
+    if (username === "abc@email.com" && password === "password") {
       setError(false);
-      setHelperText('Login Successfully');
+      setHelperText("Успешный вход");
     } else {
       setError(true);
-      setHelperText('Incorrect username or password')
+      setHelperText("Ошибка ввода логина или пароля");
     }
   };
 
-  const handleKeyPress = (e:any) => {
+  const handleKeyPress = (e: any) => {
     if (e.keyCode === 13 || e.which === 13) {
       isButtonDisabled || handleLogin();
     }
@@ -76,10 +75,10 @@ const Login = () => {
                 id="username"
                 type="email"
                 label="Логин"
-                placeholder="Имя оператора"
+                placeholder="Введите логин"
                 margin="normal"
-                onChange={(e)=>setUsername(e.target.value)}
-                onKeyPress={(e)=>handleKeyPress(e)}
+                onChange={e => setUsername(e.target.value)}
+                onKeyPress={e => handleKeyPress(e)}
               />
               <TextField
                 error={error}
@@ -87,11 +86,11 @@ const Login = () => {
                 id="password"
                 type="password"
                 label="Пароль"
-                placeholder="Пароль оператора"
+                placeholder="Введите пароль"
                 margin="normal"
                 helperText={helperText}
-                onChange={(e)=>setPassword(e.target.value)}
-                onKeyPress={(e)=>handleKeyPress(e)}
+                onChange={e => setPassword(e.target.value)}
+                onKeyPress={e => handleKeyPress(e)}
               />
             </div>
           </CardContent>
@@ -101,8 +100,9 @@ const Login = () => {
               size="large"
               color="secondary"
               className={classes.loginBtn}
-              onClick={()=>handleLogin()}
-              disabled={isButtonDisabled}>
+              onClick={() => handleLogin()}
+              disabled={isButtonDisabled}
+            >
               Вход
             </Button>
           </CardActions>
@@ -110,6 +110,6 @@ const Login = () => {
       </form>
     </React.Fragment>
   );
-}
+};
 
 export default Login;
