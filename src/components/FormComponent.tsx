@@ -1,15 +1,15 @@
-import React from "react";
-import MailSendComponent from "./MailSendComponent";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import CustomizedSelects from "./SelectComponent";
-
-import { Button, TextField } from "@material-ui/core";
-import Login from "./LoginComponent";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
+import React from "react"
+import MailSendComponent from "./MailSendComponent"
+import TextareaAutosize from "@material-ui/core/TextareaAutosize"
+import CustomizedSelects from "./SelectComponent"
+import { Button, TextField } from "@material-ui/core"
+import Login from "./LoginComponent"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Container from "@material-ui/core/Container"
+import InfoTextBlock from './InfoComponent'
 
 interface Props {
-  classes: any;
+  classes: any
   //openSession: typeof openSession
   // history: any
   // location: any
@@ -17,39 +17,39 @@ interface Props {
 }
 interface State {
   //endpoint: string
-  username: string;
-  password: string;
-  submitted: boolean;
-  failure: boolean;
-  persistent: boolean;
+  username: string
+  password: string
+  submitted: boolean
+  failure: boolean
+  persistent: boolean
 }
 
 export class FormComponent extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
   }
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     switch (name) {
       // case "endpoint":
       //     this.setState({ endpoint: value })
       //     break
       case "username":
-        this.setState({ username: value });
-        break;
+        this.setState({ username: value })
+        break
       case "password":
-        this.setState({ password: value });
-        break;
+        this.setState({ password: value })
+        break
       case "persistent":
-        this.setState({ persistent: Boolean(value) });
-        break;
+        this.setState({ persistent: Boolean(value) })
+        break
     }
   }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    this.setState({ submitted: true });
+    e.preventDefault()
+    this.setState({ submitted: true })
     if (!this.state.username || !this.state.password) {
-      return;
+      return
     }
   }
 
@@ -59,7 +59,7 @@ export class FormComponent extends React.Component<Props, State> {
     //   .then(json => console.table(json))
   }
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
     return (
       <Container component="main" maxWidth="md">
         <CssBaseline />
@@ -75,14 +75,7 @@ export class FormComponent extends React.Component<Props, State> {
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
-            {/* 
-    id: number;
-    name: string;
-    fio: string;
-    phone: number;
-    email?: string;
-    comment?: string; 
-  */}
+            <InfoTextBlock/>
             <TextField
               variant="outlined"
               margin="normal"
@@ -119,12 +112,6 @@ export class FormComponent extends React.Component<Props, State> {
               label="почта организации"
               name="company_mail"
             />
-            {/* <FormControlLabel
-              value="end"
-              control={<Checkbox color="primary" />}
-              label="Отправить коммерческое предложение"
-              labelPlacement="end"
-            /> */}
             <CustomizedSelects />
             <MailSendComponent />
             <TextareaAutosize
@@ -144,8 +131,8 @@ export class FormComponent extends React.Component<Props, State> {
           </form>
         </div>
       </Container>
-    );
+    )
   }
 }
 
-export default FormComponent;
+export default FormComponent

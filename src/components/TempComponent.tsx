@@ -76,7 +76,15 @@ class LoginTemp extends React.Component<Props, State> {
         if (!this.state.username || !this.state.password) {
             return
         }
-
+        console.log(this.state.username + ' ' + this.state.password)
+        fetch('https://jsonplaceholder.typicode.com/todos/1') 
+        .then(response => response.json())
+        .then(response => console.log(response))
+         //.then(response => this.setState({ 
+        // }))
+        // .catch(error => this.setState({ 
+          
+        // }));
         // var endpoint = this.state.endpoint || this.props.session.endpoint
 
         // var conf = new Configuration({ basePath: endpoint })
