@@ -1,4 +1,5 @@
-import React from "react";
+import React, { ReactNode } from "react";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -42,13 +43,14 @@ export default function AuthExample() {
 
 const fakeAuth = {
   isAuthenticated: false,
-  authenticate(cb) {
+  authenticate(cb : any) : void {
     fakeAuth.isAuthenticated = true;
     setTimeout(cb, 100); // fake async
   },
-  signout(cb) {
+  signout(cb : any) : void {
     fakeAuth.isAuthenticated = false;
     setTimeout(cb, 100);
+    
   }
 };
 
@@ -70,10 +72,14 @@ function AuthButton() {
     <p>You are not logged in.</p>
   );
 }
-
+interface IProps {
+  children: ReactNode;
+  path : string
+  // any other props that come into the component
+}
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ children, ...rest }: IProps) {
   return (
     <Route
       {...rest}

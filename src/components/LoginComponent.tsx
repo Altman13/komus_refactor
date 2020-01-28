@@ -47,12 +47,15 @@ const Login = () => {
   }, [username, password]);
 
   const handleLogin = () => {
+
     if (username === "abc@email.com" && password === "password") {
-      setError(false);
-      setHelperText("Успешный вход");
+      setError(false)
+      console.log('успешный вход')
+      setHelperText("Успешный вход")
     } else {
-      setError(true);
-      setHelperText("Ошибка ввода логина или пароля");
+      setError(true)
+      setHelperText("Ошибка ввода логина или пароля")
+      console.log('неуспешный вход')
     }
   };
 

@@ -7,7 +7,8 @@ import Login from "./LoginComponent"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import Container from "@material-ui/core/Container"
 import InfoTextBlock from './InfoComponent'
-
+import { BasicExample } from './t';
+import { ResponsiveDrawer } from './DashBoardComponent';
 interface Props {
   classes: any
   //openSession: typeof openSession
@@ -130,6 +131,8 @@ export class FormComponent extends React.Component<Props, State> {
             </Button>
           </form>
         </div>
+        <BasicExample/> 
+        <ResponsiveDrawer/>
       </Container>
     )
   }

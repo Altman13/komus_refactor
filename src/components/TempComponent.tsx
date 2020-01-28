@@ -14,7 +14,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 //import { styles } from './LoginStyles'
 //import { Configuration } from './api/configuration'
 //import { LoginApi } from './api'
-
 //import Logo from '../assets/Logo-large.png'
 
 interface Props {
@@ -70,9 +69,7 @@ class LoginTemp extends React.Component<Props, State> {
 
     handleSubmit(e : React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
         this.setState({ submitted: true })
-
         if (!this.state.username || !this.state.password) {
             return
         }
