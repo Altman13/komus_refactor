@@ -1,16 +1,16 @@
-import React from "react"
-import MailSendComponent from "./MailSendComponent"
-import TextareaAutosize from "@material-ui/core/TextareaAutosize"
-import CustomizedSelects from "./SelectComponent"
-import { Button, TextField } from "@material-ui/core"
-import Login from "./LoginComponent"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Container from "@material-ui/core/Container"
-import InfoTextBlock from './InfoComponent'
-import { BasicExample } from './t';
-import { ResponsiveDrawer } from './DashBoardComponent';
+import React from "react";
+import MailSendComponent from "./MailSendComponent";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import CustomizedSelects from "./SelectComponent";
+import { Button, TextField } from "@material-ui/core";
+//import Login from "./LoginComponent";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import InfoTextBlock from "./InfoComponent";
+import { BasicExample } from "./t";
+import { ResponsiveDrawer } from "./DashBoardComponent";
 interface Props {
-  classes: any
+  classes: any;
   //openSession: typeof openSession
   // history: any
   // location: any
@@ -18,49 +18,49 @@ interface Props {
 }
 interface State {
   //endpoint: string
-  username: string
-  password: string
-  submitted: boolean
-  failure: boolean
-  persistent: boolean
+  username: string;
+  password: string;
+  submitted: boolean;
+  failure: boolean;
+  persistent: boolean;
 }
 
 export class FormComponent extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props)
+    super(props);
   }
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     switch (name) {
       // case "endpoint":
       //     this.setState({ endpoint: value })
       //     break
       case "username":
-        this.setState({ username: value })
-        break
+        this.setState({ username: value });
+        break;
       case "password":
-        this.setState({ password: value })
-        break
+        this.setState({ password: value });
+        break;
       case "persistent":
-        this.setState({ persistent: Boolean(value) })
-        break
+        this.setState({ persistent: Boolean(value) });
+        break;
     }
   }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    this.setState({ submitted: true })
+    e.preventDefault();
+    this.setState({ submitted: true });
     if (!this.state.username || !this.state.password) {
-      return
+      return;
     }
   }
 
   componentDidMount() {
-    // fetch("http://localhost/react/php/komus_new/test.php")
-    //   .then(response => response.json())
-    //   .then(json => console.table(json))
+    fetch("http://localhost/react/php/komus_new/test.php")
+      .then(response => response.json())
+      .then(json => console.log(json));
   }
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <Container component="main" maxWidth="md">
         <CssBaseline />
@@ -76,7 +76,7 @@ export class FormComponent extends React.Component<Props, State> {
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
-            <InfoTextBlock/>
+            <InfoTextBlock />
             <TextField
               variant="outlined"
               margin="normal"
@@ -131,11 +131,11 @@ export class FormComponent extends React.Component<Props, State> {
             </Button>
           </form>
         </div>
-        <BasicExample/> 
-        <ResponsiveDrawer/>
+        <BasicExample />
+        <ResponsiveDrawer />
       </Container>
-    )
+    );
   }
 }
 
-export default FormComponent
+export default FormComponent;
