@@ -72,30 +72,60 @@ class LoginTemp extends React.Component<Props, State> {
     if (!this.state.username || !this.state.password) {
       return;
     }
-    console.log(this.state.username + " " + this.state.password);
-    const url = "http://localhost/react/php/komus_new/login.php";
+//     console.log(this.state.username + " " + this.state.password);
     const data = {
       username: this.state.username,
       password: this.state.password
-    };
+  };
+// const endpoint = 'http://localhost/react/php/komus_new/login.php';
 
-    postData("http://localhost/react/php/komus_new/login.php", { username: this.state.username })
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
+function getvals(){
+    return fetch('http://localhost/react/php/komus_new/login.php',
+    {
+    	method: "POST",
+      body: JSON.stringify(data),
+      //mode: 'no-cors', // no-cors, cors, same-origin
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      return responseData;
+    })
+    .catch(error => console.warn(error));
+  }
+  
+  getvals().then(response => console.log(response));
+// .then(function(resp) {
+//   console.info('fetch()', resp);
+//   return resp;
+// });
+    // const url = "http://localhost/react/php/komus_new/login.php";
+    // const data = {
+    //   username: this.state.username,
+    //   password: this.state.password
+    // };
 
-    function postData(url = "", data = {}) {
-      return fetch(url, {
-        method: "POST",
-        mode: 'no-cors', // no-cors, cors, same-origin
-        headers: {
-        "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data) 
-      })
-      // }).then(response =>response.json())
-      //   .then(json =>console.log(json))
+    // postData("http://localhost/react/php/komus_new/test.php", { username: this.state.username })
+    //   .then(data => console.log(data))
+    //   .catch(error => console.error(error));
+
+    // function postData(url = "", data = {}) {
+    //   return fetch(url, {
+    //     method: "POST",
+    //     mode: 'no-cors', // no-cors, cors, same-origin
+    //     headers: {
+    //     "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(data) 
+    //   })
+    //   // .then(response =>response.json())
+    //   // .then(response => console.log(response))
       
-    }
+    // }
 
     // fetch('https://jsonplaceholder.typicode.com/todos/1')
     // .then(response => response.json())
@@ -134,6 +164,7 @@ class LoginTemp extends React.Component<Props, State> {
     //         }
     //     })
   }
+  
 
   render() {
     const { classes } = this.props;
