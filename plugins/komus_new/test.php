@@ -1,10 +1,17 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-require "../../config/config.php";
+
+require "../config/config.php";
 require 'calls.php';
 require 'contacts.php';
+//__DIR__ 
+require '../vendor/autoload.php';
+
+$router = new \Bramus\Router\Router();
+
+$router->run();
+
 
 $call = new Calls($db);
-$call->Read();
+echo $call->Read();
 // $contacts = new Contacts($db);
 // $contacts->Read();
