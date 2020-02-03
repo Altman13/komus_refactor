@@ -16,7 +16,7 @@ class ApiEntryPoint
         # code...
         return $xml;
     }
-    public function SetXml($json)
+    public function SetXml($xml)
     {
         # code...
     }
