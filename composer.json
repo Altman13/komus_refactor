@@ -9,6 +9,8 @@
     "require": {
         "fzaninotto/faker": "^1.9",
         "phpoffice/phpspreadsheet": "^1.10",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "bramus/router": "~1.4",
+        "tuupola/slim-jwt-auth": "^3.4"
     }
 }

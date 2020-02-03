@@ -4,6 +4,9 @@ $password = "";
 $host = "127.0.0.1";
 $dbname = "komus_new";
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 try {
     $db = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $username, $password, $options);

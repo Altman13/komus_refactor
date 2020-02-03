@@ -77,10 +77,10 @@ class LoginTemp extends React.Component<Props, State> {
       username: this.state.username,
       password: this.state.password
   };
-// const endpoint = 'http://localhost/react/php/komus_new/login.php';
+const endpoint = 'http://localhost/react/php/komus_new/login.php';
 
 function getvals(){
-    return fetch('http://localhost/react/php/komus_new/login.php',
+    return fetch(endpoint,
     {
     	method: "POST",
       body: JSON.stringify(data),
@@ -99,42 +99,6 @@ function getvals(){
   }
   
   getvals().then(response => console.log(response));
-// .then(function(resp) {
-//   console.info('fetch()', resp);
-//   return resp;
-// });
-    // const url = "http://localhost/react/php/komus_new/login.php";
-    // const data = {
-    //   username: this.state.username,
-    //   password: this.state.password
-    // };
-
-    // postData("http://localhost/react/php/komus_new/test.php", { username: this.state.username })
-    //   .then(data => console.log(data))
-    //   .catch(error => console.error(error));
-
-    // function postData(url = "", data = {}) {
-    //   return fetch(url, {
-    //     method: "POST",
-    //     mode: 'no-cors', // no-cors, cors, same-origin
-    //     headers: {
-    //     "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(data) 
-    //   })
-    //   // .then(response =>response.json())
-    //   // .then(response => console.log(response))
-      
-    // }
-
-    // fetch('https://jsonplaceholder.typicode.com/todos/1')
-    // .then(response => response.json())
-    // .then(response => console.log(response))
-    //.then(response => this.setState({
-    // }))
-    // .catch(error => this.setState({
-
-    // }));
     // var endpoint = this.state.endpoint || this.props.session.endpoint
 
     // var conf = new Configuration({ basePath: endpoint })
