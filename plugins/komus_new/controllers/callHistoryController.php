@@ -1,6 +1,6 @@
 <?php
-require "config/config.php";
-require "vendor/autoload.php";
+require "../config/config.php";
+require "../vendor/autoload.php";
 
 // история звонков+количество попыток совершенных оператором
 $history_calls_count = $db->prepare("SELECT COUNT(calls.contacts_id) AS tryed_to_call, calls.status, 

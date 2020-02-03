@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+//header("Access-Control-Allow-Origin: *");
 class Calls
 {
     private $db;
@@ -18,7 +18,7 @@ class Calls
      */
     public function Read()
     {
-        $all_calls = $this->db->prepare("SELECT * FROM calls LIMIT 1");
+        $all_calls = $this->db->prepare("SELECT * FROM calls");
         try {
             $all_calls->execute();
         } catch (\Throwable $th) {
