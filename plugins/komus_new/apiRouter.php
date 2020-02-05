@@ -1,16 +1,30 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 require "config/config.php";
 require 'vendor/autoload.php';
-require './controllers/callController.php';
+//require 'controllers/callController.php';
+require 'vendor/autoload.php';
+require 'controllers/HomeController.php';
+
+$app = new \Slim\App;
+$app->get('/api/home', HomeController::class . ':home');
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
+    $newResponse = $response->withStatus(302);
+    return $newResponse;
+});
+$app->run();
 
 //$app = new Slim\App;
-$router = new \Bramus\Router\Router();
+//$router = new \Bramus\Router\Router();
 
 // $app->add(new Tuupola\Middleware\JwtAuthentication([
 //      "path" => "/api", /* or ["/api", "/admin"] */
 //     "secret" => getenv("JWT_SECRET")
 // ]));
-$router->get('/calls/', '\Controllers\callController');
+//$router->get('/calls/', '\Controllers\callController');
 // $router->get('/calls/', function() {
   
 // });
@@ -45,4 +59,4 @@ $router->get('/calls/', '\Controllers\callController');
 // $router->post('/api/entrypoint', function($request) {
 //     echo 'post enterypoint';
 // });
-$router->run();
+//$router->run();
