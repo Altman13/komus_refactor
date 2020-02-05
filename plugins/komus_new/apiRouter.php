@@ -12,11 +12,18 @@ $app->get('/api/home', HomeController::class . ':home');
 
 $app->get('/api/calls', CallController::class . ':show');
 $app->post('/api/calls', CallController::class . ':create');
+//TODO: реализовать универсальный метод выборки отчетов, самому выборку делать через входные параметры
 $app->get('/api/reports', ReportController::class . ':show_full_report');
 $app->get('/api/reports/operator', ReportController::class . ':show_by_operator');
 $app->get('/api/reports/date', ReportController::class . ':show_by_date');
 $app->post('/api/base', BaseController::class . ':inject');
 $app->post('/api/mail', MailController::class . ':send');
+$app->post('/api/user', UserController::class . ':create');
+$app->get('/api/user', UserController::class . ':show');
+//Get xml, json, html, 
+$app->get('/api/entrypoint', EntrypointController::class . ':show');
+//Post xml, json, formdata
+$app->post('/api/entrypoint', EntrypointController::class . ':create');
 
 
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
