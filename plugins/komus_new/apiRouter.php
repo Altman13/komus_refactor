@@ -9,6 +9,16 @@ require 'controllers/HomeController.php';
 
 $app = new \Slim\App;
 $app->get('/api/home', HomeController::class . ':home');
+
+$app->get('/api/calls', CallController::class . ':show');
+$app->post('/api/calls', CallController::class . ':create');
+$app->get('/api/reports', ReportController::class . ':show_full_report');
+$app->get('/api/reports/operator', ReportController::class . ':show_by_operator');
+$app->get('/api/reports/date', ReportController::class . ':show_by_date');
+$app->post('/api/base', BaseController::class . ':inject');
+$app->post('/api/mail', MailController::class . ':send');
+
+
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");
