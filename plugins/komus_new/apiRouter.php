@@ -1,6 +1,8 @@
 <?php
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+
 require "config/config.php";
 require 'vendor/autoload.php';
 //require 'controllers/callController.php';
@@ -9,21 +11,21 @@ require 'controllers/HomeController.php';
 
 $app = new \Slim\App;
 $app->get('/api/home', HomeController::class . ':home');
-
 $app->get('/api/calls', CallController::class . ':show');
 $app->post('/api/calls', CallController::class . ':create');
 //TODO: реализовать универсальный метод выборки отчетов, самому выборку делать через входные параметры
-$app->get('/api/reports', ReportController::class . ':show_full_report');
-$app->get('/api/reports/operator', ReportController::class . ':show_by_operator');
-$app->get('/api/reports/date', ReportController::class . ':show_by_date');
+$app->get('/api/reports', ReportController::class . ':show');
+$app->get('/api/reports/{operator}', ReportController::class . ':show');
+$app->get('/api/reports/{date}', ReportController::class . ':show');
 $app->post('/api/base', BaseController::class . ':inject');
 $app->post('/api/mail', MailController::class . ':send');
-$app->post('/api/user', UserController::class . ':create');
-$app->get('/api/user', UserController::class . ':show');
+$app->post('/api/user', UsersController::class . ':create');
+$app->get('/api/user', UsersController::class . ':show');
 //Get xml, json, html, 
-$app->get('/api/entrypoint', EntrypointController::class . ':show');
+$app->
+$app->get('/api/entrypoint', EntryPointController::class . ':show');
 //Post xml, json, formdata
-$app->post('/api/entrypoint', EntrypointController::class . ':create');
+$app->post('/api/entrypoint', EntryPointController::class . ':create');
 
 
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
