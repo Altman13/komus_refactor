@@ -1,6 +1,5 @@
 <?php
-require "../models/calls.php";
-require "config/config.php";
+require "plugins/komus_new/models/calls.php";
 class CallsController
 {
     private $calls;
@@ -8,7 +7,7 @@ class CallsController
     {
         $this->calls = $calls;
     }
-    public public function show()
+    public function show()
     {
         echo $this->calls->Read();
     }
