@@ -1,27 +1,20 @@
 <?php
-class BaseController
+//header("Access-Control-Allow-Origin: *");
+class Calls
 {
-    public function __construct()
+    private $db;
+    public function __construct($db)
     {
+        $this->db = $db;
     }
-    /**
-     * inject
-     *
-     * @param  mixed $file_import_base
-     *
-     * @return void
-     */
-    public function inject($file_import_base)
+    public function Create()
     {
+        //TODO : реализовать динамическое добавление полей в таблицу контакты без ручного вмешательства в базу
         $file_import_base = 'datas/users/load.xls';
-        //подключаем и создаем класс PHPExcel
         set_include_path(get_include_path() . PATH_SEPARATOR . 'Classes/');
         include_once 'PHPExcel.php';
         $objPHPExcel = new PHPExcel();
-        //PHPExcel_Settings::setLocale('ru');
         if (move_uploaded_file($_FILES["fileload"]["tmp_name"], $file_import_base)) {
-            //$objPHPExcel = PHPExcel_IOFactory::load($file_import_base);
-            // Использование фильтра загрузки
             $inputFileType = PHPExcel_IOFactory::identify($file_import_base);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
             if ($inputFileType == 'OOCalc') {
@@ -56,5 +49,36 @@ class BaseController
                 $insert_base['office']        = $row['AM'];
             }
         }
+    }
+    /**
+     * Read
+     *
+     * @return void
+     */
+    public function Read()
+    {
+        
+    }
+    /**
+     * Update
+     *
+     * @param  mixed $id
+     *
+     * @return void
+     */
+    public function Update($id)
+    {
+        # code...
+    }
+    /**
+     * Delete
+     *
+     * @param  mixed $id
+     *
+     * @return void
+     */
+    public function Delete($id)
+    {
+        # code...
     }
 }
