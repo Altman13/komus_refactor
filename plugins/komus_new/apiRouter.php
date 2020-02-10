@@ -7,7 +7,8 @@ require "config/config.php";
 require 'vendor/autoload.php';
 require 'controllers/HomeController.php';
 require 'controllers/ReportsController.php';
-require 'controllers/CallsController.php.php';
+require 'controllers/CallsController.php';
+require 'controllers/EntryPointController.php';
 
 $app = new \Slim\App;
 
@@ -27,10 +28,11 @@ $app->post('/api/base', BaseController::class . ':inject');
 $app->post('/api/mail', MailController::class . ':send');
 $app->post('/api/user', UsersController::class . ':create');
 $app->get('/api/user', UsersController::class . ':show');
+
 //Get xml, json, html, 
-$app->$app->get('/api/entrypoint', EntryPointController::class . ':show');
+$app->$app->get('/api/entrypoint', ApiEntryPoint::class . ':show');
 //Post xml, json, formdata
-$app->post('/api/entrypoint', EntryPointController::class . ':create');
+$app->post('/api/entrypoint', ApiEntryPoint::class . ':create');
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");

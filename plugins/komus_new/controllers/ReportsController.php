@@ -1,5 +1,4 @@
 <?php
-require "../models/reports.php";
 class ReportController
 {
     private $report;

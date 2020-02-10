@@ -156,10 +156,10 @@ for ($i = 0; $i < 100; $i++) {
     $groups_users_id = $faker->numberBetween($min = $min_gu_id, $max = $max_gu_id);
     $cont_insert = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`, `city`, `organization`, 
                                 `address`, `fio`, `phone`, `email`, `category`, `subcategory`, `question`, 
-                                `comment`, `regions_id`, `users_user_id`) 
+                                `comment`, `regions_id`, `users_id`) 
                                 VALUES (NOW(), :city, :company, 
                                 :streetAddress, :name, :phoneNumber, :email, :category, :subcategory,
-                                :question, :comment, :regions_id, :users_user_id)");
+                                :question, :comment, :regions_id, :users_id)");
     $cont_insert->bindParam(':city', $city, PDO::PARAM_STR);
     $cont_insert->bindParam(':company', $company, PDO::PARAM_STR);
     $cont_insert->bindParam(':streetAddress', $streetAddress, PDO::PARAM_STR);
@@ -171,7 +171,7 @@ for ($i = 0; $i < 100; $i++) {
     $cont_insert->bindParam(':question', $question, PDO::PARAM_STR);
     $cont_insert->bindParam(':comment', $comment, PDO::PARAM_STR);
     $cont_insert->bindParam(':regions_id', $regions_id, PDO::PARAM_STR);
-    $cont_insert->bindParam(':users_user_id', $groups_users_id, PDO::PARAM_STR);
+    $cont_insert->bindParam(':users_id', $groups_users_id, PDO::PARAM_STR);
     try {
         $cont_insert->execute();
     } catch (\Throwable $th) {
