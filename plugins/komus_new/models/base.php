@@ -80,12 +80,21 @@ class Base
         $for_sortable = array();
         //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
         //иначе загрузка произойдет до первого пустого столбца заголовка
-        for ($i = 0; ; $i++) {
+        for ($i = 0;; $i++) {
             $column_name = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
             if ($column_name != NULL) {
                 $column_name_translit = strtolower(strtr($column_name, $translit));
-                echo $column_name_translit . '<br>';
-                array_push($for_sortable, $column_name_translit);
+                $one_word_column_name = explode(' ', $column_name_translit, 2);
+                $one_word_column_name = preg_replace("/[^a-zA-ZА\s]/", '', $one_word_column_name[0]);
+                echo $one_word_column_name . '<br>';
+                array_push($for_sortable, $one_word_column_name);
+                $alter_table_contacts = $this->db->prepare("ALTER TABLE `contacts` ADD COLUMN 
+                                        $one_word_column_name VARCHAR(255) NULL DEFAULT NULL AFTER `id`");
+                try {
+                    $alter_table_contacts->execute();
+                } catch (\Throwable $th) {
+                    die('Произошла ошибка при добавлении поля в таблицу contacts' . $th->getMessage());
+                }
             } else {
                 break;
             }
