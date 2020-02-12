@@ -1,7 +1,7 @@
 <?php
 //header("Access-Control-Allow-Origin: *");
 require 'vendor/autoload.php';
-require '/config/config.php';
+require 'config/config.php';
 
 class Base
 {
@@ -86,19 +86,43 @@ class Base
                 $column_name_translit = strtolower(strtr($column_name, $translit));
                 $one_word_column_name = explode(' ', $column_name_translit, 2);
                 $one_word_column_name = preg_replace("/[^a-zA-ZА\s]/", '', $one_word_column_name[0]);
-                echo $one_word_column_name . '<br>';
-                array_push($for_sortable, $one_word_column_name);
-                $alter_table_contacts = $this->db->prepare("ALTER TABLE `contacts` ADD COLUMN 
-                                        $one_word_column_name VARCHAR(255) NULL DEFAULT NULL AFTER `id`");
-                try {
-                    $alter_table_contacts->execute();
-                } catch (\Throwable $th) {
-                    die('Произошла ошибка при добавлении поля в таблицу contacts' . $th->getMessage());
-                }
+                //echo $one_word_column_name;
             } else {
                 break;
             }
+            array_push($for_sortable, $one_word_column_name);
+            $alter_table_contacts = $this->db->prepare("ALTER TABLE `contacts` ADD COLUMN 
+                                $one_word_column_name VARCHAR(255) NULL DEFAULT NULL AFTER `id`");
+            try {
+                $alter_table_contacts->execute();
+            } catch (\Throwable $th) {
+                //TODO :убрать в отдельную функцию  errorReporter
+                die('Произошла ошибка при добавлении поля в таблицу contacts '
+                    . $th->getMessage() . ' в строке №' . $th->getLine() .
+                    ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
+            }
         }
+        //добавление данных в базу после динамического создания полей
+        // for ($row_num = 2;; $row_num++) {
+        //     for ($column_num = 0;; $column_num++) {
+        //         $column_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $row_num)->getValue();
+        //         if ($column_value != NULL) {
+        //             echo $column_value . '&nbsp&nbsp';
+        //         } else {
+        //             break;
+        //         }
+        //         $insert_contacts = $this->db->prepare("INSERT INTO `komus_new`.`contacts` ($column_name) VALUES (:col_val)");
+        //         $insert_contacts->bindParam(':col_val', $column_value, PDO::PARAM_STR);
+        //         try {
+        //             $insert_contacts->execute();
+        //         } catch (\Throwable $th) {
+        //             die('Произошла ошибка при добавлении значения '.$column_value.' в таблицу contacts '
+        //                 . $th->getMessage() . ' в строке №' . $th->getLine() .
+        //                 ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
+        //         }
+        //     }
+        //     echo '<br>';
+        // }
         return $for_sortable;
 
         // if (move_uploaded_file($_FILES["fileload"]["tmp_name"], $this->file_import_base)) {
