@@ -22,13 +22,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema komus_new
--- -----------------------------------------------------
-
--- -----------------------------------------------------
 -- Schema komus_new
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `komus_new` DEFAULT CHARACTER SET utf8 ;
