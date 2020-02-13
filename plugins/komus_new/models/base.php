@@ -18,13 +18,19 @@ class Base
         //if (move_uploaded_file($_FILES["fileload"]["tmp_name"], $file_import_base)) {
         $input_file_type = PHPExcel_IOFactory::identify($uploadfile);
         $obj_reader = PHPExcel_IOFactory::createReader($input_file_type);
+
         if ($input_file_type == 'OOCalc') {
             $obj_reader->setLoadSheetsOnly('Лист1');
         }
         $obj_php_excel = $obj_reader->load($uploadfile);
         $sheetData = $obj_php_excel->getActiveSheet()->toArray(null, true, true, true);
+
+        //всего строк в файле
+        $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
+        global $totalRows;
+        $totalRows = $worksheetData[0]['totalRows'];
         //TODO: удалить пробелы, обрезать строки, сделать проверку на пустоту и перебор ячеек в цикле
-        
+
         function translit($s)
         {
             $s = (string) $s; // преобразуем в строковое значение
@@ -59,23 +65,20 @@ class Base
             $columns_for_insert .= ', ';
         }
         echo $columns_for_insert;
-        
+
         $length = count($for_sortable);
         echo '<br>';
-        for ($column_num = 0; $column_num < $length; $column_num++) {
-            for ($i = 2;; $i++) {
+        global $i;
+        for ($i = 2; $i < $totalRows; $i++) {
+            for ($column_num = 0; $column_num < $length; $column_num++) {
                 $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
-                if ($columns_value != NULL) {
-                    echo $columns_value . ' ';
-                } else {
-                    break;
-                }
+                echo $columns_value . ' ';
             }
             echo '<br>';
         }
         // $insert_contacts = $db->prepare("INSERT INTO `komus_new`.`contacts` ($columns_for_insert) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
         // $insert_contacts->bindParam(':col_val', $column_value, PDO::PARAM_STR);
-        
+
         //     $alter_table_contacts = $db->prepare("ALTER TABLE `contacts` ADD COLUMN 
         //                         $one_word_column_name VARCHAR(255) NULL DEFAULT NULL AFTER `id`");
         //     try {
@@ -97,15 +100,15 @@ class Base
         //         } else {
         //             break;
         //         }
-                // $insert_contacts = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`,`regions_id`, `users_id`, $col_name) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
-                // $insert_contacts->bindParam(':col_val', $column_value, PDO::PARAM_STR);
-                // try {
-                //     $insert_contacts->execute();
-                // } catch (\Throwable $th) {
-                //     die('Произошла ошибка при добавлении значения ' . $column_value . ' в таблицу contacts '
-                //         . $th->getMessage() . ' в строке №' . $th->getLine() .
-                //         ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
-                // }
+        // $insert_contacts = $db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`,`regions_id`, `users_id`, $col_name) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
+        // $insert_contacts->bindParam(':col_val', $column_value, PDO::PARAM_STR);
+        // try {
+        //     $insert_contacts->execute();
+        // } catch (\Throwable $th) {
+        //     die('Произошла ошибка при добавлении значения ' . $column_value . ' в таблицу contacts '
+        //         . $th->getMessage() . ' в строке №' . $th->getLine() .
+        //         ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
+        // }
         //     }
         // }
     }
