@@ -16,6 +16,7 @@ class Login
     {
         $this->db = $db;
         $this->app = $app;
+        $this->container = $container;
     }
     public function login()
     {
