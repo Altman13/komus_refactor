@@ -1,47 +1,56 @@
 <?php
+require 'vendor/autoload.php';
+
+use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Container\ContainerInterface;
+use Slim\App;
+//use Slim\Factory\AppFactory;
+//use Slim\Http\Request;
+
 class Login
 {
-    private $db;
-    public function __construct($db)
+    protected $container;
+    private $db, $app;
+    public function __construct($db, ContainerInterface $container, App $app)
     {
         $this->db = $db;
+        $this->app = $app;
     }
     public function login()
     {
-        if ($_POST['username'] and $_POST['password']) {
+        $this->app->get('/', function (Request $request/*, Response $response, $args*/) {
+            //TODO : добавить валидацию, проверить на пустоту
+            $req_body = $request->getBody();
+            $users_data = json_decode($req_body);
             $select = $this->db->prepare("SELECT users.password, users.salt FROM users
-                            WHERE users.username=:username");
-            $select->bindparam(':username', $_POST['username'], PDO::PARAM_STR);
+                                WHERE users.username=:username");
+            $select->bindparam(':username', $users_data->user, PDO::PARAM_STR);
             try {
                 $select->execute();
             } catch (\Throwable $th) {
                 die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
             }
             $data = $select->fetch(PDO::PARAM_STR);
-            $login_ok = false;
-            $pass = $_POST['password'];
-            $check_password = hash('sha256', $pass . $data['salt']);
-            if ($check_password === $data['password']) {
-                $login_ok = true;
-            } else {
-                die('Произошла ошибка при выборе пользователя из базы');
-            }
-            if ($login_ok) {
-                // TODO: Передалать таблицу users, сгенерировать токен для каджого пользователяы при импорте пользователей, 
-                // который будем возвращать на пару пароль/логин
-                // Кроме того  поле users.name должно быть уникальным
-                $user_select = $this->db->prepare("SELECT users.token, users.groups_id as user_group
-                                        FROM users");
-                $user_select->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
-                $user_select->execute();
+            $check_password = hash('sha256', $users_data->password . $data['salt']);
+            if ($check_password === $users_data->password) {
+                //TODO : разобраться с token
+                $get_users_token = $this->db->prepare("SELECT users.token from users 
+                                                WHERE  users.name=:user_name AND users.password=:user_password");
+                $get_users_token->bindParam(':user_name', $users_data->user, PDO::PARAM_STR);
+                $get_users_token->bindParam(':user_password', $users_data->password, PDO::PARAM_STR);
                 try {
-                    $user = $user_select->fetch();
+                    $get_users_token->execute();
                 } catch (\Throwable $th) {
-                    die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
+                    die("Произошла ошибка при попытке получить токен пользователя " . $th->getMessage());
                 }
+                $users_token = $get_users_token->fetch();
+                return $users_token;
+            } else {
+                die('Введенны некорректные данные для авторизации');
             }
-        }
-        return $user;
+        });
+        $this->app->run();
     }
     public function logout($user)
     {
