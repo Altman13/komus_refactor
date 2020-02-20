@@ -73,7 +73,7 @@ COLLATE = utf8_unicode_ci;
 CREATE TABLE IF NOT EXISTS `komus_new`.`users` (
   `user_id` INT(10) NOT NULL AUTO_INCREMENT,
   `user_login` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
-  `user_password` VARCHAR(32) CHARACTER SET 'utf8' NOT NULL,
+  `user_password` VARCHAR(255) CHARACTER SET 'utf8' NOT NULL,
   `user_email` VARCHAR(64) CHARACTER SET 'utf8' NOT NULL,
   `user_firstname` VARCHAR(255) CHARACTER SET 'utf8' NULL DEFAULT NULL,
   `user_lastname` VARCHAR(255) CHARACTER SET 'utf8' NULL DEFAULT NULL,

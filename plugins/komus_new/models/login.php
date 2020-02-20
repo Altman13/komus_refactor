@@ -34,6 +34,16 @@ class Login
             }
             $data = $select->fetch(PDO::PARAM_STR);
             $check_password = hash('sha256', $users_data->password . $data['salt']);
+            $users_password_hash=$this->db->prepare("SELECT users.user_password FROM users
+                                                    WHERE users.user_password =:pass_hash");
+            $users_password_hash->bindParam(':pass_hash',$check_password, PDO::PARAM_STR);
+            try {
+                $users_password_hash->execute();
+                $hash=$users_password_hash->fetch();
+                return $hash;
+            } catch (\Throwable $th) {
+                die('Произошла ошибка при проверке пароля пользователя ' .$th->getMessage());
+            }
             if ($check_password === $users_data->password) {
                 //TODO : разобраться с token
                 $get_users_token = $this->db->prepare("SELECT users.token from users 
