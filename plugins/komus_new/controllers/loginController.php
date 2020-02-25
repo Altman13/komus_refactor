@@ -1,7 +1,9 @@
 <?php
 // header("Access-Control-Allow-Origin: *");
 // header("Access-Control-Allow-Headers: *");
-require "../models/login.php";
+//require "../models/login.php";
+require "plugins/komus_new/models/login.php";
+require "config/config.php";
 class LoginController
 {
     private $login;
