@@ -115,9 +115,9 @@ for ($i = 0; $i < 100; $i++) {
     $user_lastvisit = $faker->dateTime($max = 'now', $timezone = null);
     $u_last_visit = date_format($user_lastvisit, 'Y-m-d H:i:s');
     $user_ban = null;
-    $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`user_login`, `user_password`, `user_email`, 
-                                                            `user_firstname`, `user_lastname`, `user_gender`,
-                                                            `user_birthdate`, `user_lastvisit`, `user_ban`,
+    $insert_user = $db->prepare("INSERT INTO `komus_new`.`users` (`login`, `token`, `email`, 
+                                                            `firstname`, `lastname`, `gender`,
+                                                            `birthdate`, `lastvisit`, `ban`,
                                                             `timezone_id`, `groups_id`) 
                             VALUES (:user_login, :user_password, :user_email, 
                                     :user_firstname, :user_lastname, :user_gender, 
