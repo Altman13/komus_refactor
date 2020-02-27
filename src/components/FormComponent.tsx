@@ -59,6 +59,7 @@ export class FormComponent extends React.Component<Props, State> {
       .then(response => response.json())
       .then(json => console.log(json));
   }
+
   render() {
     const { classes } = this.props;
     return (
@@ -126,13 +127,14 @@ export class FormComponent extends React.Component<Props, State> {
               variant="contained"
               color="primary"
               className={classes.submit}
+
             >
               Продолжить
             </Button>
           </form>
         </div>
         <BasicExample />
-        <ResponsiveDrawer />
+        {/* <ResponsiveDrawer /> */}
       </Container>
     );
   }
