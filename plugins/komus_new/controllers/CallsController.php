@@ -1,5 +1,5 @@
 <?php
-require "plugins/komus_new/models/calls.php";
+require "models/calls.php";
 class CallsController
 {
     private $calls;
