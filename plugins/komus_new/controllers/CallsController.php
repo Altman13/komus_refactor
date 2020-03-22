@@ -1,14 +1,18 @@
 <?php
-require "models/calls.php";
+use Komus\Calls;
+
 class CallsController
 {
     private $calls;
-    public function __construct(Calls $calls)
+    //TODO:  разобраться почему не работает DI
+    public function __construct()
     {
-        $this->calls = $calls;
+        require "config/config.php";
+        $this->calls = new Calls($db);
     }
     public function show()
     {
         echo $this->calls->Read();
+        //return json_encode($calls);
     }
 }
