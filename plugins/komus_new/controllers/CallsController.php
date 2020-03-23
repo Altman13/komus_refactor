@@ -15,4 +15,9 @@ class CallsController
         echo $this->calls->Read();
         //return json_encode($calls);
     }
+    public function make()
+    {
+        $this->calls->Create();
+        //return json_encode($calls);
+    }
 }

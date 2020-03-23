@@ -44,7 +44,7 @@ $app = new \Slim\App($config);
 
 
 $app->get('/api/calls', CallsController::class . ':show');
-$app->post('/api/calls', CallsController::class . ':create');
+$app->post('/api/calls', CallsController::class . ':make');
 $app->post('/api/login', LoginController::class . ':inter');
 // //TODO: реализовать универсальный метод выборки отчетов, выборку делать через входные параметры
 $app->get('/api/report', ReportController::class . ':show');

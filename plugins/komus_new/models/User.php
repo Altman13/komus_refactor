@@ -5,6 +5,8 @@ require "vendor/autoload.php";
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Firebase\JWT\JWT;
 
+namespace Komus;
+
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $uploaddir = './files/';

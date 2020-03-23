@@ -1,18 +1,20 @@
 <?php
 require "../models/users.php";
+use Komus\User;
+
 class UserController
 {
-    private $users;
-    public function __construct(Users $users)
+    private $user;
+    public function __construct(User $user)
     {
-        $this->users = $users;
+        $this->user = $user;
     }
     public function Read()
     {
     }
     public function Create()
     {
-        $this->users->Create();
+        $this->user->Create();
     }
     //TODO: дописать назначение ролей операторам
     public function Update($id)
