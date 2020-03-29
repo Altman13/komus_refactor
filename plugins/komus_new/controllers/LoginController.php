@@ -1,4 +1,5 @@
 <?php
+
 // header("Access-Control-Allow-Origin: *");
 // header("Access-Control-Allow-Headers: *");
 
@@ -10,29 +11,24 @@ use Slim\Container;
 class LoginController
 {
     private $login;
-    private $calls;
-    private $container;
+    //private $calls;
+    private $pdo;
     public function __construct(Container $container)
     {
-        $this->container  = $container['con'];
-        //$this->login = new Login ($this->container);
-        $this->calls = new Calls($this->container);
-        //$this->calls = $container['calls'];
-        
-        //$this->login = new Login($this->container);
-        //$this->login = new Login($db);
+        $this->pdo  = $container['pdo'];
+        $this->login = new Login ($this->pdo);
+        //$this->login = $container['login'];
     }
     //TODO : добавить счетчик неудачных попыток входа
     public function inter($request, $response, $args)
     {
-        $resp = $this->calls->Read();
-            // $user_data = json_decode($request->getBody());
-            // try {
-            //     $resp = $this->login->Sign($user_data->username, $user_data->password);
-            // } catch (\Throwable $th) {
-            //     $response->getBody()->write("Произошла ошибка при попытке входа на сайт " . $th->getMessage() . PHP_EOL);
-            //     $resp = $response->withStatus(500);
-            // }
+            $user_data = json_decode($request->getBody());
+            try {
+                $resp = $this->login->Sign($user_data->username, $user_data->password);
+            } catch (\Throwable $th) {
+                $response->getBody()->write("Произошла ошибка при попытке входа на сайт " . $th->getMessage() . PHP_EOL);
+                $resp = $response->withStatus(500);
+            }
             return $resp;
     }
     //TODO : убедиться в нужности функции, так как токен лежит в localstorage
