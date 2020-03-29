@@ -8,16 +8,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use Komus\Login;
 use Slim\Container;
+
 class LoginController
 {
     private $login;
-    //private $calls;
-    private $pdo;
     public function __construct(Container $container)
     {
-        $this->pdo  = $container['pdo'];
-        $this->login = new Login ($this->pdo);
-        //$this->login = $container['login'];
+        $this->login = $container['login'];
     }
     //TODO : добавить счетчик неудачных попыток входа
     public function inter($request, $response, $args)

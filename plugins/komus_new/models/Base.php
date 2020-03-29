@@ -1,12 +1,14 @@
 <?php
+
+namespace Komus;
 //header("Access-Control-Allow-Origin: *");
-require 'vendor/autoload.php';
-require 'config/config.php';
 
 class Base
 {
     private $db;
-    public function __construct($db, PHPExcel $obj_php_excel, $file_import_base)
+    private $obj_php_excel;
+    private $file_import_base;
+    public function __construct($db/*, PHPExcel $obj_php_excel, $file_import_base*/)
     {
         $this->db = $db;
     }

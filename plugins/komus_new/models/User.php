@@ -15,10 +15,10 @@ class User
 {
     private $db;
     private $operators_file;
-    public function __construct($db, $uploadfile)
+    public function __construct($db)
     {
         $this->db = $db;
-        $this->operators_file = $uploadfile;
+        //$this->operators_file = $uploadfile;
     }
     /**
      * Create
