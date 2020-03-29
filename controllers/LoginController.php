@@ -12,11 +12,11 @@ class LoginController
 {
     private $login;
     //private $calls;
-    private $container;
+    private $pdo;
     public function __construct(Container $container)
     {
-        $this->container  = $container['pdo'];
-        $this->login = new Login ($this->container);
+        $this->pdo  = $container['pdo'];
+        $this->login = new Login ($this->pdo);
     }
     //TODO : добавить счетчик неудачных попыток входа
     public function inter($request, $response, $args)

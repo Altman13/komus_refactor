@@ -1,16 +1,16 @@
 <?php
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Firebase\JWT\JWT;
+namespace Komus;
+
 require "config/config.php";
 require "vendor/autoload.php";
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Firebase\JWT\JWT;
+//$spreadsheet = new Spreadsheet();
+//$sheet = $spreadsheet->getActiveSheet();
+// $uploaddir = './files/';
+// $uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
 
-namespace Komus;
-
-$spreadsheet = new Spreadsheet();
-$sheet = $spreadsheet->getActiveSheet();
-$uploaddir = './files/';
-$uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
 class User
 {
     private $db;

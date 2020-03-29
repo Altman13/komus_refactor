@@ -1,5 +1,5 @@
 <?php
-require "../models/users.php";
+require "models/User.php";
 use Komus\User;
 
 class UserController

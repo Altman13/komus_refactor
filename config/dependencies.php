@@ -1,30 +1,5 @@
 <?php
-
-require_once "vendor/autoload.php";
 require_once "config.php";
-
-$config = [
-    'settings' => [
-        'displayErrorDetails' => true,
-        "db" => [
-            "host" => $host,
-            "dbname" => $dbname,
-            "user" => $username,
-            "pass" => $password
-        ],
-        // 'logger' => [
-        //     'name' => 'slim-app',
-        //     'level' => Monolog\Logger::DEBUG,
-        //     'path' => __DIR__ . '/../logs/app.log',
-        // ],
-    ],
-];
-$app = new \Slim\App($config);
-
-// $app->add(new Tuupola\Middleware\JwtAuthentication([
-//     "path" => "/api", /* or ["/api", "/admin"] */
-//     "secret" => getenv("JWT_SECRET")
-// ]));
 
 $container = $app->getContainer();
 $container['pdo'] = function ($c) {

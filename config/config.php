@@ -1,5 +1,6 @@
 <?php
-//TODO: перенести в ENV
+require_once "vendor/autoload.php";
+
 $username = "root";
 $password = "1";
 $host = "127.0.0.1";
@@ -20,3 +21,21 @@ $dbname = "komus_new";
 //header('Content-Type: text/html; charset=utf-8');
 //session_start();
 
+
+$config = [
+    'settings' => [
+        'displayErrorDetails' => true,
+        "db" => [
+            "host" => $host,
+            "dbname" => $dbname,
+            "user" => $username,
+            "pass" => $password
+        ],
+        // 'logger' => [
+        //     'name' => 'slim-app',
+        //     'level' => Monolog\Logger::DEBUG,
+        //     'path' => __DIR__ . '/../logs/app.log',
+        // ],
+    ],
+];
+$app = new \Slim\App($config);

@@ -6,11 +6,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require "./config/config.php";
 require './vendor/autoload.php';
 
-require './controllers/HomeController.php';
-require './controllers/ReportController.php';
-//require './controllers/CallsController.php';
-require './controllers/LoginController.php';
 require './controllers/ApiController.php';
+require './controllers/UserController.php';
+require './controllers/LoginController.php';
+require './controllers/CallsController.php';
+require './controllers/ReportController.php';
+require './controllers/HomeController.php';
+
 require_once './config/dependencies.php';
 
 //$app = new \Slim\App;
@@ -19,22 +21,20 @@ require_once './config/dependencies.php';
 //     "secret" => getenv("JWT_SECRET")
 // ]));
 
-$app->get('/api/calls', CallsController::class . ':show');
-$app->post('/api/calls', CallsController::class . ':make');
-$app->get('/api/login', LoginController::class . ':inter');
-$app->post('/api/login', LoginController::class . ':inter');
-$app->get('/api/report/{all}', ReportController::class . ':show');
-$app->get('/api/report/{operator}', ReportController::class . ':show');
-$app->get('/api/report/{date}', ReportController::class . ':show');
 $app->put('/api/base', BaseController::class . ':inject');
-//Get xml, json, html, 
+$app->post('/api/login', LoginController::class . ':inter');
+$app->get('/api/login', LoginController::class . ':inter');
+$app->post('/api/calls', CallsController::class . ':make');
+$app->get('/api/calls', CallsController::class . ':show');
+$app->post('/api/user', UserController::class . ':create');
+$app->get('/api/user', UserController::class . ':show');
+$app->get('/api/report', ReportController::class . ':show');
+
+//xml, json, html, 
 $app->get('/api/getpoint', ApiController::class . ':show');
-//Post xml, json, formdata
 $app->post('/api/postpoint', ApiController::class . ':create');
 
-// $app->post('/api/mail', MailController::class . ':send');
-// $app->post('/api/user', UsersController::class . ':create');
-// $app->get('/api/user', UsersController::class . ':show');
+$app->post('/api/mail', MailController::class . ':send');
 
 // $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
 //     $name = $args['name'];
