@@ -1,5 +1,7 @@
 <?php
 
+namespace Komus;
+
 class TimeZone
 {
     private $db;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Komus;
 
 class Login
@@ -8,19 +9,24 @@ class Login
     {
         $this->db = $db;
     }
-    //TODO : добавить валидацию, проверить на пустоту
-    public function Sign($user_name, $user_password)
+    public function sign($user_name, $user_password)
     {
-        $login ="Pagac";
+        //TODO: поправить кодировку у некоторых таблиц
+        $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
+        $unicode->execute();
+        //TODO: валидация
+        echo $user_name.PHP_EOL;
+        echo $user_password.PHP_EOL;
         $users_data = $this->db->prepare("SELECT users.groups_id, salt, token FROM users
-                        WHERE users.lastname=?");
+        WHERE users.password=? AND users.name=?");
         try {
-            $users_data->execute([$login]);
+            $users_data->execute([$user_name, $user_password]);
+            $user_data = $users_data->fetch();
+            //$user_data = json_encode($user_data, JSON_UNESCAPED_UNICODE);
+            var_dump($user_data);
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
         }
-        $user_data = $users_data->fetch();
-        var_dump($user_data);
         $check_password = hash('sha256', $user_password . $user_data['salt']);
         if ($check_password == $user_data['token']) {
             $user_group = $user_data['groups_id'];
@@ -33,7 +39,7 @@ class Login
             die('Введенны некорректные данные для авторизации');
         }
     }
-    public function Signout($user)
+    public function signOut($user)
     {
         if ($user) {
         }

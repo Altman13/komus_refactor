@@ -1,5 +1,7 @@
 <?php
 
+namespace Komus;
+
 class MailLog
 {
     private $db;

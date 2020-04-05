@@ -1,5 +1,8 @@
 <?php
 //header("Access-Control-Allow-Origin: *");
+
+namespace Komus;
+
 class Report
 {
     private $db;

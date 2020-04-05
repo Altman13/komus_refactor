@@ -2,9 +2,14 @@
 
 use Komus\Login;
 use Komus\Base;
+use Komus\Calls;
 use Komus\Contacts;
 use Komus\MailLog;
+use Komus\Region;
+use Komus\Report;
+use Komus\TimeZone;
 use Komus\User;
+use Komus\UserGroup;
 
 require_once "config.php";
 
@@ -28,19 +33,35 @@ $container['base'] = function ($c) {
     $base = new Base($c['pdo']);
     return $base;
 };
-$container['login'] = function ($c) {
+$container['user'] = function ($c) {
     $user = new User($c['pdo']);
     return $user;
 };
-$container['login'] = function ($c) {
-    $login = new Login($c['pdo']);
-    return $login;
+$container['calls'] = function ($c) {
+    $calls = new Calls($c['pdo']);
+    return $calls;
 };
-$container['login'] = function ($c) {
-    $login = new Login($c['pdo']);
-    return $login;
+$container['contact'] = function ($c) {
+    $contact = new Contact($c['pdo']);
+    return $contact;
 };
-$container['login'] = function ($c) {
-    $login = new Login($c['pdo']);
-    return $login;
+$container['mailLog'] = function ($c) {
+    $mailLog = new MailLog($c['pdo']);
+    return $mailLog;
+};
+$container['region'] = function ($c) {
+    $region = new Region($c['pdo']);
+    return $region;
+};
+$container['report'] = function ($c) {
+    $report = new Report($c['pdo']);
+    return $report;
+};
+$container['timeZone'] = function ($c) {
+    $timeZone = new TimeZone($c['pdo']);
+    return $timeZone;
+};
+$container['userGroup'] = function ($c) {
+    $userGroup = new UserGroup($c['pdo']);
+    return $userGroup;
 };

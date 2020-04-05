@@ -1,8 +1,9 @@
 <?php
 require_once "vendor/autoload.php";
+use Respect\Validation\Validator as v;
 
 $username = "root";
-$password = "1";
+$password = "";
 $host = "127.0.0.1";
 $dbname = "komus_new";
 
@@ -21,6 +22,13 @@ $dbname = "komus_new";
 //header('Content-Type: text/html; charset=utf-8');
 //session_start();
 
+$usernameValidator = v::alnum()->noWhitespace()->length(1, 10);
+//TODO: длина пароля
+$passwordValidator = v::alnum()->noWhitespace()->length(1, 10);
+$validators = array(
+  'username' => $usernameValidator,
+  'userpassword' => $passwordValidator
+);
 
 $config = [
     'settings' => [
@@ -29,7 +37,8 @@ $config = [
             "host" => $host,
             "dbname" => $dbname,
             "user" => $username,
-            "pass" => $password
+            "pass" => $password,
+            "charset" => "utf8",
         ],
         // 'logger' => [
         //     'name' => 'slim-app',
