@@ -13,12 +13,14 @@ class Base
     }
     public function create($files)
     {
-        $directory = __DIR__.'/../files/';
-        foreach ($files as $f)
-        {
-            move_uploaded_file($f, $directory.'1.xlsx');
+        $directory = __DIR__ . '/../files/';
+        //TODO: дописать загрузку нескольких файлов
+        $i = 1;
+        foreach ($files as $f) {
+            move_uploaded_file($f, $directory . "$i.xlsx");
+            $i++;
         }
-        $uploadfile = $directory.'1.xlsx';
+        $uploadfile = $directory . '1.xlsx';
         $obj_php_excel = new \PHPExcel();
         $input_file_type = \PHPExcel_IOFactory::identify($uploadfile);
         $obj_reader = \PHPExcel_IOFactory::createReader($input_file_type);
@@ -61,14 +63,29 @@ class Base
             } else {
                 break;
             }
-            array_push($for_sortable, $one_word_column_name);
+            $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD $one_word_column_name VARCHAR(255)");
+            try {
+                $alter_table_contacts->execute();
+            } catch (\Throwable $th) {
+                //TODO :убрать в отдельную функцию  errorReporter
+                die('Произошла ошибка при добавлении поля в таблицу contacts '
+                    . $th->getMessage() . ' в строке № ' . $th->getLine() .
+                    ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
+            }
         }
-        global $columns_for_insert;
-        foreach ($for_sortable as $item) {
-            $columns_for_insert .= $item;
-            $columns_for_insert .= ', ';
-        }
-        echo $columns_for_insert;
+        array_push($for_sortable, $one_word_column_name);
+        //}
+        // global $columns_for_insert;
+        // foreach ($for_sortable as $item) {
+        //     $columns_for_insert .= $item;
+        //     $columns_for_insert .= ', ';
+        // }
+        // echo $columns_for_insert;
+
+
+
+
+
 
         $length = count($for_sortable);
         echo '<br>';
@@ -80,10 +97,9 @@ class Base
             }
             echo '<br>';
         }
-        // $insert_contacts = $db->prepare("INSERT INTO `komus_new`.`contacts` ($columns_for_insert) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
-        // $insert_contacts->bindParam(':col_val', $column_value, PDO::PARAM_STR);
-
-        //     $alter_table_contacts = $db->prepare("ALTER TABLE `contacts` ADD COLUMN 
+        //$insert_contacts = $this->db->prepare("INSERT INTO `komus_new`.`contacts` ($columns_for_insert) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
+        // $insert_contacts->bindParam(':col_val', $column_value, \PDO::PARAM_STR);
+        //     $alter_table_contacts = $this->db->prepare("ALTER TABLE `contacts` ADD COLUMN 
         //                         $one_word_column_name VARCHAR(255) NULL DEFAULT NULL AFTER `id`");
         //     try {
         //         $alter_table_contacts->execute();
