@@ -2,6 +2,7 @@
 
 namespace Komus;
 //header("Access-Control-Allow-Origin: *");
+use Slim\Http\UploadedFile;
 
 class Base
 {
@@ -10,17 +11,17 @@ class Base
     {
         $this->db = $db;
     }
-    public function create($file)
+    public function create($files)
     {
-        //$uploaddir = './files/';
-        //$uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
-        $uploadfile = $file;
+        $directory = __DIR__.'/../files/';
+        foreach ($files as $f)
+        {
+            move_uploaded_file($f, $directory.'1.xlsx');
+        }
+        $uploadfile = $directory.'1.xlsx';
         $obj_php_excel = new \PHPExcel();
-        //if (move_uploaded_file($_FILES["fileload"]["tmp_name"], $file_import_base)) {
         $input_file_type = \PHPExcel_IOFactory::identify($uploadfile);
         $obj_reader = \PHPExcel_IOFactory::createReader($input_file_type);
-        //$input_file_type = $this->obj_php_excel::identify($uploadfile);
-        $obj_reader = $this->excel_io_factory::createReader($input_file_type);
 
         if ($input_file_type == 'OOCalc') {
             $obj_reader->setLoadSheetsOnly('Лист1');
@@ -32,6 +33,7 @@ class Base
         $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
         global $totalRows;
         $totalRows = $worksheetData[0]['totalRows'];
+        //TODO: удалить пробелы, обрезать строки, сделать проверку на пустоту и перебор ячеек в цикле
 
         function translit($s)
         {

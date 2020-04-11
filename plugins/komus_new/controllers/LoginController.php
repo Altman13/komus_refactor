@@ -2,17 +2,17 @@
 
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Container\ContainerInterface;
+use Slim\Container;
 
 class LoginController
 {
     private $login;
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->login = $container['login'];
     }
     //TODO : добавить счетчик неудачных попыток входа
-    public function inter($request, $response, $args)
+    public function inter(Request $request, Response $response, $args)
     {
         $resp = '';
         if ($request->getAttribute('has_errors')) {
