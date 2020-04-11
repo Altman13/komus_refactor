@@ -1,9 +1,8 @@
 <?php
-
 use Komus\Login;
 use Komus\Base;
 use Komus\Calls;
-use Komus\Contacts;
+use Komus\Contact;
 use Komus\MailLog;
 use Komus\Region;
 use Komus\Report;
@@ -12,6 +11,7 @@ use Komus\User;
 use Komus\UserGroup;
 
 require_once "config.php";
+require_once "vendor/autoload.php";
 
 $container = $app->getContainer();
 $container['pdo'] = function ($c) {
@@ -25,11 +25,21 @@ $container['pdo'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
+// $container['obj_php_excel'] = function ($c) {
+//     $obj_php_excel = new PHPExcel();
+//     return $obj_php_excel;
+// };
+
+// $container['excel_io_factory'] = function ($c) {
+//     $excel_io_factory = new PHPExcel_IOFactory();
+//     return $excel_io_factory;
+// };
 $container['login'] = function ($c) {
     $login = new Login($c['pdo']);
     return $login;
 };
 $container['base'] = function ($c) {
+    //$base = new Base($c['pdo'], $c['obj_php_excel'], $c['excel_io_factory']);
     $base = new Base($c['pdo']);
     return $base;
 };

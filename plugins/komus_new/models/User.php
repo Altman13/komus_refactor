@@ -34,8 +34,8 @@ class User
          * в которой будет реализация раздачи прав и назначения групп пользователям
          */
         //TODO: Реализовать подгрузку пользователей сразу из центрального проекта
-        $inputFileType = PhpOffice\PhpSpreadsheet\IOFactory::identify($this->operators_file);
-        $objReader = PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($this->operators_file);
+        $objReader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
         if ($inputFileType == 'OOCalc') {
             $objReader->setLoadSheetsOnly('Операторы');
         }
@@ -57,18 +57,18 @@ class User
                 "user" => $operator_login,
                 "passwords" =>$operator_depass
             ];
-            $token = JWT::encode($payload, "thisissecret", "HS256");
+            $token = \JWT::encode($payload, "thisissecret", "HS256");
             $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, password, token, salt, depass, 
                                                             timezone_id, groups_id)
                                             VALUES (:operator_login, :operator_fist_name, :operator_last_name, :pass, :token, :salt, :depass, 1, 1)");
-            $insert_users->bindParam(':operator_login', $operator_login, PDO::PARAM_STR);
-            $insert_users->bindParam(':operator_fist_name', $operator_fist_name, PDO::PARAM_STR);
-            $insert_users->bindParam(':operator_last_name', $operator_last_name, PDO::PARAM_STR);
-            $insert_users->bindParam(':salt', $salt, PDO::PARAM_STR);
-            $insert_users->bindParam(':pass', $password_hash, PDO::PARAM_STR);
-            $insert_users->bindParam(':token', $token, PDO::PARAM_STR);
+            $insert_users->bindParam(':operator_login', $operator_login, \PDO::PARAM_STR);
+            $insert_users->bindParam(':operator_fist_name', $operator_fist_name, \PDO::PARAM_STR);
+            $insert_users->bindParam(':operator_last_name', $operator_last_name, \PDO::PARAM_STR);
+            $insert_users->bindParam(':salt', $salt, \PDO::PARAM_STR);
+            $insert_users->bindParam(':pass', $password_hash, \PDO::PARAM_STR);
+            $insert_users->bindParam(':token', $token, \PDO::PARAM_STR);
             // //TODO : убрать после отладки depass из базы
-            $insert_users->bindParam(':depass', $operator_depass, PDO::PARAM_STR);
+            $insert_users->bindParam(':depass', $operator_depass, \PDO::PARAM_STR);
             try {
                 $insert_users->execute();
             } catch (\Throwable $th) {

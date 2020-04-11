@@ -9,7 +9,7 @@ class Calls
     {
         $this->db = $db;
     }
-    public function Create()
+    public function create()
     {
         # code...
     }
@@ -18,8 +18,11 @@ class Calls
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
+        //TODO: поправить кодировку у некоторых таблиц
+        $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
+        $unicode->execute();
         $all_calls = $this->db->prepare("SELECT * FROM calls");
         try {
             $all_calls->execute();

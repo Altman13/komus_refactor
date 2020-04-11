@@ -6,20 +6,21 @@ namespace Komus;
 class Base
 {
     private $db;
-    private $obj_php_excel;
-    private $file_import_base;
-    public function __construct($db/*, PHPExcel $obj_php_excel, $file_import_base*/)
+    public function __construct($db)
     {
         $this->db = $db;
     }
-    public function Create()
+    public function create($file)
     {
-        $uploaddir = './files/';
-        $uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
-        $obj_php_excel = new PHPExcel();
+        //$uploaddir = './files/';
+        //$uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
+        $uploadfile = $file;
+        $obj_php_excel = new \PHPExcel();
         //if (move_uploaded_file($_FILES["fileload"]["tmp_name"], $file_import_base)) {
-        $input_file_type = PHPExcel_IOFactory::identify($uploadfile);
-        $obj_reader = PHPExcel_IOFactory::createReader($input_file_type);
+        $input_file_type = \PHPExcel_IOFactory::identify($uploadfile);
+        $obj_reader = \PHPExcel_IOFactory::createReader($input_file_type);
+        //$input_file_type = $this->obj_php_excel::identify($uploadfile);
+        $obj_reader = $this->excel_io_factory::createReader($input_file_type);
 
         if ($input_file_type == 'OOCalc') {
             $obj_reader->setLoadSheetsOnly('Лист1');
@@ -31,7 +32,6 @@ class Base
         $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
         global $totalRows;
         $totalRows = $worksheetData[0]['totalRows'];
-        //TODO: удалить пробелы, обрезать строки, сделать проверку на пустоту и перебор ячеек в цикле
 
         function translit($s)
         {
@@ -119,7 +119,7 @@ class Base
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
     }
     /**
@@ -129,7 +129,7 @@ class Base
      *
      * @return void
      */
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
@@ -140,7 +140,7 @@ class Base
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

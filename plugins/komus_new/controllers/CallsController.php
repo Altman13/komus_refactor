@@ -1,23 +1,21 @@
 <?php
 use Komus\Calls;
-
+use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Container;
 class CallsController
 {
     private $calls;
-    //TODO:  разобраться почему не работает DI
-    public function __construct()
+    public function __construct(Container $container)
     {
-        require "config/config.php";
-        $this->calls = new Calls($db);
+        $this->calls = $container['calls'];
     }
     public function show()
     {
-        echo $this->calls->Read();
-        //return json_encode($calls);
+        echo $this->calls->read();
     }
     public function make()
     {
-        $this->calls->Create();
-        //return json_encode($calls);
+        $this->calls->create();
     }
 }

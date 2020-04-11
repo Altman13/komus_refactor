@@ -1,18 +1,13 @@
 <?php
 
-// header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Headers: *");
-
-use Komus\Calls;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
-use Komus\Login;
-use Slim\Container;
+use Psr\Container\ContainerInterface;
 
 class LoginController
 {
     private $login;
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->login = $container['login'];
     }
@@ -22,7 +17,6 @@ class LoginController
         $resp = '';
         if ($request->getAttribute('has_errors')) {
             $errors = $request->getAttribute('errors');
-            //var_dump($errors);
             $response->getBody()->write("Произошла ошибка валидации данных пользователя " . $errors . PHP_EOL);
             $resp =$response->withStatus(500);
         } else {

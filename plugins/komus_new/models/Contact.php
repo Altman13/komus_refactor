@@ -1,5 +1,7 @@
 <?php
 
+namespace Komus;
+
 class Contact
 {
     private $db;
@@ -19,7 +21,8 @@ class Contact
         $new_contacts = json_decode($contact);
         //TODO: дописать запрос на инсерт контактов
         $this->db->prepare("INSERT INTO ");
-        foreach ($new_contacts as $ct) { }
+        foreach ($new_contacts as $ct) {
+        }
     }
     /**
      * Read

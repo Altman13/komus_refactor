@@ -18,7 +18,7 @@ class Login
         echo $user_name.PHP_EOL;
         echo $user_password.PHP_EOL;
         $users_data = $this->db->prepare("SELECT users.groups_id, salt, token FROM users
-        WHERE users.password=? AND users.name=?");
+        WHERE users.lastname=? AND users.login=?");
         try {
             $users_data->execute([$user_name, $user_password]);
             $user_data = $users_data->fetch();
