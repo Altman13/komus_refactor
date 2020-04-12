@@ -63,6 +63,8 @@ class Base
             } else {
                 break;
             }
+            // ALTER TABLE `contacts` ADD COLUMN 
+            // test VARCHAR(255) NULL DEFAULT NULL AFTER `id`  
             $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD $one_word_column_name VARCHAR(255)");
             try {
                 $alter_table_contacts->execute();
