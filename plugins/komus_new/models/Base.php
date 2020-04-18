@@ -33,7 +33,6 @@ class Base
 
         //всего строк в файле
         $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
-        global $totalRows;
         $totalRows = $worksheetData[0]['totalRows'];
         function translit($s)
         {
@@ -52,7 +51,7 @@ class Base
         //иначе загрузка произойдет до первого пустого столбца заголовка
         //номер строки в excel файле 
         $for_sortable = array();
-        $str_q = '("INSERT INTO contacts (';
+        $str_q_tables_n = "INSERT INTO contacts (";
         $data = array();
         for ($i = 0;; $i++) {
             $column_name = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
@@ -61,7 +60,7 @@ class Base
                 $one_word_column_name = explode('-', $column_name_translit, 2);
                 $one_word_column_name = preg_replace("/[^a-zA-ZА\s]/", '', $one_word_column_name[0]);
                 array_push($for_sortable, $one_word_column_name);
-                $str_q .= '`' . $one_word_column_name . '`, ';
+                $str_q_tables_n .= '`' . $one_word_column_name . '`, ';
                 $data[$one_word_column_name] = strval($column_name);
             } else {
                 break;
@@ -76,19 +75,17 @@ class Base
         $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
         $fn = "columns_name.json";
         file_put_contents($fn, $data_json);
-        $str_q = substr_replace($str_q, ',`regions_id`, `users_id`)', -2, -1);
-        $max_column_num = count($for_sortable);
+        $str_q_tables_n = substr_replace($str_q_tables_n, ',`regions_id`, `users_id`)', -2, -1);
         $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
         $unicode->execute();
         for ($i = 1; $i < $totalRows; $i++) {
-            $str_q_values = 'VALUES (';
-            for ($column_num = 0; $column_num < $max_column_num; $column_num++) {
+            $str_q_tables_n_values = 'VALUES (';
+            for ($column_num = 0; $column_num < count($for_sortable); $column_num++) {
                 $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
-                $str_q_values .= '\'' . $columns_value . '\', ';
+                $str_q_tables_n_values .= '\'' . $columns_value . '\', ';
             }
-            $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
-            $q = substr($str_q . $str_q_values, 2);
-            $insert_row = $this->db->prepare($q);
+            $str_q_tables_n_values = substr_replace($str_q_tables_n_values, ',\'1\',\'1\')', -2, -1);
+            $insert_row = $this->db->prepare($str_q_tables_n . $str_q_tables_n_values);
             try {
                 $insert_row->execute();
             } catch (\Throwable $th) {
