@@ -30,15 +30,8 @@ $app->get('/api/user', UserController::class . ':show');
 $app->get('/api/report', ReportController::class . ':show');
 
 //xml, json, html, 
-$app->get('/api/getpoint', ApiController::class . ':show');
-$app->post('/api/postpoint', ApiController::class . ':create');
+$app->get('/api/get', ApiController::class . ':show');
+$app->post('/api/post', ApiController::class . ':create');
 
 $app->post('/api/mail', MailController::class . ':send');
-
-// $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-//     $name = $args['name'];
-//     $response->getBody()->write("Hello, $name");
-//     $newResponse = $response->withStatus(302);
-//     return $newResponse;
-//});
 $app->run();

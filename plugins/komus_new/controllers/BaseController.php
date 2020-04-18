@@ -16,7 +16,6 @@ class BaseController
         $resp='';
         $get_file = $request->getUploadedFiles();
         $uploaded_file = $get_file['base_operator'];
-        
         try {
             $this->base->create($uploaded_file);
         } catch (\Throwable $th) {

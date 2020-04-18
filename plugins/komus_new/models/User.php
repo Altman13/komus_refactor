@@ -1,6 +1,8 @@
 <?php
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Firebase\JWT\JWT;
+
 namespace Komus;
 
 require "config/config.php";
@@ -27,7 +29,7 @@ class User
      *
      * @return void
      */
-    public function Create()
+    public function create()
     {
         //TODO: Реализовать назначение в группы пользователей
         /** Реализовать панель управления для админа и старшего оператора
@@ -55,7 +57,7 @@ class User
             //генерируем  JWT токен            
             $payload = [
                 "user" => $operator_login,
-                "passwords" =>$operator_depass
+                "passwords" => $operator_depass
             ];
             $token = \JWT::encode($payload, "thisissecret", "HS256");
             $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, password, token, salt, depass, 
@@ -82,7 +84,7 @@ class User
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
         $all_users = $this->db->prepare("SELECT * FROM users");
         try {
@@ -96,13 +98,22 @@ class User
     /**
      * Update
      *
-     * @param  mixed $id
+     * @param  mixed $name
      *
      * @return void
      */
-    public function Update($id)
+    public function update($user_name)
     {
-        # code...
+        if ($user_name) {
+            $update_role_user = $this->db->prepare("UPDATE `komus_new`.`users` SET `groups_id`='2' WHERE users.firstname =:user_name");
+            $update_role_user->bindParam(':user_name', $user_name, \PDO::PARAM_STR);
+            try {
+                $update_role_user->execute();
+            } catch (\Throwable $th) {
+                echo ('Произошла ошибка при назначении прав оператору' . $th->getMessage() . PHP_EOL);
+            }
+            echo ('Произошла ошибка при назначении прав оператору' . $th->getMessage() . PHP_EOL);
+        }
     }
     /**
      * Delete
@@ -111,7 +122,7 @@ class User
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

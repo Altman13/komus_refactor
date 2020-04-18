@@ -10,7 +10,7 @@ class Report
     {
         $this->db = $this->db;
     }
-    public function Create()
+    public function create()
     {
         # code...
     }
@@ -19,7 +19,7 @@ class Report
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
         //количество попыток совершенных оператором
         $calls_count = $this->db->prepare("SELECT COUNT(calls.contacts_id) AS tryed_to_call, calls.status, 
@@ -34,8 +34,9 @@ class Report
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе истории звонков и попыток дозвона ' . $th->getMessage());
         }
-        $all_calls_count = $calls_count->fetchAll(PDO::FETCH_ASSOC);
-
+        $all_calls_count = $calls_count->fetchAll(\PDO::FETCH_ASSOC);
+        $all_calls_count=json_decode($all_calls_count, JSON_UNESCAPED_UNICODE);
+        return $all_calls_count;
         // звонки, совершенные оператором
         $operator_calls = $this->db->prepare("SELECT contacts.id AS cont_id, contacts.phone, 
                                         CONCAT(users.user_firstname, ' ', users.user_lastname) AS operator_fio 
@@ -47,7 +48,7 @@ class Report
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборке истории звонков по оператору ' . $th->getMessage());
         }
-        $oper = $operator_calls->fetchAll(PDO::FETCH_ASSOC);
+        $oper = $operator_calls->fetchAll(\PDO::FETCH_ASSOC);
 
         //звоноки по всем операторам
         $calls_all_oper = $this->db->prepare("SELECT calls.contacts_id, calls.status, contacts.id, contacts.phone
@@ -59,7 +60,7 @@ class Report
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе истории звонков по всем операторам ' . $th->getMessage());
         }
-        $hs_calls_all_oper = $calls_all_oper->fetchAll(PDO::FETCH_ASSOC);
+        $hs_calls_all_oper = $calls_all_oper->fetchAll(\PDO::FETCH_ASSOC);
 
         //все контакты для звонков
         //если по контакту было 3 звонка - больше по нему не работаем
@@ -75,7 +76,7 @@ class Report
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе контактов для обзвона ' . $th->getMessage());
         }
-        $contacts = $all_contats->fetchAll(PDO::PARAM_STR);
+        $contacts = $all_contats->fetchAll(\PDO::PARAM_STR);
         //return json_encode($reports);
     }
     /**
@@ -85,7 +86,7 @@ class Report
      *
      * @return void
      */
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
@@ -96,7 +97,7 @@ class Report
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

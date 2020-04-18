@@ -35,8 +35,6 @@ class Base
         $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
         global $totalRows;
         $totalRows = $worksheetData[0]['totalRows'];
-        //TODO: удалить пробелы, обрезать строки, сделать проверку на пустоту и перебор ячеек в цикле
-
         function translit($s)
         {
             $s = (string) $s; // преобразуем в строковое значение
@@ -54,7 +52,8 @@ class Base
         //иначе загрузка произойдет до первого пустого столбца заголовка
         //номер строки в excel файле 
         $for_sortable = array();
-        $str_q='("INSERT INTO contacts (';
+        $str_q = '("INSERT INTO contacts (';
+        $data = array();
         for ($i = 0;; $i++) {
             $column_name = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
             if ($column_name != NULL) {
@@ -62,7 +61,8 @@ class Base
                 $one_word_column_name = explode('-', $column_name_translit, 2);
                 $one_word_column_name = preg_replace("/[^a-zA-ZА\s]/", '', $one_word_column_name[0]);
                 array_push($for_sortable, $one_word_column_name);
-                $str_q.='`'.$one_word_column_name.'`, ';
+                $str_q .= '`' . $one_word_column_name . '`, ';
+                $data[$one_word_column_name] = strval($column_name);
             } else {
                 break;
             }
@@ -70,41 +70,31 @@ class Base
             try {
                 $alter_table_contacts->execute();
             } catch (\Throwable $th) {
-                //TODO :убрать в отдельную функцию  errorReporter
-                die('Произошла ошибка при добавлении поля в таблицу contacts '
-                    . $th->getMessage() . ' в строке № ' . $th->getLine() .
-                    ' по адресу: ' . $_SERVER['SCRIPT_NAME']);
+                echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
             }
         }
-        echo $str_q=substr_replace($str_q, ')', -2, -1);
-        
+        $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $fn = "columns_name.json";
+        file_put_contents($fn, $data_json);
+        $str_q = substr_replace($str_q, ',`regions_id`, `users_id`)', -2, -1);
         $max_column_num = count($for_sortable);
-        $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
+        $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
         $unicode->execute();
-
-        for ($i = 2; $i < $totalRows; $i++) {
-            $str_q_values='VALUES (';
+        for ($i = 1; $i < $totalRows; $i++) {
+            $str_q_values = 'VALUES (';
             for ($column_num = 0; $column_num < $max_column_num; $column_num++) {
                 $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
-            $str_q_values.='\''.$columns_value.'\', ';
+                $str_q_values .= '\'' . $columns_value . '\', ';
             }
-            $str_q_values=$str_q_values.')");';
-            $str_q_values=substr_replace($str_q_values, ')")', -6, -1);
+            $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
+            $q = substr($str_q . $str_q_values, 2);
+            $insert_row = $this->db->prepare($q);
+            try {
+                $insert_row->execute();
+            } catch (\Throwable $th) {
+                echo 'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
+            }
         }
-        echo $str_q_values;
-        // $insert_contacts = $this->db->prepare("INSERT INTO `komus_new`.`contacts` (`creation_time`,`regions_id`, `users_id`, $col_name) VALUES ('2020-02-12 13:17:35', '21', '29', :col_val)");
-        // $insert_contacts->bindParam(':col_val', $column_value, \PDO::PARAM_STR);
-        // $insert_contacts->bindParam(':col_val', $col_name, \PDO::PARAM_STR);
-        // try {
-        //     $insert_contacts->execute();
-        // } 
-        // catch (\Throwable $th) {
-        //     die('Произошла ошибка при добавлении значения ' . $column_value . ' в таблицу contacts '
-        //         . $th->getMessage() . ' в строке №' . $th->getLine() 
-        //         .' по адресу: ' . $_SERVER['SCRIPT_NAME']);
-        // }
-        //}
-
     }
     /**
      * Read
