@@ -21,17 +21,26 @@ class Calls
     public function read()
     {
         //TODO: поправить кодировку у некоторых таблиц
-        $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
+        $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
         $unicode->execute();
-        $all_calls = $this->db->prepare("SELECT * FROM calls");
+        $all_calls = $this->db->prepare("SELECT * from contacts
+        LEFT JOIN calls on calls.contacts_id=contacts.id where contacts.id=441");
         try {
             $all_calls->execute();
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборке звонков ' . $th->getMessage());
         }
-        $calls = $all_calls->fetchAll();
-        //echo json_encode($calls);
-        return json_encode($calls);
+        $calls = $all_calls->fetch();
+        //TODO: перенести html на react
+        $fn_data = (array) json_decode(file_get_contents('./columns_name.json'));
+        //foreach ($calls as $call) {
+            foreach ($fn_data as $name => $name_column) {
+                echo "<div id=\"$name\" style=\"border: 2px solid black;\"><span style=\"color:red;\">
+            $name_column<span style=\"color:blue;\"> $calls[$name]</span></span></div>";
+            }
+        //}
+        
+        //return json_encode($calls);
     }
     /**
      * Update
@@ -40,7 +49,7 @@ class Calls
      *
      * @return void
      */
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
@@ -51,7 +60,7 @@ class Calls
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

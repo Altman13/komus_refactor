@@ -24,14 +24,10 @@ class Base
         $obj_php_excel = new \PHPExcel();
         $input_file_type = \PHPExcel_IOFactory::identify($uploadfile);
         $obj_reader = \PHPExcel_IOFactory::createReader($input_file_type);
-
         if ($input_file_type == 'OOCalc') {
             $obj_reader->setLoadSheetsOnly('Лист1');
         }
         $obj_php_excel = $obj_reader->load($uploadfile);
-        $sheetData = $obj_php_excel->getActiveSheet()->toArray(null, true, true, true);
-
-        //всего строк в файле
         $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
         $totalRows = $worksheetData[0]['totalRows'];
         function translit($s)
@@ -74,6 +70,14 @@ class Base
         }
         $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
         $fn = "columns_name.json";
+        $file = (array)json_decode(file_get_contents('./columns_name.json', true));
+        foreach($file as $id=>$name_column){
+            // echo "<div id=\"$id\"><span style=\"color:red;\">
+            // $name_column<span style=\"color:blue;\"> content_text</span></span></div>";
+            // echo $id.PHP_EOL.'</br>';
+            // echo $name_column.PHP_EOL.'</br>';
+        }
+        die();
         file_put_contents($fn, $data_json);
         $str_q_tables_n = substr_replace($str_q_tables_n, ',`regions_id`, `users_id`)', -2, -1);
         $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");

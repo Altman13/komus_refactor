@@ -23,7 +23,7 @@ $app->post('/api/base', BaseController::class . ':upload');
 $app->post('/api/login', LoginController::class . ':inter');
 $app->get('/api/login', LoginController::class . ':inter')
             ->add(new \DavidePastore\Slim\Validation\Validation($validators));
-$app->post('/api/calls', CallsController::class . ':create');
+$app->post('/api/calls', CallsController::class . ':make');
 $app->get('/api/calls', CallsController::class . ':show');
 $app->post('/api/user', UserController::class . ':create');
 $app->get('/api/user', UserController::class . ':show');

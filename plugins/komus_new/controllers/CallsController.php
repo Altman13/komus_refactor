@@ -16,7 +16,7 @@ class CallsController
     }
     public function make()
     {
-        $this->calls->create();
+        //$this->calls->create();
         
     }
 }
