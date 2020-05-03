@@ -14,7 +14,7 @@ export const OPEN_SESSION = "OPEN_SESSION";
 export const CLOSE_SESSION = "CLOSE_SESSION";
 export interface MakeCallAction {
   type: typeof MAKE_CALL;
-  contact: Contact;
+  contacts: Contact [];
 }
 export interface ReceiveCallAction {
   type: typeof RECEIVE_CALL;

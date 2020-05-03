@@ -1,3 +1,4 @@
+//import { Contact } from './contact';
 export interface Contact {
   id: number;
   name: string;
@@ -12,6 +13,7 @@ interface Call {
   status_call: string;
   operator: string;
 }
+
 export interface Report extends Contact, Call {
   label: string;
 }

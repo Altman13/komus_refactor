@@ -11,7 +11,7 @@ import { store } from './store';
 ReactDOM.render(
 <Provider store = {store}>
 <LoginTemp classes/>
-<FormComponent classes/>
+<FormComponent/>
 </Provider>,
 
 document.getElementById('root')
