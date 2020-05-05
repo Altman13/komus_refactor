@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom"
+import  LoginTemp  from './TempComponent';
 
 export function BasicExample() {
   return (
@@ -20,6 +21,9 @@ export function BasicExample() {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         </ul>
 
         <hr />
@@ -33,6 +37,9 @@ export function BasicExample() {
           </Route>
           <Route path="/dashboard">
             <Dashboard />
+          </Route>
+          <Route path="/login">
+            <LoginTemp />
           </Route>
         </Switch>
       </div>

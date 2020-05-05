@@ -17,7 +17,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 //import Logo from '../assets/Logo-large.png'
 
 interface Props {
-  classes: any;
+  //classes: any;
   //openSession: typeof openSession
   // history: any
   // location: any
@@ -131,26 +131,26 @@ function getvals(){
   
 
   render() {
-    const { classes } = this.props;
+    //const { classes } = this.props;
 
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div className={classes.logo}>
+        <div>
           {/* <img src={Logo} alt="logo" className={classes.logoImg} /> */}
           {/* <Typography className={classes.logoTitle} variant="h3" component="h3">
                         КОМУС
                     </Typography> */}
         </div>
-        <div className={classes.paper}>
+        <div>
           {this.state.failure && (
             <React.Fragment>
-              <div className={classes.failure}>Неудачный вход</div>
-              <div className={classes.failure}>Некорректные логин/пароль</div>
+              <div>Неудачный вход</div>
+              <div>Некорректные логин/пароль</div>
             </React.Fragment>
           )}
           <form
-            className={classes.form}
+            //className={classes.form}
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
@@ -184,7 +184,7 @@ function getvals(){
               onChange={this.handleChange.bind(this)}
             />
             {this.state.submitted && !this.state.username && (
-              <div className={classes.error}>Требуется логин оператора</div>
+              <div>Требуется логин оператора</div>
             )}
             <TextField
               variant="outlined"
@@ -200,7 +200,7 @@ function getvals(){
               onChange={this.handleChange.bind(this)}
             />
             {this.state.submitted && !this.state.password && (
-              <div className={classes.error}>Требуется пароль</div>
+              <div >Требуется пароль</div>
             )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -214,7 +214,6 @@ function getvals(){
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
             >
               Вход
             </Button>

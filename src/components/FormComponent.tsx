@@ -13,6 +13,9 @@ import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
 import { rec_call } from "../actions/";
+import SearchComponent from './SearchComponent'
+import RadioBtnComponent from './RadioBtnComponent'
+import { BasicExample } from './t'
 
 import Box from "@material-ui/core/Box";
 
@@ -62,6 +65,8 @@ export class FormComponent extends React.Component<Props, State> {
 
   render() {
     const { contacts } = this.props;
+    var result = Object.entries(contacts);
+    console.log(typeof result)
     var obj;
     Object.keys(contacts).forEach(function eachKey(key) {
       obj = contacts[key];
@@ -85,7 +90,7 @@ export class FormComponent extends React.Component<Props, State> {
           justifyContent="center"
           m={1}
           p={1}
-          bgcolor="c4e1a5"
+          bgcolor="#c4e1a5"
         >
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
             {html_element}
@@ -128,6 +133,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label="телефон организации"
                 name="company_phone"
               />
+              <RadioBtnComponent/>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -153,10 +159,12 @@ export class FormComponent extends React.Component<Props, State> {
               >
                 Продолжить
               </Button>
+              <BasicExample/>
             </form>
           </Box>
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-            Дополнительный блок
+            <SearchComponent/>
+            <InfoTextBlock/>
           </Box>
         </Box>
       </Container>
@@ -164,7 +172,7 @@ export class FormComponent extends React.Component<Props, State> {
   }
 }
 interface LinkStateProps {
-  contacts: Contact[];
+  contacts: Contact;
 }
 interface LinkDispatchProps {
   //makeCall: (contacts: Contact ) => void;
