@@ -15,7 +15,6 @@ import { Contact } from "../models";
 import { rec_call } from "../actions/";
 import SearchComponent from './SearchComponent'
 import RadioBtnComponent from './RadioBtnComponent'
-import { BasicExample } from './t'
 
 import Box from "@material-ui/core/Box";
 
@@ -159,7 +158,6 @@ export class FormComponent extends React.Component<Props, State> {
               >
                 Продолжить
               </Button>
-              <BasicExample/>
             </form>
           </Box>
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>

@@ -33,7 +33,7 @@ interface State {
   persistent: boolean;
 }
 
-class LoginTemp extends React.Component<Props, State> {
+class LoginComponent extends React.Component<Props, State> {
   state: State;
 
   constructor(props: Props) {
@@ -233,4 +233,4 @@ function getvals(){
 // })
 
 // export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(Login)))
-export default LoginTemp;
+export default LoginComponent;

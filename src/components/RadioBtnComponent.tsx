@@ -1,15 +1,15 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const GreenRadio = withStyles({
   root: {
     color: green[400],
-    '&$checked': {
+    "&$checked": {
       color: green[600],
     },
   },
@@ -17,7 +17,7 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 export default function RadioButtons() {
-  const [selectedValue, setSelectedValue] = React.useState('a');
+  const [selectedValue, setSelectedValue] = React.useState("a");
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -32,42 +32,44 @@ export default function RadioButtons() {
         name="radio-button-demo"
         inputProps={{ 'aria-label': 'A' }}
       /> */}
-        <FormControlLabel
-          value="start"
-          control={      <Radio
-            checked={selectedValue === 'a'}
-        onChange={handleChange}
-        value="a"
-        name="radio-button-demo"
-        inputProps={{ 'aria-label': 'A' }}
-        color ="primary"
-          />}
-          label="Значение 1"
-          labelPlacement="start"
-        />
+      <FormControlLabel
+        value="start"
+        control={
+          <Radio
+            checked={selectedValue === "a"}
+            onChange={handleChange}
+            value="a"
+            name="radio-button-demo"
+            inputProps={{ "aria-label": "A" }}
+            color="primary"
+          />
+        }
+        label="Значение 1"
+        labelPlacement="start"
+      />
       <Radio
-        checked={selectedValue === 'b'}
+        checked={selectedValue === "b"}
         onChange={handleChange}
         value="b"
         name="radio-button-demo"
-        inputProps={{ 'aria-label': 'B' }}
+        inputProps={{ "aria-label": "B" }}
       />
-      
+
       <Radio
-        checked={selectedValue === 'd'}
+        checked={selectedValue === "d"}
         onChange={handleChange}
         value="d"
         color="default"
         name="radio-button-demo"
-        inputProps={{ 'aria-label': 'D' }}
+        inputProps={{ "aria-label": "D" }}
       />
       <Radio
-        checked={selectedValue === 'e'}
+        checked={selectedValue === "e"}
         onChange={handleChange}
         value="e"
         color="default"
         name="radio-button-demo"
-        inputProps={{ 'aria-label': 'E' }}
+        inputProps={{ "aria-label": "E" }}
         size="small"
       />
     </div>
