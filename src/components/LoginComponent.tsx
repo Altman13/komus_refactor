@@ -77,7 +77,9 @@ class LoginComponent extends React.Component<Props, State> {
       username: this.state.username,
       password: this.state.password
   };
-const endpoint = 'http://localhost/react/php/komus_new/login.php';
+//const endpoint = 'http://localhost/react/php/komus_new/login.php';
+const endpoint = 'http://localhost/komus_new/api/login'
+
 
 function getvals(){
     return fetch(endpoint,

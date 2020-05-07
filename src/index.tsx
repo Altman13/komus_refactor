@@ -1,18 +1,22 @@
-import  React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-//import FormComponent from './components/FormComponent'
-//import Login from './components/LoginComponent';
-import LoginComponent from './components/LoginComponent';
-import HomePagePage from './components/HomeComponent'
-import FormComponent from './components/FormComponent'
-import { store } from './store';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import LoginComponent from "./components/LoginComponent";
+import FormComponent from "./components/FormComponent";
+import { ResponsiveDrawer } from './components/DashBoardComponent'
 
 ReactDOM.render(
-<Provider store = {store}>
-{/* <LoginTemp classes/> */}
-<FormComponent/>
-</Provider>,
+    <Provider store={store}>
+        <Router>
+            <Switch>
+                <Route exact path="/" component={LoginComponent} />
+                <Route path="/main" component={FormComponent} />
+                <Route path="/dashboard" component={ResponsiveDrawer} />
+            </Switch>
+        </Router>
+    </Provider>,
 
-document.getElementById('root')
-)
+document.getElementById("root")
+);

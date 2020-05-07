@@ -30,10 +30,10 @@ export function BasicExample() {
 
         <Switch>
           <Route exact path="/">
-            <Home />
+            <LoginComponent/>
           </Route>
-          <Route path="/about">
-            <About />
+          <Route path="/main">
+            <About/>
           </Route>
           <Route path="/dashboard">
             <Dashboard />
