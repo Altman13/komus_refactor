@@ -1,20 +1,12 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-//import { withStyles } from '@material-ui/core/styles'
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-//import { withRouter } from 'react-router-dom'
-
-//import { AppState, openSession, session } from './Store'
-//import { styles } from './LoginStyles'
-//import { Configuration } from './api/configuration'
-//import { LoginApi } from './api'
-//import Logo from '../assets/Logo-large.png'
+import Alert from "@material-ui/lab/Alert";
 
 interface Props {
   //classes: any;
@@ -25,12 +17,11 @@ interface Props {
 }
 
 interface State {
-  //endpoint: string
   username: string;
   password: string;
   submitted: boolean;
   failure: boolean;
-  persistent: boolean;
+  token : string
 }
 
 class LoginComponent extends React.Component<Props, State> {
@@ -39,29 +30,22 @@ class LoginComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      //endpoint: this.props.session.endpoint,
+      token : "",
       username: "",
       password: "",
       submitted: false,
       failure: false,
-      persistent: false
     };
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     switch (name) {
-      // case "endpoint":
-      //     this.setState({ endpoint: value })
-      //     break
       case "username":
         this.setState({ username: value });
         break;
       case "password":
         this.setState({ password: value });
-        break;
-      case "persistent":
-        this.setState({ persistent: Boolean(value) });
         break;
     }
   }
@@ -72,65 +56,39 @@ class LoginComponent extends React.Component<Props, State> {
     if (!this.state.username || !this.state.password) {
       return;
     }
-//     console.log(this.state.username + " " + this.state.password);
     const data = {
       username: this.state.username,
-      password: this.state.password
-  };
-//const endpoint = 'http://localhost/react/php/komus_new/login.php';
-const endpoint = 'http://localhost/komus_new/api/login'
+      userpassword: this.state.password,
+    };
+    const url = "http://localhost/komus_new/api/login";
 
-
-function getvals(){
-    return fetch(endpoint,
-    {
-    	method: "POST",
-      body: JSON.stringify(data),
-      //mode: 'no-cors', // no-cors, cors, same-origin
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      return responseData;
-    })
-    .catch(error => console.warn(error));
+    async function login(url = "", data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *client
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
+      return await response.json(); // parses JSON response into native JavaScript objects
+    }
+    login(url, data)
+      .then((data) => {
+        console.log(data); 
+        //TODO: tokenExpiry
+        //localStorage.setItem('token', data.token)
+      })
+      .catch(() => {
+        this.setState({ failure: true })
+      })
   }
-  
-  getvals().then(response => console.log(response));
-    // var endpoint = this.state.endpoint || this.props.session.endpoint
-
-    // var conf = new Configuration({ basePath: endpoint })
-    // var api = new LoginApi(conf)
-
-    // api.login(this.state.username, this.state.password)
-    //     .catch(() => {
-    //         this.setState({ failure: true })
-    //     })
-    //     .then(response => {
-    //         if (response) {
-    //             this.setState({ failure: false })
-    //             return response.json()
-    //         } else {
-    //             this.setState({ failure: true })
-    //         }
-    //     })
-    //     .then(data => {
-    //         if (data) {
-    //             this.props.openSession(endpoint, this.state.username, data.Token, data.Permissions, this.state.persistent)
-
-    //             var from = "/"
-    //             if (this.props.location.state && this.props.location.state.from !== "/login") {
-    //                 from = this.props.location.state.from
-    //             }
-    //             this.props.history.push(from)
-    //         }
-    //     })
-  }
-  
 
   render() {
     //const { classes } = this.props;
@@ -139,39 +97,15 @@ function getvals(){
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div>
-          {/* <img src={Logo} alt="logo" className={classes.logoImg} /> */}
-          {/* <Typography className={classes.logoTitle} variant="h3" component="h3">
-                        КОМУС
-                    </Typography> */}
-        </div>
-        <div>
           {this.state.failure && (
-            <React.Fragment>
-              <div>Неудачный вход</div>
-              <div>Некорректные логин/пароль</div>
-            </React.Fragment>
+            <Alert variant="outlined" severity="error">
+              Введены некорректные данные для авторизации
+            </Alert>
           )}
           <form
-            //className={classes.form}
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
-            {/* <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="endpoint"
-                            label="Endpoint"
-                            name="endpoint"
-                            //autoComplete="endpoint"
-                            //autoFocus
-                            //value={this.state.endpoint}
-                            onChange={this.handleChange.bind(this)}
-                        /> */}
-            {/* {this.state.submitted && !this.state.endpoint &&
-                            <div className={classes.error}>Endpoint is required</div>
-                        } */}
             <TextField
               variant="outlined"
               margin="normal"
@@ -180,8 +114,6 @@ function getvals(){
               id="username"
               label="Логин оператора"
               name="username"
-              //autoComplete="username"
-              //autoFocus
               value={this.state.username}
               onChange={this.handleChange.bind(this)}
             />
@@ -202,21 +134,15 @@ function getvals(){
               onChange={this.handleChange.bind(this)}
             />
             {this.state.submitted && !this.state.password && (
-              <div >Требуется пароль</div>
+              <div>Требуется пароль</div>
             )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Запомнить меня"
               name="persistent"
               value={true}
-              // onChange={this.handleChange.bind(this)}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
+            <Button type="submit" fullWidth variant="contained" color="primary">
               Вход
             </Button>
           </form>
@@ -225,14 +151,4 @@ function getvals(){
     );
   }
 }
-
-// export const mapStateToProps = (state: AppState) => ({
-//     session: state.session
-// })
-
-// export const mapDispatchToProps = ({
-//     openSession
-// })
-
-// export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(Login)))
 export default LoginComponent;
