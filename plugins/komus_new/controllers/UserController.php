@@ -16,9 +16,18 @@ class UserController
     {
 
     }
-    public function create()
+    public function create(Request $request, Response $response)
     {
-        $this->user->create();
+        $resp='';
+        $get_file = $request->getUploadedFiles();
+        $uploaded_file = $get_file['operators'];
+        try {
+            $this->user->create($uploaded_file);
+        } catch (\Throwable $th) {
+            $response->getBody()->write("Произошла ошибка при загрузке базы " . $th->getMessage() . PHP_EOL);
+                $resp = $response->withStatus(500);
+        }
+        return $resp;
     }
     //TODO: дописать назначение ролей операторам
     public function update($id)
