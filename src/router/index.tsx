@@ -38,9 +38,6 @@ export function BasicExample() {
           <Route path="/dashboard">
             <Dashboard />
           </Route>
-          <Route path="/login">
-            <LoginComponent />
-          </Route>
         </Switch>
       </div>
     </Router>

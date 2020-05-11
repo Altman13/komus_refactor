@@ -7,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
-
 interface Props {
   //classes: any;
   //openSession: typeof openSession
@@ -83,7 +82,10 @@ class LoginComponent extends React.Component<Props, State> {
       .then((data) => {
         console.log(data); 
         //TODO: tokenExpiry
-        //localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data.user_token)
+        localStorage.setItem('token_exp', data.token_exp)
+        localStorage.setItem('user_group', data.user_group)
+        console.log('localStrorage :>> ', localStorage);
       })
       .catch(() => {
         this.setState({ failure: true })
