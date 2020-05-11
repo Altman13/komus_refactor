@@ -22,7 +22,7 @@ class LoginController
         } else {
             $user_data = json_decode($request->getBody());
             try {
-                $resp = $this->login->sign($user_data->username, $user_data->userpassword);
+                $resp = $this->login->sign($user_data->userpassword, $user_data->username);
             } catch (\Throwable $th) {
                 $response->getBody()->write("Произошла ошибка при попытке входа на сайт " . $th->getMessage() . PHP_EOL);
                 $resp = $response->withStatus(500);

@@ -2,6 +2,8 @@
 
 namespace Komus;
 
+use PDO;
+
 class Login
 {
     private $db;
@@ -9,29 +11,32 @@ class Login
     {
         $this->db = $db;
     }
-    public function sign($user_name, $user_password)
+    public function sign($user_password, $user_name)
     {
         //TODO: поправить кодировку у некоторых таблиц
         $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
         $unicode->execute();
         //TODO: валидация
-        echo $user_name.PHP_EOL;
-        echo $user_password.PHP_EOL;
-        $users_data = $this->db->prepare("SELECT users.groups_id, salt, token FROM users
-        WHERE users.lastname=? AND users.login=?");
+        $payload = [
+            "user" => $user_name,
+            "passwords" => $user_password,
+        ];
+        $token =\Firebase\JWT\JWT::encode($payload, "thisissecret", "HS256");
+        
+        $users_data = $this->db->prepare("SELECT users.groups_id, token FROM users
+        WHERE users.token=:token");
+        $users_data->bindParam(':token', $token, PDO::PARAM_STR);
         try {
-            $users_data->execute([$user_name, $user_password]);
+            $users_data->execute();
             $user_data = $users_data->fetch();
-            //$user_data = json_encode($user_data, JSON_UNESCAPED_UNICODE);
-            var_dump($user_data);
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
         }
-        $check_password = hash('sha256', $user_password . $user_data['salt']);
-        if ($check_password == $user_data['token']) {
+        if ($token == $user_data['token']) {
             $user_group = $user_data['groups_id'];
             $user_token = $user_data['token'];
-            $u = array('user_group', 'user_token');
+            $token_exp  = date("Y-m-d H:i:s", strtotime("+9 hours"));
+            $u = array('user_group', 'user_token', 'token_exp');
             $user = compact($u);
             $user_data = json_encode($user);
             return $user_data;
