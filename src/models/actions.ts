@@ -1,4 +1,4 @@
-import { Contact, Report } from "./contact";
+import { Contact, Report, Contacts } from "./contact";
 
 export const MAKE_CALL = "MAKE_CALL";
 export const RECEIVE_CALL = "RECEIVE_CALL";
@@ -14,7 +14,8 @@ export const OPEN_SESSION = "OPEN_SESSION";
 export const CLOSE_SESSION = "CLOSE_SESSION";
 export interface MakeCallAction {
   type: typeof MAKE_CALL;
-  contacts: Contact [];
+  //contacts: Contact [];
+  contacts: Contacts;
 }
 export interface ReceiveCallAction {
   type: typeof RECEIVE_CALL;

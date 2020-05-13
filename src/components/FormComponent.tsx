@@ -13,23 +13,29 @@ import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
 import { rec_call } from "../actions/";
-import SearchComponent from './SearchComponent'
-import RadioBtnComponent from './RadioBtnComponent'
+import SearchComponent from "./SearchComponent";
+import RadioBtnComponent from "./RadioBtnComponent";
 
 import Box from "@material-ui/core/Box";
 
 interface State {
-  temp: any;
-  loading: boolean;
+  // temp: any;
+  // loading: boolean;
+  organization: string;
+  fio: string;
+  phone: string;
+  email: string;
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
 export class FormComponent extends React.Component<Props, State> {
   _isMounted = false;
-
   constructor(props: Props) {
     super(props);
+    this.state = { organization: "", fio: "", phone: "", email: "" };
+    this.handleChange = this.handleChange.bind(this);
   }
+
   // handleChange(e: React.ChangeEvent<HTMLInputElement>) {
   //   const { name, value } = e.target;
   //   switch (name) {
@@ -56,32 +62,57 @@ export class FormComponent extends React.Component<Props, State> {
   // }
   componentDidMount() {
     this.rec_call();
+
+    //this.handleChange()
   }
 
   rec_call = (): void => {
     this.props.receiveCall();
   };
+  componentWillReceiveProps(nextProps) {
+    //console.log(this.props.contacts)
+    console.log(nextProps.contacts);
+    var obj;
+    Object.keys(nextProps.contacts).forEach(function eachKey(key) {
+      obj = nextProps.contacts[key];
+      console.log(obj.naimenovanie);
+    });
 
+    this.setState({ organization: obj.naimenovanie, fio: obj.fio, phone: obj.nomer, email : obj.email });
+  }
+  handleChange() {}
   render() {
     const { contacts } = this.props;
-    var result = Object.entries(contacts);
-    console.log(typeof result)
+    //console.log(typeof contacts)
     var obj;
     Object.keys(contacts).forEach(function eachKey(key) {
       obj = contacts[key];
+      //console.log(obj.naimenovanie)
     });
-    console.log(typeof obj);
+
     let html_element = new Array();
-    if (obj)
-      for (let [key, value] of Object.entries(obj)) {
-        //console.log(`${key}: ${value}`);
-        if (value)
+    if(contacts[146])
+    for (let [key, value] of Object.entries(contacts[146])) {
+          if (value)
           html_element.push(
             <div id={key} style={{ fontSize: 18 }}>
               {key}: {value}
             </div>
           );
       }
+    //console.log(html_element[5])
+    // //console.log(typeof obj);
+    // let html_element = new Array();
+    // if (obj)
+    //   for (let [key, value] of Object.entries(obj)) {
+    //     //console.log(`${key}: ${value}`);
+    //     if (value)
+    //       html_element.push(
+    //         <div id={key} style={{ fontSize: 18 }}>
+    //           {key}: {value}
+    //         </div>
+    //       );
+    //   }
     return (
       <Container component="main">
         <Box
@@ -97,14 +128,6 @@ export class FormComponent extends React.Component<Props, State> {
           <Box p={1} bgcolor="#c4e1a5" width="75%" boxShadow={1}>
             <form className="form" noValidate>
               <InfoTextBlock />
-              {/* {contacts.map((contact) => (
-              <div>
-                <p id={`${Object.keys(contact)}`}>{Object.values(contact)}</p>
-                <p>{contact.id}</p>
-                <p>{contact.fio}</p>
-                <p>{contact.email}</p>
-              </div>
-            ))} */}
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -113,6 +136,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="name"
                 label="Наименование организации"
                 name="company_name"
+                value={this.state.organization}
               />
               <TextField
                 variant="outlined"
@@ -122,6 +146,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="fio_lpr"
                 label="ФИО ЛПР"
                 name="fio_lpr"
+                value={this.state.fio}
               />
               <TextField
                 variant="outlined"
@@ -131,8 +156,9 @@ export class FormComponent extends React.Component<Props, State> {
                 id="phone"
                 label="телефон организации"
                 name="company_phone"
+                value={this.state.phone}
               />
-              <RadioBtnComponent/>
+              <RadioBtnComponent />
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -141,6 +167,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="phone"
                 label="почта организации"
                 name="company_mail"
+                value={this.state.email || "Почты нет"}
               />
               <CustomizedSelects />
               <MailSendComponent />
@@ -161,8 +188,8 @@ export class FormComponent extends React.Component<Props, State> {
             </form>
           </Box>
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-            <SearchComponent/>
-            <InfoTextBlock/>
+            <SearchComponent />
+            <InfoTextBlock />
           </Box>
         </Box>
       </Container>

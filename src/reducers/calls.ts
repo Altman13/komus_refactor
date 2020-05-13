@@ -1,10 +1,10 @@
-import { Contacts} from "./../models/contact"
+import { Contacts, Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
 
 const callsReducerDefaultState: Contacts = {
-  contacts: [],
-  login: {login: '', password: ''}
+  contacts : []
 }
+
 
 const CallReducer = (
   state = callsReducerDefaultState,
@@ -12,7 +12,7 @@ const CallReducer = (
 ) => {
   switch (action.type) {
     case "MAKE_CALL":
-      return [...state.contacts, action.contacts]
+      return action.contacts
     case "RECEIVE_CALL":
       return [...state.contacts, action.contact]
     default:

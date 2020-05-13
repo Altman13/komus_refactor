@@ -8,8 +8,7 @@ export interface Contact {
 }
 
 export interface Contacts {
-  contacts: Contact[]
-  login: Login
+  contacts: any
   report?: Report[]
   filter?: Filter
 }

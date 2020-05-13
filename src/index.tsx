@@ -25,7 +25,7 @@ document.getElementById("root")
 function PrivateRoute() {
 let token=localStorage.getItem('token')
 console.log('token :>> ', token);
-const auth =true
+const auth =false
     return (
         <Route
             render={() =>
