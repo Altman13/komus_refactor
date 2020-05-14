@@ -1,22 +1,22 @@
-import React from "react";
-import MailSendComponent from "./MailSendComponent";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import CustomizedSelects from "./SelectComponent";
-import { Button, TextField } from "@material-ui/core";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
-import InfoTextBlock from "./InfoComponent";
-import { connect } from "react-redux";
-import { AppState } from "../store";
-import { bindActionCreators } from "redux";
-import { AppActions } from "../models/actions";
-import { ThunkDispatch } from "redux-thunk";
-import { Contact } from "../models";
-import { rec_call } from "../actions/";
-import SearchComponent from "./SearchComponent";
-import RadioBtnComponent from "./RadioBtnComponent";
+import React from "react"
+import MailSendComponent from "./MailSendComponent"
+import TextareaAutosize from "@material-ui/core/TextareaAutosize"
+import CustomizedSelects from "./SelectComponent"
+import { Button, TextField } from "@material-ui/core"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Container from "@material-ui/core/Container"
+import InfoTextBlock from "./InfoComponent"
+import { connect } from "react-redux"
+import { AppState } from "../store"
+import { bindActionCreators } from "redux"
+import { AppActions } from "../models/actions"
+import { ThunkDispatch } from "redux-thunk"
+import { Contact } from "../models"
+import { rec_call } from "../actions/"
+import SearchComponent from "./SearchComponent"
+import RadioBtnComponent from "./RadioBtnComponent"
 
-import Box from "@material-ui/core/Box";
+import Box from "@material-ui/core/Box"
 
 interface State {
   organization: string
@@ -39,52 +39,52 @@ export class FormComponent extends React.Component<Props, State> {
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     switch (name) {
       case "company_name":
-        this.setState({ organization: value });
-        break;
+        this.setState({ organization: value })
+        break
       case "fio_lpr":
-        this.setState({ fio: value });
-        break;
+        this.setState({ fio: value })
+        break
       case "company_phone":
-        this.setState({ phone: value });
-        break;
+        this.setState({ phone: value })
+        break
       case "company_mail":
-        this.setState({ email: value });
-        break;
+        this.setState({ email: value })
+        break
     }
   }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault()
     // this.props.makeCall()
     // this.setState({ submitted: true });
   }
   componentDidMount() {
-    this.rec_call();
+    this.rec_call()
   }
 
   rec_call = (): void => {
-    this.props.receiveCall();
-  };
+    this.props.receiveCall()
+  }
   componentWillReceiveProps(nextProps) {
-    var obj;
+    var obj
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
-      obj = nextProps.contacts[key];
-    });
+      obj = nextProps.contacts[key]
+    })
 
     this.setState({
       organization: obj.naimenovanie,
       fio: obj.fio,
       phone: obj.nomer,
       email: obj.email,
-    });
+    })
   }
 
   render() {
-    const { contacts } = this.props;
+    const { contacts } = this.props
 
-    let html_element = new Array();
+    let html_element = new Array()
     if (contacts[146])
       for (let [key, value] of Object.entries(contacts[146])) {
         if (value)
@@ -187,11 +187,11 @@ export class FormComponent extends React.Component<Props, State> {
   }
 }
 interface LinkStateProps {
-  contacts: Contact;
+  contacts: Contact
 }
 interface LinkDispatchProps {
   //makeCall: (contacts: Contact ) => void;
-  receiveCall: () => void;
+  receiveCall: () => void
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   contacts: state.contacts,

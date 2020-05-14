@@ -1,4 +1,4 @@
-enum Users {
+export enum Users {
   operator,
   st_operator,
   administrator,
@@ -16,11 +16,11 @@ abstract class User implements IUsers {
     this.user_role = user_role;
     this.Category = Users.undefined;
   }
-  printDetails(): void {
-    // console.log(`User : `);
+  printDetails(): number {
+    return this.user_role;
   }
 }
- export class Opertator extends User {
+ export class Operator extends User {
   constructor(user_role: number) {
     super(user_role);
     this.Category = Users.operator;
@@ -38,10 +38,10 @@ class Administrator extends User {
     this.Category = Users.administrator;
   }
 }
-class UserFactory {
+export class UserFactory {
   getUserRole(user_role: number) : IUsers | undefined {
     if (user_role == 1) {
-      return new Opertator(user_role);
+      return new Operator(user_role);
     }
     if (user_role == 2) {
       return new St_operator(user_role);
