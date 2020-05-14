@@ -19,100 +19,82 @@ import RadioBtnComponent from "./RadioBtnComponent";
 import Box from "@material-ui/core/Box";
 
 interface State {
-  // temp: any;
-  // loading: boolean;
-  organization: string;
-  fio: string;
-  phone: string;
-  email: string;
+  organization: string
+  fio: string
+  phone: string
+  email: string
+  comment: string
+  submitted: boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
 export class FormComponent extends React.Component<Props, State> {
-  _isMounted = false;
   constructor(props: Props) {
-    super(props);
-    this.state = { organization: "", fio: "", phone: "", email: "" };
-    this.handleChange = this.handleChange.bind(this);
+    super(props)
+    this.state = { organization: "", fio: "", phone: "", email: "", comment: "", submitted: false}
+    this.handleChange = this.handleChange.bind(this)
+  }
+  onChange(e) {
+    this.setState({comment: e.target.value})
   }
 
-  // handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const { name, value } = e.target;
-  //   switch (name) {
-  // case "endpoint":
-  //     this.setState({ endpoint: value })
-  //     break
-  //     case "username":
-  //       this.setState({ username: value });
-  //       break;
-  //     case "password":
-  //       this.setState({ password: value });
-  //       break;
-  //     case "persistent":
-  //       this.setState({ persistent: Boolean(value) });
-  //       break;
-  //   }
-  // }
-  // handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   this.setState({ submitted: true });
-  //   if (!this.state.username || !this.state.password) {
-  //     return;
-  //   }
-  // }
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    switch (name) {
+      case "company_name":
+        this.setState({ organization: value });
+        break;
+      case "fio_lpr":
+        this.setState({ fio: value });
+        break;
+      case "company_phone":
+        this.setState({ phone: value });
+        break;
+      case "company_mail":
+        this.setState({ email: value });
+        break;
+    }
+  }
+  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    // this.props.makeCall()
+    // this.setState({ submitted: true });
+  }
   componentDidMount() {
     this.rec_call();
-
-    //this.handleChange()
   }
 
   rec_call = (): void => {
     this.props.receiveCall();
   };
   componentWillReceiveProps(nextProps) {
-    //console.log(this.props.contacts)
-    console.log(nextProps.contacts);
     var obj;
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       obj = nextProps.contacts[key];
-      console.log(obj.naimenovanie);
     });
 
-    this.setState({ organization: obj.naimenovanie, fio: obj.fio, phone: obj.nomer, email : obj.email });
+    this.setState({
+      organization: obj.naimenovanie,
+      fio: obj.fio,
+      phone: obj.nomer,
+      email: obj.email,
+    });
   }
-  handleChange() {}
+
   render() {
     const { contacts } = this.props;
-    //console.log(typeof contacts)
-    var obj;
-    Object.keys(contacts).forEach(function eachKey(key) {
-      obj = contacts[key];
-      //console.log(obj.naimenovanie)
-    });
 
     let html_element = new Array();
-    if(contacts[146])
-    for (let [key, value] of Object.entries(contacts[146])) {
-          if (value)
+    if (contacts[146])
+      for (let [key, value] of Object.entries(contacts[146])) {
+        if (value)
           html_element.push(
-            <div id={key} style={{ fontSize: 18 }}>
+            <div id={key} style={{ fontSize: 18 }} key={key}>
               {key}: {value}
             </div>
           );
       }
-    //console.log(html_element[5])
-    // //console.log(typeof obj);
-    // let html_element = new Array();
-    // if (obj)
-    //   for (let [key, value] of Object.entries(obj)) {
-    //     //console.log(`${key}: ${value}`);
-    //     if (value)
-    //       html_element.push(
-    //         <div id={key} style={{ fontSize: 18 }}>
-    //           {key}: {value}
-    //         </div>
-    //       );
-    //   }
+
     return (
       <Container component="main">
         <Box
@@ -137,6 +119,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label="Наименование организации"
                 name="company_name"
                 value={this.state.organization}
+                onChange={this.handleChange}
               />
               <TextField
                 variant="outlined"
@@ -147,6 +130,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label="ФИО ЛПР"
                 name="fio_lpr"
                 value={this.state.fio}
+                onChange={this.handleChange}
               />
               <TextField
                 variant="outlined"
@@ -157,6 +141,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label="телефон организации"
                 name="company_phone"
                 value={this.state.phone}
+                onChange={this.handleChange}
               />
               <RadioBtnComponent />
               <TextField
@@ -168,6 +153,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label="почта организации"
                 name="company_mail"
                 value={this.state.email || "Почты нет"}
+                onChange={this.handleChange}
               />
               <CustomizedSelects />
               <MailSendComponent />
@@ -176,6 +162,10 @@ export class FormComponent extends React.Component<Props, State> {
                 rowsMin={3}
                 placeholder="Комментарий оператора"
                 style={{ width: "100%" }}
+                id="operator_comment"
+                name="operator_comment"
+                value={this.state.comment}
+                onChange={this.onChange.bind(this)}
               />
               <Button
                 type="submit"
