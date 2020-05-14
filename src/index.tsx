@@ -13,6 +13,9 @@ let factory = new UserFactory();
 let user = factory.getUserRole(parseInt(user_group));
 
     switch (user!.constructor.name) {
+        case 'Guest':
+            console.log('Guest')
+            break;
         case 'Operator':
             console.log('Operator')
             break;
