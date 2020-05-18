@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { rec_call } from "../actions/";
+import { get_contacts } from "../actions/"
 import { Contact } from "../models";
 import { AppState } from "../store"
 import { Dispatch, bindActionCreators } from "redux";
@@ -21,8 +21,8 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
   //   super(props);
   //   this.state = { contact : '' };
   // }
-  rec_call = () : void => {
-    this.props.receiveCall();
+  get_contact = () : void => {
+    this.props.get_contacts();
   };
   // MakeCall = (contact: Contact) : void => {
   //   this.props.makeCall(contact);
@@ -42,7 +42,7 @@ export class HomePagePage extends React.Component<Props, HomePageState> {
               
             </div>
           ))}
-          <button onClick={() => this.rec_call()}>Edit contact</button>
+          <button onClick={() => this.get_contact()}>Edit contact</button>
         </div>
       </div>
     );
@@ -54,7 +54,7 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   //makeCall: (contacts: Contact ) => void;
-  receiveCall: () => void;
+  get_contacts: () => void
 }
 const mapStateToProps = (
   state: AppState,
@@ -64,10 +64,9 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (
-  dispatch: ThunkDispatch<any, any, AppActions>,
-  //ownProps: HomePageProps
+  dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  receiveCall: bindActionCreators(rec_call, dispatch)
+  get_contacts: bindActionCreators(get_contacts, dispatch),
 });
 
 export default connect(

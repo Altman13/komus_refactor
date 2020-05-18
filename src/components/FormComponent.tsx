@@ -12,7 +12,7 @@ import { bindActionCreators } from "redux"
 import { AppActions } from "../models/actions"
 import { ThunkDispatch } from "redux-thunk"
 import { Contact } from "../models"
-import { rec_call } from "../actions/"
+import { get_contacts,  make_calls } from "../actions/"
 import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
 
@@ -38,6 +38,7 @@ export class FormComponent extends React.Component<Props, State> {
   }
   onChange(e) {
     this.setState({comment: e.target.value})
+    this.props.make_calls(this.props.contacts.id)
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -59,15 +60,17 @@ export class FormComponent extends React.Component<Props, State> {
   }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
     // this.props.makeCall()
     // this.setState({ submitted: true });
   }
 
   componentDidMount() {
-    this.props.receiveCall()
+    this.props.get_contacts()
   }
 
   componentWillReceiveProps(nextProps) {
+    
     var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       contact = nextProps.contacts[key]
@@ -79,7 +82,9 @@ export class FormComponent extends React.Component<Props, State> {
       nomer: contact.nomer,
       email: contact.email,
     })
+      
       var key_contact= Object.keys(this.state)
+      
       for (let [key, value] of Object.entries(contact)) {
         var el_main_form =key_contact.indexOf(key)
         if(el_main_form==-1)
@@ -190,16 +195,18 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   //makeCall: (contacts: Contact ) => void;
-  receiveCall: () => void
+  get_contacts: () => void,
+  make_calls: (id: number) => void
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   contacts: state.contacts,
 });
 
 const mapDispatchToProps = (
-  dispatch: ThunkDispatch<any, any, AppActions>
+  dispatch: ThunkDispatch<any, any, AppActions>,
 ): LinkDispatchProps => ({
-  receiveCall: bindActionCreators(rec_call, dispatch),
-});
+  get_contacts: bindActionCreators(get_contacts, dispatch),
+  make_calls : bindActionCreators(make_calls, dispatch)
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormComponent);
