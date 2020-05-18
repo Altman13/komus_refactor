@@ -19,9 +19,9 @@ import RadioBtnComponent from "./RadioBtnComponent"
 import Box from "@material-ui/core/Box"
 
 interface State {
-  organization: string
+  naimenovanie: string
   fio: string
-  phone: string
+  nomer: string
   email: string
   comment: string
   submitted: boolean
@@ -33,7 +33,7 @@ export class FormComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = { organization: "", fio: "", phone: "", email: "", comment: "", submitted: false, html_cont: []}
+    this.state = { naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: []}
     this.handleChange = this.handleChange.bind(this)
   }
   onChange(e) {
@@ -44,13 +44,13 @@ export class FormComponent extends React.Component<Props, State> {
     const { name, value } = e.target
     switch (name) {
       case "company_name":
-        this.setState({ organization: value })
+        this.setState({ naimenovanie: value })
         break
       case "fio_lpr":
         this.setState({ fio: value })
         break
       case "company_phone":
-        this.setState({ phone: value })
+        this.setState({ nomer: value })
         break
       case "company_mail":
         this.setState({ email: value })
@@ -74,16 +74,21 @@ export class FormComponent extends React.Component<Props, State> {
     })
 
     this.setState({
-      organization: contact.naimenovanie,
+      naimenovanie: contact.naimenovanie,
       fio: contact.fio,
-      phone: contact.nomer,
+      nomer: contact.nomer,
       email: contact.email,
     })
+      var key_contact= Object.keys(this.state)
       for (let [key, value] of Object.entries(contact)) {
-        this.state.html_cont.push(<div id={key} style={{ fontSize: 18 }} key={key}>
+        var el_main_form =key_contact.indexOf(key)
+        if(el_main_form==-1)
+        {
+          this.state.html_cont.push(<div id={key} style={{ fontSize: 18 }} key={key}>
               {key}: {value}
             </div>
           );
+        }
       }
   }
 
@@ -112,7 +117,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="name"
                 label="Наименование организации"
                 name="company_name"
-                value={this.state.organization}
+                value={this.state.naimenovanie}
                 onChange={this.handleChange}
               />
               <TextField
@@ -134,7 +139,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="phone"
                 label="телефон организации"
                 name="company_phone"
-                value={this.state.phone}
+                value={this.state.nomer}
                 onChange={this.handleChange}
               />
               <RadioBtnComponent />
