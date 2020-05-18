@@ -25,13 +25,15 @@ interface State {
   email: string
   comment: string
   submitted: boolean
+  html_cont : any[]
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
 export class FormComponent extends React.Component<Props, State> {
+
   constructor(props: Props) {
     super(props)
-    this.state = { organization: "", fio: "", phone: "", email: "", comment: "", submitted: false}
+    this.state = { organization: "", fio: "", phone: "", email: "", comment: "", submitted: false, html_cont: []}
     this.handleChange = this.handleChange.bind(this)
   }
   onChange(e) {
@@ -60,40 +62,32 @@ export class FormComponent extends React.Component<Props, State> {
     // this.props.makeCall()
     // this.setState({ submitted: true });
   }
-  componentDidMount() {
-    this.rec_call()
-  }
 
-  rec_call = (): void => {
+  componentDidMount() {
     this.props.receiveCall()
   }
+
   componentWillReceiveProps(nextProps) {
-    var obj
+    var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
-      obj = nextProps.contacts[key]
+      contact = nextProps.contacts[key]
     })
 
     this.setState({
-      organization: obj.naimenovanie,
-      fio: obj.fio,
-      phone: obj.nomer,
-      email: obj.email,
+      organization: contact.naimenovanie,
+      fio: contact.fio,
+      phone: contact.nomer,
+      email: contact.email,
     })
-  }
-
-  render() {
-    const { contacts } = this.props
-
-    let html_element = new Array()
-    if (contacts[146])
-      for (let [key, value] of Object.entries(contacts[146])) {
-        if (value)
-          html_element.push(
-            <div id={key} style={{ fontSize: 18 }} key={key}>
+      for (let [key, value] of Object.entries(contact)) {
+        this.state.html_cont.push(<div id={key} style={{ fontSize: 18 }} key={key}>
               {key}: {value}
             </div>
           );
       }
+  }
+
+  render() {
 
     return (
       <Container component="main">
@@ -105,7 +99,7 @@ export class FormComponent extends React.Component<Props, State> {
           bgcolor="#c4e1a5"
         >
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-            {html_element}
+            {this.state.html_cont}
           </Box>
           <Box p={1} bgcolor="#c4e1a5" width="75%" boxShadow={1}>
             <form className="form" noValidate>
