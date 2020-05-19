@@ -1,10 +1,9 @@
 import { Contacts, Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
-import { type } from "os"
 
-const callsReducerDefaultState: Contacts = {
-  contacts : []
-}
+const callsReducerDefaultState: Contact[] = []
+  //contacts : []
+
 
 const CallReducer = (
   state = callsReducerDefaultState,
@@ -14,11 +13,10 @@ const CallReducer = (
     case "GET_CONTACTS":
       return action.contacts
     case "MAKE_CALL":
-    //console.log(state.contacts.filter(({ id }) => id !== action.id))
-    return state.contacts.filter(({ id }) => id !== action.id)
+    return state.filter(({ id }) => id !== action.id)
     
     case "RECEIVE_CALL":
-      return [...state.contacts, action.contact]
+      return [...state, action.contact]
     default:
       return state
   }

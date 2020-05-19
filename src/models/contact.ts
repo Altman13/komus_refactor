@@ -8,6 +8,7 @@ export interface Contact {
 }
 
 export interface Contacts {
+  id: number;
   contacts: any
   report?: Report[]
   filter?: Filter

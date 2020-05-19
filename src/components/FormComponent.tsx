@@ -19,6 +19,7 @@ import RadioBtnComponent from "./RadioBtnComponent"
 import Box from "@material-ui/core/Box"
 
 interface State {
+  id: number
   naimenovanie: string
   fio: string
   nomer: string
@@ -33,12 +34,12 @@ export class FormComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = { naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: []}
+    this.state = {id: 0, naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: []}
     this.handleChange = this.handleChange.bind(this)
   }
   onChange(e) {
     this.setState({comment: e.target.value})
-    this.props.make_calls(this.props.contacts.id)
+    this.props.make_calls(this.state.id)    
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -60,7 +61,6 @@ export class FormComponent extends React.Component<Props, State> {
   }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-
     // this.props.makeCall()
     // this.setState({ submitted: true });
   }
@@ -77,28 +77,32 @@ export class FormComponent extends React.Component<Props, State> {
     })
 
     this.setState({
+      id: contact.id,
       naimenovanie: contact.naimenovanie,
       fio: contact.fio,
       nomer: contact.nomer,
       email: contact.email,
     })
-      
+    
       var key_contact= Object.keys(this.state)
-      
+      console.log(key_contact)
       for (let [key, value] of Object.entries(contact)) {
         var el_main_form =key_contact.indexOf(key)
         if(el_main_form==-1)
-        {
+        { 
           this.state.html_cont.push(<div id={key} style={{ fontSize: 18 }} key={key}>
               {key}: {value}
             </div>
           );
         }
       }
+      //TODO: сделать нормальную проверку
+      if(this.state.html_cont.length>25)
+      this.state.html_cont.splice(0, 25);
   }
 
   render() {
-
+    
     return (
       <Container component="main">
         <Box
