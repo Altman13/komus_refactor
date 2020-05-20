@@ -26,7 +26,7 @@ interface State {
   email: string
   comment: string
   submitted: boolean
-  html_cont : any[]
+  html_cont : HTMLElement[]
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -36,10 +36,12 @@ export class FormComponent extends React.Component<Props, State> {
     super(props)
     this.state = {id: 0, naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: []}
     this.handleChange = this.handleChange.bind(this)
+    //this.handleSubmit = this.handleSubmit.bind(this)
+    this.makeCallHandler = this.makeCallHandler.bind(this)
+    
   }
   onChange(e) {
     this.setState({comment: e.target.value})
-    this.props.make_calls(this.state.id)    
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -59,10 +61,21 @@ export class FormComponent extends React.Component<Props, State> {
         break
     }
   }
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    // this.props.makeCall()
-    // this.setState({ submitted: true });
+
+  // handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault()
+  // this.props.makeCall()
+  // this.setState({ submitted: true });
+  // }
+
+  makeCallHandler(event){
+    event.preventDefault()
+    //TODO: заменить на .env OUTGOING/INCOMING/APC
+    let project_type:string = 'INCOMING'
+    if(project_type=='INCOMING'){
+      //this.props.recive_call()
+      }
+      this.props.make_calls(this.state.id)
   }
 
   componentDidMount() {
@@ -70,7 +83,6 @@ export class FormComponent extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps) {
-    
     var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       contact = nextProps.contacts[key]
@@ -85,20 +97,18 @@ export class FormComponent extends React.Component<Props, State> {
     })
     
       var key_contact= Object.keys(this.state)
-      console.log(key_contact)
+      var html_element:any=[]
       for (let [key, value] of Object.entries(contact)) {
         var el_main_form =key_contact.indexOf(key)
-        if(el_main_form==-1)
+        if(el_main_form==-1 && value)
         { 
-          this.state.html_cont.push(<div id={key} style={{ fontSize: 18 }} key={key}>
+          html_element.push(<div id={key} style={{ fontSize: 18 }} key={key}>
               {key}: {value}
             </div>
-          );
+          )
         }
       }
-      //TODO: сделать нормальную проверку
-      if(this.state.html_cont.length>25)
-      this.state.html_cont.splice(0, 25);
+      this.setState({html_cont: html_element})
   }
 
   render() {
@@ -113,7 +123,7 @@ export class FormComponent extends React.Component<Props, State> {
           bgcolor="#c4e1a5"
         >
           <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-            {this.state.html_cont}
+                {this.state.html_cont.map((element, key) => <div key={key}>{element}</div>)}
           </Box>
           <Box p={1} bgcolor="#c4e1a5" width="75%" boxShadow={1}>
             <form className="form" noValidate>
@@ -180,6 +190,7 @@ export class FormComponent extends React.Component<Props, State> {
                 variant="contained"
                 color="primary"
                 className="submit"
+                onClick={this.makeCallHandler}
               >
                 Продолжить
               </Button>
@@ -198,7 +209,6 @@ interface LinkStateProps {
   contacts: Contact
 }
 interface LinkDispatchProps {
-  //makeCall: (contacts: Contact ) => void;
   get_contacts: () => void,
   make_calls: (id: number) => void
 }
