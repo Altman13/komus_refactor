@@ -3,7 +3,7 @@ import MailSendComponent from "./MailSendComponent"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
 import CustomizedSelects from "./SelectComponent"
 import { Button, TextField } from "@material-ui/core"
-import CssBaseline from "@material-ui/core/CssBaseline"
+//import CssBaseline from "@material-ui/core/CssBaseline"
 import Container from "@material-ui/core/Container"
 import InfoTextBlock from "./InfoComponent"
 import { connect } from "react-redux"
@@ -15,6 +15,8 @@ import { Contact } from "../models"
 import { get_contacts,  make_calls } from "../actions/"
 import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
+import NativeSelect from "@material-ui/core/NativeSelect";
+import InputLabel from '@material-ui/core/InputLabel';
 
 import Box from "@material-ui/core/Box"
 
@@ -110,7 +112,9 @@ export class FormComponent extends React.Component<Props, State> {
       }
       this.setState({html_cont: html_element})
   }
-
+  SelectHandleChange (event: React.ChangeEvent<{ value: unknown }>){
+    console.log(event.target.value);
+  }
   render() {
     
     return (
@@ -167,13 +171,37 @@ export class FormComponent extends React.Component<Props, State> {
                 margin="normal"
                 required
                 fullWidth
-                id="phone"
+                id="mail"
                 label="почта организации"
                 name="company_mail"
                 value={this.state.email || "Почты нет"}
                 onChange={this.handleChange}
               />
-              <CustomizedSelects />
+              
+              <InputLabel id="request_call-label">Статус обращения</InputLabel>
+              <NativeSelect style={{ width: "200px" }}
+                id="request_call"
+                onChange={this.SelectHandleChange}
+              >
+                <option value="" />
+                <option value={'Суть обращения'}>Суть обращения</option>
+                <option value={'Статус обращения'}>Статус обращения</option>
+                <option value={'Результат обращения'}>Результат обращения</option>
+                
+              </NativeSelect>
+              <InputLabel id="status_call-label">Статус звонка</InputLabel>
+              <NativeSelect style={{ width: "200px" }}
+                id="status_call"
+                onChange={this.SelectHandleChange}
+              >
+                <option value="" />
+                <option value={'Перезвон1'}>Перезвон1</option>
+                <option value={'Перезвон2'}>Перезвон2</option>
+                <option value={'Перезвон3'}>Перезвон3</option>
+                <option value={'Недозвон'}>Недозвон</option>
+              </NativeSelect>
+    
+              {/* <CustomizedSelects onChange={this.handleChange} /> */}
               <MailSendComponent />
               <TextareaAutosize
                 aria-label="minimum height"
