@@ -93,6 +93,7 @@ export function closeSession(): closeSessionAction {
   }
 }
 
+
 export type CallActionTypes =
   | ReceiveCallAction
   | MakeCallAction
@@ -109,3 +110,10 @@ export type CallActionTypes =
   
 
 export type AppActions = CallActionTypes;
+
+export function makeCall (id: number): AppActions {
+  return {
+    type: MAKE_CALL,
+  id
+  }
+}
