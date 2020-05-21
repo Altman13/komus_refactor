@@ -56,42 +56,42 @@ export interface SearchInfoAction {
   type: typeof SEARCH_INFO;
   contact?: Contact;
 }
-export interface session {
-  endpoint: string;
-  username: string;
-  token: string;
-  permissions: any;
-  persistent: boolean;
-}
-interface openSessionAction {
-  type: typeof OPEN_SESSION;
-  payload: session;
-}
+// export interface session {
+//   endpoint: string;
+//   username: string;
+//   token: string;
+//   permissions: any;
+//   persistent: boolean;
+// }
+// interface openSessionAction {
+//   type: typeof OPEN_SESSION;
+//   payload: session;
+// }
 
-interface closeSessionAction {
-  type: typeof CLOSE_SESSION;
-  payload: null;
-}
+// interface closeSessionAction {
+//   type: typeof CLOSE_SESSION;
+//   payload: null;
+// }
 
-export function openSession(endpoint: string, username: string, token: string, permissions: any, persistent: boolean): openSessionAction {
-  return {
-      type: OPEN_SESSION,
-      payload: {
-          endpoint: endpoint,
-          username: username,
-          token: token,
-          permissions: permissions,
-          persistent: persistent
-      }
-  }
-}
+// export function openSession(endpoint: string, username: string, token: string, permissions: any, persistent: boolean): openSessionAction {
+//   return {
+//       type: OPEN_SESSION,
+//       payload: {
+//           endpoint: endpoint,
+//           username: username,
+//           token: token,
+//           permissions: permissions,
+//           persistent: persistent
+//       }
+//   }
+// }
 
-export function closeSession(): closeSessionAction {
-  return {
-      type: CLOSE_SESSION,
-      payload: null
-  }
-}
+// export function closeSession(): closeSessionAction {
+//   return {
+//       type: CLOSE_SESSION,
+//       payload: null
+//   }
+// }
 
 
 export type CallActionTypes =
@@ -105,8 +105,8 @@ export type CallActionTypes =
   | GetInfoByContactAction
   | SetlInfoByContactAction
   | SearchInfoAction
-  | openSessionAction
-  | closeSessionAction
+  // | openSessionAction
+  // | closeSessionAction
   
 
 export type AppActions = CallActionTypes;

@@ -12,13 +12,13 @@ import { bindActionCreators } from "redux"
 import { AppActions } from "../models/actions"
 import { ThunkDispatch } from "redux-thunk"
 import { Contact } from "../models"
-import { get_contacts,  make_calls } from "../actions/"
+import { get_contacts,  make_calls , receive_calls } from "../actions/"
 import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from '@material-ui/core/InputLabel';
-
 import Box from "@material-ui/core/Box"
+import { ResponsiveDrawer } from './DashBoardComponent';
 
 interface State {
   id: number
@@ -29,6 +29,7 @@ interface State {
   comment: string
   submitted: boolean
   html_cont : HTMLElement[]
+  st_operator: boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -36,7 +37,7 @@ export class FormComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    this.state = {id: 0, naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: []}
+    this.state = {id: 0, naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: [], st_operator: false}
     this.handleChange = this.handleChange.bind(this)
     //this.handleSubmit = this.handleSubmit.bind(this)
     this.makeCallHandler = this.makeCallHandler.bind(this)
@@ -75,7 +76,7 @@ export class FormComponent extends React.Component<Props, State> {
     //TODO: заменить на .env OUTGOING/INCOMING/APC
     let project_type:string = 'INCOMING'
     if(project_type=='INCOMING'){
-      //this.props.recive_call()
+      //this.props.receive_calls()
       }
       this.props.make_calls(this.state.id)
   }
@@ -96,6 +97,7 @@ export class FormComponent extends React.Component<Props, State> {
       fio: contact.fio,
       nomer: contact.nomer,
       email: contact.email,
+      st_operator: true
     })
     
       var key_contact= Object.keys(this.state)
@@ -115,10 +117,15 @@ export class FormComponent extends React.Component<Props, State> {
   SelectHandleChange (event: React.ChangeEvent<{ value: unknown }>){
     console.log(event.target.value);
   }
+
   render() {
     
     return (
       <Container component="main">
+        {
+          this.state.st_operator === true &&
+          <ResponsiveDrawer/>
+        }
         <Box
           display="flex"
           justifyContent="center"
@@ -238,7 +245,8 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   get_contacts: () => void,
-  make_calls: (id: number) => void
+  make_calls: (id: number) => void,
+  receive_calls: () =>void
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   contacts: state.contacts,
@@ -248,7 +256,9 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
 ): LinkDispatchProps => ({
   get_contacts: bindActionCreators(get_contacts, dispatch),
-  make_calls : bindActionCreators(make_calls, dispatch)
+  make_calls : bindActionCreators(make_calls, dispatch),
+  receive_calls : bindActionCreators(receive_calls, dispatch)
+  
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormComponent);
