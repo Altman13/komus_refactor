@@ -15,7 +15,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-
+import  UploadButtons from './UploadFileComponent';
+import Button from "@material-ui/core/Button";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,10 +74,23 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const drawer = (
     <div>
+
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Загрузить базу', 'Загрузить пользователей', 'Назначить старших операторов'].map((text, index) => (
+      <UploadButtons/>
+      <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+        ><PersonAddIcon/>
+        </IconButton> 
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span">
+          Загрузить пользователей
+        </Button>
+      </label>
+        {['Загрузить пользователей', 'Назначить старших операторов'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />

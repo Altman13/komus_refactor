@@ -20,6 +20,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Box from "@material-ui/core/Box"
 import { ResponsiveDrawer } from './DashBoardComponent';
 
+
+
 interface State {
   id: number
   naimenovanie: string
@@ -181,7 +183,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id="mail"
                 label="почта организации"
                 name="company_mail"
-                value={this.state.email || "Почты нет"}
+                value={this.state.email || ""}
                 onChange={this.handleChange}
               />
               

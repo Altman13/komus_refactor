@@ -1,4 +1,4 @@
-import { AppActions, MAKE_CALL , RECEIVE_CALL, makeCall} from './../models/actions';
+import { AppActions, MAKE_CALL , RECEIVE_CALL} from './../models/actions';
 import actionCreatorFactory from "typescript-fsa";
 import { asyncFactory } from "typescript-fsa-redux-thunk";
 import { AppState } from "../store";
@@ -24,12 +24,12 @@ export const get_contacts = createAsync<any, any>(
     }
   }
 )
-// export function makeCall (id: number): AppActions {
-//   return {
-//     type: MAKE_CALL,
-//   id
-//   }
-// }
+export function makeCall (id: number): AppActions {
+  return {
+    type: MAKE_CALL,
+  id
+  }
+}
 export const make_calls = (id: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(makeCall(id));
