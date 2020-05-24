@@ -2,7 +2,7 @@ import React from "react"
 import MailSendComponent from "./MailSendComponent"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
 import CustomizedSelects from "./SelectComponent"
-import { Button, TextField } from "@material-ui/core"
+import { Button, TextField, Grid } from "@material-ui/core"
 //import CssBaseline from "@material-ui/core/CssBaseline"
 import Container from "@material-ui/core/Container"
 import InfoTextBlock from "./InfoComponent"
@@ -19,8 +19,8 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from "@material-ui/core/Box"
 import { ResponsiveDrawer } from './DashBoardComponent';
-
-
+import UploadFileComponent from './uploadTemp';
+import Hidden from '@material-ui/core/Hidden';
 
 interface State {
   id: number
@@ -128,17 +128,13 @@ export class FormComponent extends React.Component<Props, State> {
           this.state.st_operator === true &&
           <ResponsiveDrawer/>
         }
-        <Box
-          display="flex"
-          justifyContent="center"
-          m={1}
-          p={1}
-          bgcolor="#c4e1a5"
-        >
-          <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-                {this.state.html_cont.map((element, key) => <div key={key}>{element}</div>)}
-          </Box>
-          <Box p={1} bgcolor="#c4e1a5" width="75%" boxShadow={1}>
+      <Grid container spacing={3}>
+        <Hidden only="xs">
+          <Grid item xs style={{ border: "2px solid" }}>
+                  {this.state.html_cont.map((element, key) => <div key={key}>{element}</div>)}
+          </Grid>
+        </Hidden>
+          <Grid item lg={6}>
             <form className="form" noValidate>
               <InfoTextBlock />
               <TextField
@@ -232,12 +228,14 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </Button>
             </form>
-          </Box>
-          <Box p={1} style={{ border: "2px solid" }} width="25%" boxShadow={3}>
-            <SearchComponent />
-            <InfoTextBlock />
-          </Box>
-        </Box>
+          </Grid>
+          <Hidden only="xs">
+            <Grid item xs style={{ border: "2px solid" }}>
+              <SearchComponent />
+              <InfoTextBlock />
+            </Grid>
+          </Hidden>
+        </Grid>
       </Container>
     );
   }
