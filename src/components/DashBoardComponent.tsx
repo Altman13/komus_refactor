@@ -28,6 +28,7 @@ import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
+import UploadFileComponent from './uploadTemp';
 
 const drawerWidth = 240;
 
@@ -78,11 +79,16 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+    
   };
-
+  const [ttOpen, setTtOpen] = React.useState(false);
+  const handlettToggle = () => {
+    console.log('test')
+    setTtOpen(!ttOpen);
+  };
+  
   const drawer = (
     <div>
       <Link to="/main" style={{ fontSize: 18, marginLeft: 60 }}>
@@ -100,14 +106,15 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         </Button>
       </label> */}
 
-        <ListItem button key={"Загрузить базу"}>
+
+        <ListItem button key={"Загрузить базу"} onClick={handlettToggle}>
           <ListItemIcon>
             <IconButton
               color="primary"
               aria-label="upload picture"
               component="span"
             >
-              <LocalAirportRoundedIcon />
+              <LocalAirportRoundedIcon/>
             </IconButton>
           </ListItemIcon>
           <ListItemText primary="Загрузить базу" />
@@ -164,13 +171,10 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
           </ListItemIcon>
           <ListItemText primary={"Графики звонков"} />
         </ListItem>
-        )
       </List>
     </div>
   );
-  const test = () => {
-    console.log("test");
-  };
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -223,6 +227,11 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {ttOpen ?
+           <UploadFileComponent /> :
+           null
+        }
+
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

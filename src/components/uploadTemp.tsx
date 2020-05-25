@@ -32,25 +32,28 @@ class UploadFileComponent extends React.Component<UploadFileProps, UploadFileSta
         });
     }
 
-    private manageUploadedFile(binary: String, file: File) {
+    private manageUploadedFile(/*binary: String, */file: File) {
         // do what you need with your file (fetch POST, ect ....)
-        console.log(`The file size is ${binary.length}`);
+        //console.log(`The file size is ${binary.length}`);
         console.log(`The file name is ${file.name}`);
     }
 
     private handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.persist();
         if(event.target.files){
-        Array.from(event.target.files).forEach(file => {
-            this.getFileFromInput(file)
-                .then((binary) => {
-                    this.manageUploadedFile(binary, file);
-                }).catch(function (reason) {
-                    console.log(`Error during upload ${reason}`);
-                    event.target.value = '' // to allow upload of same file if error occurs
-                })
-            })
-        }
+        //Array.from(event.target.files).forEach(file => {
+            // this.getFileFromInput(event.target.files[0])
+            //     .then((binary) => {
+                    //if(event.target.files)
+                    console.log(event.target.files[0])
+                        this.manageUploadedFile(/*binary,*/ event.target.files[0]);
+                // }).catch(function (reason) {
+                //     console.log(`Error during upload ${reason}`);
+                //     event.target.value = '' // to allow upload of same file if error occurs
+                // })
+            }
+            //)
+        //}
     }
 
 
@@ -58,7 +61,7 @@ class UploadFileComponent extends React.Component<UploadFileProps, UploadFileSta
         return (
             <Grid container>
                 <Hidden only={['sm', 'lg']}>
-                <Grid item xs={6} lg={12} style={{backgroundColor: "red"}}>
+                <Grid item xs={6} lg={1} style={{backgroundColor: "red"}}>
                     <input accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
