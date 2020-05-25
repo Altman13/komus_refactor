@@ -18,6 +18,12 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 import  UploadButtons from './UploadFileComponent';
 import Button from "@material-ui/core/Button";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { Link } from "react-router-dom"
+import LocalAirportRoundedIcon from '@material-ui/icons/LocalAirportRounded';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
+      
     },
     content: {
       flexGrow: 1,
@@ -74,34 +81,83 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const drawer = (
     <div>
-
-      <div className={classes.toolbar} />
+      
+      <Link to="/main" style={{fontSize: 18, marginLeft: 60}} >На главную</Link>
+      <br/><br/>
       <Divider />
       <List>
-      <UploadButtons/>
-      <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-        ><PersonAddIcon/>
-        </IconButton> 
-      <label htmlFor="contained-button-file">
+      {/* <UploadButtons/> */}
+      
+      {/* <label htmlFor="contained-button-file">
         <Button variant="contained" color="primary" component="span">
           Загрузить пользователей
         </Button>
-      </label>
-        {['Загрузить пользователей', 'Назначить старших операторов'].map((text, index) => (
+      </label> */}
+      {['Загрузить базу'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          <ListItemIcon>{index % 2 === 0 ? <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+        >
+          <LocalAirportRoundedIcon/>
+            </IconButton>  : <MailIcon />}</ListItemIcon>
+            <ListItemText primary="Загрузить базу" />
+          </ListItem>
+        ))}
+        {['Загрузить пользователей'].map((text, index) => (
+          <ListItem button key={text}>
+          <ListItemIcon>{index % 2 === 0 ? 
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+          <PersonAddIcon/>
+            </IconButton>  : <PeopleAltIcon/>}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+        {['Назначить старших операторов'].map((text, index) => (
+          <ListItem button key={text}>
+          <ListItemIcon>{index % 2 === 0 ? 
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+          <PeopleAltIcon/>
+            </IconButton>  : <PeopleAltIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['Выгрузить отчет', 'Графики звонков'].map((text, index) => (
+        {['Выгрузить отчет'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? 
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+          <WorkOutlineIcon/>
+            </IconButton>  : <PeopleAltIcon/>}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      
+        {['Графики звонков'].map((text, index) => (
+          <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? 
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                <ShowChartIcon/>
+            </IconButton>  : <PeopleAltIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -111,9 +167,11 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   return (
     <div className={classes.root}>
+      
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+        
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -161,7 +219,7 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {/* <Typography paragraph>
+        <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
           facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
@@ -183,7 +241,7 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
           tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
           nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
           accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography> */}
+        </Typography>
       </main>
     </div>
   );

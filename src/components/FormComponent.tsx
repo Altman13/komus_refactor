@@ -1,4 +1,4 @@
-import React from "react"
+import React, { JSXElementConstructor } from "react"
 import MailSendComponent from "./MailSendComponent"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
 import CustomizedSelects from "./SelectComponent"
@@ -21,6 +21,10 @@ import Box from "@material-ui/core/Box"
 import { ResponsiveDrawer } from './DashBoardComponent';
 import UploadFileComponent from './uploadTemp';
 import Hidden from '@material-ui/core/Hidden';
+import {
+  
+  Link
+} from "react-router-dom"
 
 interface State {
   id: number
@@ -121,14 +125,20 @@ export class FormComponent extends React.Component<Props, State> {
   }
 
   render() {
-    
+
     return (
-      <Container component="main">
-        {
-          this.state.st_operator === true &&
-          <ResponsiveDrawer/>
-        }
-      <Grid container spacing={3}>
+      
+      <Container component="main" >
+        <span style={{fontSize: 30}}>"Название проекта"</span>
+        <br/>
+        <span style={{fontSize:20}}>
+        { 
+        this.state.st_operator === true &&
+        <Link to="/dashboard" >Панель управления</Link>
+      }
+      </span>
+      
+      <Grid container spacing={3} style={{marginTop: 5}}>
         <Hidden only="xs">
           <Grid item xs style={{ border: "2px solid" }}>
                   {this.state.html_cont.map((element, key) => <div key={key}>{element}</div>)}
@@ -237,6 +247,7 @@ export class FormComponent extends React.Component<Props, State> {
           </Hidden>
         </Grid>
       </Container>
+      
     );
   }
 }
