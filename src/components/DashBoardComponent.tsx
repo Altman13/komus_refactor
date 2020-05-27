@@ -1,19 +1,18 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import React from "react"
+import AppBar from "@material-ui/core/AppBar"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Divider from "@material-ui/core/Divider"
+import Drawer from "@material-ui/core/Drawer"
+import Hidden from "@material-ui/core/Hidden"
+import IconButton from "@material-ui/core/IconButton"
+import InboxIcon from "@material-ui/icons/MoveToInbox"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemText from "@material-ui/core/ListItemText"
+import MenuIcon from "@material-ui/icons/Menu"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
 import {
   makeStyles,
   useTheme,
@@ -81,14 +80,17 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-    
-  };
-  const [ttOpen, setTtOpen] = React.useState(false);
+  }
+  const [base, setBase] = React.useState(false);
   const handlettToggle = () => {
-    console.log('test')
-    setTtOpen(!ttOpen);
-  };
-  
+    console.log('base loaded')
+    setBase(!base)
+  }
+  const [oper, setOper] = React.useState(false);
+  const operatorLoad = () => {
+    console.log('operator loaded')
+    setOper(!oper)
+  }
   const drawer = (
     <div>
       <Link to="/main" style={{ fontSize: 18, marginLeft: 60 }}>
@@ -116,11 +118,11 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             >
               <LocalAirportRoundedIcon/>
             </IconButton>
-          </ListItemIcon>
+          </ListItemIcon >
           <ListItemText primary="Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={"Загрузить пользователей"}>
+        <ListItem button key={"Загрузить пользователей"} onClick ={operatorLoad}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -227,11 +229,14 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {ttOpen ?
-           <UploadFileComponent /> :
-           null
+        { base ?
+          <UploadFileComponent url ='base' /> :
+          null
         }
-
+        { oper ?
+          <UploadFileComponent url="user"/> :
+          null
+        }
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

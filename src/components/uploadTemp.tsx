@@ -88,7 +88,8 @@ const buttonUploadFile: CSS.Properties = {
     margin: '8'
 };
 export interface UploadFileComponentProps {
-    
+    url: string
+    //file: any
 }
  
 export interface UploadFileComponentState {
@@ -120,17 +121,18 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
             let op='operators'
             formData.append(op, file);
             //}
-            const response = await fetch('http://localhost/komus_new/api/user', {
+            const response = await fetch('http://localhost/komus_new/api/'+this.props.url, {
             method: 'POST',
             body: formData
             });
         console.log(`The file name is ${file.name}`);
+        console.log(this.props.url)
         this.setState({file: file.name})
     }
         handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.persist();
         if(event.target.files){
-            
+
         Array.from(event.target.files).forEach(file => {
             if(event.target.files)
             this.getFileFromInput(event.target.files[0])
@@ -142,8 +144,7 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
                     console.log(`Error during upload ${reason}`);
                     event.target.value = '' // to allow upload of same file if error occurs
                 })
-            }
-            )
+            })
         }
     }
     render() : JSX.Element { 
