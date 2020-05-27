@@ -24,7 +24,7 @@ export const get_contacts = createAsync<any, any>(
     }
   }
 )
-export function makeCall (id: number): AppActions {
+function makeCall (id: number): AppActions {
   return {
     type: MAKE_CALL,
   id

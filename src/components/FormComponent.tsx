@@ -1,9 +1,8 @@
-import React, { JSXElementConstructor } from "react"
+import React from "react"
 import MailSendComponent from "./MailSendComponent"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
 import CustomizedSelects from "./SelectComponent"
 import { Button, TextField, Grid } from "@material-ui/core"
-//import CssBaseline from "@material-ui/core/CssBaseline"
 import Container from "@material-ui/core/Container"
 import InfoTextBlock from "./InfoComponent"
 import { connect } from "react-redux"
@@ -18,7 +17,7 @@ import RadioBtnComponent from "./RadioBtnComponent"
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from "@material-ui/core/Box"
-import { ResponsiveDrawer } from './DashBoardComponent';
+
 import UploadFileComponent from './uploadTemp';
 import Hidden from '@material-ui/core/Hidden';
 import {
@@ -85,6 +84,7 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
       }
       this.props.make_calls(this.state.id)
+      //this.props.get_contacts()
   }
 
   componentDidMount() {

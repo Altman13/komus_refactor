@@ -111,9 +111,9 @@ export type CallActionTypes =
 
 export type AppActions = CallActionTypes;
 
-export function makeCall (id: number): AppActions {
-  return {
-    type: MAKE_CALL,
-  id
-  }
-}
+// export function makeCall (id: number): AppActions {
+//   return {
+//     type: MAKE_CALL,
+//   id
+//   }
+// }
