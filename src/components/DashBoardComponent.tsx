@@ -82,13 +82,16 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setMobileOpen(!mobileOpen);
   }
   const [url, setUrl] = React.useState("");
+  const [text, setText] = React.useState("");
   const setBaseUrl = () => {
     console.log('base loaded')
     setUrl("base")
+    setText("базу")
   }
   const setUserUrl = () => {
     console.log('operator loaded')
     setUrl("user")
+    setText("пользователей")
   }
   const drawer = (
     <div>
@@ -228,11 +231,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {
-        url ?
-          <UploadFileComponent url ={url}/> : null
+        { 
+          url ? <UploadFileComponent url ={url} text={text}/> : null
         }
-        
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

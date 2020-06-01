@@ -89,7 +89,7 @@ const buttonUploadFile: CSS.Properties = {
 };
 export interface UploadFileComponentProps {
     url: string
-    //file: any
+    text :string
 }
  
 export interface UploadFileComponentState {
@@ -155,7 +155,7 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
                     <input accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">Загрузить
+                        <IconButton color="primary" aria-label="upload picture" component="span">Загрузить {this.props.text}
                             <CheckCircleIcon />
                         </IconButton>
                         </label>
