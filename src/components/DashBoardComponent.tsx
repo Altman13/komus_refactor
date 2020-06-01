@@ -27,8 +27,9 @@ import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
-import UploadFileComponent from './uploadTemp';
 import ListOperators from './ListOperatorsComponent'
+import UploadFileComponent from './UploadFileComponent'
+import CustomizedSelects from './SelectComponent';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>

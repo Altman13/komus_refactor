@@ -5,7 +5,6 @@ import { store } from "./store";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import LoginComponent from "./components/LoginComponent";
 import FormComponent from "./components/FormComponent";
-// import { ResponsiveDrawer } from './components/DashBoardComponent'
 import { DashBoardComponent }  from './components/DashBoardComponent'
 import { UserFactory } from './components/user_role_temp'
 

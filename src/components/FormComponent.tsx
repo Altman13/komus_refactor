@@ -19,7 +19,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Box from "@material-ui/core/Box"
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from "react-router-dom"
-import ListOperators from './ListOperatorsComponent'
+
 interface State {
   id: number
   naimenovanie: string
