@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface ResponsiveDrawerProps {
+interface DashBoardComponentProps {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -73,7 +73,7 @@ interface ResponsiveDrawerProps {
   container?: Element;
 }
 
-export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
+export function DashBoardComponent(props: DashBoardComponentProps) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -81,15 +81,14 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   }
-  const [base, setBase] = React.useState(false);
-  const handlettToggle = () => {
+  const [url, setUrl] = React.useState("");
+  const setBaseUrl = () => {
     console.log('base loaded')
-    setBase(!base)
+    setUrl("base")
   }
-  const [oper, setOper] = React.useState(false);
-  const operatorLoad = () => {
+  const setUserUrl = () => {
     console.log('operator loaded')
-    setOper(!oper)
+    setUrl("user")
   }
   const drawer = (
     <div>
@@ -109,7 +108,7 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       </label> */}
 
 
-        <ListItem button key={"Загрузить базу"} onClick={handlettToggle}>
+        <ListItem button key={"Загрузить базу"} onClick={setBaseUrl}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -122,7 +121,7 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
           <ListItemText primary="Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={"Загрузить пользователей"} onClick ={operatorLoad}>
+        <ListItem button key={"Загрузить пользователей"} onClick ={setUserUrl}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -229,14 +228,11 @@ export function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        { base ?
-          <UploadFileComponent url ='base' /> :
-          null
+        {
+        url ?
+          <UploadFileComponent url ={url}/> : null
         }
-        { oper ?
-          <UploadFileComponent url="user"/> :
-          null
-        }
+        
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

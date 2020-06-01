@@ -5,7 +5,8 @@ import { store } from "./store";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import LoginComponent from "./components/LoginComponent";
 import FormComponent from "./components/FormComponent";
-import { ResponsiveDrawer } from './components/DashBoardComponent'
+// import { ResponsiveDrawer } from './components/DashBoardComponent'
+import { DashBoardComponent }  from './components/DashBoardComponent'
 import { UserFactory } from './components/user_role_temp'
 
 let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
@@ -36,7 +37,7 @@ ReactDOM.render(
                 {<Route exact path="/" component={PrivateRoute} />}
                 <Route path="/login" component={LoginComponent} />
                 {<Route path="/main" component={FormComponent} />}
-                <Route path="/dashboard" component={ResponsiveDrawer} />
+                <Route path="/dashboard" component={DashBoardComponent} />
             </Switch>
         </Router>
     </Provider>,

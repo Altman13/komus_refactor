@@ -133,9 +133,9 @@ export class FormComponent extends React.Component<Props, State> {
         <br/>
         <span style={{fontSize:20}}>
         { 
-        this.state.st_operator === true &&
-        <Link to="/dashboard" >Панель управления</Link>
-      }
+          this.state.st_operator === true &&
+          <Link to="/dashboard" >Панель управления</Link>
+        }
       </span>
       
       <Grid container spacing={3} style={{marginTop: 5}}>
