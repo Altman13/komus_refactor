@@ -17,14 +17,9 @@ import RadioBtnComponent from "./RadioBtnComponent"
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from "@material-ui/core/Box"
-
-import UploadFileComponent from './uploadTemp';
 import Hidden from '@material-ui/core/Hidden';
-import {
-  
-  Link
-} from "react-router-dom"
-
+import { Link } from "react-router-dom"
+import ListOperators from './ListOperatorsComponent'
 interface State {
   id: number
   naimenovanie: string
@@ -129,6 +124,7 @@ export class FormComponent extends React.Component<Props, State> {
     return (
       
       <Container component="main" >
+        
         <span style={{fontSize: 30}}>"Название проекта"</span>
         <br/>
         <span style={{fontSize:20}}>
@@ -228,6 +224,7 @@ export class FormComponent extends React.Component<Props, State> {
                 value={this.state.comment}
                 onChange={this.onChange.bind(this)}
               />
+              
               <Button
                 type="submit"
                 variant="contained"
