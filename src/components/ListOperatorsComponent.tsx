@@ -10,7 +10,7 @@ export default function ListOperators() {
       options={top100Films}
       getOptionLabel={(option) => option.title}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined"  style={{width: 300}}/>}
+      renderInput={(params) => <TextField {...params} label="Список операторов" variant="outlined"  style={{width: 300}}/>}
     />
   );
 }

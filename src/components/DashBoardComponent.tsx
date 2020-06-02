@@ -5,7 +5,6 @@ import Divider from "@material-ui/core/Divider"
 import Drawer from "@material-ui/core/Drawer"
 import Hidden from "@material-ui/core/Hidden"
 import IconButton from "@material-ui/core/IconButton"
-import InboxIcon from "@material-ui/icons/MoveToInbox"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
@@ -19,8 +18,6 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-import UploadButtons from "./UploadFileComponent";
-import Button from "@material-ui/core/Button";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { Link } from "react-router-dom";
 import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
@@ -29,7 +26,6 @@ import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import ListOperators from './ListOperatorsComponent'
 import UploadFileComponent from './UploadFileComponent'
-import CustomizedSelects from './SelectComponent';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -103,15 +99,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       <br />
       <Divider />
       <List>
-        {/* <UploadButtons/> */}
-
-        {/* <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          Загрузить пользователей
-        </Button>
-      </label> */}
-
-
         <ListItem button key={"Загрузить базу"} onClick={setBaseUrl}>
           <ListItemIcon>
             <IconButton

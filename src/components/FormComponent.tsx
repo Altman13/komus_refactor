@@ -1,7 +1,6 @@
 import React from "react"
 import MailSendComponent from "./MailSendComponent"
 import TextareaAutosize from "@material-ui/core/TextareaAutosize"
-import CustomizedSelects from "./SelectComponent"
 import { Button, TextField, Grid } from "@material-ui/core"
 import Container from "@material-ui/core/Container"
 import InfoTextBlock from "./InfoComponent"
@@ -16,7 +15,6 @@ import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from '@material-ui/core/InputLabel';
-import Box from "@material-ui/core/Box"
 import Hidden from '@material-ui/core/Hidden';
 import { Link } from "react-router-dom"
 
@@ -39,7 +37,6 @@ export class FormComponent extends React.Component<Props, State> {
     super(props)
     this.state = {id: 0, naimenovanie: "", fio: "", nomer: "", email: "", comment: "", submitted: false, html_cont: [], st_operator: false}
     this.handleChange = this.handleChange.bind(this)
-    //this.handleSubmit = this.handleSubmit.bind(this)
     this.makeCallHandler = this.makeCallHandler.bind(this)
     
   }
@@ -65,12 +62,6 @@ export class FormComponent extends React.Component<Props, State> {
     }
   }
 
-  // handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault()
-  // this.props.makeCall()
-  // this.setState({ submitted: true });
-  // }
-
   makeCallHandler(event){
     event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
@@ -79,7 +70,6 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
       }
       this.props.make_calls(this.state.id)
-      //this.props.get_contacts()
   }
 
   componentDidMount() {
@@ -188,17 +178,14 @@ export class FormComponent extends React.Component<Props, State> {
                 value={this.state.email || ""}
                 onChange={this.handleChange}
               />
-              
               <InputLabel id="request_call-label">Статус обращения</InputLabel>
               <NativeSelect style={{ width: "200px" }}
                 id="request_call"
-                onChange={this.SelectHandleChange}
-              >
+                onChange={this.SelectHandleChange}>
                 <option value="" />
                 <option value={'Суть обращения'}>Суть обращения</option>
                 <option value={'Статус обращения'}>Статус обращения</option>
                 <option value={'Результат обращения'}>Результат обращения</option>
-                
               </NativeSelect>
               <InputLabel id="status_call-label">Статус звонка</InputLabel>
               <NativeSelect style={{ width: "200px" }}
@@ -211,8 +198,6 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value={'Перезвон3'}>Перезвон3</option>
                 <option value={'Недозвон'}>Недозвон</option>
               </NativeSelect>
-    
-              {/* <CustomizedSelects onChange={this.handleChange} /> */}
               <MailSendComponent />
               <TextareaAutosize
                 aria-label="minimum height"
@@ -224,7 +209,6 @@ export class FormComponent extends React.Component<Props, State> {
                 value={this.state.comment}
                 onChange={this.onChange.bind(this)}
               />
-              
               <Button
                 type="submit"
                 variant="contained"

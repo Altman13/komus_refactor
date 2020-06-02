@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import LoginComponent from "./components/LoginComponent";
 import FormComponent from "./components/FormComponent";
 import { DashBoardComponent }  from './components/DashBoardComponent'
-import { UserFactory } from './components/user_role_temp'
+import { UserFactory } from './components/UserFactory'
 
 let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
 let factory = new UserFactory();

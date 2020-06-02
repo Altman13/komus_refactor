@@ -66,11 +66,11 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
             <Grid container>
                 <Hidden only={['sm', 'lg']}>
                 <Grid item xs={6} lg={1}>
-                    <input accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
+                    <input accept=".xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
                         <IconButton color="primary" aria-label="upload picture" component="span">Загрузить {this.props.text}
-                            <CheckCircleIcon />
+                            {/* <CheckCircleIcon /> */}
                         </IconButton>
                         </label>
                         <span>{this.state.file}</span>

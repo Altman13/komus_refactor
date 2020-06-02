@@ -1,9 +1,7 @@
-import { Contacts, Contact} from "./../models/contact"
+import { Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
 
 const callsReducerDefaultState: Contact[] = []
-  //contacts : []
-
 
 const CallReducer = (
   state = callsReducerDefaultState,
