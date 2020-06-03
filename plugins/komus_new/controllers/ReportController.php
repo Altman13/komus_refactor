@@ -20,21 +20,16 @@ class ReportController
         $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
         $objPHPExcel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
-        $row_count = count($data_for_xls);
         $row_num = 0;
-        for ($i = 0; $i < $row_count; $i++) {
             foreach ($data_for_xls as $key => $data_row) {
                 $clm_num = 0;
                 foreach ($data_row as $key => $column_val) {
                     //echo $column_val . ' ';
-                    //echo $j;
-                    //echo "k=>$k j=$j".'<br>';
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
                     $clm_num++;
                 }
                 $row_num++;
             }
-        }
         $objWriter->save('report.xlsx');
     }
 }
