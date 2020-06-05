@@ -29,37 +29,37 @@ import UploadFileComponent from "./UploadFileComponent";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+createStyles({
     root: {
-      display: "flex",
+        display: "flex",
     },
     drawer: {
-      [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
         flexShrink: 0,
-      },
+        },
     },
     appBar: {
-      [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("sm")]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
-      },
+        },
     },
     menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up("sm")]: {
         display: "none",
-      },
+        },
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth,
+        width: drawerWidth,
     },
     content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  })
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        },
+    })
 );
 export interface DashBoardComponentProps {
     
@@ -80,58 +80,58 @@ class DashBoardComponent extends React.Component<DashBoardComponentProps, DashBo
         <div className={classes.root}>
             <CssBaseline />
             <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar>
+            <Toolbar>
                 <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
                   //onClick={handleDrawerToggle}
-                  className={classes.menuButton}
+                className={classes.menuButton}
                 >
-                  <MenuIcon />
+                <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap>
-                  Панель управления
+                Панель управления
                 </Typography>
-              </Toolbar>
+            </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">
               {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-              <Hidden smUp implementation="css">
+            <Hidden smUp implementation="css">
                 {/* <Drawer
-                  container={container}
-                  variant="temporary"
-                  anchor={theme.direction === "rtl" ? "right" : "left"}
-                  open={mobileOpen}
-                  onClose={handleDrawerToggle}
-                  classes={{
+                container={container}
+                variant="temporary"
+                anchor={theme.direction === "rtl" ? "right" : "left"}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
                     paper: classes.drawerPaper,
-                  }}
-                  ModalProps={{
+                }}
+                ModalProps={{
                     keepMounted: true, // Better open performance on mobile.
-                  }}
+                }}
                 >
-                  {drawer}
+                {drawer}
                 </Drawer> */}
-              </Hidden>
-              <Hidden xsDown implementation="css">
+            </Hidden>
+            <Hidden xsDown implementation="css">
                 <Drawer
-                  classes={{
+                classes={{
                     paper: classes.drawerPaper,
-                  }}
-                  variant="permanent"
-                  open
+                }}
+                variant="permanent"
+                open
                 >
                   {/* {drawer} */}
                 </Drawer>
-              </Hidden>
+            </Hidden>
             </nav>
             <main className={classes.content}>
-              <div className={classes.toolbar} />
-              {/* { 
+            <div className={classes.toolbar} />
+            {/* { 
                 url ? <UploadFileComponent url ={url} text={text}/> : null
               } */}
-              <Typography paragraph>
+            <Typography paragraph>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
                 dolor purus non enim praesent elementum facilisis leo vel. Risus at
@@ -145,8 +145,8 @@ class DashBoardComponent extends React.Component<DashBoardComponentProps, DashBo
                 vivamus at augue. At augue eget arcu dictum varius duis at consectetur
                 lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
                 faucibus et molestie ac.
-              </Typography>
-              <Typography paragraph>
+            </Typography>
+            <Typography paragraph>
                 Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
                 ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
                 elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
@@ -159,10 +159,10 @@ class DashBoardComponent extends React.Component<DashBoardComponentProps, DashBo
                 sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
                 eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
                 posuere sollicitudin aliquam ultrices sagittis orci a.
-              </Typography>
+            </Typography>
             </main>
             </div> );
     }
 }
- 
+
 export default DashBoardComponent;

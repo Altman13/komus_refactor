@@ -26,6 +26,12 @@ import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import ListOperators from './ListOperatorsComponent'
 import UploadFileComponent from './UploadFileComponent'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom"
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,7 +75,7 @@ interface DashBoardComponentProps {
    */
   container?: Element;
 }
-
+//TODO: разобраться как правильно работать с хуками
 export function DashBoardComponent(props: DashBoardComponentProps) {
   const { container } = props;
   const classes = useStyles();
@@ -80,24 +86,31 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   }
   const [url, setUrl] = React.useState("");
   const [text, setText] = React.useState("");
+  const [oper, setOper] = React.useState("");
   const setBaseUrl = () => {
     console.log('base loaded')
     setUrl("base")
     setText("базу")
+    setOper("")
   }
   const setUserUrl = () => {
     console.log('operator loaded')
     setUrl("user")
     setText("пользователей")
+    setOper("")
   }
+
+const setOperator = () =>{
+  console.log('назначить старших')
+  setOper("user")
+  setUrl("")
+}
   const drawer = (
     <div>
-      <Link to="/main" style={{ fontSize: 18, marginLeft: 60 }}>
+      <Link to="/main" style={{ fontSize: 18, textAlign: 'center', display: 'block', marginTop: 20 }}>
         На главную
       </Link>
-      <br />
-      <br />
-      <Divider />
+      <Divider style={{marginTop: 20}}/>
       <List>
         <ListItem button key={"Загрузить базу"} onClick={setBaseUrl}>
           <ListItemIcon>
@@ -122,9 +135,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <PersonAddIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Загрузить пользователей"} />
+          <ListItemText primary={"Загрузить пользователей"}/>
         </ListItem>
-        <ListItem button key={"Назначить старших операторов"}>
+        <ListItem button key={"Назначить старших операторов"} onClick ={setOperator}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -221,6 +234,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         <div className={classes.toolbar} />
         { 
           url ? <UploadFileComponent url ={url} text={text}/> : null
+        }
+        {
+          oper ? <ListOperators/> : null
         }
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

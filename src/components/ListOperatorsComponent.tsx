@@ -10,6 +10,7 @@ export default function ListOperators() {
       id="combo-box-demo"
       options={temp}
       getOptionLabel={(option) => option.title}
+      style={{ width: 300 }}
       renderInput={(params) =>
          <TextField {...params} label="Список операторов" variant="outlined"/>
       } 
