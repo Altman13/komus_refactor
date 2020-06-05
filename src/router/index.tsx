@@ -3,70 +3,57 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Redirect
 } from "react-router-dom"
 import  LoginComponent  from '../components/LoginComponent'
+import FormComponent from "../components/FormComponent";
+import  { DashBoardComponent }   from '../components/DashBoardComponent'
+let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
+import { UserFactory } from '../components/UserFactory'
+let factory = new UserFactory();
+let user = factory.getUserRole(parseInt(user_group));
 
-export function BasicExample() {
+    switch (user!.constructor.name) {
+        case 'Guest':
+            console.log('Guest')
+            break;
+        case 'Operator':
+            console.log('Operator')
+            break;
+        case 'St_operator':
+            console.log('St_operator')
+            break;
+        case 'Administrator':
+            console.log('Administrator')
+            break;
+        default:
+            break;
+    }
+export function MainRouter() {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        <Switch>
-          <Route exact path="/">
-            <LoginComponent/>
-          </Route>
-          <Route path="/main">
-            <About/>
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <Switch>
+        {<Route exact path="/" component={PrivateRoute} />}
+        <Route path="/login" component={LoginComponent} />
+        {<Route path="/main" component={FormComponent} />}
+        <Route path="/dashboard" component={DashBoardComponent} />
+    </Switch>
+</Router>
   )
 }
-
-// You can think of these components as "pages"
-// in your app.
-
-function Home() {
+function PrivateRoute() {
+  if(user_group){
+      var auth =true
+  }
   return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  )
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  )
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  )
-}
+      <Route
+          render={() =>
+          auth ? (
+              <Redirect to="/main"/>
+          ) : (
+              <Redirect to="/login"/>
+          )
+          }
+      />
+      )
+  }

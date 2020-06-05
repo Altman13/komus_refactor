@@ -24,7 +24,7 @@ class Report
         //TODO: дописать выборку согласно файлу загрузки базы
         //TODO: последний статус звонка?
         //количество попыток совершенных оператором
-        $calls_count = $this->db->prepare("SELECT COUNT(calls.contacts_id) AS tryed_to_call, calls.status, 
+        $calls = $this->db->prepare("SELECT COUNT(calls.contacts_id) AS tryed_to_call, calls.status, 
                                         contacts.id, contacts.phone, contacts.fio, contacts.naimenovanie,
                                         contacts.organization,
                                         CONCAT(users.firstname, ' ', users.lastname) as fio 
@@ -33,13 +33,13 @@ class Report
                                     LEFT JOIN users ON users.id =contacts.users_id
                                     GROUP BY calls.contacts_id");
         try {
-            $calls_count->execute();
+            $calls->execute();
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборе истории звонков и попыток дозвона ' . $th->getMessage());
         }
-        $all_calls_count = $calls_count->fetchAll(\PDO::FETCH_ASSOC);
+        $report_calls = $calls->fetchAll(\PDO::FETCH_ASSOC);
         //$all_calls_count=json_encode($all_calls_count, JSON_UNESCAPED_UNICODE);
-        return $all_calls_count;
+        return $report_calls;
         // звонки, совершенные оператором
         // $operator_calls = $this->db->prepare("SELECT contacts.id AS cont_id, contacts.phone, 
         //                                 CONCAT(users.user_firstname, ' ', users.user_lastname) AS operator_fio 
