@@ -8,6 +8,7 @@ var users = new Array();
 //   operators: string
 // }
 
+//TODO: все запросы перенести в сервисы
 async function get_users() {
   try {
     await fetch("http://localhost/komus_new/api/user")
@@ -50,9 +51,9 @@ export default function ListOperators() {
         onChange={(event, value) => set_st_operator(value)}
         options={users}
         getOptionLabel={(options) => options.operators}
-        style={{ width: 250, float: "left", marginLeft: 5 }}
+        style={{ width: 250, float: "left", marginLeft: 5, marginBottom: 5 }}
         renderInput={(params) => (
-          <TextField {...params} label="Назначить старшего" variant="outlined" />
+          <TextField {...params} label="Выбрать оператора" variant="outlined" />
         )}
       />
       <Button
