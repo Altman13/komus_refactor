@@ -10,7 +10,7 @@ const inputUploadFile: CSS.Properties= {
 }
 export interface UploadFileComponentProps {
     url: string
-    text :string
+    //text :string
 }
 export interface UploadFileComponentState {
     file: any
@@ -65,11 +65,11 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
         return (
             <Grid container>
                 <Hidden only={['sm', 'lg']}>
-                <Grid item xs={6} lg={1}>
+                <Grid item xs={12} lg={2}>
                     <input accept=".xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">Загрузить {this.props.text}
+                        <IconButton color="primary" aria-label="upload picture" component="span">Выбрать файл
                             {/* <CheckCircleIcon /> */}
                         </IconButton>
                         </label>

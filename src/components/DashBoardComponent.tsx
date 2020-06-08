@@ -86,24 +86,28 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   }
   const [url, setUrl] = React.useState("");
   const [text, setText] = React.useState("");
-  const [oper, setOper] = React.useState("");
+  const [oper, setOper] = React.useState(false);
   const setBaseUrl = () => {
     console.log('base loaded')
     setUrl("base")
     setText("базу")
-    setOper("")
+    setOper(false)
+    handleDrawerToggle()
   }
   const setUserUrl = () => {
     console.log('operator loaded')
     setUrl("user")
     setText("пользователей")
-    setOper("")
+    setOper(false)
+    handleDrawerToggle()
   }
 
 const setOperator = () =>{
   console.log('назначить старших')
-  setOper("user")
+  setOper(true)
+  setText("операторов")
   setUrl("")
+  handleDrawerToggle()
 }
   const drawer = (
     <div>
@@ -195,7 +199,8 @@ const setOperator = () =>{
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Панель управления
+            {text ? `Загрузить ${text}` : 'Панель управления'}
+            {oper ? "" : null}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -233,7 +238,7 @@ const setOperator = () =>{
       <main className={classes.content}>
         <div className={classes.toolbar} />
         { 
-          url ? <UploadFileComponent url ={url} text={text}/> : null
+          url ? <UploadFileComponent url ={url} /> : null
         }
         {
           oper ? <ListOperators/> : null
