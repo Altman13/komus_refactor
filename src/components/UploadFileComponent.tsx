@@ -73,7 +73,7 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
                         {/* <IconButton color="primary" aria-label="upload picture" component="span">Выбрать файл
                             {/* <CheckCircleIcon /> *
                         </IconButton> */}
-                        <Button variant="outlined" color="primary" aria-label="upload picture" component="span">Выбрать файл
+                        <Button variant="outlined" color="primary" aria-label="upload picture" component="span" style={{ height: 55 }}>Выбрать файл
                         </Button>
                         </label>
                         <span>{this.state.file}</span>
