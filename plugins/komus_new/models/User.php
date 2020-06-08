@@ -5,6 +5,8 @@
 
 namespace Komus;
 
+use DateTime;
+
 require "config/config.php";
 require "vendor/autoload.php";
 
@@ -60,22 +62,27 @@ class User
             $operator_last_name = $operator['B'];
             $operator_login = $operator['E'];
             $operator_depass = $operator['F'];
-            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+            // echo $operator_login .PHP_EOL;
+            // echo $operator_depass .PHP_EOL;
+            //$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
             //$password_hash = hash('sha256', $operator_depass . $salt);
             //генерируем  JWT токен            
             $payload = [
                 "user" => $operator_login,
-                "passwords" => $operator_depass
+                "passwords" => $operator_depass,
             ];
+            var_dump($payload);
+            die();
+
             $token =\Firebase\JWT\JWT::encode($payload, "thisissecret", "HS256");
-            $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, depass, token, salt, 
+            $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, depass, token,
                                                             timezone_id, groups_id)
-                                                                VALUES (:operator_login, :operator_fist_name, :operator_last_name, :depass, :token, :salt, 
+                                                                VALUES (:operator_login, :operator_fist_name, :operator_last_name, :depass, :token,
                                                             1, 1)");
             $insert_users->bindParam(':operator_login', $operator_login, \PDO::PARAM_STR);
             $insert_users->bindParam(':operator_fist_name', $operator_fist_name, \PDO::PARAM_STR);
             $insert_users->bindParam(':operator_last_name', $operator_last_name, \PDO::PARAM_STR);
-            $insert_users->bindParam(':salt', $salt, \PDO::PARAM_STR);
+            //$insert_users->bindParam(':salt', $salt, \PDO::PARAM_STR);
             //$insert_users->bindParam(':pass', $password_hash, \PDO::PARAM_STR);
             $insert_users->bindParam(':token', $token, \PDO::PARAM_STR);
             // //TODO : убрать после отладки depass из базы
@@ -95,7 +102,7 @@ class User
      */
     public function read()
     {
-        $all_users = $this->db->prepare("SELECT * FROM users");
+        $all_users = $this->db->prepare("SELECT CONCAT(users.firstname,' ', users.lastname) as operators FROM users");
         try {
             $all_users->execute();
         } catch (\Throwable $th) {

@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import CSS from 'csstype'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 
 const inputUploadFile: CSS.Properties= {
@@ -69,9 +70,11 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
                     <input accept=".xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">Выбрать файл
-                            {/* <CheckCircleIcon /> */}
-                        </IconButton>
+                        {/* <IconButton color="primary" aria-label="upload picture" component="span">Выбрать файл
+                            {/* <CheckCircleIcon /> *
+                        </IconButton> */}
+                        <Button variant="outlined" color="primary" aria-label="upload picture" component="span">Выбрать файл
+                        </Button>
                         </label>
                         <span>{this.state.file}</span>
                 </Grid>

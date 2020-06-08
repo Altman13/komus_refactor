@@ -1,5 +1,6 @@
 <?php
 require "models/User.php";
+
 use Komus\User;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,18 +15,20 @@ class UserController
     }
     public function show()
     {
-
+        $resp = '';
+        $resp = $this->user->read();
+        return $resp;
     }
     public function create(Request $request, Response $response)
     {
-        $resp='';
+        $resp = '';
         $get_file = $request->getUploadedFiles();
         $uploaded_file = $get_file['operators'];
         try {
             $this->user->create($uploaded_file);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при загрузке базы " . $th->getMessage() . PHP_EOL);
-                $resp = $response->withStatus(500);
+            $resp = $response->withStatus(500);
         }
         return $resp;
     }

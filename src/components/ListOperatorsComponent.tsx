@@ -4,7 +4,26 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Divider } from '@material-ui/core';
 
+const get_users = (
+    async () => {
+      try {
+        let resp=''
+        await fetch("http://localhost/komus_new/api/user")
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            resp = data
+          });
+        return resp
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  )
+
 export default function ListOperators() {
+  get_users()
   return (
     <Autocomplete
       id="combo-box-demo"
@@ -12,7 +31,7 @@ export default function ListOperators() {
       getOptionLabel={(option) => option.title}
       style={{ width: 300 }}
       renderInput={(params) =>
-         <TextField {...params} label="Список операторов" variant="outlined"/>
+      <TextField {...params} label="Список операторов" variant="outlined"/>
       } 
     />
   );
