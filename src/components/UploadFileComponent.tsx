@@ -66,14 +66,14 @@ class UploadFileComponent extends React.Component<UploadFileComponentProps, Uplo
         return (
             <Grid container>
                 <Hidden only={['sm', 'lg']}>
-                <Grid item xs={12} lg={2}>
+                <Grid item xs={12} lg={3} sm={4} md={4}>
                     <input accept=".xls,.xlsx" style={inputUploadFile} id="file" multiple={true} type="file"
                         onChange={this.handleFileChange} />
                     <label htmlFor="file">
                         {/* <IconButton color="primary" aria-label="upload picture" component="span">Выбрать файл
                             {/* <CheckCircleIcon /> *
                         </IconButton> */}
-                        <Button variant="outlined" color="primary" aria-label="upload picture" component="span" style={{ height: 55 }}>Выбрать файл
+                        <Button variant="outlined" color="primary" aria-label="upload picture" component="span" style={{ height: 55, width: '100%' }}>Выбрать файл
                         </Button>
                         </label>
                         <span>{this.state.file}</span>

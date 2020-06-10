@@ -92,14 +92,12 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setUrl("base")
     setText("базу")
     setOper(false)
-    handleDrawerToggle()
   }
   const setUserUrl = () => {
     console.log('operator loaded')
     setUrl("user")
     setText("пользователей")
     setOper(false)
-    handleDrawerToggle()
   }
 
 const setOperator = () =>{
@@ -107,7 +105,6 @@ const setOperator = () =>{
   setOper(true)
   setText("операторов")
   setUrl("")
-  handleDrawerToggle()
 }
   const drawer = (
     <div>
