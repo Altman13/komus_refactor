@@ -20,7 +20,7 @@ class SearchComponent extends React.Component<State, Props> {
         super(props);
     }
     render() { 
-        return ( <TextField id="outlined-basic" label="Поиск" variant="outlined" />);
+        return ( <TextField id="outlined-basic" label="Поиск" variant="outlined" style={{width: "100%", marginBottom: "15px" }} />);
     }
 }
 // interface LinkStateProps {

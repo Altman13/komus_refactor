@@ -10,7 +10,7 @@ var users = new Array();
 // }
 
 //TODO: все запросы перенести в сервисы
-async function get_users() {
+async function getUsers() {
   try {
     await fetch("http://localhost/komus_new/api/user")
       .then((response) => {
@@ -23,7 +23,7 @@ async function get_users() {
     console.log(err);
   }
 }
-async function set_st_operator(value) {
+async function setOperator(value) {
   if (value) {
     let resp = "";
     try {
@@ -44,13 +44,13 @@ async function set_st_operator(value) {
   }
 }
 export default function ListOperators() {
-  get_users();
-  return (
+  getUsers()
+    return (
     <div>
       <Grid item xs={12} lg={3} sm={4} md={4}>
       <Autocomplete
         id="combo-box-demo"
-        onChange={(event, value) => set_st_operator(value)}
+        onChange={(event, value) => setOperator(value)}
         options={users}
         getOptionLabel={(options) => options.operators}
         style={{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}
@@ -62,7 +62,7 @@ export default function ListOperators() {
         variant="outlined"
         color="primary"
         style={{ width: '100%', margin: 'auto', height: 55 }}
-        onClick={set_st_operator}
+        onClick={setOperator}
       >
         Назначить
       </Button>

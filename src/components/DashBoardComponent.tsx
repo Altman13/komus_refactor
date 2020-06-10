@@ -195,7 +195,7 @@ const setOperator = () =>{
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{ paddingLeft: -30, margin: 'auto', paddingRight: 44 }}>
             {text ? `Загрузить ${text}` : 'Панель управления'}
             {oper ? "" : null}
           </Typography>
