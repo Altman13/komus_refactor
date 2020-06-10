@@ -26,6 +26,7 @@ import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import ListOperators from './ListOperatorsComponent'
 import UploadFileComponent from './UploadFileComponent'
+import LoaderComponent from './LoaderComponent';
 import {
   BrowserRouter as Router,
   Switch,
@@ -106,6 +107,10 @@ const setOperator = () =>{
   setText("операторов")
   setUrl("")
 }
+const getReport =() =>{
+  
+  fetch("http://localhost/komus_new/api/report")
+}
   const drawer = (
     <div>
       <Link to="/main" style={{ fontSize: 18, textAlign: 'center', display: 'block', marginTop: 20 }}>
@@ -163,7 +168,7 @@ const setOperator = () =>{
               <WorkOutlineIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Выгрузить отчет"} />
+          <ListItemText primary={"Выгрузить отчет"} onClick={getReport} />
         </ListItem>
         <ListItem button key={"Графики звонков"}>
           <ListItemIcon>

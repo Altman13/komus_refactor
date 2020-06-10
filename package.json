@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/Altman13/komus_refactor#readme",
   "dependencies": {
-    "@babel/runtime": "^7.7.6"
+    "@babel/runtime": "^7.7.6",
+    "react-spinners": "^0.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
