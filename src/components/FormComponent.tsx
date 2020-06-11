@@ -17,8 +17,6 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
-import { yellow } from "@material-ui/core/colors";
-import LoaderComponent from './LoaderComponent';
 interface State {
   id: number;
   naimenovanie: string;
@@ -121,7 +119,6 @@ export class FormComponent extends React.Component<Props, State> {
   render() {
     return (
       <Container component="main">
-        <LoaderComponent/>
         <div style={{ fontSize: 30, textAlign: "center" }}>
           "Название проекта"
         </div>
@@ -143,7 +140,7 @@ export class FormComponent extends React.Component<Props, State> {
                   <Link to="/dashboard">Панель управления</Link>
                 )}
                 <div className="card_info" style={{ background: "darkseagreen", lineHeight: '22px', marginTop: '15px', 
-                borderRadius: '4px', padding: '15px' }}>
+                borderRadius: '4px', padding: '15px', textAlign: "left" }}>
                   {this.state.html_cont.map((element, key) => (
                     <div key={key}>{element}</div>
                   ))}

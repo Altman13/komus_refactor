@@ -1,17 +1,17 @@
-import React from "react"
-import AppBar from "@material-ui/core/AppBar"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Divider from "@material-ui/core/Divider"
-import Drawer from "@material-ui/core/Drawer"
-import Hidden from "@material-ui/core/Hidden"
-import IconButton from "@material-ui/core/IconButton"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import MenuIcon from "@material-ui/icons/Menu"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import {
   makeStyles,
   useTheme,
@@ -24,15 +24,16 @@ import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
-import ListOperators from './ListOperatorsComponent'
-import UploadFileComponent from './UploadFileComponent'
-import LoaderComponent from './LoaderComponent';
+import ListOperators from "./ListOperatorsComponent";
+import UploadFileComponent from "./UploadFileComponent";
+import LoaderComponent from "./LoaderComponent";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
-} from "react-router-dom"
+  Redirect,
+} from "react-router-dom";
+import { Grid } from "@material-ui/core";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -84,39 +85,54 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  }
+  };
   const [url, setUrl] = React.useState("");
   const [text, setText] = React.useState("");
   const [oper, setOper] = React.useState(false);
+  const [loader, setLoader] = React.useState(false);
   const setBaseUrl = () => {
-    console.log('base loaded')
-    setUrl("base")
-    setText("базу")
-    setOper(false)
-  }
+    console.log("base loaded");
+    setUrl("base");
+    setText("базу");
+    setOper(false);
+    setLoader(false);
+  };
   const setUserUrl = () => {
-    console.log('operator loaded')
-    setUrl("user")
-    setText("пользователей")
-    setOper(false)
-  }
+    console.log("operator loaded");
+    setLoader(false);
+    setUrl("user");
+    setText("пользователей");
+    setOper(false);
+  };
 
-const setOperator = () =>{
-  console.log('назначить старших')
-  setOper(true)
-  setText("операторов")
-  setUrl("")
-}
-const getReport =() =>{
-  
-  fetch("http://localhost/komus_new/api/report")
-}
+  const setOperator = () => {
+    setLoader(false);
+    console.log("назначить старших");
+    setOper(true);
+    setText("операторов");
+    setUrl("");
+  };
+  const getReport = () => {
+    setOper(false);
+    setUrl("");
+    setLoader(true);
+    setText("отчет");
+    //fetch("http://localhost/komus_new/api/report")
+  };
   const drawer = (
     <div>
-      <Link to="/main" style={{ fontSize: 18, textAlign: 'center', display: 'block', marginTop: 20 }}>
+      <Link
+        to="/main"
+        style={{
+          fontSize: 18,
+          textAlign: "center",
+          display: "block",
+          marginTop: 20,
+        }}
+      >
         На главную
       </Link>
-      <Divider style={{marginTop: 20}}/>
+      <Divider style={{ marginTop: 20 }} />
       <List>
         <ListItem button key={"Загрузить базу"} onClick={setBaseUrl}>
           <ListItemIcon>
@@ -125,13 +141,13 @@ const getReport =() =>{
               aria-label="upload picture"
               component="span"
             >
-              <LocalAirportRoundedIcon/>
+              <LocalAirportRoundedIcon />
             </IconButton>
-          </ListItemIcon >
+          </ListItemIcon>
           <ListItemText primary="Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={"Загрузить пользователей"} onClick ={setUserUrl}>
+        <ListItem button key={"Загрузить пользователей"} onClick={setUserUrl}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -141,9 +157,13 @@ const getReport =() =>{
               <PersonAddIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Загрузить пользователей"}/>
+          <ListItemText primary={"Загрузить пользователей"} />
         </ListItem>
-        <ListItem button key={"Назначить старших операторов"} onClick ={setOperator}>
+        <ListItem
+          button
+          key={"Назначить старших операторов"}
+          onClick={setOperator}
+        >
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -158,7 +178,7 @@ const getReport =() =>{
       </List>
       <Divider />
       <List>
-        <ListItem button key={"Выгрузить отчет"}>
+        <ListItem button key={"Выгрузить отчет"} onClick={getReport}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -168,7 +188,7 @@ const getReport =() =>{
               <WorkOutlineIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Выгрузить отчет"} onClick={getReport} />
+          <ListItemText primary={"Выгрузить отчет"}  />
         </ListItem>
         <ListItem button key={"Графики звонков"}>
           <ListItemIcon>
@@ -185,7 +205,7 @@ const getReport =() =>{
       </List>
     </div>
   );
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -200,8 +220,12 @@ const getReport =() =>{
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap style={{ paddingLeft: -30, margin: 'auto', paddingRight: 44 }}>
-            {text ? `Загрузить ${text}` : 'Панель управления'}
+          <Typography
+            variant="h6"
+            noWrap
+            style={{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
+          >
+            {text ? `Загрузить ${text}` : "Панель управления"}
             {oper ? "" : null}
           </Typography>
         </Toolbar>
@@ -239,12 +263,16 @@ const getReport =() =>{
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        { 
-          url ? <UploadFileComponent url ={url} /> : null
-        }
-        {
-          oper ? <ListOperators/> : null
-        }
+        {url ? <UploadFileComponent url={url} /> : null}
+        {oper ? <ListOperators /> : null}
+        {loader ? (
+          <Grid item xs={12} lg={2} sm={4} md={4}>
+            <div style={{ marginBottom: 20 }}>
+              <LoaderComponent />
+              <div style={{ fontSize: '18px', marginTop: '-10px' }}>Отчет формируется</div>
+              </div>
+          </Grid>
+        ) : null}
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

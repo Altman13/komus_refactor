@@ -24,7 +24,7 @@ class LoaderComponent extends React.Component<LoaderComponentProps,LoaderCompone
         <PacmanLoader
             css={override}
             size={20}
-            color={"#2196f3"}
+            color={"#3f51b5"}
             loading={this.state.loading}
         />
         </div>
