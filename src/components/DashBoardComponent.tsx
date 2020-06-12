@@ -1,40 +1,35 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import React from "react"
+import AppBar from "@material-ui/core/AppBar"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Divider from "@material-ui/core/Divider"
+import Drawer from "@material-ui/core/Drawer"
+import Hidden from "@material-ui/core/Hidden"
+import IconButton from "@material-ui/core/IconButton"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemText from "@material-ui/core/ListItemText"
+import MenuIcon from "@material-ui/icons/Menu"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
 import {
   makeStyles,
   useTheme,
   Theme,
   createStyles,
-} from "@material-ui/core/styles";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import { Link } from "react-router-dom";
-import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
-import ShowChartIcon from "@material-ui/icons/ShowChart";
-import ListOperators from "./ListOperatorsComponent";
-import UploadFileComponent from "./UploadFileComponent";
-import LoaderComponent from "./LoaderComponent";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import { Grid } from "@material-ui/core";
-const drawerWidth = 240;
+} from "@material-ui/core/styles"
+import PersonAddIcon from "@material-ui/icons/PersonAdd"
+import { Link } from "react-router-dom"
+import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded"
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
+import WorkOutlineIcon from "@material-ui/icons/WorkOutline"
+import ShowChartIcon from "@material-ui/icons/ShowChart"
+import ListOperators from "./ListOperatorsComponent"
+import UploadFileComponent from "./UploadFileComponent"
+import LoaderComponent from "./LoaderComponent"
+
+import { Grid } from "@material-ui/core"
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,46 +74,63 @@ interface DashBoardComponentProps {
 }
 //TODO: разобраться как правильно работать с хуками
 export function DashBoardComponent(props: DashBoardComponentProps) {
-  const { container } = props;
-  const classes = useStyles();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { container } = props
+  const classes = useStyles()
+  const theme = useTheme()
+  const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-  const [url, setUrl] = React.useState("");
-  const [text, setText] = React.useState("");
-  const [oper, setOper] = React.useState(false);
-  const [loader, setLoader] = React.useState(false);
+    setMobileOpen(!mobileOpen)
+  }
+  const [url, setUrl] = React.useState("")
+  const [text, setText] = React.useState("")
+  const [oper, setOper] = React.useState(false)
+  const [loader, setLoader] = React.useState(false)
+  const [report, setReport] = React.useState(false)
   const setBaseUrl = () => {
-    console.log("base loaded");
-    setUrl("base");
-    setText("базу");
-    setOper(false);
-    setLoader(false);
-  };
+    console.log("base loaded")
+    setUrl("base")
+    setText("базу")
+    setOper(false)
+    setLoader(false)
+    setReport(false)
+  }
   const setUserUrl = () => {
-    console.log("operator loaded");
-    setLoader(false);
-    setUrl("user");
-    setText("пользователей");
-    setOper(false);
-  };
+    console.log("operator loaded")
+    setLoader(false)
+    setUrl("user")
+    setText("пользователей")
+    setOper(false)
+    setReport(false)
+  }
 
   const setOperator = () => {
-    setLoader(false);
-    console.log("назначить старших");
-    setOper(true);
-    setText("операторов");
-    setUrl("");
-  };
+    setLoader(false)
+    setReport(false)
+    console.log("назначить старших")
+    setOper(true)
+    setText("операторов")
+    setUrl("")
+  }
   const getReport = () => {
-    setOper(false);
-    setUrl("");
-    setLoader(true);
-    setText("отчет");
-    //fetch("http://localhost/komus_new/api/report")
-  };
+    setOper(false)
+    setUrl("")
+    setLoader(true)
+    setText("отчет")
+      try {
+        fetch("http://localhost/komus_new/api/report")
+          .then((response) => {
+            //return response.json()
+          })
+          .then((data) => {
+            setLoader(false);
+            setReport(true);
+            //console.log(resp)
+          })
+      } catch (err) {
+        console.log("Ошибка при формировании очтета " + err)
+      }
+    }
+
   const drawer = (
     <div>
       <Link
@@ -188,7 +200,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <WorkOutlineIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Выгрузить отчет"}  />
+          <ListItemText primary={"Выгрузить отчет"} />
         </ListItem>
         <ListItem button key={"Графики звонков"}>
           <ListItemIcon>
@@ -266,12 +278,19 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         {url ? <UploadFileComponent url={url} /> : null}
         {oper ? <ListOperators /> : null}
         {loader ? (
-          <Grid item xs={12} lg={2} sm={4} md={4}>
-            <div style={{ marginBottom: 20 }}>
+          <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
+            <div style={{ marginLeft: "130px" }}>
               <LoaderComponent />
-              <div style={{ fontSize: '18px', marginTop: '-10px' }}>Отчет формируется</div>
-              </div>
+            </div>
+            <div style={{ fontSize: "18px", marginTop: "-10px" }}>
+              Отчет формируется
+            </div>
           </Grid>
+        ) : null}
+        {report ? (
+          <p style={{ fontSize: "18px" }}>
+            <a href="http://localhost/komus_new/report.xlsx">Скачать отчет</a>
+          </p>
         ) : null}
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -304,5 +323,5 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         </Typography>
       </main>
     </div>
-  );
+  )
 }
