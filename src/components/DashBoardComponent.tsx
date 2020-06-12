@@ -27,6 +27,7 @@ import ShowChartIcon from "@material-ui/icons/ShowChart"
 import ListOperators from "./ListOperatorsComponent"
 import UploadFileComponent from "./UploadFileComponent"
 import LoaderComponent from "./LoaderComponent"
+import { Button } from "@material-ui/core";
 
 import { Grid } from "@material-ui/core"
 const drawerWidth = 240
@@ -275,7 +276,18 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {url ? <UploadFileComponent url={url} /> : null}
+        {url ? <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
+              <UploadFileComponent url={url} /> 
+              <Button
+              variant="outlined"
+              color="primary"
+              style={{ width: '100%', margin: 'auto', height: 55, marginTop: 5 }}
+              //onClick={setOperator}
+            >
+              Загрузить
+            </Button>
+            </Grid>
+        : null }
         {oper ? <ListOperators /> : null}
         {loader ? (
           <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
