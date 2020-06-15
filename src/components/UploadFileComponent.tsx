@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import CSS from "csstype";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const inputUploadFile: CSS.Properties = {
@@ -28,20 +28,28 @@ class UploadFileComponent extends React.Component<
     this.manageUploadedFile = this.manageUploadedFile.bind(this);
   }
 
-  getFileFromInput(file: File): Promise<any> {
-    return new Promise(function (resolve, reject) {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = function () {
-        resolve(reader.result);
-      };
-      reader.readAsBinaryString(file); // here the file can be read in different way Text, DataUrl, ArrayBuffer
-    });
+  // getFileFromInput(file: File): Promise<any> {
+  //   this.setState({ file })
+  //   return new Promise(function (resolve, reject) {
+  //     const reader = new FileReader();
+  //     reader.onerror = reject;
+  //     reader.onload = function () {
+  //       resolve(reader.result);
+  //     };
+  //     reader.readAsBinaryString(file); // here the file can be read in different way Text, DataUrl, ArrayBuffer
+  //   });
+  // }
+
+  getFileFromInput(file: File){
+      if(file){
+        this.setState({ file : file })
+        console.log(this.state.file)
+      }
   }
-  async manageUploadedFile(/*binary: String, */ file: File) {
+  async manageUploadedFile() {
     const formData = new FormData();
     let fn: string = "upload_file";
-    formData.append(fn, file);
+    formData.append(fn, this.state.file);
     const response = await fetch(
       "http://localhost/komus_new/api/" + this.props.url,
       {
@@ -49,25 +57,46 @@ class UploadFileComponent extends React.Component<
         body: formData,
       }
     );
-    console.log(`The file name is ${file.name}`);
+    console.log(`The file name is ${this.state.file.name}`);
     console.log(this.props.url);
-    this.setState({ file: file.name });
   }
-  handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   manageUploadedFile(/*binary: String, */ file: File) {
+  //   const formData = new FormData();
+  //   let fn: string = "upload_file";
+  //   formData.append(fn, file);
+  //   const response = fetch(
+  //     "http://localhost/komus_new/api/" + this.props.url,
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //     }
+  //   );
+  //   console.log(`The file name is ${file.name}`);
+  //   console.log(this.props.url);
+  //   this.setState({ file: file.name });
+  // }
+  // handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   event.persist();
+  //   if (event.target.files) {
+  //     Array.from(event.target.files).forEach((file) => {
+  //       if (event.target.files)
+  //         this.getFileFromInput(event.target.files[0])
+  //           .then((binary) => {
+  //             if (event.target.files)
+  //               this.manageUploadedFile(/*binary,*/ event.target.files[0]);
+  //           })
+  //           .catch(function (reason) {
+  //             console.log(`Error during upload ${reason}`);
+  //             event.target.value = "";
+  //           });
+  //     });
+  //   }
+  // }
+    handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist();
     if (event.target.files) {
-      Array.from(event.target.files).forEach((file) => {
-        if (event.target.files)
-          this.getFileFromInput(event.target.files[0])
-            .then((binary) => {
-              if (event.target.files)
-                this.manageUploadedFile(/*binary,*/ event.target.files[0]);
-            })
-            .catch(function (reason) {
-              console.log(`Error during upload ${reason}`);
-              event.target.value = "";
-            });
-      });
+          console.log(event.target.files[0])
+          this.setState({ file : event.target.files[0] })
     }
   }
   render(): JSX.Element {
@@ -87,12 +116,25 @@ class UploadFileComponent extends React.Component<
             color="primary"
             aria-label="upload picture"
             component="span"
-            style={{ width: "100%", margin: "auto", height: 55, marginBottom: '5' }}
+            style={{
+              width: "100%",
+              margin: "auto",
+              height: 55,
+              marginBottom: "5",
+            }}
           >
             Выбрать файл
           </Button>
         </label>
-        <span>{this.state.file}</span>
+        {/* <span>{this.state.file}</span> */}
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
+          onClick={ this.manageUploadedFile }
+        >
+          Загрузить
+        </Button>
       </div>
     );
   }

@@ -278,14 +278,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         <div className={classes.toolbar} />
         {url ? <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
               <UploadFileComponent url={url} /> 
-              <Button
-              variant="outlined"
-              color="primary"
-              style={{ width: '100%', margin: 'auto', height: 55, marginTop: 5 }}
-              //onClick={setOperator}
-            >
-              Загрузить
-            </Button>
             </Grid>
         : null }
         {oper ? <ListOperators /> : null}
