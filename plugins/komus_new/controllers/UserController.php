@@ -23,7 +23,7 @@ class UserController
     {
         $resp = '';
         $get_file = $request->getUploadedFiles();
-        $uploaded_file = $get_file['operators'];
+        $uploaded_file = $get_file['upload_file'];
         try {
             $this->user->create($uploaded_file);
         } catch (\Throwable $th) {

@@ -128,7 +128,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             //console.log(resp)
           })
       } catch (err) {
-        console.log("Ошибка при формировании очтета " + err)
+        console.log("Ошибка при формировании отчета " + err)
       }
     }
 
@@ -300,9 +300,16 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           </Grid>
         ) : null}
         {report ? (
-          <p style={{ fontSize: "18px" }}>
-            <a href="http://localhost/komus_new/report.xlsx">Скачать отчет</a>
-          </p>
+          <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
+            <Button
+              href="http://localhost/komus_new/report.xlsx"
+              variant="outlined"
+              color="primary"
+              style={{ width: '100%', margin: 'auto', height: 55, marginTop: 5 }}
+            >
+              Скачать отчет
+            </Button>
+          </Grid>
         ) : null}
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

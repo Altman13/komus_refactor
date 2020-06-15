@@ -40,8 +40,8 @@ class UploadFileComponent extends React.Component<
   }
   async manageUploadedFile(/*binary: String, */ file: File) {
     const formData = new FormData();
-    let op = "operators";
-    formData.append(op, file);
+    let fn: string = "upload_file";
+    formData.append(fn, file);
     const response = await fetch(
       "http://localhost/komus_new/api/" + this.props.url,
       {
