@@ -123,8 +123,8 @@ export class FormComponent extends React.Component<Props, State> {
           "Название проекта"
         </div>
         <Grid container spacing={3} style={{ marginTop: 5 }}>
-          <Hidden only="xs">
-            <Grid item xs style={{ border: "2px solid" }}>
+          <Hidden only={['sm', 'xs']}>
+            <Grid item xs style={{ border: "2px solid" }} md={3}>
               <div
                 style={{
                   fontSize: 20,
@@ -148,7 +148,7 @@ export class FormComponent extends React.Component<Props, State> {
               </div>
             </Grid>
           </Hidden>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={9} sm={12}>
             <form className="form" noValidate>
               <InfoTextBlock />
               <TextField
@@ -243,7 +243,7 @@ export class FormComponent extends React.Component<Props, State> {
               </Button>
             </form>
           </Grid>
-          <Hidden only="xs">
+          <Hidden only={['md', 'sm', 'xs']}>
             <Grid item xs style={{ border: "2px solid" }}>
               <SearchComponent />
               <InfoTextBlock />
