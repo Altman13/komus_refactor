@@ -40,11 +40,11 @@ class UploadFileComponent extends React.Component<
   //   });
   // }
 
-  getFileFromInput(file: File){
-      if(file){
-        this.setState({ file : file })
-        console.log(this.state.file)
-      }
+  getFileFromInput(file: File) {
+    if (file) {
+      this.setState({ file: file });
+      console.log(this.state.file);
+    }
   }
   async manageUploadedFile() {
     const formData = new FormData();
@@ -56,9 +56,23 @@ class UploadFileComponent extends React.Component<
         method: "POST",
         body: formData,
       }
-    );
-    console.log(`The file name is ${this.state.file.name}`);
-    console.log(this.props.url);
+    ).then((response) => {
+      if (response.status === 200) {
+        console.log("SUCCESSS");
+        //return response.json();
+        this.setState({file : null })
+      } else if (response.status === 408) {
+        console.log("SOMETHING WENT WRONG");
+        //this.setState({ requestFailed: true })
+      }
+    });
+    //console.log(`The file name is ${this.state.file.name}`);
+    //console.log(this.props.url);
+  }
+
+  //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
+  componentWillReceiveProps(nextProps: UploadFileComponentProps) {
+    this.setState({ file: null });
   }
   //   manageUploadedFile(/*binary: String, */ file: File) {
   //   const formData = new FormData();
@@ -92,11 +106,11 @@ class UploadFileComponent extends React.Component<
   //     });
   //   }
   // }
-    handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist();
     if (event.target.files) {
-          console.log(event.target.files[0])
-          this.setState({ file : event.target.files[0] })
+      console.log(event.target.files[0]);
+      this.setState({ file: event.target.files[0] });
     }
   }
   render(): JSX.Element {
@@ -126,13 +140,14 @@ class UploadFileComponent extends React.Component<
             Выбрать файл
           </Button>
         </label>
-
-        <span>{this.state.file ? this.state.file.name : null }</span>
+        <div style={{ width: "100%", textAlign: "center", fontSize: 18 }}>
+          {this.state.file ? this.state.file.name : null}
+        </div>
         <Button
           variant="outlined"
           color="primary"
           style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
-          onClick={ this.manageUploadedFile }
+          onClick={this.manageUploadedFile}
         >
           Загрузить
         </Button>
