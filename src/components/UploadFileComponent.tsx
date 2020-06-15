@@ -48,7 +48,7 @@ class UploadFileComponent extends React.Component<
   }
   async manageUploadedFile() {
     const formData = new FormData();
-    let fn: string = "upload_file";
+    let fn: string = "file_upload";
     formData.append(fn, this.state.file);
     const response = await fetch(
       "http://localhost/komus_new/api/" + this.props.url,
@@ -126,7 +126,8 @@ class UploadFileComponent extends React.Component<
             Выбрать файл
           </Button>
         </label>
-        {/* <span>{this.state.file}</span> */}
+
+        <span>{this.state.file ? this.state.file.name : null }</span>
         <Button
           variant="outlined"
           color="primary"
