@@ -17,6 +17,7 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
+import NoticeDefault from '../components/NoticeComponent';
 interface State {
   id: number;
   naimenovanie: string;
@@ -27,6 +28,7 @@ interface State {
   submitted: boolean;
   html_cont: HTMLElement[];
   st_operator: boolean;
+  notice: boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -43,6 +45,7 @@ export class FormComponent extends React.Component<Props, State> {
       submitted: false,
       html_cont: [],
       st_operator: false,
+      notice : false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
@@ -96,8 +99,11 @@ export class FormComponent extends React.Component<Props, State> {
       nomer: contact.nomer,
       email: contact.email,
       st_operator: true,
+      notice : true
     });
-
+    setTimeout(() => {
+      this.setState({notice : false })
+    }, 6000);
     var key_contact = Object.keys(this.state);
     var html_element: any = [];
     for (let [key, value] of Object.entries(contact)) {
@@ -242,6 +248,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </Button>
             </form>
+            { this.state.notice ? <NoticeDefault/> : null }
           </Grid>
           <Hidden only={['md', 'sm', 'xs']}>
             <Grid item xs style={{ border: "2px solid" }}>

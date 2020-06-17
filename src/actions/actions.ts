@@ -53,7 +53,7 @@ export const receive_calls =createAsync<any, any>(
             referrerPolicy: 'no-referrer', // no-referrer, *client
             //TODO: передача данных
             //body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
+        })
         return dispatch({ type: "RECEIVE_CALL", contacts: resp });
       } catch (err) {
         console.log(err);
