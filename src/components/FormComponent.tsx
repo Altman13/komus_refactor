@@ -29,7 +29,7 @@ interface State {
   html_cont: HTMLElement[];
   st_operator: boolean;
   notice: boolean;
-  err : boolean
+  err: boolean;
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -47,7 +47,7 @@ export class FormComponent extends React.Component<Props, State> {
       html_cont: [],
       st_operator: false,
       notice: false,
-      err : false,
+      err: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
@@ -259,7 +259,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </Button>
             </form>
-            {this.state.notice ? <DefaultNotice  err={ this.state.err } /> : null}
+            {this.state.notice ? <DefaultNotice err={this.state.err} /> : null}
           </Grid>
           <Hidden only={["md", "sm", "xs"]}>
             <Grid item xs style={{ border: "2px solid" }}>
