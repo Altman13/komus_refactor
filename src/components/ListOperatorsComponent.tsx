@@ -61,7 +61,7 @@ export default function ListOperators() {
       <Button
         variant="outlined"
         color="primary"
-        style={{ width: '100%', margin: 'auto', height: 55 }}
+        style={{ width: '100%', margin: 'auto', height: 55, marginBottom: 20 }}
         onClick={setOperator}
       >
         Назначить

@@ -28,8 +28,9 @@ import ListOperators from "./ListOperatorsComponent"
 import UploadFileComponent from "./UploadFileComponent"
 import LoaderComponent from "./LoaderComponent"
 import { Button } from "@material-ui/core";
-
 import { Grid } from "@material-ui/core"
+import DefaultNotice from './NoticeComponent';
+
 const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -82,11 +83,14 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
+  
   const [url, setUrl] = React.useState("")
   const [text, setText] = React.useState("")
   const [oper, setOper] = React.useState(false)
   const [loader, setLoader] = React.useState(false)
   const [report, setReport] = React.useState(false)
+  const [notice, setNotice] = React.useState(false)
+
   const setBaseUrl = () => {
     console.log("base loaded")
     setUrl("base")
@@ -94,6 +98,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setOper(false)
     setLoader(false)
     setReport(false)
+    setNotice(false)
   }
   const setUserUrl = () => {
     console.log("operator loaded")
@@ -102,6 +107,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setText("пользователей")
     setOper(false)
     setReport(false)
+    setNotice(false)
   }
 
   const setOperator = () => {
@@ -111,6 +117,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setOper(true)
     setText("операторов")
     setUrl("")
+    setNotice(false)
   }
   const getReport = () => {
     setOper(false)
@@ -121,11 +128,11 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         fetch("http://localhost/komus_new/api/report")
           .then((response) => {
             //return response.json()
+            setNotice(true)
           })
           .then((data) => {
-            setLoader(false);
-            setReport(true);
-            //console.log(resp)
+            setLoader(false)
+            setReport(true)
           })
       } catch (err) {
         console.log("Ошибка при формировании отчета " + err)
@@ -218,7 +225,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </List>
     </div>
   );
-
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -301,8 +308,13 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             >
               Скачать отчет
             </Button>
+            
           </Grid>
         ) : null}
+        {
+          notice ? <DefaultNotice/> : null
+        }
+        
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
