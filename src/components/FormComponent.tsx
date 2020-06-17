@@ -17,7 +17,7 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
-import NoticeDefault from '../components/NoticeComponent';
+import DefaultNotice from "../components/NoticeComponent";
 interface State {
   id: number;
   naimenovanie: string;
@@ -28,7 +28,8 @@ interface State {
   submitted: boolean;
   html_cont: HTMLElement[];
   st_operator: boolean;
-  notice: boolean
+  notice: boolean;
+  err : boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -45,7 +46,8 @@ export class FormComponent extends React.Component<Props, State> {
       submitted: false,
       html_cont: [],
       st_operator: false,
-      notice : false,
+      notice: false,
+      err : false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
@@ -99,10 +101,10 @@ export class FormComponent extends React.Component<Props, State> {
       nomer: contact.nomer,
       email: contact.email,
       st_operator: true,
-      notice : true
+      notice: true,
     });
     setTimeout(() => {
-      this.setState({notice : false })
+      this.setState({ notice: false });
     }, 6000);
     var key_contact = Object.keys(this.state);
     var html_element: any = [];
@@ -129,7 +131,7 @@ export class FormComponent extends React.Component<Props, State> {
           "Название проекта"
         </div>
         <Grid container spacing={3} style={{ marginTop: 5 }}>
-          <Hidden only={['sm', 'xs']}>
+          <Hidden only={["sm", "xs"]}>
             <Grid item xs style={{ border: "2px solid" }} md={3}>
               <div
                 style={{
@@ -145,8 +147,17 @@ export class FormComponent extends React.Component<Props, State> {
                 {this.state.st_operator === true && (
                   <Link to="/dashboard">Панель управления</Link>
                 )}
-                <div className="card_info" style={{ background: "darkseagreen", lineHeight: '22px', marginTop: '15px', 
-                borderRadius: '4px', padding: '15px', textAlign: "left" }}>
+                <div
+                  className="card_info"
+                  style={{
+                    background: "darkseagreen",
+                    lineHeight: "22px",
+                    marginTop: "15px",
+                    borderRadius: "4px",
+                    padding: "15px",
+                    textAlign: "left",
+                  }}
+                >
                   {this.state.html_cont.map((element, key) => (
                     <div key={key}>{element}</div>
                   ))}
@@ -248,9 +259,9 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </Button>
             </form>
-            { this.state.notice ? <NoticeDefault/> : null }
+            {this.state.notice ? <DefaultNotice  err={ this.state.err } /> : null}
           </Grid>
-          <Hidden only={['md', 'sm', 'xs']}>
+          <Hidden only={["md", "sm", "xs"]}>
             <Grid item xs style={{ border: "2px solid" }}>
               <SearchComponent />
               <InfoTextBlock />

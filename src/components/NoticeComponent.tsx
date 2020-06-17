@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function DefaultNotice() {
+export default function DefaultNotice(err : any ) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [state, setState] = React.useState({
@@ -31,17 +31,23 @@ export default function DefaultNotice() {
     }
     setOpen(false);
   };
-
+  console.log(err.err)
   return (
     <div className={classes.root}>
       {/* <Button variant="outlined" onClick={handleClick}>
         Open success snackbar
       </Button> */}
+      { err.err ?
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal} >
-        <Alert onClose={handleClose} severity="success">
-          Действие выполнено успешно!
-        </Alert>
+        <Alert  onClose={handleClose} severity="error">Произошла ошибка при выполнеии действия!</Alert>
       </Snackbar>
+      :
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal} >
+          <Alert onClose={handleClose} severity="success">
+          Действие выполнено успешно!
+         </Alert>
+      </Snackbar>
+      }
       {/* <Alert severity="error">This is an error message!</Alert>
       <Alert severity="warning">This is a warning message!</Alert>
       <Alert severity="info">This is an information message!</Alert>
