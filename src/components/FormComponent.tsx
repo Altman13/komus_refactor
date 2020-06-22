@@ -18,7 +18,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
 import DefaultNotice from "../components/NoticeComponent";
-import { stringify } from "querystring";
+import { FormControlLabel, Checkbox } from '@material-ui/core';
+
 interface State {
   id: number;
   naimenovanie: string;
@@ -31,8 +32,9 @@ interface State {
   st_operator: boolean;
   notice: boolean;
   err: boolean;
-  status_call : string,
-  request_call : string
+  status_call: string;
+  request_call: string;
+  send_mail_kp: boolean;
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -53,11 +55,13 @@ export class FormComponent extends React.Component<Props, State> {
       err: false,
       status_call: "",
       request_call: "",
+      send_mail_kp: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
-    this.SelectHandleChange = this.SelectHandleChange.bind(this);
+    this.selectHandleChange = this.selectHandleChange.bind(this);
   }
+  
   onChange(e) {
     this.setState({ comment: e.target.value });
   }
@@ -88,8 +92,9 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
     }
     this.props.make_calls(this.state.id);
-    console.log(this.state)
-    this.setState({ request_call : "" })
+    console.log(this.state);
+    if(this.state.send_mail_kp)
+      fetch("http://localhost/komus_new/api/mail", { method : 'POST' })
   }
 
   componentDidMount() {
@@ -111,7 +116,8 @@ export class FormComponent extends React.Component<Props, State> {
       st_operator: true,
       notice: true,
       request_call: "",
-      status_call : ""
+      status_call: "",
+      send_mail_kp: false,
     });
     setTimeout(() => {
       this.setState({ notice: false });
@@ -130,18 +136,24 @@ export class FormComponent extends React.Component<Props, State> {
     }
     this.setState({ html_cont: html_element });
   }
-  SelectHandleChange(event : React.ChangeEvent<HTMLSelectElement>) {
-    const { name, value } =event.target
-    switch(name){
+  
+  selectHandleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = event.target;
+    switch (name) {
       case "status_call":
-          this.setState({ status_call: value }); 
-          break
-      case "request_call": 
-          this.setState({ request_call: value });
-          break
+        this.setState({ status_call: value });
+        break;
+      case "request_call":
+        this.setState({ request_call: value });
+        break;
     }
-    console.log(`${name} ${value}`)
+    console.log(`${name} ${value}`);
   }
+
+  sendMailKp = () => {
+    this.setState({ send_mail_kp: !this.state.send_mail_kp })
+  }
+
   render() {
     return (
       <Container component="main">
@@ -236,7 +248,7 @@ export class FormComponent extends React.Component<Props, State> {
                 style={{ width: "200px" }}
                 id="request_call"
                 name="request_call"
-                onChange={this.SelectHandleChange}
+                onChange={this.selectHandleChange}
                 value={this.state.request_call}
               >
                 <option value="" />
@@ -251,8 +263,8 @@ export class FormComponent extends React.Component<Props, State> {
                 style={{ width: "200px" }}
                 id="status_call"
                 name="status_call"
-                onChange={ this.SelectHandleChange }
-                value={ this.state.status_call }
+                onChange={this.selectHandleChange}
+                value={this.state.status_call}
               >
                 <option value="" />
                 <option value={"Перезвон1"}>Перезвон1</option>
@@ -260,7 +272,18 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value={"Перезвон3"}>Перезвон3</option>
                 <option value={"Недозвон"}>Недозвон</option>
               </NativeSelect>
-              <MailSendComponent />
+              {/* <MailSendComponent /> */}
+              <br/>
+              <FormControlLabel
+                className="custom-control-input"
+                id="customSwitches"
+                checked={this.state.send_mail_kp}
+                onChange={this.sendMailKp}
+                value="end"
+                control={<Checkbox color="primary" />}
+                label="Отправить коммерческое предложение"
+                labelPlacement="end"
+              />
               <TextareaAutosize
                 aria-label="minimum height"
                 rowsMin={3}
