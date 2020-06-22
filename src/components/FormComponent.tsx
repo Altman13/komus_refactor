@@ -18,6 +18,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
 import DefaultNotice from "../components/NoticeComponent";
+import { stringify } from "querystring";
 interface State {
   id: number;
   naimenovanie: string;
@@ -30,6 +31,8 @@ interface State {
   st_operator: boolean;
   notice: boolean;
   err: boolean;
+  status_call : string,
+  request_call : string
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -48,9 +51,12 @@ export class FormComponent extends React.Component<Props, State> {
       st_operator: false,
       notice: false,
       err: false,
+      status_call: "",
+      request_call: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
+    this.SelectHandleChange = this.SelectHandleChange.bind(this);
   }
   onChange(e) {
     this.setState({ comment: e.target.value });
@@ -82,6 +88,8 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
     }
     this.props.make_calls(this.state.id);
+    console.log(this.state)
+    this.setState({ request_call : "" })
   }
 
   componentDidMount() {
@@ -102,6 +110,8 @@ export class FormComponent extends React.Component<Props, State> {
       email: contact.email,
       st_operator: true,
       notice: true,
+      request_call: "",
+      status_call : ""
     });
     setTimeout(() => {
       this.setState({ notice: false });
@@ -120,10 +130,18 @@ export class FormComponent extends React.Component<Props, State> {
     }
     this.setState({ html_cont: html_element });
   }
-  SelectHandleChange(event: React.ChangeEvent<{ value: unknown }>) {
-    console.log(event.target.value);
+  SelectHandleChange(event : React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } =event.target
+    switch(name){
+      case "status_call":
+          this.setState({ status_call: value }); 
+          break
+      case "request_call": 
+          this.setState({ request_call: value });
+          break
+    }
+    console.log(`${name} ${value}`)
   }
-
   render() {
     return (
       <Container component="main">
@@ -217,7 +235,9 @@ export class FormComponent extends React.Component<Props, State> {
               <NativeSelect
                 style={{ width: "200px" }}
                 id="request_call"
+                name="request_call"
                 onChange={this.SelectHandleChange}
+                value={this.state.request_call}
               >
                 <option value="" />
                 <option value={"Суть обращения"}>Суть обращения</option>
@@ -230,7 +250,9 @@ export class FormComponent extends React.Component<Props, State> {
               <NativeSelect
                 style={{ width: "200px" }}
                 id="status_call"
-                onChange={this.SelectHandleChange}
+                name="status_call"
+                onChange={ this.SelectHandleChange }
+                value={ this.state.status_call }
               >
                 <option value="" />
                 <option value={"Перезвон1"}>Перезвон1</option>
