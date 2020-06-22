@@ -1,20 +1,30 @@
 import React, { Component } from "react"
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-export interface MailComponentProps {}
+import { connect } from "react-redux";
+import { AppState } from "../store";
+import { bindActionCreators } from "redux";
+import { AppActions } from "../models/actions";
+import { ThunkDispatch } from "redux-thunk";
+import { Contact } from "../models";
+import { send_mail } from "../actions/";
+export interface MailComponentProps {
+}
 export interface MailComponentState {
   switch: boolean;
 }
+type Props = LinkStateProps & LinkDispatchProps;
 class MailComponent extends React.Component<
-  MailComponentProps,
+  Props,
   MailComponentState
 > {
-  constructor(props: MailComponentProps) {
+  constructor(props: Props) {
     super(props);
     this.state = { switch: false }
   }
   handleSwitchChange = () => {
     this.setState({ switch: !this.state.switch })
+    this.props.send_mail_kp()
   }
   render() {
     return (
@@ -35,4 +45,22 @@ class MailComponent extends React.Component<
   }
 }
 
-export default  MailComponent;
+//export default  MailComponent;
+
+interface LinkStateProps {
+  contacts: Contact;
+}
+interface LinkDispatchProps {
+  send_mail_kp : () => void
+}
+const mapStateToProps = (state: AppState): LinkStateProps => ({
+  contacts: state.contacts,
+});
+
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  send_mail_kp: bindActionCreators(send_mail, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MailComponent);

@@ -1,4 +1,4 @@
-import { AppActions, MAKE_CALL , RECEIVE_CALL} from './../models/actions';
+import { AppActions, MAKE_CALL, RECEIVE_CALL, SEND_MAIL } from './../models/actions';
 import actionCreatorFactory from "typescript-fsa";
 import { asyncFactory } from "typescript-fsa-redux-thunk";
 import { AppState } from "../store";
@@ -35,6 +35,27 @@ export const make_calls = (id: number) => {
     dispatch(makeCall(id));
   }
 }
+export const send_mail = createAsync<any, any>(
+  "SEND_MAIL", async(params, dispatch) => {
+    try {
+      let resp=''
+      await fetch("http://localhost/komus_new/api/mail", {
+          method: 'POST', 
+          mode: 'cors', 
+          cache: 'no-cache', 
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          redirect: 'follow', 
+          referrerPolicy: 'no-referrer', 
+      })
+      return dispatch({ type: "SEND_MAIL", contacts: resp });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
 export const receive_calls =createAsync<any, any>(
     "RECEIVE_CALL",
     async (params, dispatch) => {

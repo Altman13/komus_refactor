@@ -5,6 +5,7 @@ export interface Contact {
   phone: number;
   email?: string;
   comment?: string;
+  send_mail_kp: boolean
 }
 
 export interface Contacts {

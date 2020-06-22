@@ -12,8 +12,9 @@ const CallReducer = (
       return action.contacts
     case "MAKE_CALL":
     return state.filter(({ id }) => id !== action.id)
-    
     case "RECEIVE_CALL":
+      return [...state, action.contact]
+    case "SEND_MAIL" :
       return [...state, action.contact]
     default:
       return state
