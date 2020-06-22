@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
-import { send_mail } from "../actions/";
+import { send_mails } from "../actions/";
 export interface MailComponentProps {
 }
 export interface MailComponentState {
@@ -24,7 +24,7 @@ class MailComponent extends React.Component<
   }
   handleSwitchChange = () => {
     this.setState({ switch: !this.state.switch })
-    this.props.send_mail_kp()
+    this.props.send_mail_kp(this.state.switch)
   }
   render() {
     return (
@@ -51,7 +51,8 @@ interface LinkStateProps {
   contacts: Contact;
 }
 interface LinkDispatchProps {
-  send_mail_kp : () => void
+  send_mail_kp : (need_send: boolean) => void
+  
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   contacts: state.contacts,
@@ -60,7 +61,7 @@ const mapStateToProps = (state: AppState): LinkStateProps => ({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  send_mail_kp: bindActionCreators(send_mail, dispatch),
+  send_mail_kp: bindActionCreators(send_mails, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MailComponent);

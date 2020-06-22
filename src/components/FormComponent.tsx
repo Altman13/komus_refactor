@@ -272,7 +272,7 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value={"Перезвон3"}>Перезвон3</option>
                 <option value={"Недозвон"}>Недозвон</option>
               </NativeSelect>
-              {/* <MailSendComponent /> */}
+              <MailSendComponent />
               <br/>
               <FormControlLabel
                 className="custom-control-input"
