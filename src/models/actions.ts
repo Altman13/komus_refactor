@@ -30,7 +30,6 @@ export interface GetContactsAction {
 }
 export interface SendMailKp {
   type: typeof SEND_MAIL
-  //contact : Contact
   need_send : boolean
 }
 

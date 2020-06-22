@@ -3,7 +3,7 @@ import { CallActionTypes } from "./../models/actions"
 
 const callsReducerDefaultState: Contact[] = []
 
-const CallReducer = (
+export const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes
 ) => {
@@ -15,10 +15,12 @@ const CallReducer = (
     case "RECEIVE_CALL":
       return [...state, action.contact]
     case "SEND_MAIL" :
-      return [...state, action.need_send]
+      //return [...state, action.need_send]
+      let newState= Object.assign({},state, action.need_send)
+      return newState;
     default:
       return state
   }
 }
 
-export { CallReducer }
+//export { CallReducer }

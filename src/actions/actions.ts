@@ -50,7 +50,7 @@ function sendMail(need_send: boolean): AppActions {
 }
 
 export const send_mails = (need_send: boolean) => {
-    fetch("http://localhost/komus_new/api/mail", {
+      fetch("http://localhost/komus_new/api/mail", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
