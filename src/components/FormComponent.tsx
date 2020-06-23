@@ -9,7 +9,12 @@ import { bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
-import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/";
+import {
+  get_contacts,
+  make_calls,
+  receive_calls,
+  send_mails,
+} from "../actions/";
 import SearchComponent from "./SearchComponent";
 import RadioBtnComponent from "./RadioBtnComponent";
 import NativeSelect from "@material-ui/core/NativeSelect";
@@ -91,9 +96,27 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
     }
     this.props.make_calls(this.state.id);
-    this.props
-    if (this.state.send_mail_kp){
-      fetch("http://localhost/komus_new/api/mail", { method: "POST" });
+    this.props;
+    let mail = this.state.email;
+    let id = this.state.id;
+    const data = {
+      id,
+      mail,
+    };
+    if (this.state.send_mail_kp) {
+      fetch("http://localhost/komus_new/api/mail", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          //"Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *client
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      });
     }
   }
 
@@ -106,7 +129,7 @@ export class FormComponent extends React.Component<Props, State> {
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       contact = nextProps.contacts[key];
     });
-    
+
     if (contact) {
       this.setState({
         id: contact.id,
@@ -149,7 +172,6 @@ export class FormComponent extends React.Component<Props, State> {
         this.setState({ request_call: value });
         break;
     }
-    console.log(`${name} ${value}`);
   }
 
   sendMailKp = () => {

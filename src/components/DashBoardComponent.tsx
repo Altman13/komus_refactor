@@ -68,13 +68,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface DashBoardComponentProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   container?: Element;
 }
-//TODO: разобраться как правильно работать с хуками
+
 export function DashBoardComponent(props: DashBoardComponentProps) {
   const { container } = props
   const classes = useStyles()
@@ -92,7 +88,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const [notice, setNotice] = React.useState(false)
 
   const setBaseUrl = () => {
-    console.log("base loaded")
     setUrl("base")
     setText("базу")
     setOper(false)
@@ -127,7 +122,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       try {
         fetch("http://localhost/komus_new/api/report")
           .then((response) => {
-            //return response.json()
             setNotice(true)
           })
           .then((data) => {
@@ -251,7 +245,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -263,7 +256,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
           >
             {drawer}

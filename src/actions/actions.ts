@@ -1,6 +1,7 @@
 import {
   AppActions,
   MAKE_CALL,
+  RECEIVE_CALL
 } from "./../models/actions";
 import actionCreatorFactory from "typescript-fsa";
 import { asyncFactory } from "typescript-fsa-redux-thunk";
@@ -73,7 +74,7 @@ export const receive_calls = createAsync<any, any>(
         //TODO: передача данных
         //body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
-      return dispatch({ type: "RECEIVE_CALL", contacts: resp });
+      return dispatch({ type: RECEIVE_CALL, contacts: resp });
     } catch (err) {
       console.log(err);
     }

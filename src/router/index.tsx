@@ -8,7 +8,6 @@ import {
 import  LoginComponent  from '../components/LoginComponent'
 import FormComponent from "../components/FormComponent";
 import  { DashBoardComponent }   from '../components/DashBoardComponent'
-//import  DashBoardComponent from '../components/DashTemp'
 let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
 import { UserFactory } from '../components/UserFactory'
 let factory = new UserFactory();

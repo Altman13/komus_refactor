@@ -3,8 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 
 const GreenRadio = withStyles({
   root: {
@@ -25,13 +23,6 @@ export default function RadioButtons() {
 
   return (
     <div>
-      {/* <Radio
-        checked={selectedValue === 'a'}
-        onChange={handleChange}
-        value="a"
-        name="radio-button-demo"
-        inputProps={{ 'aria-label': 'A' }}
-      /> */}
       <FormControlLabel
         value="start"
         control={

@@ -8,7 +8,9 @@ const override = css`
     border-color: red;`
     
 
-export interface LoaderComponentProps {}
+export interface LoaderComponentProps {
+    
+}
 
 export interface LoaderComponentState {
     loading: boolean

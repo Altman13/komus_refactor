@@ -46,7 +46,6 @@ class UploadFileComponent extends React.Component<
     }
   }
 
-  //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
   componentWillReceiveProps(nextProps: UploadFileComponentProps) {
     this.setState({ file: null , err : true });
   }
