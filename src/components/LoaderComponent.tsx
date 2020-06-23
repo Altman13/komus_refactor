@@ -6,10 +6,9 @@ const override = css`
     display: block;
     margin: 0 auto;
     border-color: red;`
-    
 
-export interface LoaderComponentProps {
-    
+    export interface LoaderComponentProps {
+
 }
 
 export interface LoaderComponentState {
@@ -18,7 +17,7 @@ export interface LoaderComponentState {
 
 class LoaderComponent extends React.Component<LoaderComponentProps,LoaderComponentState> {
     constructor(props: LoaderComponentProps) {
-        super(props);
+        super(props)
         this.state = { loading: true }
     }
     render() {

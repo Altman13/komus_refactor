@@ -3,11 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Button } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid'
-var users = new Array();
 
-// interface oper {
-//   operators: string
-// }
+var users = new Array();
 
 //TODO: все запросы перенести в сервисы
 async function getUsers() {

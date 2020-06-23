@@ -93,7 +93,6 @@ class LoginComponent extends React.Component<Props, State> {
   }
 
   render() {
-    //const { classes } = this.props;
 
     return (
       <Container component="main" maxWidth="xs">
@@ -131,7 +130,6 @@ class LoginComponent extends React.Component<Props, State> {
               label="Пароль оператора"
               type="password"
               id="password"
-              //autoComplete="current-password"
               value={this.state.password}
               onChange={this.handleChange.bind(this)}
             />
@@ -150,7 +148,7 @@ class LoginComponent extends React.Component<Props, State> {
           </form>
         </div>
       </Container>
-    );
+    )
   }
 }
 export default LoginComponent;

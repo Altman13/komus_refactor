@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -34,9 +33,6 @@ export default function DefaultNotice(err : any ) {
   console.log(err.err)
   return (
     <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
       { err.err ?
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal} >
         <Alert  onClose={handleClose} severity="error">Произошла ошибка при выполнеии действия!</Alert>
@@ -48,10 +44,6 @@ export default function DefaultNotice(err : any ) {
          </Alert>
       </Snackbar>
       }
-      {/* <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert> */}
     </div>
   );
 }
