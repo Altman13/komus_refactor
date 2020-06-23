@@ -1,4 +1,4 @@
-import { Contact } from "./../models/contact"
+import { Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
 
 const callsReducerDefaultState: Contact[] = []
@@ -11,10 +11,11 @@ export const CallReducer = (
     case "GET_CONTACTS":
       return action.contacts
     case "MAKE_CALL":
-      return state.filter(({ id }) => id !== action.id)
+    return state.filter(({ id }) => id !== action.id)
     case "RECEIVE_CALL":
-      return action.contact
+      return [...state, action.contact]
+
     default:
       return state
   }
-};
+}

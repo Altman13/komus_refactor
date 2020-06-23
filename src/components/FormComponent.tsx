@@ -9,12 +9,7 @@ import { bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
-import {
-  get_contacts,
-  make_calls,
-  receive_calls,
-  send_mails,
-} from "../actions/";
+import { get_contacts, make_calls, receive_calls } from "../actions/";
 import SearchComponent from "./SearchComponent";
 import RadioBtnComponent from "./RadioBtnComponent";
 import NativeSelect from "@material-ui/core/NativeSelect";
