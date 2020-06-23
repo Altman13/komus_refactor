@@ -1,5 +1,4 @@
 import React from "react";
-import MailSendComponent from "./MailSendComponent";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { Button, TextField, Grid } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
@@ -10,7 +9,7 @@ import { bindActionCreators } from "redux";
 import { AppActions } from "../models/actions";
 import { ThunkDispatch } from "redux-thunk";
 import { Contact } from "../models";
-import { get_contacts, make_calls, receive_calls } from "../actions/";
+import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/";
 import SearchComponent from "./SearchComponent";
 import RadioBtnComponent from "./RadioBtnComponent";
 import NativeSelect from "@material-ui/core/NativeSelect";
@@ -18,7 +17,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
 import DefaultNotice from "../components/NoticeComponent";
-import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Checkbox } from "@material-ui/core";
 
 interface State {
   id: number;
@@ -55,13 +54,13 @@ export class FormComponent extends React.Component<Props, State> {
       err: false,
       status_call: "",
       request_call: "",
-      send_mail_kp: false
+      send_mail_kp: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.makeCallHandler = this.makeCallHandler.bind(this);
     this.selectHandleChange = this.selectHandleChange.bind(this);
   }
-  
+
   onChange(e) {
     this.setState({ comment: e.target.value });
   }
@@ -92,9 +91,10 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
     }
     this.props.make_calls(this.state.id);
-    console.log(this.state);
-    if(this.state.send_mail_kp)
-      fetch("http://localhost/komus_new/api/mail", { method : 'POST' })
+    this.props
+    if (this.state.send_mail_kp){
+      fetch("http://localhost/komus_new/api/mail", { method: "POST" });
+    }
   }
 
   componentDidMount() {
@@ -106,37 +106,39 @@ export class FormComponent extends React.Component<Props, State> {
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       contact = nextProps.contacts[key];
     });
-
-    this.setState({
-      id: contact.id,
-      naimenovanie: contact.naimenovanie,
-      fio: contact.fio,
-      nomer: contact.nomer,
-      email: contact.email,
-      st_operator: true,
-      notice: true,
-      request_call: "",
-      status_call: "",
-      send_mail_kp: false,
-    });
-    setTimeout(() => {
-      this.setState({ notice: false });
-    }, 6000);
-    var key_contact = Object.keys(this.state);
-    var html_element: any = [];
-    for (let [key, value] of Object.entries(contact)) {
-      var el_main_form = key_contact.indexOf(key);
-      if (el_main_form == -1 && value) {
-        html_element.push(
-          <div id={key} style={{ fontSize: 18 }} key={key}>
-            {key}: {value}
-          </div>
-        );
+    
+    if (contact) {
+      this.setState({
+        id: contact.id,
+        naimenovanie: contact.naimenovanie,
+        fio: contact.fio,
+        nomer: contact.nomer,
+        email: contact.email,
+        st_operator: true,
+        notice: true,
+        request_call: "",
+        status_call: "",
+        send_mail_kp: false,
+      });
+      setTimeout(() => {
+        this.setState({ notice: false });
+      }, 6000);
+      var key_contact = Object.keys(this.state);
+      var html_element: any = [];
+      for (let [key, value] of Object.entries(contact)) {
+        var el_main_form = key_contact.indexOf(key);
+        if (el_main_form == -1 && value) {
+          html_element.push(
+            <div id={key} style={{ fontSize: 18 }} key={key}>
+              {key}: {value}
+            </div>
+          );
+        }
       }
+      this.setState({ html_cont: html_element });
     }
-    this.setState({ html_cont: html_element });
   }
-  
+
   selectHandleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = event.target;
     switch (name) {
@@ -151,8 +153,8 @@ export class FormComponent extends React.Component<Props, State> {
   }
 
   sendMailKp = () => {
-    this.setState({ send_mail_kp: !this.state.send_mail_kp })
-  }
+    this.setState({ send_mail_kp: !this.state.send_mail_kp });
+  };
 
   render() {
     return (
@@ -272,8 +274,7 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value={"Перезвон3"}>Перезвон3</option>
                 <option value={"Недозвон"}>Недозвон</option>
               </NativeSelect>
-              <MailSendComponent />
-              <br/>
+              <br />
               <FormControlLabel
                 className="custom-control-input"
                 id="customSwitches"

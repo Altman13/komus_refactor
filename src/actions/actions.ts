@@ -1,9 +1,6 @@
-//import { send_mail } from './actions';
 import {
   AppActions,
   MAKE_CALL,
-  RECEIVE_CALL,
-  SEND_MAIL,
 } from "./../models/actions";
 import actionCreatorFactory from "typescript-fsa";
 import { asyncFactory } from "typescript-fsa-redux-thunk";
@@ -40,16 +37,10 @@ export const make_calls = (id: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(makeCall(id));
   };
+  
 };
 
-function sendMail(need_send: boolean): AppActions {
-  return {
-    type: SEND_MAIL,
-    need_send,
-  };
-}
-
-export const send_mails = (need_send: boolean) => {
+export const send_mails = (email : string , id : number) => {
       fetch("http://localhost/komus_new/api/mail", {
       method: "POST",
       mode: "cors",
@@ -61,32 +52,8 @@ export const send_mails = (need_send: boolean) => {
       redirect: "follow",
       referrerPolicy: "no-referrer",
     });
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(sendMail(need_send));
-  };
 };
 
-// export const send_mail = createAsync<any, any>(
-//   "SEND_MAIL", async(params, dispatch) => {
-//     try {
-//       let resp=''
-//       await fetch("http://localhost/komus_new/api/mail", {
-//           method: 'POST',
-//           mode: 'cors',
-//           cache: 'no-cache',
-//           credentials: 'same-origin',
-//           headers: {
-//             'Content-Type': 'application/json'
-//           },
-//           redirect: 'follow',
-//           referrerPolicy: 'no-referrer',
-//       })
-//       return dispatch({ type: "SEND_MAIL", contacts: resp });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-// )
 export const receive_calls = createAsync<any, any>(
   "RECEIVE_CALL",
   async (params, dispatch) => {

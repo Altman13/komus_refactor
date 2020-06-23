@@ -3,7 +3,6 @@ import { Contact, Report, Contacts } from "./contact";
 export const MAKE_CALL = "MAKE_CALL";
 export const RECEIVE_CALL = "RECEIVE_CALL";
 export const GET_CONTACTS = "GET_CONTACTS";
-export const SEND_MAIL = "SEND_MAIL"
 export const SET_FILTER_ON_CONTACTS = "SET_FILTER_ON_CONTACTS";
 export const GET_REPORTS_BY_OPERATOR = "GET_REPORTS_BY_OPERATOR";
 export const GET_REPORTS_BY_DATE = "GET_REPORTS_BY_DATE";
@@ -28,11 +27,6 @@ export interface GetContactsAction {
   type: typeof GET_CONTACTS;
   contacts: Contacts;
 }
-export interface SendMailKp {
-  type: typeof SEND_MAIL
-  need_send : boolean
-}
-
 export interface SetFilterOnContactsAction {
   type: typeof SET_FILTER_ON_CONTACTS;
   contact: Contact;
@@ -111,7 +105,6 @@ export type CallActionTypes =
   | GetInfoByContactAction
   | SetlInfoByContactAction
   | SearchInfoAction
-  | SendMailKp
   // | openSessionAction
   // | closeSessionAction
   

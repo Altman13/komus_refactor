@@ -14,13 +14,8 @@ export const CallReducer = (
     return state.filter(({ id }) => id !== action.id)
     case "RECEIVE_CALL":
       return [...state, action.contact]
-    case "SEND_MAIL" :
-      //return [...state, action.need_send]
-      let newState= Object.assign({},state, action.need_send)
-      return newState;
+
     default:
       return state
   }
 }
-
-//export { CallReducer }
