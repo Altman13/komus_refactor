@@ -1,12 +1,9 @@
-import * as React from "react";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Alert from "@material-ui/lab/Alert";
+import * as React from "react"
+import Container from "@material-ui/core/Container"
+import { Button, TextField, CssBaseline, 
+  FormControlLabel, Checkbox 
+} from "@material-ui/core"
+import Alert from "@material-ui/lab/Alert"
 interface Props {
   //classes: any;
   //openSession: typeof openSession
@@ -50,16 +47,16 @@ class LoginComponent extends React.Component<Props, State> {
   }
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    this.setState({ submitted: true });
+    e.preventDefault()
+    this.setState({ submitted: true })
     if (!this.state.username || !this.state.password) {
-      return;
+      return
     }
     const data = {
       username: this.state.username,
       userpassword: this.state.password,
     };
-    const url = "http://localhost/komus_new/api/login";
+    const url = "http://localhost/komus_new/api/login"
 
     async function login(url = "", data = {}) {
       // Default options are marked with *
@@ -78,9 +75,9 @@ class LoginComponent extends React.Component<Props, State> {
       });
       return await response.json(); // parses JSON response into native JavaScript objects
     }
-    login(url, data)
-      .then((data) => {
-        console.log(data); 
+    login( url, data )
+      .then(( data ) => {
+        console.log( data )
         //TODO: tokenExpiry
         localStorage.setItem('token', data.user_token)
         localStorage.setItem('token_exp', data.token_exp)

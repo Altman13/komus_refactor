@@ -1,10 +1,10 @@
-import React from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Button, TextField, Grid } from "@material-ui/core";
+import React from "react"
+import Autocomplete from "@material-ui/lab/Autocomplete"
+import { Button, TextField, Grid } from "@material-ui/core"
 
 import { ajaxAction } from './../servicies'
 
-var users = new Array();
+var users = new Array()
 
 async function getUsers() {
   const url : string = 'user'
@@ -18,7 +18,7 @@ getUsers()
 
 async function setStOperator(value) {
   if (value) {
-    let resp : any = '';
+    let resp : any = ''
     const url : string = 'user'
     const method : string = 'PATCH'
     const data : any = value.operators
