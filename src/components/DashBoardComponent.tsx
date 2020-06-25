@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 
 import ListOperators from "./ListOperatorsComponent";
 import UploadFileComponent from "./UploadFileComponent";
-import LoaderComponent from "./LoaderComponent";
+import SpinnerComponent from "./SpinnerComponent";
 import DefaultNotice from "./NoticeComponent";
 
 const drawerWidth = 240;
@@ -277,7 +277,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         {loader ? (
           <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
             <div style={{ marginLeft: "130px" }}>
-              <LoaderComponent />
+              <SpinnerComponent />
             </div>
             <div style={{ fontSize: "18px", marginTop: "-10px" }}>
               Отчет формируется

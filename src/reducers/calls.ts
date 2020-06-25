@@ -3,7 +3,6 @@ import { CallActionTypes } from "./../models/actions"
 
 const callsReducerDefaultState : Contact [] = []
 
-
 export const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes
@@ -15,7 +14,6 @@ export const CallReducer = (
     return state.filter(({ id }) => id !== action.id)
     case "RECEIVE_CALL":
       return [...state, action.contact]
-
     default:
       return state
   }

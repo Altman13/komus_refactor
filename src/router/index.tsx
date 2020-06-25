@@ -1,9 +1,6 @@
 import React from "react"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
+import { BrowserRouter as Router,
+        Switch, Route, Redirect
 } from "react-router-dom"
 import  LoginComponent  from '../components/LoginComponent'
 import FormComponent from "../components/FormComponent";
@@ -30,30 +27,30 @@ let user = factory.getUserRole(parseInt('2'));
             break;
     }
 export function MainRouter() {
-  return (
-    <Router>
-    <Switch>
-        {<Route exact path="/" component={PrivateRoute} />}
-        <Route path="/login" component={LoginComponent} />
-        {<Route path="/main" component={FormComponent} />}
-        <Route path="/dashboard" component={DashBoardComponent} />
-    </Switch>
-</Router>
-  )
+    return (
+            <Router>
+                <Switch>
+                    {<Route exact path="/" component={PrivateRoute} />}
+                    <Route path="/login" component={LoginComponent} />
+                    {<Route path="/main" component={FormComponent} />}
+                    <Route path="/dashboard" component={DashBoardComponent} />
+                </Switch>
+            </Router>
+        )
 }
 function PrivateRoute() {
-  if(user_group){
-      var auth =true
-  }
-  return (
-      <Route
-          render={() =>
-          auth ? (
-              <Redirect to="/main"/>
-          ) : (
-              <Redirect to="/login"/>
-          )
-          }
-      />
-      )
-  }
+    if(user_group){
+        var auth =true
+    }
+    return (
+        <Route
+            render={() =>
+                auth ? (
+                    <Redirect to="/main"/>
+                ) : (
+                    <Redirect to="/login"/>
+                )
+            }
+        />
+    )
+}

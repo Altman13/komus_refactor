@@ -8,14 +8,13 @@ const override = css`
     border-color: red;`
 
     export interface LoaderComponentProps {
-
 }
 
 export interface LoaderComponentState {
     loading: boolean
 }
 
-class LoaderComponent extends React.Component<LoaderComponentProps,LoaderComponentState> {
+export default class SpinnerComponent extends React.Component<LoaderComponentProps,LoaderComponentState> {
     constructor(props: LoaderComponentProps) {
         super(props)
         this.state = { loading: true }
@@ -24,14 +23,13 @@ class LoaderComponent extends React.Component<LoaderComponentProps,LoaderCompone
     return (
         <div className="sweet-loading">
         <PacmanLoader
-            css={override}
-            size={20}
-            color={"#3f51b5"}
-            loading={this.state.loading}
+            css={ override }
+            size={ 20 }
+            color={ "#3f51b5" }
+            loading={ this.state.loading }
         />
         </div>
         )
     }
 }
 
-export default LoaderComponent;
