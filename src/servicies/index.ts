@@ -1,8 +1,9 @@
-export async function ajaxAction(url : string, method: string, data: string) {
+export async function ajaxAction( url : string, method : string, data : any = undefined) {
     var ret=""
     try {
             await fetch("http://localhost/komus_new/api/"+url, {
             method: method,
+            body: data,
             mode: "cors",
             cache: "no-cache",
             credentials: "same-origin",

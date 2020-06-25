@@ -1,65 +1,52 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Button } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid'
+import { Button, TextField, Grid } from "@material-ui/core";
+
+import { ajaxAction } from './../servicies'
 
 var users = new Array();
 
-//TODO: все запросы перенести в сервисы
 async function getUsers() {
-  try {
-    await fetch("http://localhost/komus_new/api/user")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        users = data;
-      });
-  } catch (err) {
-    console.log(err);
-  }
+  const url : string = 'user'
+  const method : string = 'GET'
+  let resp: any = ''
+  resp = await ajaxAction(url, method )
+  users = resp
 }
-async function setOperator(value) {
+
+getUsers()
+
+async function setStOperator(value) {
   if (value) {
-    let resp = "";
-    try {
-      await fetch("http://localhost/komus_new/api/user", {
-        method: "PATCH",
-        body: value.operators,
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          resp = data;
-          return resp;
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    let resp : any = '';
+    const url : string = 'user'
+    const method : string = 'PATCH'
+    const data : any = value.operators
+    resp = await ajaxAction(url, method , data )
+    return resp
   }
 }
+
 export default function ListOperators() {
-  getUsers()
+
     return (
     <div>
       <Grid item xs={12} lg={3} sm={4} md={4}>
       <Autocomplete
         id="combo-box-demo"
-        onChange={(event, value) => setOperator(value)}
-        options={users}
+        onChange={(event, value) => setStOperator(value)}
+        options={ users }
         getOptionLabel={(options) => options.operators}
         style={{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}
-        renderInput={(params) => (
-          <TextField {...params} label="Выбрать оператора" variant="outlined" />
+        renderInput={( params ) => (
+          <TextField { ...params } label="Выбрать оператора" variant="outlined" />
         )}
       />
       <Button
         variant="outlined"
         color="primary"
         style={{ width: '100%', margin: 'auto', height: 55, marginBottom: 20 }}
-        onClick={setOperator}
+        onClick={ setStOperator }
       >
         Назначить
       </Button>
