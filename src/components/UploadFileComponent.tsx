@@ -1,6 +1,6 @@
-import * as React from "react";
-import CSS from "csstype";
-import { Button } from "@material-ui/core";
+import * as React from "react"
+import CSS from "csstype"
+import { Button } from "@material-ui/core"
 
 const inputUploadFile: CSS.Properties = {
   display: "none",
@@ -18,35 +18,35 @@ class UploadFileComponent extends React.Component<
   UploadFileComponentState
 > {
   constructor(props: UploadFileComponentProps) {
-    super(props);
-    this.state = { file: null, err : true , err_text : 'Выберете файл для загрузки' };
-    this.handleFileChange = this.handleFileChange.bind(this);
-    this.manageUploadedFile = this.manageUploadedFile.bind(this);
+    super(props)
+    this.state = { file: null, err : true , err_text : 'Выберете файл для загрузки' }
+    this.handleFileChange = this.handleFileChange.bind(this)
+    this.manageUploadedFile = this.manageUploadedFile.bind(this)
   }
 
   async manageUploadedFile() {
-    const formData = new FormData();
+    const formData = new FormData()
     if (this.state.err!=true) {
-      let fn: string = "file_upload";
-      formData.append(fn, this.state.file);
+      let fn: string = "file_upload"
+      formData.append(fn, this.state.file)
       const response = await fetch(
         "http://localhost/komus_new/api/" + this.props.url,
         {
           method: "POST",
           body: formData,
         }
-      ).then((response) => {
-        if (response.status === 200) {
-          console.log("SUCCESSS");
-          this.setState({ file: null });
-        } else if (response.status === 408) {
-          console.log("SOMETHING WENT WRONG");
+      ).then(( response ) => {
+        if ( response.status === 200 ) {
+          console.log( "SUCCESSS" )
+          this.setState({ file: null })
+        } else if ( response.status === 500 ) {
+          console.log( "SOMETHING WENT WRONG" )
         }
-      });
+      })
     }
   }
 componentWillReceiveProps (){
-    this.setState({ file: null , err : true });
+    this.setState({ file: null , err : true })
 }
   // static  getDerivedStateFromProps(nextProps: UploadFileComponentProps) {
   //   return {
@@ -56,11 +56,11 @@ componentWillReceiveProps (){
 
   // }
   
-  handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    event.persist();
-    if (event.target.files) {
-      console.log(event.target.files[0]);
-      this.setState({ file: event.target.files[0] ,err :false });
+  handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
+    event.persist()
+    if ( event.target.files ) {
+      console.log( event.target.files[0] )
+      this.setState({ file: event.target.files[0] ,err :false })
     }
   }
   render(): JSX.Element {
@@ -68,11 +68,11 @@ componentWillReceiveProps (){
       <div>
         <input
           accept=".xls,.xlsx"
-          style={inputUploadFile}
+          style={ inputUploadFile }
           id="file"
           multiple={true}
           type="file"
-          onChange={this.handleFileChange}
+          onChange={ this.handleFileChange }
         />
         <label htmlFor="file">
           <Button
@@ -91,19 +91,18 @@ componentWillReceiveProps (){
           </Button>
         </label>
         <div style={{ width: "100%", textAlign: "center", fontSize: 18 }}>
-          {this.state.file ? this.state.file.name : null}
-          {this.state.err ? this.state.err_text : null}
+          { this.state.file ? this.state.file.name : null }
+          { this.state.err ? this.state.err_text : null }
         </div>
         <Button
           variant="outlined"
           color="primary"
           style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
-          onClick={this.manageUploadedFile}
-        >
-          Загрузить
+          onClick={ this.manageUploadedFile }
+        >Загрузить
         </Button>
       </div>
-    );
+    )
   }
 }
-export default UploadFileComponent;
+export default UploadFileComponent

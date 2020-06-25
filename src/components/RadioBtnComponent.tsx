@@ -1,8 +1,6 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { green } from "@material-ui/core/colors";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import React from "react"
+import { withStyles, Radio, FormControlLabel} from "@material-ui/core"
+import { green } from "@material-ui/core/colors"
 
 const GreenRadio = withStyles({
   root: {
