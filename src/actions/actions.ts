@@ -2,7 +2,7 @@ import { Dispatch } from "redux"
 import actionCreatorFactory from "typescript-fsa"
 import { asyncFactory } from "typescript-fsa-redux-thunk"
 import { AppState } from "../store"
-import { AppActions, MAKE_CALL, RECEIVE_CALL } from "./../models/actions";
+import { AppActions, MAKE_CALL, RECEIVE_CALL, GET_CONTACTS } from "./../models/actions";
 import { ajaxAction } from './../servicies'
 
 const create = actionCreatorFactory()
@@ -15,7 +15,7 @@ export const get_contacts = createAsync<any, any>(
     const data: string = ''
     let resp = ''
     resp = await ajaxAction(url, 'GET', data)
-    return dispatch({ type: "GET_CONTACTS", contacts: resp })
+    return dispatch({ type: GET_CONTACTS, contacts: resp })
   }
 )
 function makeCall(id: number): AppActions {
@@ -29,11 +29,9 @@ export const make_calls = (id: number) => {
     dispatch(makeCall(id))
   }
 }
-export async function send_mails (data: any) {
-    const url: string = 'mail'
-    const data_for_send = data
+export async function send_mails (url: string, method: string, data: any) {
     let resp = ''
-    resp = await ajaxAction(url, 'GET', data_for_send)
+    resp = await ajaxAction(url, 'GET', data)
     return resp
 }
 

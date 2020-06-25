@@ -1,27 +1,23 @@
 import React from "react";
-import {
-  Button,
-  TextField,
-  Grid,
-  FormControlLabel,
-  Checkbox,
-  NativeSelect,
-  InputLabel,
-  TextareaAutosize,
-} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import InfoTextBlock from "./InfoComponent";
+import { Link } from "react-router-dom";
+import { AppActions } from "../models/actions";
+import { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
 import { AppState } from "../store";
 import { bindActionCreators } from "redux";
-import { AppActions } from "../models/actions";
-import { ThunkDispatch } from "redux-thunk";
+
+import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/";
 import { Contact } from "../models";
-import { get_contacts, make_calls, receive_calls } from "../actions/";
+
+import {
+  Button, TextField, Grid, FormControlLabel,
+  Checkbox, NativeSelect, InputLabel, TextareaAutosize,
+  Hidden, Container
+} from "@material-ui/core";
+
+import InfoTextBlock from "./InfoComponent";
 import SearchComponent from "./SearchComponent";
 import RadioBtnComponent from "./RadioBtnComponent";
-import Hidden from "@material-ui/core/Hidden";
-import { Link } from "react-router-dom";
 import DefaultNotice from "../components/NoticeComponent";
 
 interface State {
@@ -104,19 +100,7 @@ export class FormComponent extends React.Component<Props, State> {
       mail,
     };
     if (this.state.send_mail_kp) {
-      fetch("http://localhost/komus_new/api/mail", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          //"Content-Type": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        redirect: "follow", // manual, *follow, error
-        referrerPolicy: "no-referrer", // no-referrer, *client
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
-      });
+      send_mails('mail', 'POST', data)
     }
   }
 
