@@ -1,6 +1,14 @@
 import React from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { Button, TextField, Grid } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Grid,
+  FormControlLabel,
+  Checkbox,
+  NativeSelect,
+  InputLabel,
+  TextareaAutosize,
+} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import InfoTextBlock from "./InfoComponent";
 import { connect } from "react-redux";
@@ -12,12 +20,9 @@ import { Contact } from "../models";
 import { get_contacts, make_calls, receive_calls } from "../actions/";
 import SearchComponent from "./SearchComponent";
 import RadioBtnComponent from "./RadioBtnComponent";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import InputLabel from "@material-ui/core/InputLabel";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
 import DefaultNotice from "../components/NoticeComponent";
-import { FormControlLabel, Checkbox } from "@material-ui/core";
 
 interface State {
   id: number;
