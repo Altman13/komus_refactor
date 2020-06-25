@@ -45,7 +45,7 @@ class UploadFileComponent extends React.Component<
       });
     }
   }
-componentDidUpdate (){
+componentWillReceiveProps (){
     this.setState({ file: null , err : true });
 }
   // static  getDerivedStateFromProps(nextProps: UploadFileComponentProps) {
@@ -53,6 +53,7 @@ componentDidUpdate (){
   //     file : null,
   //     err : true
   //   }
+
   // }
   
   handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
