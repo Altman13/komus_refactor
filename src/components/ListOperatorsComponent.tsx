@@ -4,8 +4,7 @@ import { Button, TextField, Grid } from "@material-ui/core"
 
 import { ajaxAction } from './../servicies'
 
-var users = new Array()
-
+let users: any[]
 async function getUsers() {
   const url : string = 'user'
   const method : string = 'GET'
@@ -13,7 +12,6 @@ async function getUsers() {
   resp = await ajaxAction( url, method )
   users = resp
 }
-
 getUsers()
 
 async function setStOperator( value ) {

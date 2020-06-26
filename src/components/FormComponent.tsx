@@ -28,7 +28,7 @@ interface State {
   email: string
   comment: string
   submitted: boolean
-  html_cont: HTMLElement[]
+  additional_info_block: HTMLElement[]
   st_operator: boolean
   notice: boolean
   err: boolean
@@ -49,7 +49,7 @@ export class FormComponent extends React.Component<Props, State> {
       email: "",
       comment: "",
       submitted: false,
-      html_cont: [],
+      additional_info_block: [],
       st_operator: false,
       notice: false,
       err: false,
@@ -91,7 +91,7 @@ export class FormComponent extends React.Component<Props, State> {
     if (project_type == "INCOMING") {
       //this.props.receive_calls()
     }
-    this.props.make_calls(this.state.id)
+    this.props.make_calls(this.state.id, this.state.status_call)
     const data = {
       id : this.state.email,
       mail : this.state.id,
@@ -149,7 +149,7 @@ export class FormComponent extends React.Component<Props, State> {
         )
       }
     }
-    this.setState({ html_cont: html_element })
+    this.setState({ additional_info_block: html_element })
   }
 
   selectHandleChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -202,7 +202,7 @@ export class FormComponent extends React.Component<Props, State> {
                     textAlign: "left",
                   }}
                 >
-                  {this.state.html_cont.map((element, key) => (
+                  {this.state.additional_info_block.map((element, key) => (
                     <div key={key}>{element}</div>
                   ))}
                 </div>
@@ -268,9 +268,7 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value="" />
                 <option value={"Суть обращения"}>Суть обращения</option>
                 <option value={"Статус обращения"}>Статус обращения</option>
-                <option value={"Результат обращения"}>
-                  Результат обращения
-                </option>
+                <option value={"Результат обращения"}>Результат обращения</option>
               </NativeSelect>
               <InputLabel id="status_call-label">Статус звонка</InputLabel>
               <NativeSelect
@@ -335,10 +333,10 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   get_contacts: () => void
-  make_calls: (id: number) => void
+  make_calls: (id: number, data : any) => void
   receive_calls: () => void
 }
-const mapStateToProps = (state: AppState): LinkStateProps => ({
+const mapStateToProps = ( state: AppState ): LinkStateProps => ({
   contacts: state.contacts,
 });
 

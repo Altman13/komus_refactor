@@ -29,18 +29,22 @@ export const receive_calls = createAsync<any, any>(
   }
 )
 
-function makeCall( id: number ) : AppActions {
-  return {
-    type: MAKE_CALL,
-    id
-  }
-}
+// function makeCall( id: number ) : AppActions {
+//   return {
+//     type: MAKE_CALL,
+//     id
+//   }
+// }
 
-export const make_calls = ( id : number ) => {
-  return ( dispatch: Dispatch<AppActions> ) => {
-    dispatch( makeCall( id ) )
+export const make_calls = createAsync<any, any>(
+  "MAKE_CALL",
+  async ( id, dispatch ) => {
+    const url: string = 'contacts'
+    let resp = ''
+    resp = await ajaxAction( url, 'POST', id )
+    return dispatch({ type: MAKE_CALL, id })
   }
-}
+)
 
 export async function send_mails ( url: string, method: string, data: any ) {
     let resp = ''
