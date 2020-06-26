@@ -92,11 +92,9 @@ export class FormComponent extends React.Component<Props, State> {
       //this.props.receive_calls()
     }
     this.props.make_calls(this.state.id)
-    let mail = this.state.email
-    let id = this.state.id
     const data = {
-      id,
-      mail,
+      id : this.state.email,
+      mail : this.state.id,
     }
     if (this.state.send_mail_kp) {
       send_mails('mail', 'POST', data)
@@ -111,7 +109,7 @@ export class FormComponent extends React.Component<Props, State> {
     var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
       contact = nextProps.contacts[key]
-    });
+    })
 
     if (contact) {
       this.setState({
@@ -148,7 +146,7 @@ export class FormComponent extends React.Component<Props, State> {
           <div id={key} style={{ fontSize: 18 }} key={key}>
             {key}: {value}
           </div>
-        );
+        )
       }
     }
     this.setState({ html_cont: html_element })
