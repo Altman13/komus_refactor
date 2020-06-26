@@ -1,40 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { AppActions } from "../models/actions";
-import { ThunkDispatch } from "redux-thunk";
-import { connect } from "react-redux";
-import { AppState } from "../store";
-import { bindActionCreators } from "redux";
+import React from "react"
+import { Link } from "react-router-dom"
+import { AppActions } from "../models/actions"
+import { ThunkDispatch } from "redux-thunk"
+import { connect } from "react-redux"
+import { AppState } from "../store"
+import { bindActionCreators } from "redux"
 
-import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/";
-import { Contact } from "../models";
+import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/"
+import { Contact } from "../models"
 
 import {
   Button, TextField, Grid, FormControlLabel,
   Checkbox, NativeSelect, InputLabel, TextareaAutosize,
   Hidden, Container
-} from "@material-ui/core";
+} from "@material-ui/core"
 
-import InfoTextBlock from "./InfoComponent";
-import SearchComponent from "./SearchComponent";
-import RadioBtnComponent from "./RadioBtnComponent";
-import DefaultNotice from "../components/NoticeComponent";
+import InfoTextBlock from "./InfoComponent"
+import SearchComponent from "./SearchComponent"
+import RadioBtnComponent from "./RadioBtnComponent"
+import DefaultNotice from "../components/NoticeComponent"
 
 interface State {
-  id: number;
-  naimenovanie: string;
-  fio: string;
-  nomer: string;
-  email: string;
-  comment: string;
-  submitted: boolean;
-  html_cont: HTMLElement[];
-  st_operator: boolean;
-  notice: boolean;
-  err: boolean;
-  status_call: string;
-  request_call: string;
-  send_mail_kp: boolean;
+  id: number
+  naimenovanie: string
+  fio: string
+  nomer: string
+  email: string
+  comment: string
+  submitted: boolean
+  html_cont: HTMLElement[]
+  st_operator: boolean
+  notice: boolean
+  err: boolean
+  status_call: string
+  request_call: string
+  send_mail_kp: boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -57,61 +57,60 @@ export class FormComponent extends React.Component<Props, State> {
       request_call: "",
       send_mail_kp: false,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.makeCallHandler = this.makeCallHandler.bind(this);
-    this.selectHandleChange = this.selectHandleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.makeCallHandler = this.makeCallHandler.bind(this)
+    this.selectHandleChange = this.selectHandleChange.bind(this)
   }
 
   onChange(e) {
-    this.setState({ comment: e.target.value });
+    this.setState({ comment: e.target.value })
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     switch (name) {
       case "company_name":
-        this.setState({ naimenovanie: value });
-        break;
+        this.setState({ naimenovanie: value })
+        break
       case "fio_lpr":
-        this.setState({ fio: value });
-        break;
+        this.setState({ fio: value })
+        break
       case "company_phone":
-        this.setState({ nomer: value });
-        break;
+        this.setState({ nomer: value })
+        break
       case "company_mail":
-        this.setState({ email: value });
-        break;
+        this.setState({ email: value })
+        break
     }
   }
 
   makeCallHandler(event) {
-    event.preventDefault();
+    event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
-    let project_type: string = "INCOMING";
+    let project_type: string = "INCOMING"
     if (project_type == "INCOMING") {
       //this.props.receive_calls()
     }
-    this.props.make_calls(this.state.id);
-    this.props;
-    let mail = this.state.email;
-    let id = this.state.id;
+    this.props.make_calls(this.state.id)
+    let mail = this.state.email
+    let id = this.state.id
     const data = {
       id,
       mail,
-    };
+    }
     if (this.state.send_mail_kp) {
       send_mails('mail', 'POST', data)
     }
   }
 
   componentDidMount() {
-    this.props.get_contacts();
+    this.props.get_contacts()
   }
 
   componentWillReceiveProps(nextProps) {
-    var contact;
+    var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {
-      contact = nextProps.contacts[key];
+      contact = nextProps.contacts[key]
     });
 
     if (contact) {
@@ -127,40 +126,49 @@ export class FormComponent extends React.Component<Props, State> {
         status_call: "",
         send_mail_kp: false,
       });
-      setTimeout(() => {
-        this.setState({ notice: false });
-      }, 6000);
-      var key_contact = Object.keys(this.state);
-      var html_element: any = [];
-      for (let [key, value] of Object.entries(contact)) {
-        var el_main_form = key_contact.indexOf(key);
-        if (el_main_form == -1 && value) {
-          html_element.push(
-            <div id={key} style={{ fontSize: 18 }} key={key}>
-              {key}: {value}
-            </div>
-          );
-        }
-      }
-      this.setState({ html_cont: html_element });
+      this.noticeVisibleToggle()
+      this.setAdditionalInfoBlock(contact)
     }
   }
 
+  noticeVisibleToggle() {
+    setTimeout(() => {
+      this.setState({ notice: false })
+    }, 6000)
+  }
+
+  //если элемента нет на главной форме отображаем в дополнительном блоке
+  setAdditionalInfoBlock(contact: any) {
+    var key_contact = Object.keys(this.state)
+    var html_element: any = []
+    for (let [key, value] of Object.entries(contact)) {
+      var el_main_form = key_contact.indexOf(key)
+      if (el_main_form == -1 && value) {
+        html_element.push(
+          <div id={key} style={{ fontSize: 18 }} key={key}>
+            {key}: {value}
+          </div>
+        );
+      }
+    }
+    this.setState({ html_cont: html_element })
+  }
+
   selectHandleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     switch (name) {
       case "status_call":
-        this.setState({ status_call: value });
+        this.setState({ status_call: value })
         break;
       case "request_call":
-        this.setState({ request_call: value });
+        this.setState({ request_call: value })
         break;
     }
   }
 
   sendMailKp = () => {
-    this.setState({ send_mail_kp: !this.state.send_mail_kp });
-  };
+    this.setState({ send_mail_kp: !this.state.send_mail_kp })
+  }
 
   render() {
     return (
@@ -325,12 +333,12 @@ export class FormComponent extends React.Component<Props, State> {
   }
 }
 interface LinkStateProps {
-  contacts: Contact;
+  contacts: Contact
 }
 interface LinkDispatchProps {
-  get_contacts: () => void;
-  make_calls: (id: number) => void;
-  receive_calls: () => void;
+  get_contacts: () => void
+  make_calls: (id: number) => void
+  receive_calls: () => void
 }
 const mapStateToProps = (state: AppState): LinkStateProps => ({
   contacts: state.contacts,
@@ -344,4 +352,4 @@ const mapDispatchToProps = (
   receive_calls: bindActionCreators(receive_calls, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(FormComponent)

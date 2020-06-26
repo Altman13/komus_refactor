@@ -10,19 +10,19 @@ async function getUsers() {
   const url : string = 'user'
   const method : string = 'GET'
   let resp: any = ''
-  resp = await ajaxAction(url, method )
+  resp = await ajaxAction( url, method )
   users = resp
 }
 
 getUsers()
 
-async function setStOperator(value) {
-  if (value) {
+async function setStOperator( value ) {
+  if ( value ) {
     let resp : any = ''
     const url : string = 'user'
     const method : string = 'PATCH'
     const data : any = value.operators
-    resp = await ajaxAction(url, method , data )
+    resp = await ajaxAction( url, method , data )
     return resp
   }
 }

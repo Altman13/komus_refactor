@@ -1,4 +1,4 @@
-export async function ajaxAction( url : string, method : string, data : any = undefined) {
+export async function ajaxAction( url : string, method : string, data : any = undefined ) {
     var ret=""
     try {
             await fetch("http://localhost/komus_new/api/"+url, {
@@ -14,7 +14,7 @@ export async function ajaxAction( url : string, method : string, data : any = un
             referrerPolicy: "no-referrer",
         })
         .then((response) => {
-            return response.json();
+            return response.json()
         })
         .then((data) => {
             ret=data
