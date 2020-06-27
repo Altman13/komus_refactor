@@ -27,7 +27,7 @@ interface State {
   nomer: string
   email: string
   comment: string
-  submitted: boolean
+  //submitted: boolean
   additional_info_block: HTMLElement[]
   st_operator: boolean
   notice: boolean
@@ -48,7 +48,7 @@ export class FormComponent extends React.Component<Props, State> {
       nomer: "",
       email: "",
       comment: "",
-      submitted: false,
+      //submitted: false,
       additional_info_block: [],
       st_operator: false,
       notice: false,
@@ -93,6 +93,7 @@ export class FormComponent extends React.Component<Props, State> {
     }
     const call ={
       status_call : this.state.status_call,
+      requst_call : this.state.request_call,
       id : this.state.id
     }
     this.props.make_calls(call)

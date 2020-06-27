@@ -10,6 +10,7 @@ require './controllers/CallsController.php';
 require './controllers/ReportController.php';
 require './controllers/HomeController.php';
 require './controllers/BaseController.php';
+require './controllers/ContactController.php';
 
 require_once './config/dependencies.php';
 
@@ -28,6 +29,7 @@ $app->get('/api/calls', CallsController::class . ':show');
 $app->post('/api/user', UserController::class . ':create');
 $app->get('/api/user', UserController::class . ':show');
 $app->get('/api/report', ReportController::class . ':show');
+$app->get('/api/contact', ContactController::class . ':update');
 
 //xml, json, html, 
 $app->get('/api/get', ApiController::class . ':show');

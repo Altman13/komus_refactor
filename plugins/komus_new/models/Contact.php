@@ -38,7 +38,6 @@ class Contact
             die('Произошла ошибка при выборке контактов ' . $th->getMessage());
         }
         $contacts = $all_contacts->fetchAll();
-        //echo json_encode($contacts);
         return json_encode($contacts);
     }
     /**
@@ -48,7 +47,7 @@ class Contact
      *
      * @return void
      */
-    public function Update($id)
+    public function updateStatus($id)
     {
         # code...
     }
