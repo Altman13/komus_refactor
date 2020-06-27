@@ -31,7 +31,7 @@ export const receive_calls = createAsync<any, any>(
 export const make_calls = createAsync<any, any>(
   "MAKE_CALL",
   async ( data, dispatch ) => {
-    const url : string = 'contacts'
+    const url : string = 'contact'
     const method : string = 'POST' 
     console.log( data )
     await ajaxAction( url, method, data )
