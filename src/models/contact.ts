@@ -18,11 +18,12 @@ export interface Login {
   password: string;
   login: string;
 }
-interface Call {
-  date_call: number
-  count_calls: number
+export interface Call {
+  //id : number
   status_call: string
-  operator: string
+  date_call?: number
+  count_calls?: number
+  operator?: string
 }
 
 export interface Report extends Contact, Call {

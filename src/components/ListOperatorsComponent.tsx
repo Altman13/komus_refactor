@@ -1,8 +1,8 @@
 import React from "react"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { Button, TextField, Grid } from "@material-ui/core"
+import { ajaxAction } from '../services'
 
-import { ajaxAction } from './../servicies'
 
 let users: any[]
 async function getUsers() {

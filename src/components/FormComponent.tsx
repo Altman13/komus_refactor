@@ -91,7 +91,11 @@ export class FormComponent extends React.Component<Props, State> {
     if (project_type == "INCOMING") {
       //this.props.receive_calls()
     }
-    this.props.make_calls(this.state.id, this.state.status_call)
+    const call ={
+      status_call : this.state.status_call,
+      id : this.state.id
+    }
+    this.props.make_calls(call)
     const data = {
       id : this.state.email,
       mail : this.state.id,
@@ -333,7 +337,7 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   get_contacts: () => void
-  make_calls: (id: number, data : any) => void
+  make_calls: (data: any) => void
   receive_calls: () => void
 }
 const mapStateToProps = ( state: AppState ): LinkStateProps => ({

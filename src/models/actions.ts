@@ -1,5 +1,4 @@
-//import { Contact, Report, Contacts } from "./contact";
-import { Contact, Contacts } from "./contact";
+import { Contact, Contacts, Call } from "./contact";
 
 export const MAKE_CALL = "MAKE_CALL";
 export const RECEIVE_CALL = "RECEIVE_CALL";
@@ -8,7 +7,9 @@ export const SET_FILTER_ON_CONTACTS = "SET_FILTER_ON_CONTACTS";
 
 export interface MakeCallAction {
   type: typeof MAKE_CALL;
-  id: number;
+  call : Call
+  id : number
+  // status_call : string
 }
 
 export interface ReceiveCallAction {
