@@ -4,6 +4,7 @@ import { Button, TextField, CssBaseline,
   FormControlLabel, Checkbox 
 } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
+import { Redirect} from "react-router-dom";
 interface Props {
   //classes: any;
   //openSession: typeof openSession
@@ -33,7 +34,7 @@ class LoginComponent extends React.Component<Props, State> {
       failure: false,
     };
   }
-
+  
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     switch (name) {
@@ -83,11 +84,18 @@ class LoginComponent extends React.Component<Props, State> {
         localStorage.setItem('token_exp', data.token_exp)
         localStorage.setItem('user_group', data.user_group)
         console.log('localStrorage :>> ', localStorage);
+            //return <Redirect to ='/'/>
+    return <Redirect to="/"/>
       })
       .catch(() => {
         this.setState({ failure: true })
       })
   }
+  componentWillUpdate(nextProps, nextState) {
+    //return <Redirect to ='/'/>
+    return <Redirect to="/"/>
+  }
+  
 
   render() {
 

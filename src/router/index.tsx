@@ -9,7 +9,7 @@ let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
 import { UserFactory } from '../components/UserFactory'
 let factory = new UserFactory();
 let user = factory.getUserRole(parseInt(user_group));
-console.log(user)
+console.log(user_group)
 //let user = factory.getUserRole(parseInt('2'));
     // switch (user!.constructor.name) {
     //     case 'Guest':
@@ -28,7 +28,7 @@ console.log(user)
     //         break;
     // }
     var auth = false
-    if(user_group){
+    if(user){
         auth = true
         console.log(auth)
     }

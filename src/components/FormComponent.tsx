@@ -36,7 +36,7 @@ interface State {
   request_call: string
   send_mail_kp: boolean
   date : any
-  date_reacall : string
+  date_recall : string
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -59,8 +59,8 @@ export class FormComponent extends React.Component<Props, State> {
       request_call: "",
       send_mail_kp: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
-      date : new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
-      date_reacall : ""
+      date : new Date(new Date().toString().split('GMT')[0]+'UTC').toISOString(),
+      date_recall : ""
     };
     this.handleChange = this.handleChange.bind(this)
     this.makeCallHandler = this.makeCallHandler.bind(this)
@@ -87,7 +87,7 @@ export class FormComponent extends React.Component<Props, State> {
         this.setState({ email: value })
         break
       case "date_recall":
-        this.setState({ date_reacall: value })
+        this.setState({ date_recall: value })
         break
       
     }
@@ -106,7 +106,7 @@ export class FormComponent extends React.Component<Props, State> {
       id : this.state.id
     }
     console.log(call)
-    console.log(this.state.date_reacall)
+    console.log(this.state.date_recall)
     this.props.make_calls(call)
     const data = {
       id : this.state.email,

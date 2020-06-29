@@ -54,7 +54,8 @@ class Contact
         try {
             $call_insert = $this->db->prepare("INSERT INTO `calls` (`begin_time`, `end_time`, `recall_time`, 
                                                                     `status`, `contacts_id`) 
-                                        VALUES (NOW(), NOW(), NOW(), :status_call, :id);");
+                                        VALUES (NOW(), NOW(), NOW(), 
+                                                                    :status_call, :id);");
             $call_insert->bindParam(':id', $id, PDO::PARAM_STR);
             $call_insert->bindParam(':status_call', $status_call, PDO::PARAM_STR);
             $call_insert->execute();
