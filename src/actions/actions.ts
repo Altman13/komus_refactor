@@ -11,8 +11,7 @@ export const get_contacts = createAsync<any, any>(
   "GET_CONTACTS",
   async ( params, dispatch ) => {
     const url: string = 'calls'
-    let resp = ''
-    resp = await ajaxAction( url, 'GET' )
+    const resp = await ajaxAction( url, 'GET' )
     return dispatch({ type: GET_CONTACTS, contacts: resp })
   }
 )
@@ -22,8 +21,7 @@ export const receive_calls = createAsync<any, any>(
   async ( params, dispatch ) => {
     const url: string = 'contacts'
     const method : string = 'POST'
-    let resp = ''
-    resp = await ajaxAction( url, method )
+    const resp = await ajaxAction( url, method )
     return dispatch({ type: RECEIVE_CALL, contacts: resp })
   }
 )
@@ -41,7 +39,6 @@ export const make_calls = createAsync<any, any>(
 )
 
 export async function send_mails ( url: string, method: string, data: any ) {
-    let resp = ''
-    resp = await ajaxAction( url, method, data )
+    const resp = await ajaxAction( url, method, data )
     return resp
 }

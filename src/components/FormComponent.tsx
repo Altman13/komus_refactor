@@ -265,7 +265,7 @@ export class FormComponent extends React.Component<Props, State> {
               />
               <InputLabel id="request_call-label">Статус обращения</InputLabel>
               <NativeSelect
-                style={{ width: "200px" }}
+                style={{ width: "215px" }}
                 id="request_call"
                 name="request_call"
                 onChange={this.selectHandleChange}
@@ -278,7 +278,7 @@ export class FormComponent extends React.Component<Props, State> {
               </NativeSelect>
               <InputLabel id="status_call-label">Статус звонка</InputLabel>
               <NativeSelect
-                style={{ width: "200px" }}
+                style={{ width: "215px" }}
                 id="status_call"
                 name="status_call"
                 onChange={this.selectHandleChange}
@@ -290,7 +290,19 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value={"Перезвон3"}>Перезвон3</option>
                 <option value={"Недозвон"}>Недозвон</option>
               </NativeSelect>
+              <br/>
+              
+              <TextField
+                id="datetime-local"
+                label="Выбрать дату"
+                type="datetime-local"
+                defaultValue="2017-05-24T10:30"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
               <br />
+
               <FormControlLabel
                 className="custom-control-input"
                 id="customSwitches"
