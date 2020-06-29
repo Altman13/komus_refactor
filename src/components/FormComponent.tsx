@@ -35,6 +35,8 @@ interface State {
   status_call: string
   request_call: string
   send_mail_kp: boolean
+  date : any
+  date_reacall : string
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -56,6 +58,8 @@ export class FormComponent extends React.Component<Props, State> {
       status_call: "",
       request_call: "",
       send_mail_kp: false,
+      date : new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
+      date_reacall : ""
     };
     this.handleChange = this.handleChange.bind(this)
     this.makeCallHandler = this.makeCallHandler.bind(this)
@@ -81,6 +85,10 @@ export class FormComponent extends React.Component<Props, State> {
       case "company_mail":
         this.setState({ email: value })
         break
+      case "date_recall":
+        this.setState({ date_reacall: value })
+        break
+      
     }
   }
 
@@ -97,6 +105,7 @@ export class FormComponent extends React.Component<Props, State> {
       id : this.state.id
     }
     console.log(call)
+    console.log(this.state.date_reacall)
     this.props.make_calls(call)
     const data = {
       id : this.state.email,
@@ -109,6 +118,8 @@ export class FormComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.get_contacts()
+    //this.setState({date: new Date()})
+    console.log(this.state.date)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -296,7 +307,9 @@ export class FormComponent extends React.Component<Props, State> {
                 id="datetime-local"
                 label="Выбрать дату"
                 type="datetime-local"
-                defaultValue="2017-05-24T10:30"
+                name="date_recall"
+                defaultValue={ this.state.date }
+                onChange={ this.handleChange }
                 InputLabelProps={{
                   shrink: true,
                 }}
