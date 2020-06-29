@@ -21,21 +21,21 @@ export const receive_calls = createAsync<any, any>(
   "RECEIVE_CALL",
   async ( params, dispatch ) => {
     const url: string = 'contacts'
-    const data: string = ''
+    const method : string = 'POST'
     let resp = ''
-    resp = await ajaxAction( url, 'POST', data )
+    resp = await ajaxAction( url, method )
     return dispatch({ type: RECEIVE_CALL, contacts: resp })
   }
 )
 
 export const make_calls = createAsync<any, any>(
   "MAKE_CALL",
-  async ( data, dispatch ) => {
+  async ( contact, dispatch ) => {
     const url : string = 'contact'
     const method : string = 'POST' 
-    console.log( data )
-    await ajaxAction( url, method, data )
-    const { id } = data
+    console.log( contact )
+    await ajaxAction( url, method, contact )
+    const { id } = contact
     return dispatch({ type: MAKE_CALL, id })
   }
 )

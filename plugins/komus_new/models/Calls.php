@@ -31,15 +31,7 @@ class Calls
             die('Произошла ошибка при выборке звонков ' . $th->getMessage());
         }
         $calls = $all_calls->fetchAll();
-        //TODO: перенести html на react
-        $fn_data = (array) json_decode(file_get_contents('./columns_name.json'));
-        //foreach ($calls as $call) {
-            // foreach ($fn_data as $name => $name_column) {
-            //     echo "<div id=\"$name\" style=\"border: 2px solid black;\"><span style=\"color:red;\">
-            // $name_column<span style=\"color:blue;\"> $calls[$name]</span></span></div>";
-            // }
-        //}
-        //return json_encode($fn_data);
+        //$fn_data = (array) json_decode(file_get_contents('./columns_name.json'));
         return json_encode($calls);
     }
     /**

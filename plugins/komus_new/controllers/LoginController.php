@@ -7,6 +7,7 @@ use Slim\Container;
 class LoginController
 {
     private $login;
+    private $resp;
     public function __construct(Container $container)
     {
         $this->login = $container['login'];
@@ -14,22 +15,21 @@ class LoginController
     //TODO : добавить счетчик неудачных попыток входа
     public function inter(Request $request, Response $response, $args)
     {
-        $resp = '';
-        if ($request->getAttribute('has_errors')) {
-            $errors = $request->getAttribute('errors');
-            $response->getBody()->write("Произошла ошибка валидации данных пользователя " . $errors . PHP_EOL);
-            $resp =$response->withStatus(500);
-        } else {
-            $user_data = json_decode($request->getBody());
+        // if ($request->getAttribute('has_errors')) {
+        //     $errors = $request->getAttribute('errors');
+        //     $response->getBody()->write("Произошла ошибка валидации данных пользователя " . $errors . PHP_EOL);
+        //     $this->resp =$response->withStatus(500);
+        // } else {
             try {
-                $resp = $this->login->sign($user_data->userpassword, $user_data->username);
+                $user_data = json_decode($request->getBody());
+                $this->resp = $this->login->sign($user_data->userpassword, $user_data->username);
             } catch (\Throwable $th) {
                 $response->getBody()->write("Произошла ошибка при попытке входа на сайт " . $th->getMessage() . PHP_EOL);
-                $resp = $response->withStatus(500);
+                $this->resp = $response->withStatus(500);
             }
-            return $resp;
+            return $this->resp;
         }
-    }
+    //}
     //TODO : убедиться в нужности функции, так как токен лежит в localstorage
     public function exit($token)
     {
