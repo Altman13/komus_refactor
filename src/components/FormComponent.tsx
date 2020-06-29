@@ -58,7 +58,8 @@ export class FormComponent extends React.Component<Props, State> {
       status_call: "",
       request_call: "",
       send_mail_kp: false,
-      date : new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
+      //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
+      date : new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
       date_reacall : ""
     };
     this.handleChange = this.handleChange.bind(this)
@@ -118,8 +119,6 @@ export class FormComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.get_contacts()
-    //this.setState({date: new Date()})
-    console.log(this.state.date)
   }
 
   componentWillReceiveProps(nextProps) {
