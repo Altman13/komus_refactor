@@ -16,20 +16,16 @@ class Region
      *
      * @return void
      */
-    public function Create($regions)
+    public function create($regions)
     {
-        $new_region = json_decode($regions);
-        //TODO: дописать запрос на инсерт регионов
-        $this->db->prepare("INSERT INTO ");
-        foreach ($new_region as $rs) {
-        }
+        # code...
     }
     /**
      * Read
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
         $all_regions = $this->db->prepare("SELECT * FROM regions");
         try {
@@ -48,7 +44,7 @@ class Region
      *
      * @return void
      */
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
@@ -59,7 +55,7 @@ class Region
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

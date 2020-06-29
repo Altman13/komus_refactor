@@ -74,8 +74,6 @@ class Base
 
         file_put_contents($fn, $data_json);
         $str_q_tables_n = substr_replace($str_q_tables_n, ',`regions_id`, `users_id`)', -2, -1);
-        $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
-        $unicode->execute();
         for ($i = 1; $i < $totalRows; $i++) {
             $str_q_values = 'VALUES (';
             for ($column_num = 0; $column_num < count($for_sortable); $column_num++) {

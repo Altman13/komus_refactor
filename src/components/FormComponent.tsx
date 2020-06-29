@@ -91,11 +91,12 @@ export class FormComponent extends React.Component<Props, State> {
     if (project_type == "INCOMING") {
       //this.props.receive_calls()
     }
-    const call ={
+    const call = {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
       id : this.state.id
     }
+    console.log(call)
     this.props.make_calls(call)
     const data = {
       id : this.state.email,

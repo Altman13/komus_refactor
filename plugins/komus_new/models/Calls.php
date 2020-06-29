@@ -20,9 +20,6 @@ class Calls
      */
     public function read()
     {
-        //TODO: поправить кодировку у некоторых таблиц
-        $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
-        $unicode->execute();
         $all_calls = $this->db->prepare("SELECT * from contacts
         /*LEFT JOIN calls on calls.contacts_id=contacts.id where contacts.id=441*/");
         try {

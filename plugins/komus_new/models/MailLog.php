@@ -15,7 +15,7 @@ class MailLog
      *
      * @return void
      */
-    public function Create()
+    public function create()
     {
         # code...
     }
@@ -24,7 +24,7 @@ class MailLog
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
         $mailslog = $this->db->prepare("SELECT * FROM mailog");
         try {
@@ -42,7 +42,7 @@ class MailLog
      *
      * @return void
      */
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
@@ -53,7 +53,7 @@ class MailLog
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

@@ -1,10 +1,11 @@
 <?php
 
 namespace Komus;
-
+use PDO;
 class Contact
 {
     private $db;
+    private $resp;
     public function __construct($db)
     {
         $this->db = $db;
@@ -16,7 +17,7 @@ class Contact
      *
      * @return void
      */
-    public function Create($contact)
+    public function create($contact)
     {
         $new_contacts = json_decode($contact);
         //TODO: дописать запрос на инсерт контактов
@@ -29,13 +30,13 @@ class Contact
      *
      * @return void
      */
-    public function Read()
+    public function read()
     {
-        $all_contacts = $this->db->prepare("SELECT * FROM contacts");
         try {
+            $all_contacts = $this->db->prepare("SELECT * FROM contacts");
             $all_contacts->execute();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборке контактов ' . $th->getMessage());
+            echo ('Произошла ошибка при выборке контактов ' . $th->getMessage());
         }
         $contacts = $all_contacts->fetchAll();
         return json_encode($contacts);
@@ -47,9 +48,22 @@ class Contact
      *
      * @return void
      */
-    public function updateStatus($id)
+    public function updateStatusCall($id, $status_call)
     {
-        # code...
+        //TODO: begin_time, recall_time, end_time
+        try {
+            $call_insert = $this->db->prepare("INSERT INTO `calls` (`begin_time`, `end_time`, `recall_time`, 
+                                                                    `status`, `contacts_id`) 
+                                        VALUES (NOW(), NOW(), NOW(), 
+                                                                    :status_call, :id);");
+            $call_insert->bindParam(':id', $id, PDO::PARAM_STR);
+            $call_insert->bindParam(':status_call', $status_call, PDO::PARAM_STR);
+            $call_insert->execute();
+            $this->resp = $call_insert;
+        } catch (\Throwable $th) {
+            echo ('Произошла ошибка при добавлении статуса звонка ' . $th->getMessage());
+        }
+        return $this->resp;
     }
     /**
      * Delete
@@ -58,7 +72,7 @@ class Contact
      *
      * @return void
      */
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

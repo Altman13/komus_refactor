@@ -33,9 +33,9 @@ export const make_calls = createAsync<any, any>(
   async ( contact, dispatch ) => {
     const url : string = 'contact'
     const method : string = 'POST' 
-    console.log( contact )
-    await ajaxAction( url, method, contact )
     const { id } = contact
+    const cont = JSON.stringify({ contact })
+    await ajaxAction( url, method, cont )
     return dispatch({ type: MAKE_CALL, id })
   }
 )

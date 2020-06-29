@@ -9,6 +9,7 @@ class ContactController
 {
     private $contact;
     private $resp;
+
     public function __construct(Container $container)
     {
         $this->contact = $container['contact'];
@@ -17,11 +18,12 @@ class ContactController
     {
         return $this->contact->read();
     }
+
     public function update(Request $request, Response $response)
     {
         try {
             $call = json_decode($request->getBody());
-            $this->resp = $this->contact->updateStatus($call->id, $call->status_call);
+            $this->resp = $this->contact->updateStatusCall($call->contact->id, $call->contact->status_call);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при добавлении результата звонка "
                 . $th->getMessage() . PHP_EOL);

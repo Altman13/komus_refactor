@@ -13,9 +13,6 @@ class Login
     }
     public function sign($user_password, $user_name)
     {
-        //TODO: поправить кодировку у некоторых таблиц
-        $unicode =$this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
-        $unicode->execute();
         //TODO: валидация
         $payload = [
             "user" => $user_name,
@@ -30,7 +27,7 @@ class Login
             $users_data->execute();
             $user_data = $users_data->fetch();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
+            echo ('Произошла ошибка при выборе пользователя из базы ' . $th->getMessage());
         }
         if ($token == $user_data['token']) {
             $user_group = $user_data['groups_id'];
@@ -41,7 +38,7 @@ class Login
             $user_data = json_encode($user);
             return $user_data;
         } else {
-            die('Введенны некорректные данные для авторизации');
+            echo ('Введенны некорректные данные для авторизации');
         }
     }
     public function signOut($user)
