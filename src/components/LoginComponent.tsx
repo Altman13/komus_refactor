@@ -13,14 +13,13 @@ interface Props {
   location: any
   //session: session
 }
-
 interface State {
   username: string;
   password: string;
   submitted: boolean;
   failure: boolean;
+  token : string
 }
-
 class LoginComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
@@ -30,6 +29,7 @@ class LoginComponent extends React.Component<Props, State> {
       password: "",
       submitted: false,
       failure: false,
+      token : ''
     };
   }
   
@@ -47,16 +47,13 @@ class LoginComponent extends React.Component<Props, State> {
 
   //TODO: tokenExpiry
   async login(url: string, method: string, data : any){
-      
       let resp: any
       resp  = await ajaxAction( url, method, data )
-      localStorage.setItem( 'token', resp.user_token )
-      localStorage.setItem( 'token_exp', resp.token_exp )
-      localStorage.setItem( 'user_group', resp.user_group )
+      return resp
       // console.log( 'localStrorage :>> ', localStorage )
       //this.setState({ failure: true })
   }
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     this.setState({ submitted: true })
     if ( !this.state.username || !this.state.password ) {
@@ -68,8 +65,24 @@ class LoginComponent extends React.Component<Props, State> {
     };
     const url = 'login'
     const method = 'POST'
-    this.login(url, method, data)
-    this.props.history.push('/');
+    let resp : any
+    resp = await this.login(url, method, data)
+    const { user_token , token_exp, user_group } = resp
+    console.log( user_token )    
+    this.setState({ token: user_token })
+    if( user_token ){
+      localStorage.setItem( 'token', user_token )
+      localStorage.setItem( 'token_exp', token_exp )
+      localStorage.setItem( 'user_group', user_group )
+    }
+
+    if(localStorage.getItem('token')){
+      const { history } = this.props
+        history.push("/main")  
+        window.location.reload()
+      console.log('ok')
+      }
+      //this.setState({ failure: true })
   }
 
   render() {

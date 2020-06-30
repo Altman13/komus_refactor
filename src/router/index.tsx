@@ -5,9 +5,10 @@ import { BrowserRouter as Router,
 import  LoginComponent  from '../components/LoginComponent'
 import FormComponent from "../components/FormComponent";
 import  { DashBoardComponent }   from '../components/DashBoardComponent'
-let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
 import { UserFactory } from '../components/UserFactory'
+
 let factory = new UserFactory();
+let user_group = JSON.parse(localStorage.getItem('user_group') || '{}');
 let user = factory.getUserRole(parseInt(user_group));
 console.log(user_group)
 //let user = factory.getUserRole(parseInt('2'));
@@ -27,9 +28,10 @@ console.log(user_group)
     //     default:
     //         break;
     // }
-    var auth = true
-    //const token = localStorage.getItem('token')
-    if( auth ){
+    var auth = false
+    const token = localStorage.getItem('token')
+    
+    if( token ){
         auth = true
         console.log(auth)
     }
@@ -40,9 +42,9 @@ export function MainRouter() {
                     <Route exact path="/" component={PrivateRoute} />
                     <Route path="/login" component={LoginComponent} />
                     { auth ? (<Route path="/main" component={FormComponent} />) :
-                    (<Route path="/dashboard" component={PrivateRoute} />)}
+                    (<Route path="/" component={LoginComponent} />)}
                     { auth ? (<Route path="/dashboard" component={DashBoardComponent} />) :
-                    (<Route path="/dashboard" component={PrivateRoute} />)}
+                    (<Route path="/login" component={PrivateRoute} />)}
                     <Route path="*" component={PrivateRoute} />
                 </Switch>
             </Router>
