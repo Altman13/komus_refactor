@@ -27,8 +27,9 @@ console.log(user_group)
     //     default:
     //         break;
     // }
-    var auth = false
-    if(user){
+    var auth = true
+    //const token = localStorage.getItem('token')
+    if( auth ){
         auth = true
         console.log(auth)
     }

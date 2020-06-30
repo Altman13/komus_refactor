@@ -9,7 +9,7 @@ import { ajaxAction } from '../services';
 interface Props {
   //classes: any;
   //openSession: typeof openSession
-  // history: any
+  history: any
   location: any
   //session: session
 }
@@ -22,7 +22,6 @@ interface State {
 }
 
 class LoginComponent extends React.Component<Props, State> {
-  state: State;
 
   constructor(props: Props) {
     super(props);
@@ -45,9 +44,10 @@ class LoginComponent extends React.Component<Props, State> {
         break;
     }
   }
+
   //TODO: tokenExpiry
-  
   async login(url: string, method: string, data : any){
+      
       let resp: any
       resp  = await ajaxAction( url, method, data )
       localStorage.setItem( 'token', resp.user_token )
@@ -69,11 +69,8 @@ class LoginComponent extends React.Component<Props, State> {
     const url = 'login'
     const method = 'POST'
     this.login(url, method, data)
+    this.props.history.push('/');
   }
-  componentWillUpdate(nextProps, nextState) {
-    
-  }
-  
 
   render() {
 
