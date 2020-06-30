@@ -208,7 +208,7 @@ export class FormComponent extends React.Component<Props, State> {
                   <Link to="/dashboard">Панель управления</Link>
                 )}
                 <div
-                  className="card_info"
+                  className="additional_info"
                   style={{
                     background: "darkseagreen",
                     lineHeight: "22px",

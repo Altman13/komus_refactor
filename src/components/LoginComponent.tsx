@@ -4,12 +4,13 @@ import { Button, TextField, CssBaseline,
   FormControlLabel, Checkbox 
 } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
-import { Redirect} from "react-router-dom";
+import { ajaxAction } from '../services';
+
 interface Props {
   //classes: any;
   //openSession: typeof openSession
   // history: any
-  // location: any
+  location: any
   //session: session
 }
 
@@ -18,7 +19,6 @@ interface State {
   password: string;
   submitted: boolean;
   failure: boolean;
-  token : string
 }
 
 class LoginComponent extends React.Component<Props, State> {
@@ -27,7 +27,6 @@ class LoginComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      token : "",
       username: "",
       password: "",
       submitted: false,
@@ -46,54 +45,33 @@ class LoginComponent extends React.Component<Props, State> {
         break;
     }
   }
-
+  //TODO: tokenExpiry
+  
+  async login(url: string, method: string, data : any){
+      let resp: any
+      resp  = await ajaxAction( url, method, data )
+      localStorage.setItem( 'token', resp.user_token )
+      localStorage.setItem( 'token_exp', resp.token_exp )
+      localStorage.setItem( 'user_group', resp.user_group )
+      // console.log( 'localStrorage :>> ', localStorage )
+      //this.setState({ failure: true })
+  }
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     this.setState({ submitted: true })
-    if (!this.state.username || !this.state.password) {
+    if ( !this.state.username || !this.state.password ) {
       return
     }
     const data = {
       username: this.state.username,
       userpassword: this.state.password,
     };
-    const url = "http://localhost/komus_new/api/login"
-
-    async function login(url = "", data = {}) {
-      // Default options are marked with *
-      const response = await fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: "follow", // manual, *follow, error
-        referrerPolicy: "no-referrer", // no-referrer, *client
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
-      });
-      return await response.json(); // parses JSON response into native JavaScript objects
-    }
-    login( url, data )
-      .then(( data ) => {
-        console.log( data )
-        //TODO: tokenExpiry
-        localStorage.setItem('token', data.user_token)
-        localStorage.setItem('token_exp', data.token_exp)
-        localStorage.setItem('user_group', data.user_group)
-        console.log('localStrorage :>> ', localStorage);
-            //return <Redirect to ='/'/>
-    return <Redirect to="/"/>
-      })
-      .catch(() => {
-        this.setState({ failure: true })
-      })
+    const url = 'login'
+    const method = 'POST'
+    this.login(url, method, data)
   }
   componentWillUpdate(nextProps, nextState) {
-    //return <Redirect to ='/'/>
-    return <Redirect to="/"/>
+    
   }
   
 
