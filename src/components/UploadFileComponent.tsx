@@ -6,6 +6,7 @@ import SpinnerComponent from './SpinnerComponent';
 const inputUploadFile: CSS.Properties = {
   display: "none",
 };
+var temp = 0
 export interface UploadFileComponentProps {
   url: string;
 }
@@ -31,7 +32,8 @@ class UploadFileComponent extends React.Component<
     if (this.state.err!=true) {
       let fn: string = "upload_file"
       formData.append(fn, this.state.file)
-      this.setState({ text : 'Дождитесь конца загрузки', spinner : true, file : null })
+      this.setState({ text : '', spinner : true, file : null })
+      temp = 20
       const response = await fetch(
         "http://localhost/komus_new/api/" + this.props.url,
         {
@@ -41,6 +43,7 @@ class UploadFileComponent extends React.Component<
       ).then(( response ) => {
         if ( response.status === 200 ) {
           console.log( "SUCCESSS" )
+          temp = 0
           this.setState({ spinner : false, file: null, text : '' })
         } else if ( response.status === 500 ) {
           this.setState({ spinner : false })
@@ -87,10 +90,10 @@ handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
             Выбрать файл
           </Button>
         </label>
-        <div style={{ width: "100%", textAlign: "center", fontSize: 18, padding: 20 }}>
+        <div style={{ width: "100%", textAlign: "center", fontSize: 18, padding: temp }}>
           { this.state.file ? this.state.file.name : null }
           { this.state.err ? this.state.text : null }
-          { this.state.spinner ? <SpinnerComponent/> : null }
+          { this.state.spinner ? <SpinnerComponent /> : null }
         </div>
         <Button
           variant="outlined"
