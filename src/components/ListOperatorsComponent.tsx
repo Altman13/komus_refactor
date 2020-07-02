@@ -3,17 +3,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete"
 import { Button, TextField, Grid } from "@material-ui/core"
 import { ajaxAction } from '../services'
 
-
-let users: any[]
-// async function getUsers() {
-//   const url : string = 'user'
-//   const method : string = 'GET'
-//   let resp: any = ''
-//   resp = await ajaxAction( url, method )
-//   users = resp
-// }
-// getUsers()
-
 async function setStOperator( value ) {
   if ( value ) {
     let resp : any = ''
@@ -24,7 +13,7 @@ async function setStOperator( value ) {
     return resp
   }
 }
-
+let users: any[]
 export default function ListOperators(operator) {
     users = operator.users
     return (
@@ -32,7 +21,6 @@ export default function ListOperators(operator) {
       <Grid item xs={12} lg={3} sm={4} md={4}>
       <Autocomplete
         id="combo-box-demo"
-        onChange={(event, value) => setStOperator(value)}
         options={ users }
         getOptionLabel={(options) => options.operators}
         style={{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}

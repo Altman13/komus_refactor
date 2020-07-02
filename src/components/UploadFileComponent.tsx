@@ -1,7 +1,7 @@
 import * as React from "react"
 import CSS from "csstype"
 import { Button } from "@material-ui/core"
-import SpinnerComponent from './SpinnerComponent';
+import SpinnerComponent from './SpinnerComponent'
 
 const inputUploadFile: CSS.Properties = {
   display: "none",

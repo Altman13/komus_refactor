@@ -4,14 +4,11 @@ import { Button, TextField, CssBaseline,
   FormControlLabel, Checkbox 
 } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
-import { ajaxAction } from '../services';
+import { ajaxAction } from '../services'
 
 interface Props {
-  //classes: any;
-  //openSession: typeof openSession
   history: any
   location: any
-  //session: session
 }
 interface State {
   username: string;
@@ -22,38 +19,36 @@ interface State {
 }
 class LoginComponent extends React.Component<Props, State> {
 
-  constructor(props: Props) {
-    super(props);
+  constructor( props: Props ) {
+    super( props )
     this.state = {
       username: "",
       password: "",
       submitted: false,
       failure: false,
       token : ''
-    };
+    }
   }
   
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
     const { name, value } = e.target;
     switch (name) {
       case "username":
-        this.setState({ username: value });
+        this.setState({ username: value })
         break;
       case "password":
-        this.setState({ password: value });
+        this.setState({ password: value })
         break;
     }
   }
 
   //TODO: tokenExpiry
-  async login(url: string, method: string, data : any){
+  async login( url: string, method: string, data : any ){
       let resp: any
       resp  = await ajaxAction( url, method, data )
       return resp
-      // console.log( 'localStrorage :>> ', localStorage )
-      //this.setState({ failure: true })
   }
-  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async handleSubmit( e: React.FormEvent<HTMLFormElement> ) {
     e.preventDefault()
     this.setState({ submitted: true })
     if ( !this.state.username || !this.state.password ) {
@@ -68,8 +63,6 @@ class LoginComponent extends React.Component<Props, State> {
     let resp : any
     resp = await this.login( url, method, data )
     const { user_token , token_exp, user_group } = resp
-    // console.log( user_token )    
-    // this.setState({ token: user_token })
     if( user_token ){
       localStorage.setItem( 'token', user_token )
       localStorage.setItem( 'token_exp', token_exp )
@@ -80,9 +73,7 @@ class LoginComponent extends React.Component<Props, State> {
       const { history } = this.props
         history.push("/main")  
         window.location.reload()
-      console.log('ok')
       }
-      //this.setState({ failure: true })
   }
 
   render() {
@@ -144,4 +135,4 @@ class LoginComponent extends React.Component<Props, State> {
     )
   }
 }
-export default LoginComponent;
+export default LoginComponent
