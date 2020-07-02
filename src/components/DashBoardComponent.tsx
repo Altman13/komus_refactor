@@ -221,7 +221,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         </ListItem>
       </List>
     </div>
-  );
+  )
 
   return (
     <div className={ classes.root }>

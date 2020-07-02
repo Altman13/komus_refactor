@@ -38,5 +38,5 @@ export default function ListOperators(operator) {
       </Button>
       </Grid>
     </div>
-  );
+  )
 }

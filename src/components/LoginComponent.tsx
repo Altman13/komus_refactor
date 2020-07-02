@@ -11,10 +11,10 @@ interface Props {
   location: any
 }
 interface State {
-  username: string;
-  password: string;
-  submitted: boolean;
-  failure: boolean;
+  username: string
+  password: string
+  submitted: boolean
+  failure: boolean
   token : string
 }
 class LoginComponent extends React.Component<Props, State> {
@@ -31,7 +31,7 @@ class LoginComponent extends React.Component<Props, State> {
   }
   
   handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     switch (name) {
       case "username":
         this.setState({ username: value })
