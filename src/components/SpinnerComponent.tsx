@@ -21,7 +21,7 @@ export default class SpinnerComponent extends React.Component<LoaderComponentPro
     }
     render() {
     return (
-        <div className="sweet-loading">
+        <div className="sweet-loading" >
         <PacmanLoader
             css={ override }
             size={ 20 }
