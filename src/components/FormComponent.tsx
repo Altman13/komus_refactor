@@ -59,7 +59,7 @@ export class FormComponent extends React.Component<Props, State> {
       request_call: "",
       send_mail_kp: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
-      date : new Date(new Date().toString().split('GMT')[0]+'UTC').toISOString(),
+      date : "",
       date_recall : ""
     };
     this.handleChange = this.handleChange.bind(this)
@@ -120,7 +120,7 @@ export class FormComponent extends React.Component<Props, State> {
   componentDidMount() {
     this.props.get_contacts()
   }
-
+  
   componentWillReceiveProps(nextProps) {
     var contact
     Object.keys(nextProps.contacts).forEach(function eachKey(key) {

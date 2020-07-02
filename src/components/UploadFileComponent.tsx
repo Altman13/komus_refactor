@@ -1,6 +1,7 @@
 import * as React from "react"
 import CSS from "csstype"
 import { Button } from "@material-ui/core"
+import SpinnerComponent from './SpinnerComponent';
 
 const inputUploadFile: CSS.Properties = {
   display: "none",
@@ -12,6 +13,7 @@ export interface UploadFileComponentState {
   file: any;
   err_text: string
   err : boolean
+  spinner : boolean
 }
 class UploadFileComponent extends React.Component<
   UploadFileComponentProps,
@@ -19,7 +21,7 @@ class UploadFileComponent extends React.Component<
 > {
   constructor(props: UploadFileComponentProps) {
     super(props)
-    this.state = { file: null, err : true , err_text : 'Выберете файл для загрузки' }
+    this.state = { file: null, err : true , err_text : 'Выберете файл для загрузки' , spinner : false }
     this.handleFileChange = this.handleFileChange.bind(this)
     this.manageUploadedFile = this.manageUploadedFile.bind(this)
   }
@@ -27,8 +29,10 @@ class UploadFileComponent extends React.Component<
   async manageUploadedFile() {
     const formData = new FormData()
     if (this.state.err!=true) {
-      let fn: string = "file_upload"
+      let fn: string = "upload_file"
+      this.setState({ spinner : true })
       formData.append(fn, this.state.file)
+      this.setState({ file : null })
       const response = await fetch(
         "http://localhost/komus_new/api/" + this.props.url,
         {
@@ -37,9 +41,11 @@ class UploadFileComponent extends React.Component<
         }
       ).then(( response ) => {
         if ( response.status === 200 ) {
+          this.setState({ spinner : false })
           console.log( "SUCCESSS" )
           this.setState({ file: null })
         } else if ( response.status === 500 ) {
+          this.setState({ spinner : false })
           console.log( "SOMETHING WENT WRONG" )
         }
       })
@@ -48,15 +54,8 @@ class UploadFileComponent extends React.Component<
 componentWillReceiveProps (){
     this.setState({ file: null , err : true })
 }
-  // static  getDerivedStateFromProps(nextProps: UploadFileComponentProps) {
-  //   return {
-  //     file : null,
-  //     err : true
-  //   }
 
-  // }
-  
-  handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
+handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
     event.persist()
     if ( event.target.files ) {
       console.log( event.target.files[0] )
@@ -78,7 +77,7 @@ componentWillReceiveProps (){
           <Button
             variant="outlined"
             color="primary"
-            aria-label="upload picture"
+            aria-label="upload file"
             component="span"
             style={{
               width: "100%",
@@ -93,6 +92,7 @@ componentWillReceiveProps (){
         <div style={{ width: "100%", textAlign: "center", fontSize: 18 }}>
           { this.state.file ? this.state.file.name : null }
           { this.state.err ? this.state.err_text : null }
+          { this.state.spinner ? <SpinnerComponent/> : null }
         </div>
         <Button
           variant="outlined"

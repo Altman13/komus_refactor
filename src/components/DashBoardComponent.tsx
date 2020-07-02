@@ -100,11 +100,16 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setNoticeModal(false)
   };
 
-  const getReport = () => {
+  const getReport = async () => {
     setOperatorBlock( false )
     setApiUrl( "" )
     setSpinner( true )
     setTitleText( "отчет" )
+    // const url : string = 'report'
+    // const method : string = 'GET'
+    // const resp = await ajaxAction( url, method )
+    // setSpinner( false )
+    // setReportBlock( true )
     try {
       fetch("http://localhost/komus_new/api/report")
         .then(( response ) => {
@@ -250,21 +255,15 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             anchor={ theme.direction === "rtl" ? "right" : "left" }
             open={ mobileOpen }
             onClose={ handleDrawerToggle }
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true,
-            }}
+            classes={{ paper: classes.drawerPaper }}
+            ModalProps={{ keepMounted: true }}
           >
             { drawer }
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
+            classes={{ paper: classes.drawerPaper }}
             variant="permanent"
             open
           >
