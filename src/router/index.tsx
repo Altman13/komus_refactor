@@ -39,13 +39,14 @@ export function MainRouter() {
     return (
             <Router>
                 <Switch>
-                    <Route exact path="/" component={PrivateRoute} />
-                    <Route path="/login" component={LoginComponent} />
-                    { auth ? (<Route path="/main" component={FormComponent} />) :
-                    (<Route path="/" component={LoginComponent} />)}
-                    { auth ? (<Route path="/dashboard" component={DashBoardComponent} />) :
-                    (<Route path="/login" component={PrivateRoute} />)}
-                    <Route path="*" component={PrivateRoute} />
+                    <Route exact path="/" component= { PrivateRoute } />
+                    <Route path="/login" component= { LoginComponent } />
+                    { auth ? (<Route path="/main" component= { FormComponent } />) :
+                    // (<Route path="/" component= { LoginComponent } />)}
+                    (<Route path="/" component= { PrivateRoute } />)}
+                    { auth ? (<Route path="/dashboard" component= { DashBoardComponent } />) :
+                    (<Route path="/login" component= { PrivateRoute } />)}
+                    <Route path="*" component= { PrivateRoute } />
                 </Switch>
             </Router>
         )

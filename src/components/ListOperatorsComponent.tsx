@@ -5,14 +5,14 @@ import { ajaxAction } from '../services'
 
 
 let users: any[]
-async function getUsers() {
-  const url : string = 'user'
-  const method : string = 'GET'
-  let resp: any = ''
-  resp = await ajaxAction( url, method )
-  users = resp
-}
-getUsers()
+// async function getUsers() {
+//   const url : string = 'user'
+//   const method : string = 'GET'
+//   let resp: any = ''
+//   resp = await ajaxAction( url, method )
+//   users = resp
+// }
+// getUsers()
 
 async function setStOperator( value ) {
   if ( value ) {
@@ -25,8 +25,8 @@ async function setStOperator( value ) {
   }
 }
 
-export default function ListOperators() {
-
+export default function ListOperators(operator) {
+    users = operator.users
     return (
     <div>
       <Grid item xs={12} lg={3} sm={4} md={4}>

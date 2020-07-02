@@ -66,10 +66,10 @@ class LoginComponent extends React.Component<Props, State> {
     const url = 'login'
     const method = 'POST'
     let resp : any
-    resp = await this.login(url, method, data)
+    resp = await this.login( url, method, data )
     const { user_token , token_exp, user_group } = resp
-    console.log( user_token )    
-    this.setState({ token: user_token })
+    // console.log( user_token )    
+    // this.setState({ token: user_token })
     if( user_token ){
       localStorage.setItem( 'token', user_token )
       localStorage.setItem( 'token_exp', token_exp )

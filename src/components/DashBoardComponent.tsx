@@ -23,6 +23,8 @@ import UploadFileComponent from "./UploadFileComponent";
 import SpinnerComponent from "./SpinnerComponent";
 import DefaultNotice from "./NoticeComponent";
 
+import { ajaxAction } from '../services/index';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -78,6 +80,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const [loader, setLoader] = React.useState(false);
   const [report, setReport] = React.useState(false);
   const [notice, setNotice] = React.useState(false);
+  const [users, setUsers] = React.useState("")
 
   const setBaseUrl = () => {
     setUrl("base");
@@ -124,7 +127,20 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       console.log("Ошибка при формировании отчета " + err);
     }
   };
-
+    const getUsers = async () => {
+    const url : string = 'user'
+    const method : string = 'GET'
+    // let resp : any = ''
+    const resp = await ajaxAction( url, method )
+    setUsers(resp)
+    setLoader(false);
+    setReport(false);
+    console.log("назначить старших");
+    setOper(true);
+    setText("операторов");
+    setUrl("");
+    setNotice(false);
+  }
   const drawer = (
     <div>
       <Link
@@ -168,7 +184,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         <ListItem
           button
           key={"Назначить старших операторов"}
-          onClick={setOperator}
+          onClick={getUsers}
         >
           <ListItemIcon>
             <IconButton
@@ -273,7 +289,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             <UploadFileComponent url={url} />
           </Grid>
         ) : null}
-        {oper ? <ListOperators /> : null}
+        {oper ? <ListOperators users= { users }/> : null}
         {loader ? (
           <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
             <div style={{ marginLeft: "130px" }}>
