@@ -14,7 +14,7 @@ async function setStOperator( value ) {
   }
 }
 let users: any[]
-export default function ListOperators(operator) {
+export default function ListOperators( operator ) {
     users = operator.users
     return (
     <div>

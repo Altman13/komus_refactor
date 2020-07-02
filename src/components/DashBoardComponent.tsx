@@ -84,7 +84,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
 
   const setBaseUrl = () => {
     setApiUrl("base")
-    setTitleText("базу")
+    setTitleText("Загрузить базу")
     setOperatorBlock(false)
     setSpinner(false)
     setReportBlock(false)
@@ -94,7 +94,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     console.log("operator loaded")
     setSpinner(false)
     setApiUrl("user")
-    setTitleText("пользователей")
+    setTitleText("Загрузить пользователей")
     setOperatorBlock(false)
     setReportBlock(false)
     setNoticeModal(false)
@@ -104,7 +104,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setOperatorBlock( false )
     setApiUrl( "" )
     setSpinner( true )
-    setTitleText( "отчет" )
+    setTitleText( "Выгрузка отчета" )
     // const url : string = 'report'
     // const method : string = 'GET'
     // const resp = await ajaxAction( url, method )
@@ -132,7 +132,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setReportBlock( false )
     console.log( "назначить старших" )
     setOperatorBlock( true )
-    setTitleText( "операторов" )
+    setTitleText( "Назначить старшего оператора" )
     setApiUrl( "" )
     setNoticeModal( false )
   }
@@ -242,7 +242,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             noWrap
             style={{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
           >
-            { titleText ? `Загрузить ${titleText}` : "Панель управления" }
+            { titleText ? `${titleText}` : "Панель управления" }
             { operatorBlock ? "" : null }
           </Typography>
         </Toolbar>

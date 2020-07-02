@@ -5,13 +5,13 @@ import SpinnerComponent from './SpinnerComponent'
 
 const inputUploadFile: CSS.Properties = {
   display: "none",
-};
+}
 var temp = 0
 export interface UploadFileComponentProps {
-  url: string;
+  url: string
 }
 export interface UploadFileComponentState {
-  file: any;
+  file: any
   text: string
   err : boolean
   spinner : boolean
