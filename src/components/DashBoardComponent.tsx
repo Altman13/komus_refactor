@@ -1,31 +1,31 @@
-import React from "react";
+import React from "react"
 import { AppBar, CssBaseline, Divider,
         Drawer, Hidden, IconButton, List,
         ListItem, ListItemIcon, ListItemText,
         Toolbar, Typography, Button, Grid
-} from "@material-ui/core";
+} from "@material-ui/core"
 
 import {
   makeStyles, useTheme, Theme, createStyles,
-} from "@material-ui/core/styles";
+} from "@material-ui/core/styles"
 
-import MenuIcon from "@material-ui/icons/Menu";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
-import ShowChartIcon from "@material-ui/icons/ShowChart";
+import MenuIcon from "@material-ui/icons/Menu"
+import PersonAddIcon from "@material-ui/icons/PersonAdd"
+import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded"
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
+import WorkOutlineIcon from "@material-ui/icons/WorkOutline"
+import ShowChartIcon from "@material-ui/icons/ShowChart"
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-import ListOperators from "./ListOperatorsComponent";
-import UploadFileComponent from "./UploadFileComponent";
-import SpinnerComponent from "./SpinnerComponent";
-import DefaultNotice from "./NoticeComponent";
+import ListOperators from "./ListOperatorsComponent"
+import UploadFileComponent from "./UploadFileComponent"
+import SpinnerComponent from "./SpinnerComponent"
+import DefaultNotice from "./NoticeComponent"
 
-import { ajaxAction } from '../services/index';
+import { ajaxAction } from '../services/index'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,87 +59,77 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3),
     },
   })
-);
+)
 
 interface DashBoardComponentProps {
-  container?: Element;
+  container?: Element
 }
 
 export function DashBoardComponent(props: DashBoardComponentProps) {
-  const { container } = props;
-  const classes = useStyles();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { container } = props
+  const classes = useStyles()
+  const theme = useTheme()
+  const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    setMobileOpen(!mobileOpen)
+  }
 
-  const [url, setUrl] = React.useState("");
-  const [text, setText] = React.useState("");
-  const [oper, setOper] = React.useState(false);
-  const [loader, setLoader] = React.useState(false);
-  const [report, setReport] = React.useState(false);
-  const [notice, setNotice] = React.useState(false);
+  const [apiUrl, setApiUrl] = React.useState("")
+  const [titleText, setTitleText] = React.useState("")
+  const [operatorBlock, setOperatorBlock] = React.useState(false)
+  const [spinner, setSpinner] = React.useState(false)
+  const [reportBlock, setReportBlock] = React.useState(false)
+  const [noticeModal, setNoticeModal] = React.useState(false)
   const [users, setUsers] = React.useState("")
 
   const setBaseUrl = () => {
-    setUrl("base");
-    setText("базу");
-    setOper(false);
-    setLoader(false);
-    setReport(false);
-    setNotice(false);
+    setApiUrl("base")
+    setTitleText("базу")
+    setOperatorBlock(false)
+    setSpinner(false)
+    setReportBlock(false)
+    setNoticeModal(false)
   };
   const setUserUrl = () => {
-    console.log("operator loaded");
-    setLoader(false);
-    setUrl("user");
-    setText("пользователей");
-    setOper(false);
-    setReport(false);
-    setNotice(false);
+    console.log("operator loaded")
+    setSpinner(false)
+    setApiUrl("user")
+    setTitleText("пользователей")
+    setOperatorBlock(false)
+    setReportBlock(false)
+    setNoticeModal(false)
   };
 
-  const setOperator = () => {
-    setLoader(false);
-    setReport(false);
-    console.log("назначить старших");
-    setOper(true);
-    setText("операторов");
-    setUrl("");
-    setNotice(false);
-  };
   const getReport = () => {
-    setOper(false);
-    setUrl("");
-    setLoader(true);
-    setText("отчет");
+    setOperatorBlock( false )
+    setApiUrl( "" )
+    setSpinner( true )
+    setTitleText( "отчет" )
     try {
       fetch("http://localhost/komus_new/api/report")
-        .then((response) => {
-          setNotice(true);
+        .then(( response ) => {
+          setNoticeModal( true )
         })
-        .then((data) => {
-          setLoader(false);
-          setReport(true);
+        .then(( data ) => {
+          setSpinner( false )
+          setReportBlock( true )
         });
-    } catch (err) {
-      console.log("Ошибка при формировании отчета " + err);
+    } catch ( err ) {
+      console.log( "Ошибка при формировании отчета " + err )
     }
-  };
+  }
     const getUsers = async () => {
     const url : string = 'user'
     const method : string = 'GET'
-    // let resp : any = ''
     const resp = await ajaxAction( url, method )
-    setUsers(resp)
-    setLoader(false);
-    setReport(false);
-    console.log("назначить старших");
-    setOper(true);
-    setText("операторов");
-    setUrl("");
-    setNotice(false);
+    setUsers( resp )
+    setSpinner( false )
+    setReportBlock( false )
+    console.log( "назначить старших" )
+    setOperatorBlock( true )
+    setTitleText( "операторов" )
+    setApiUrl( "" )
+    setNoticeModal( false )
   }
   const drawer = (
     <div>
@@ -156,7 +146,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </Link>
       <Divider style={{ marginTop: 20 }} />
       <List>
-        <ListItem button key={"Загрузить базу"} onClick={setBaseUrl}>
+        <ListItem button key={"Загрузить базу"} onClick={ setBaseUrl }>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -169,7 +159,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           <ListItemText primary="Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={"Загрузить пользователей"} onClick={setUserUrl}>
+        <ListItem button key={"Загрузить пользователей"} onClick={ setUserUrl }>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -184,7 +174,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         <ListItem
           button
           key={"Назначить старших операторов"}
-          onClick={getUsers}
+          onClick={ getUsers }
         >
           <ListItemIcon>
             <IconButton
@@ -229,16 +219,16 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   );
 
   return (
-    <div className={classes.root}>
+    <div className={ classes.root }>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={ classes.appBar }>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            onClick={ handleDrawerToggle }
+            className={ classes.menuButton }
           >
             <MenuIcon />
           </IconButton>
@@ -247,8 +237,8 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             noWrap
             style={{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
           >
-            {text ? `Загрузить ${text}` : "Панель управления"}
-            {oper ? "" : null}
+            { titleText ? `Загрузить ${titleText}` : "Панель управления" }
+            { operatorBlock ? "" : null }
           </Typography>
         </Toolbar>
       </AppBar>
@@ -257,9 +247,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           <Drawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
+            anchor={ theme.direction === "rtl" ? "right" : "left" }
+            open={ mobileOpen }
+            onClose={ handleDrawerToggle }
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -267,7 +257,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               keepMounted: true,
             }}
           >
-            {drawer}
+            { drawer }
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -278,19 +268,19 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             variant="permanent"
             open
           >
-            {drawer}
+            { drawer }
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {url ? (
+      <main className={ classes.content }>
+        <div className={ classes.toolbar } />
+        { apiUrl ? (
           <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
-            <UploadFileComponent url={url} />
+            <UploadFileComponent url={apiUrl} />
           </Grid>
-        ) : null}
-        {oper ? <ListOperators users= { users }/> : null}
-        {loader ? (
+        ) : null }
+        { operatorBlock ? <ListOperators users= { users }/> : null}
+        { spinner ? (
           <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
             <div style={{ marginLeft: "130px" }}>
               <SpinnerComponent />
@@ -299,8 +289,8 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               Отчет формируется
             </div>
           </Grid>
-        ) : null}
-        {report ? (
+        ) : null }
+        { reportBlock ? (
           <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
             <Button
               href="http://localhost/komus_new/report.xlsx"
@@ -316,9 +306,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               Скачать отчет
             </Button>
           </Grid>
-        ) : null}
-        {notice ? <DefaultNotice /> : null}
+        ) : null }
+        { noticeModal ? <DefaultNotice /> : null }
       </main>
     </div>
-  );
+  )
 }
