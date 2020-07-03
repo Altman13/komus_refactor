@@ -1,8 +1,8 @@
 export enum Users {
+  guest,
   operator,
   st_operator,
-  administrator,
-  guest
+  administrator
 }
 interface IUsers {
   Category: Users;

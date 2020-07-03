@@ -69,42 +69,48 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const { container } = props
   const classes = useStyles()
   const theme = useTheme()
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [mobileOpen, setMobileOpen] = React.useState( false )
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
+    setMobileOpen( !mobileOpen )
+  }
+  
+  const [titleText, setTitleText] = React.useState( "" )
+  const [users, setUsers] = React.useState( "" )
+  
+  const [operatorDiv, setVisibleOperatorDiv] = React.useState( false )
+  const [spinnerDiv, setVisibleSpinnerDiv] = React.useState( false )
+  const [reportDiv, setVisibleReportDiv] = React.useState( false )
+  /*  
+      !  uploadDiv используется два раза: 
+      1. для загрузки пользователей из файла
+      2. для загрузки базы контактов из файла
+  */
+  const [uploadDiv, setVisibleUploadDiv] = React.useState( "" )
+  const [noticeModal, setVisibleNoticeModal] = React.useState( false )
+  
+  const setUploadBase = () => {
+    setTitleText( "Загрузить базу" )
+    setVisibleUploadDiv( "base" )
+    setVisibleOperatorDiv( false )
+    setVisibleSpinnerDiv( false )
+    setVisibleReportDiv( false )
+    setVisibleNoticeModal( false )
   }
 
-  const [apiUrl, setApiUrl] = React.useState("")
-  const [titleText, setTitleText] = React.useState("")
-  const [operatorBlock, setOperatorBlock] = React.useState(false)
-  const [spinner, setSpinner] = React.useState(false)
-  const [reportBlock, setReportBlock] = React.useState(false)
-  const [noticeModal, setNoticeModal] = React.useState(false)
-  const [users, setUsers] = React.useState("")
-
-  const setBaseUrl = () => {
-    setApiUrl("base")
-    setTitleText("Загрузить базу")
-    setOperatorBlock(false)
-    setSpinner(false)
-    setReportBlock(false)
-    setNoticeModal(false)
-  };
-  const setUserUrl = () => {
-    console.log("operator loaded")
-    setSpinner(false)
-    setApiUrl("user")
-    setTitleText("Загрузить пользователей")
-    setOperatorBlock(false)
-    setReportBlock(false)
-    setNoticeModal(false)
-  };
+  const setUploadUser = () => {
+    setTitleText( "Загрузить пользователей" )
+    setVisibleUploadDiv( "user" )
+    setVisibleOperatorDiv( false )
+    setVisibleSpinnerDiv( false )
+    setVisibleReportDiv( false )
+    setVisibleNoticeModal( false )
+  }
 
   const getReport = async () => {
-    setOperatorBlock( false )
-    setApiUrl( "" )
-    setSpinner( true )
     setTitleText( "Выгрузка отчета" )
+    setVisibleSpinnerDiv( true )
+    setVisibleOperatorDiv( false )
+    setVisibleUploadDiv( "" )
     // const url : string = 'report'
     // const method : string = 'GET'
     // const resp = await ajaxAction( url, method )
@@ -113,11 +119,11 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     try {
       fetch("http://localhost/komus_new/api/report")
         .then(( response ) => {
-          setNoticeModal( true )
+          setVisibleNoticeModal( true )
         })
         .then(( data ) => {
-          setSpinner( false )
-          setReportBlock( true )
+          setVisibleSpinnerDiv( false )
+          setVisibleReportDiv( true )
         });
     } catch ( err ) {
       console.log( "Ошибка при формировании отчета " + err )
@@ -126,15 +132,14 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     const getUsers = async () => {
     const url : string = 'user'
     const method : string = 'GET'
-    const resp = await ajaxAction( url, method )
-    setUsers( resp )
-    setSpinner( false )
-    setReportBlock( false )
-    console.log( "назначить старших" )
-    setOperatorBlock( true )
+    const operators = await ajaxAction( url, method )
     setTitleText( "Назначить старшего оператора" )
-    setApiUrl( "" )
-    setNoticeModal( false )
+    setVisibleOperatorDiv( true )
+    setUsers( operators )
+    setVisibleSpinnerDiv( false )
+    setVisibleReportDiv( false )
+    setVisibleUploadDiv( "" )
+    setVisibleNoticeModal( false )
   }
   const drawer = (
     <div>
@@ -151,7 +156,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </Link>
       <Divider style={{ marginTop: 20 }} />
       <List>
-        <ListItem button key={"Загрузить базу"} onClick={ setBaseUrl }>
+        <ListItem button key={ "Загрузить базу" } onClick={ setUploadBase }>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -164,7 +169,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           <ListItemText primary="Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={"Загрузить пользователей"} onClick={ setUserUrl }>
+        <ListItem button key={ "Загрузить пользователей" } onClick={ setUploadUser }>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -174,11 +179,11 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <PersonAddIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Загрузить пользователей"} />
+          <ListItemText primary={ "Загрузить пользователей" } />
         </ListItem>
         <ListItem
           button
-          key={"Назначить старших операторов"}
+          key={ "Назначить старших операторов" }
           onClick={ getUsers }
         >
           <ListItemIcon>
@@ -190,12 +195,12 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <PeopleAltIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Назначить старших операторов"} />
+          <ListItemText primary={ "Назначить старших операторов" } />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button key={"Выгрузить отчет"} onClick={getReport}>
+        <ListItem button key={ "Выгрузить отчет" } onClick={getReport}>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -205,9 +210,9 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <WorkOutlineIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Выгрузить отчет"} />
+          <ListItemText primary={ "Выгрузить отчет" } />
         </ListItem>
-        <ListItem button key={"Графики звонков"}>
+        <ListItem button key={ "Графики звонков" }>
           <ListItemIcon>
             <IconButton
               color="primary"
@@ -217,7 +222,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
               <ShowChartIcon />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={"Графики звонков"} />
+          <ListItemText primary={ "Графики звонков" } />
         </ListItem>
       </List>
     </div>
@@ -243,14 +248,13 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             style={{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
           >
             { titleText ? `${titleText}` : "Панель управления" }
-            { operatorBlock ? "" : null }
           </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
+      <nav className={ classes.drawer } aria-label="mailbox folders">
         <Hidden smUp implementation="css">
           <Drawer
-            container={container}
+            container={ container }
             variant="temporary"
             anchor={ theme.direction === "rtl" ? "right" : "left" }
             open={ mobileOpen }
@@ -273,13 +277,13 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       </nav>
       <main className={ classes.content }>
         <div className={ classes.toolbar } />
-        { apiUrl ? (
+        { uploadDiv ? (
           <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
-            <UploadFileComponent url={apiUrl} />
+            <UploadFileComponent url={ uploadDiv } />
           </Grid>
         ) : null }
-        { operatorBlock ? <ListOperators users= { users }/> : null}
-        { spinner ? (
+        { operatorDiv ? <ListOperators users= { users }/> : null}
+        { spinnerDiv ? (
           <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
             <div style={{ marginLeft: "130px" }}>
               <SpinnerComponent />
@@ -289,7 +293,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             </div>
           </Grid>
         ) : null }
-        { reportBlock ? (
+        { reportDiv ? (
           <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
             <Button
               href="http://localhost/komus_new/report.xlsx"

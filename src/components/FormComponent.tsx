@@ -41,8 +41,8 @@ interface State {
 
 type Props = LinkStateProps & LinkDispatchProps;
 export class FormComponent extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  constructor( props: Props ) {
+    super( props )
     this.state = {
       id: 0,
       naimenovanie: "",
@@ -62,12 +62,12 @@ export class FormComponent extends React.Component<Props, State> {
       date : "",
       date_recall : ""
     };
-    this.handleChange = this.handleChange.bind(this)
-    this.makeCallHandler = this.makeCallHandler.bind(this)
-    this.selectHandleChange = this.selectHandleChange.bind(this)
+    this.handleChange = this.handleChange.bind( this )
+    this.makeCallHandler = this.makeCallHandler.bind( this )
+    this.selectHandleChange = this.selectHandleChange.bind( this )
   }
 
-  onChange(e) {
+  onChange( e ) {
     this.setState({ comment: e.target.value })
   }
 
@@ -105,14 +105,12 @@ export class FormComponent extends React.Component<Props, State> {
       requst_call : this.state.request_call,
       id : this.state.id
     }
-    console.log(call)
-    console.log(this.state.date_recall)
-    this.props.make_calls(call)
+    this.props.make_calls( call )
     const data = {
       id : this.state.email,
       mail : this.state.id,
     }
-    if (this.state.send_mail_kp) {
+    if ( this.state.send_mail_kp ) {
       send_mails('mail', 'POST', data)
     }
   }
@@ -121,13 +119,13 @@ export class FormComponent extends React.Component<Props, State> {
     this.props.get_contacts()
   }
   
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps( nextProps ) {
     var contact
-    Object.keys(nextProps.contacts).forEach(function eachKey(key) {
+    Object.keys( nextProps.contacts ).forEach( function eachKey( key ) {
       contact = nextProps.contacts[key]
     })
 
-    if (contact) {
+    if ( contact ) {
       this.setState({
         id: contact.id,
         naimenovanie: contact.naimenovanie,
@@ -139,9 +137,9 @@ export class FormComponent extends React.Component<Props, State> {
         request_call: "",
         status_call: "",
         send_mail_kp: false,
-      });
+      })
       this.noticeVisibleToggle()
-      this.setAdditionalInfoBlock(contact)
+      this.setAdditionalInfoBlock( contact )
     }
   }
 
@@ -152,12 +150,12 @@ export class FormComponent extends React.Component<Props, State> {
   }
 
   //если элемента нет на главной форме отображаем в дополнительном блоке
-  setAdditionalInfoBlock(contact: any) {
-    var key_contact = Object.keys(this.state)
+  setAdditionalInfoBlock( contact: any ) {
+    var key_contact = Object.keys( this.state )
     var html_element: any = []
-    for (let [key, value] of Object.entries(contact)) {
-      var el_main_form = key_contact.indexOf(key)
-      if (el_main_form == -1 && value) {
+    for (let [key, value] of Object.entries( contact )) {
+      var el_main_form = key_contact.indexOf( key )
+      if ( el_main_form == -1 && value ) {
         html_element.push(
           <div id={key} style={{ fontSize: 18 }} key={key}>
             {key}: {value}
@@ -168,15 +166,15 @@ export class FormComponent extends React.Component<Props, State> {
     this.setState({ additional_info_block: html_element })
   }
 
-  selectHandleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+  selectHandleChange( event: React.ChangeEvent<HTMLSelectElement> ) {
     const { name, value } = event.target
-    switch (name) {
+    switch ( name ) {
       case "status_call":
         this.setState({ status_call: value })
-        break;
+        break
       case "request_call":
         this.setState({ request_call: value })
-        break;
+        break
     }
   }
 
@@ -204,7 +202,7 @@ export class FormComponent extends React.Component<Props, State> {
                   lineHeight: "56px",
                 }}
               >
-                {this.state.st_operator === true && (
+                { this.state.st_operator === true && (
                   <Link to="/dashboard">Панель управления</Link>
                 )}
                 <div
@@ -218,7 +216,7 @@ export class FormComponent extends React.Component<Props, State> {
                     textAlign: "left",
                   }}
                 >
-                  {this.state.additional_info_block.map((element, key) => (
+                  { this.state.additional_info_block.map(( element, key ) => (
                     <div key={key}>{element}</div>
                   ))}
                 </div>
@@ -236,8 +234,8 @@ export class FormComponent extends React.Component<Props, State> {
                 id="name"
                 label="Наименование организации"
                 name="company_name"
-                value={this.state.naimenovanie}
-                onChange={this.handleChange}
+                value={ this.state.naimenovanie }
+                onChange={ this.handleChange }
               />
               <TextField
                 variant="outlined"
@@ -247,8 +245,8 @@ export class FormComponent extends React.Component<Props, State> {
                 id="fio_lpr"
                 label="ФИО ЛПР"
                 name="fio_lpr"
-                value={this.state.fio}
-                onChange={this.handleChange}
+                value={ this.state.fio }
+                onChange={ this.handleChange }
               />
               <TextField
                 variant="outlined"
@@ -258,47 +256,47 @@ export class FormComponent extends React.Component<Props, State> {
                 id="phone"
                 label="телефон организации"
                 name="company_phone"
-                value={this.state.nomer}
-                onChange={this.handleChange}
+                value={ this.state.nomer }
+                onChange={ this.handleChange }
               />
               <RadioBtnComponent />
               <TextField
-                variant="outlined"
-                margin="normal"
+                variant = "outlined"
+                margin = "normal"
                 required
                 fullWidth
-                id="mail"
-                label="почта организации"
-                name="company_mail"
-                value={this.state.email || ""}
-                onChange={this.handleChange}
+                id = "mail"
+                label = "почта организации"
+                name = "company_mail"
+                value = { this.state.email || "" }
+                onChange ={ this.handleChange }
               />
               <InputLabel id="request_call-label">Статус обращения</InputLabel>
               <NativeSelect
-                style={{ width: "215px" }}
-                id="request_call"
-                name="request_call"
-                onChange={this.selectHandleChange}
-                value={this.state.request_call}
+                style = {{ width: "215px" }}
+                id = "request_call"
+                name = "request_call"
+                onChange = { this.selectHandleChange }
+                value = { this.state.request_call }
               >
-                <option value="" />
-                <option value={"Суть обращения"}>Суть обращения</option>
-                <option value={"Статус обращения"}>Статус обращения</option>
-                <option value={"Результат обращения"}>Результат обращения</option>
+                <option value = "" />
+                <option value = { "Суть обращения" }>Суть обращения</option>
+                <option value = { "Статус обращения" }>Статус обращения</option>
+                <option value = { "Результат обращения" }>Результат обращения</option>
               </NativeSelect>
               <InputLabel id="status_call-label">Статус звонка</InputLabel>
               <NativeSelect
-                style={{ width: "215px" }}
-                id="status_call"
-                name="status_call"
-                onChange={this.selectHandleChange}
-                value={this.state.status_call}
+                style = {{ width: "215px" }}
+                id = "status_call"
+                name = "status_call"
+                onChange = { this.selectHandleChange }
+                value = { this.state.status_call }
               >
-                <option value="" />
-                <option value={"Перезвон1"}>Перезвон1</option>
-                <option value={"Перезвон2"}>Перезвон2</option>
-                <option value={"Перезвон3"}>Перезвон3</option>
-                <option value={"Недозвон"}>Недозвон</option>
+                <option value = "" />
+                <option value = { "Перезвон1" }>Перезвон1</option>
+                <option value = { "Перезвон2" }>Перезвон2</option>
+                <option value = { "Перезвон3" }>Перезвон3</option>
+                <option value = { "Недозвон" }>Недозвон</option>
               </NativeSelect>
               <br/>
               
@@ -318,10 +316,10 @@ export class FormComponent extends React.Component<Props, State> {
               <FormControlLabel
                 className="custom-control-input"
                 id="customSwitches"
-                checked={this.state.send_mail_kp}
-                onChange={this.sendMailKp}
+                checked={ this.state.send_mail_kp }
+                onChange={ this.sendMailKp }
                 value="end"
-                control={<Checkbox color="primary" />}
+                control={ <Checkbox color="primary" /> }
                 label="Отправить коммерческое предложение"
                 labelPlacement="end"
               />
@@ -329,33 +327,33 @@ export class FormComponent extends React.Component<Props, State> {
                 aria-label="minimum height"
                 rowsMin={3}
                 placeholder="Комментарий оператора"
-                style={{ width: "100%" }}
+                style = {{ width: "100%" }}
                 id="operator_comment"
                 name="operator_comment"
-                value={this.state.comment}
-                onChange={this.onChange.bind(this)}
+                value = { this.state.comment }
+                onChange = { this.onChange.bind(this) }
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 className="submit"
-                onClick={this.makeCallHandler}
+                onClick = { this.makeCallHandler }
               >
                 Продолжить
               </Button>
             </form>
             {this.state.notice ? <DefaultNotice err={this.state.err} /> : null}
           </Grid>
-          <Hidden only={["md", "sm", "xs"]}>
-            <Grid item xs style={{ border: "2px solid" }}>
+          <Hidden only = {["md", "sm", "xs"]}>
+            <Grid item xs style = {{ border: "2px solid" }}>
               <SearchComponent />
               <InfoTextBlock />
             </Grid>
           </Hidden>
         </Grid>
       </Container>
-    );
+    )
   }
 }
 interface LinkStateProps {
@@ -363,19 +361,19 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   get_contacts: () => void
-  make_calls: (data: any) => void
+  make_calls: ( data: any ) => void
   receive_calls: () => void
 }
 const mapStateToProps = ( state: AppState ): LinkStateProps => ({
   contacts: state.contacts,
-});
+})
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  get_contacts: bindActionCreators(get_contacts, dispatch),
-  make_calls: bindActionCreators(make_calls, dispatch),
-  receive_calls: bindActionCreators(receive_calls, dispatch),
-});
+  get_contacts: bindActionCreators( get_contacts, dispatch ),
+  make_calls: bindActionCreators( make_calls, dispatch ),
+  receive_calls: bindActionCreators( receive_calls, dispatch ),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormComponent)
+export default connect( mapStateToProps, mapDispatchToProps )( FormComponent )
