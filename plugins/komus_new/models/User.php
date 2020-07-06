@@ -1,36 +1,19 @@
 <?php
 
-//use PhpOffice\PhpSpreadsheet\Spreadsheet;
-//use Firebase\JWT\JWT;
-
 namespace Komus;
-
-use DateTime;
 
 require "config/config.php";
 require "vendor/autoload.php";
 
-//$spreadsheet = new Spreadsheet();
-//$sheet = $spreadsheet->getActiveSheet();
-// $uploaddir = './files/';
-// $uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
-
 class User
 {
     private $db;
-    private $operators_file;
+    private $resp;
     public function __construct($db)
     {
         $this->db = $db;
-        //$this->operators_file = $uploadfile;
     }
-    /**
-     * Create
-     *
-     * @param  mixed $users
-     *
-     * @return void
-     */
+
     public function create($files)
     {
         //TODO: Реализовать подгрузку пользователей сразу из центрального проекта
@@ -62,7 +45,7 @@ class User
                 "passwords" => $operator_depass,
             ];
 
-            $token =\Firebase\JWT\JWT::encode($payload, "thisissecret", "HS256");
+            $token = \Firebase\JWT\JWT::encode($payload, "thisissecret", "HS256");
             $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, depass, token,
                                                             timezone_id, groups_id)
                                                                 VALUES (:operator_login, :operator_fist_name, :operator_last_name, :depass, :token,
@@ -86,7 +69,7 @@ class User
      *
      * @return void
      */
-    public function read()
+    public function getAllOperators()
     {
         $all_users = $this->db->prepare("SELECT CONCAT(users.firstname,' ', users.lastname) as operators FROM users");
         try {
@@ -97,25 +80,25 @@ class User
         $users = $all_users->fetchAll();
         return json_encode($users);
     }
-    /**
-     * Update
-     *
-     * @param  mixed $name
-     *
-     * @return void
-     */
-    public function update($user_name)
+
+    public function setRoleUser($operator)
     {
-        if ($user_name) {
-            $update_role_user = $this->db->prepare("UPDATE `komus_new`.`users` SET `groups_id`='2' WHERE users.firstname =:user_name");
-            $update_role_user->bindParam(':user_name', $user_name, \PDO::PARAM_STR);
-            try {
-                $update_role_user->execute();
-            } catch (\Throwable $th) {
-                echo ('Произошла ошибка при назначении прав оператору' . $th->getMessage() . PHP_EOL);
-            }
-            echo ('Произошла ошибка при назначении прав оператору' . $th->getMessage() . PHP_EOL);
+        $fio = explode(" ", $operator);
+        $first_name=$fio[0]; 
+        $last_name = $fio[1];
+        $update_role_user = $this->db->prepare("UPDATE `komus_new`.`users` SET `groups_id`='2' 
+            WHERE users.firstname =:first_name AND users.lastname =:last_name");
+        $update_role_user->bindParam(':first_name', $first_name, \PDO::PARAM_STR);
+        $update_role_user->bindParam(':last_name', $last_name, \PDO::PARAM_STR);
+        $update_role_user->execute();
+        $count = $update_role_user->rowCount();
+        if ($count == 0) {
+            $this->resp = false;
         }
+        else {
+            $this->resp=true;
+        }
+        return $this->resp;
     }
     /**
      * Delete

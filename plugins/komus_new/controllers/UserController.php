@@ -16,7 +16,7 @@ class UserController
     }
     public function show()
     {
-        $this->resp = $this->user->read();
+        $this->resp = $this->user->getAllOperators();
         return $this->resp;
     }
     public function create(Request $request, Response $response)
@@ -24,16 +24,28 @@ class UserController
         try {
             $get_file = $request->getUploadedFiles();
             $uploaded_file = $get_file['upload_file'];
-            $this->resp = $this->user->create($uploaded_file);
+            $this->resp = $this->user->create($uploaded_file, $response);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при добавлении операторов " . $th->getMessage() . PHP_EOL);
             $this->resp = $response->withStatus(500);
         }
         return $this->resp;
     }
-    //TODO: дописать назначение ролей операторам
-    public function update($id)
+
+    public function update(Request $request, Response $response)
     {
-        # code...
+        try {
+            $data = json_decode($request->getBody());
+            $this->resp = $this->user->setStOperator($data->user);
+            if(!$this->resp){
+                $this->resp = $response->withStatus(500);
+                $response->getBody()->write("Произошла ошибка при назначении старшего оператора " .PHP_EOL);
+            }
+        } catch (\Throwable $th ) {
+            $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . $th->getMessage() . PHP_EOL);
+            $this->resp = $response->withStatus(500);
+        }
+        return $this->resp;
+        
     }
 }
