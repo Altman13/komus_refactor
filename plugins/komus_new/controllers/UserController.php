@@ -35,8 +35,8 @@ class UserController
     public function update(Request $request, Response $response)
     {
         try {
-            $data = json_decode($request->getBody());
-            $this->resp = $this->user->setStOperator($data->user);
+            $operator = json_decode($request->getBody());
+            $this->resp = $this->user->setStOperator($operator->data);
             if(!$this->resp){
                 $this->resp = $response->withStatus(500);
                 $response->getBody()->write("Произошла ошибка при назначении старшего оператора " .PHP_EOL);

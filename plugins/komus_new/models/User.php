@@ -81,12 +81,12 @@ class User
         return json_encode($users);
     }
 
-    public function setRoleUser($operator)
+    public function setStOperator($operator)
     {
         $fio = explode(" ", $operator);
         $first_name=$fio[0]; 
         $last_name = $fio[1];
-        $update_role_user = $this->db->prepare("UPDATE `komus_new`.`users` SET `groups_id`='2' 
+        $update_role_user = $this->db->prepare("UPDATE `users` SET `groups_id`='2' 
             WHERE users.firstname =:first_name AND users.lastname =:last_name");
         $update_role_user->bindParam(':first_name', $first_name, \PDO::PARAM_STR);
         $update_role_user->bindParam(':last_name', $last_name, \PDO::PARAM_STR);

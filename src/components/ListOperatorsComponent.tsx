@@ -8,31 +8,37 @@ async function setStOperator( value ) {
     let resp : any = ''
     const url : string = 'user'
     const method : string = 'PATCH'
-    const data : any = value.operators
-    resp = await ajaxAction( url, method , data )
+    resp = await ajaxAction( url, method , value.operators )
     return resp
   }
 }
 
 export default function ListOperators( operator ) {
+  
+  const [oper, setOperator] = React.useState( "" )
+  
+  function SetSingleOperator(value){
+    setOperator(value)
+  }
   let users: any[] = operator.users
     return (
     <div>
-      <Grid item xs={12} lg={3} sm={4} md={4}>
+      <Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 }>
       <Autocomplete
-        id="combo-box-demo"
-        options={ users }
-        getOptionLabel={(options) => options.operators}
-        style={{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}
-        renderInput={( params ) => (
-          <TextField { ...params } label="Выбрать оператора" variant="outlined" />
+        id = "combo-box-demo"
+        onChange = {( event, value ) => SetSingleOperator( value )}
+        options = { users }
+        getOptionLabel = {( options ) => options.operators}
+        style = {{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}
+        renderInput = {( params ) => (
+          <TextField { ...params } label = "Выбрать оператора" variant = "outlined" />
         )}
       />
       <Button
-        variant="outlined"
-        color="primary"
-        style={{ width: '100%', margin: 'auto', height: 55, marginBottom: 20 }}
-        onClick={ setStOperator }
+        variant = "outlined"
+        color = "primary"
+        style = {{ width: '100%', margin: 'auto', height: 55, marginBottom: 20 }}
+        onClick = { () => setStOperator( oper ) }
       >
         Назначить
       </Button>

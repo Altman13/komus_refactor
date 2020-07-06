@@ -9,6 +9,7 @@ $dbname = "komus_new";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 
 $usernameValidator = v::alnum()->noWhitespace()->length(1, 10);
 //TODO: длина пароля

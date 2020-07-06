@@ -125,11 +125,12 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     }
   }
     const getUsers = async () => {
+
+    setTitleText( "Назначить старшего оператора" )
+    setVisibleOperatorDiv( true )
     const url : string = 'user'
     const method : string = 'GET'
     const operators = await ajaxAction( url, method )
-    setTitleText( "Назначить старшего оператора" )
-    setVisibleOperatorDiv( true )
     setUsers( operators )
     setVisibleSpinnerDiv( false )
     setVisibleReportDiv( false )
