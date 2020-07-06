@@ -3,12 +3,12 @@ import Autocomplete from "@material-ui/lab/Autocomplete"
 import { Button, TextField, Grid } from "@material-ui/core"
 import { ajaxAction } from '../services'
 
-async function setStOperator( value ) {
-  if ( value ) {
+async function setStOperator( operator ) {
+  if ( operator ) {
     let resp : any = ''
     const url : string = 'user'
     const method : string = 'PATCH'
-    resp = await ajaxAction( url, method , value.operators )
+    resp = await ajaxAction( url, method , operator.operators )
     return resp
   }
 }
@@ -17,11 +17,11 @@ export default function ListOperators( operator ) {
   
   const [oper, setOperator] = React.useState( "" )
   
-  function SetSingleOperator(value){
-    setOperator(value)
+  function ChooseStOperator( operator ){
+    setOperator( operator )
   }
 
-  const users = Object.keys(operator.users).map(function(key) {
+  const users = Object.keys( operator.users ).map(function( key ) {
     return operator.users[key];
   })
 
@@ -30,9 +30,9 @@ export default function ListOperators( operator ) {
       <Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 }>
       <Autocomplete
         id = "combo-box-demo"
-        onChange = {( event, value ) => SetSingleOperator( value )}
+        onChange = {( event, value ) => ChooseStOperator( value )}
         options = { users }
-        getOptionLabel = {( options ) => options.operators}
+        getOptionLabel = {( options ) => options.operators }
         style = {{ width: '100%', float: "left", margin: 'auto', marginBottom: 5 }}
         renderInput = {( params ) => (
           <TextField { ...params } label = "Выбрать оператора" variant = "outlined" />

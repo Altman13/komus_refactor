@@ -39,7 +39,7 @@ class UserController
             $this->resp = $this->user->setStOperator($operator->data);
             if(!$this->resp){
                 $this->resp = $response->withStatus(500);
-                $response->getBody()->write("Произошла ошибка при назначении старшего оператора " .PHP_EOL);
+                $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . PHP_EOL);
             }
         } catch (\Throwable $th ) {
             $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . $th->getMessage() . PHP_EOL);
