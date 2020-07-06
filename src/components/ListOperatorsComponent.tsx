@@ -20,8 +20,12 @@ export default function ListOperators( operator ) {
   function SetSingleOperator(value){
     setOperator(value)
   }
-  let users: any[] = operator.users
-    return (
+
+  const users = Object.keys(operator.users).map(function(key) {
+    return operator.users[key];
+  })
+
+  return (
     <div>
       <Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 }>
       <Autocomplete
