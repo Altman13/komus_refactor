@@ -24,7 +24,7 @@ class UserController
         try {
             $get_file = $request->getUploadedFiles();
             $uploaded_file = $get_file['upload_file'];
-            $this->user->create($uploaded_file);
+            $this->resp = $this->user->create($uploaded_file);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при добавлении операторов " . $th->getMessage() . PHP_EOL);
             $this->resp = $response->withStatus(500);

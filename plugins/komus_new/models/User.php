@@ -33,10 +33,6 @@ class User
      */
     public function create($files)
     {
-        //TODO: Реализовать назначение в группы пользователей
-        /** Реализовать панель управления для админа и старшего оператора
-         * в которой будет реализация раздачи прав и назначения групп пользователям
-         */
         //TODO: Реализовать подгрузку пользователей сразу из центрального проекта
         $directory = __DIR__ . '/../files/';
         foreach ($files as $f) {
@@ -55,24 +51,16 @@ class User
             die('Произошла ошибка при попытке чтения файла с операторами ' . $th->getMessage() . PHP_EOL);
         }
         $operators = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-        $unicode = $this->db->prepare("SET NAMES utf8 COLLATE utf8_unicode_ci");
-        $unicode->execute();
         foreach ($operators as $operator) {
             $operator_fist_name = $operator['C'];
             $operator_last_name = $operator['B'];
             $operator_login = $operator['E'];
             $operator_depass = $operator['F'];
-            // echo $operator_login .PHP_EOL;
-            // echo $operator_depass .PHP_EOL;
-            //$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-            //$password_hash = hash('sha256', $operator_depass . $salt);
-            //генерируем  JWT токен            
+
             $payload = [
                 "user" => $operator_login,
                 "passwords" => $operator_depass,
             ];
-            var_dump($payload);
-            die();
 
             $token =\Firebase\JWT\JWT::encode($payload, "thisissecret", "HS256");
             $insert_users = $this->db->prepare("INSERT IGNORE INTO users (login, firstname, lastname, depass, token,
@@ -82,8 +70,6 @@ class User
             $insert_users->bindParam(':operator_login', $operator_login, \PDO::PARAM_STR);
             $insert_users->bindParam(':operator_fist_name', $operator_fist_name, \PDO::PARAM_STR);
             $insert_users->bindParam(':operator_last_name', $operator_last_name, \PDO::PARAM_STR);
-            //$insert_users->bindParam(':salt', $salt, \PDO::PARAM_STR);
-            //$insert_users->bindParam(':pass', $password_hash, \PDO::PARAM_STR);
             $insert_users->bindParam(':token', $token, \PDO::PARAM_STR);
             // //TODO : убрать после отладки depass из базы
             $insert_users->bindParam(':depass', $operator_depass, \PDO::PARAM_STR);

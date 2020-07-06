@@ -35,7 +35,7 @@ interface State {
   status_call: string
   request_call: string
   send_mail_kp: boolean
-  date : any
+  date : string
   date_recall : string
 }
 
@@ -71,9 +71,9 @@ export class FormComponent extends React.Component<Props, State> {
     this.setState({ comment: e.target.value })
   }
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
     const { name, value } = e.target
-    switch (name) {
+    switch ( name ) {
       case "company_name":
         this.setState({ naimenovanie: value })
         break
@@ -93,7 +93,7 @@ export class FormComponent extends React.Component<Props, State> {
     }
   }
 
-  makeCallHandler(event) {
+  makeCallHandler( event ) {
     event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
     let project_type: string = "INCOMING"
@@ -107,11 +107,11 @@ export class FormComponent extends React.Component<Props, State> {
     }
     this.props.make_calls( call )
     const data = {
-      id : this.state.email,
-      mail : this.state.id,
+      id : this.state.id,
+      mail : this.state.email,
     }
     if ( this.state.send_mail_kp ) {
-      send_mails('mail', 'POST', data)
+      send_mails( 'mail', 'POST', data )
     }
   }
 
@@ -146,7 +146,7 @@ export class FormComponent extends React.Component<Props, State> {
   noticeVisibleToggle() {
     setTimeout(() => {
       this.setState({ notice: false })
-    }, 6000)
+    }, 6000 )
   }
 
   //если элемента нет на главной форме отображаем в дополнительном блоке
@@ -157,8 +157,8 @@ export class FormComponent extends React.Component<Props, State> {
       var el_main_form = key_contact.indexOf( key )
       if ( el_main_form == -1 && value ) {
         html_element.push(
-          <div id={key} style={{ fontSize: 18 }} key={key}>
-            {key}: {value}
+          <div id = { key } style = {{ fontSize: 18 }} key = { key }>
+            { key }: { value }
           </div>
         )
       }
@@ -185,12 +185,12 @@ export class FormComponent extends React.Component<Props, State> {
   render() {
     return (
       <Container component="main">
-        <div style={{ fontSize: 30, textAlign: "center" }}>
+        <div style = {{ fontSize: 30, textAlign: "center" }}>
           "Название проекта"
         </div>
-        <Grid container spacing={3} style={{ marginTop: 5 }}>
-          <Hidden only={["sm", "xs"]}>
-            <Grid item xs style={{ border: "2px solid" }} md={3}>
+        <Grid container spacing = { 3 } style = {{ marginTop: 5 }}>
+          <Hidden only = { ["sm", "xs"] }>
+            <Grid item xs style = {{ border: "2px solid" }} md = { 3 }>
               <div
                 style={{
                   fontSize: 20,
@@ -203,10 +203,10 @@ export class FormComponent extends React.Component<Props, State> {
                 }}
               >
                 { this.state.st_operator === true && (
-                  <Link to="/dashboard">Панель управления</Link>
+                  <Link to = "/dashboard">Панель управления</Link>
                 )}
                 <div
-                  className="additional_info"
+                  className = "additional_info"
                   style={{
                     background: "darkseagreen",
                     lineHeight: "22px",
@@ -217,47 +217,47 @@ export class FormComponent extends React.Component<Props, State> {
                   }}
                 >
                   { this.state.additional_info_block.map(( element, key ) => (
-                    <div key={key}>{element}</div>
+                    <div key = { key }>{ element }</div>
                   ))}
                 </div>
               </div>
             </Grid>
           </Hidden>
-          <Grid item lg={6} md={9} sm={12}>
-            <form className="form" noValidate>
+          <Grid item lg = { 6 } md = { 9 } sm = { 12 }>
+            <form className = "form" noValidate>
               <InfoTextBlock />
               <TextField
-                variant="outlined"
-                margin="normal"
+                variant = "outlined"
+                margin = "normal"
                 required
                 fullWidth
-                id="name"
-                label="Наименование организации"
-                name="company_name"
-                value={ this.state.naimenovanie }
-                onChange={ this.handleChange }
+                id = "name"
+                label = "Наименование организации"
+                name = "company_name"
+                value = { this.state.naimenovanie }
+                onChange = { this.handleChange }
               />
               <TextField
-                variant="outlined"
-                margin="normal"
+                variant = "outlined"
+                margin = "normal"
                 required
                 fullWidth
-                id="fio_lpr"
-                label="ФИО ЛПР"
-                name="fio_lpr"
-                value={ this.state.fio }
-                onChange={ this.handleChange }
+                id = "fio_lpr"
+                label = "ФИО ЛПР"
+                name = "fio_lpr"
+                value = { this.state.fio }
+                onChange = { this.handleChange }
               />
               <TextField
-                variant="outlined"
-                margin="normal"
+                variant = "outlined"
+                margin = "normal"
                 required
                 fullWidth
-                id="phone"
-                label="телефон организации"
-                name="company_phone"
-                value={ this.state.nomer }
-                onChange={ this.handleChange }
+                id = "phone"
+                label = "телефон организации"
+                name = "company_phone"
+                value = { this.state.nomer }
+                onChange = { this.handleChange }
               />
               <RadioBtnComponent />
               <TextField
@@ -269,9 +269,9 @@ export class FormComponent extends React.Component<Props, State> {
                 label = "почта организации"
                 name = "company_mail"
                 value = { this.state.email || "" }
-                onChange ={ this.handleChange }
+                onChange = { this.handleChange }
               />
-              <InputLabel id="request_call-label">Статус обращения</InputLabel>
+              <InputLabel id = "request_call-label">Статус обращения</InputLabel>
               <NativeSelect
                 style = {{ width: "215px" }}
                 id = "request_call"
@@ -301,51 +301,51 @@ export class FormComponent extends React.Component<Props, State> {
               <br/>
               
               <TextField
-                id="datetime-local"
-                label="Выбрать дату"
-                type="datetime-local"
-                name="date_recall"
-                defaultValue={ this.state.date }
-                onChange={ this.handleChange }
-                InputLabelProps={{
+                id = "datetime-local"
+                label = "Выбрать дату"
+                type = "datetime-local"
+                name = "date_recall"
+                defaultValue = { this.state.date }
+                onChange = { this.handleChange }
+                InputLabelProps = {{
                   shrink: true,
                 }}
               />
               <br />
 
               <FormControlLabel
-                className="custom-control-input"
-                id="customSwitches"
-                checked={ this.state.send_mail_kp }
-                onChange={ this.sendMailKp }
-                value="end"
-                control={ <Checkbox color="primary" /> }
-                label="Отправить коммерческое предложение"
-                labelPlacement="end"
+                className = "custom-control-input"
+                id = "customSwitches"
+                checked = { this.state.send_mail_kp }
+                onChange = { this.sendMailKp }
+                value = "end"
+                control = { <Checkbox color="primary" /> }
+                label = "Отправить коммерческое предложение"
+                labelPlacement = "end"
               />
               <TextareaAutosize
-                aria-label="minimum height"
-                rowsMin={3}
-                placeholder="Комментарий оператора"
+                aria-label = "minimum height"
+                rowsMin = { 3 }
+                placeholder = "Комментарий оператора"
                 style = {{ width: "100%" }}
-                id="operator_comment"
-                name="operator_comment"
+                id = "operator_comment"
+                name = "operator_comment"
                 value = { this.state.comment }
                 onChange = { this.onChange.bind(this) }
               />
               <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className="submit"
+                type = "submit"
+                variant = "contained"
+                color = "primary"
+                className = "submit"
                 onClick = { this.makeCallHandler }
               >
                 Продолжить
               </Button>
             </form>
-            {this.state.notice ? <DefaultNotice err={this.state.err} /> : null}
+            { this.state.notice ? <DefaultNotice err = { this.state.err } /> : null }
           </Grid>
-          <Hidden only = {["md", "sm", "xs"]}>
+          <Hidden only = { ["md", "sm", "xs"] }>
             <Grid item xs style = {{ border: "2px solid" }}>
               <SearchComponent />
               <InfoTextBlock />

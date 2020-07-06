@@ -13,9 +13,9 @@ async function setStOperator( value ) {
     return resp
   }
 }
-let users: any[]
+
 export default function ListOperators( operator ) {
-    users = operator.users
+  let users: any[] = operator.users
     return (
     <div>
       <Grid item xs={12} lg={3} sm={4} md={4}>

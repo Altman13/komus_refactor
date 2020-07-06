@@ -9,12 +9,7 @@ import {
   makeStyles, useTheme, Theme, createStyles,
 } from "@material-ui/core/styles"
 
-import MenuIcon from "@material-ui/icons/Menu"
-import PersonAddIcon from "@material-ui/icons/PersonAdd"
-import LocalAirportRoundedIcon from "@material-ui/icons/LocalAirportRounded"
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
-import WorkOutlineIcon from "@material-ui/icons/WorkOutline"
-import ShowChartIcon from "@material-ui/icons/ShowChart"
+import * as i from '@material-ui/icons'
 
 import { Link } from "react-router-dom"
 
@@ -27,25 +22,25 @@ import { ajaxAction } from '../services/index'
 
 const drawerWidth = 240
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(( theme: Theme ) =>
   createStyles({
     root: {
       display: "flex",
     },
     drawer: {
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up( "sm" )]: {
         width: drawerWidth,
         flexShrink: 0,
       },
     },
     appBar: {
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up( "sm" )]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing( 2 ),
       [theme.breakpoints.up("sm")]: {
         display: "none",
       },
@@ -56,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing( 3 ),
     },
   })
 )
@@ -144,8 +139,8 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
   const drawer = (
     <div>
       <Link
-        to="/main"
-        style={{
+        to = "/main"
+        style = {{
           fontSize: 18,
           textAlign: "center",
           display: "block",
@@ -154,152 +149,152 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       >
         На главную
       </Link>
-      <Divider style={{ marginTop: 20 }} />
+      <Divider style = {{ marginTop: 20 }} />
       <List>
-        <ListItem button key={ "Загрузить базу" } onClick={ setUploadBase }>
+        <ListItem button key = { "Загрузить базу" } onClick = { setUploadBase }>
           <ListItemIcon>
             <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
+              color = "primary"
+              aria-label = "upload picture"
+              component = "span"
             >
-              <LocalAirportRoundedIcon />
+              <i.LocalAirportRounded />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary="Загрузить базу" />
+          <ListItemText primary = "Загрузить базу" />
         </ListItem>
 
-        <ListItem button key={ "Загрузить пользователей" } onClick={ setUploadUser }>
+        <ListItem button key = { "Загрузить пользователей" } onClick={ setUploadUser }>
           <ListItemIcon>
             <IconButton
               color="primary"
-              aria-label="upload picture"
-              component="span"
+              aria-label = "upload picture"
+              component = "span"
             >
-              <PersonAddIcon />
+              <i.PersonAdd/>
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={ "Загрузить пользователей" } />
+          <ListItemText primary = { "Загрузить пользователей" } />
         </ListItem>
         <ListItem
           button
-          key={ "Назначить старших операторов" }
-          onClick={ getUsers }
+          key = { "Назначить старших операторов" }
+          onClick = { getUsers }
         >
           <ListItemIcon>
             <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
+              color = "primary"
+              aria-label = "upload picture"
+              component = "span"
             >
-              <PeopleAltIcon />
+              <i.PeopleAlt />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={ "Назначить старших операторов" } />
+          <ListItemText primary = { "Назначить старших операторов" } />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button key={ "Выгрузить отчет" } onClick={getReport}>
+        <ListItem button key = { "Выгрузить отчет" } onClick = { getReport }>
           <ListItemIcon>
             <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
+              color = "primary"
+              aria-label = "upload picture"
+              component = "span"
             >
-              <WorkOutlineIcon />
+              <i.WorkOutline />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={ "Выгрузить отчет" } />
+          <ListItemText primary = { "Выгрузить отчет" } />
         </ListItem>
-        <ListItem button key={ "Графики звонков" }>
+        <ListItem button key = { "Графики звонков" }>
           <ListItemIcon>
             <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
+              color = "primary"
+              aria-label = "upload picture"
+              component = "span"
             >
-              <ShowChartIcon />
+              <i.ShowChart />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary={ "Графики звонков" } />
+          <ListItemText primary = { "Графики звонков" } />
         </ListItem>
       </List>
     </div>
   )
 
   return (
-    <div className={ classes.root }>
+    <div className = { classes.root }>
       <CssBaseline />
-      <AppBar position="fixed" className={ classes.appBar }>
+      <AppBar position = "fixed" className = { classes.appBar }>
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={ handleDrawerToggle }
-            className={ classes.menuButton }
+            color = "inherit"
+            aria-label = "open drawer"
+            edge = "start"
+            onClick = { handleDrawerToggle }
+            className = { classes.menuButton }
           >
-            <MenuIcon />
+            <i.Menu />
           </IconButton>
           <Typography
-            variant="h6"
+            variant = "h6"
             noWrap
-            style={{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
+            style = {{ paddingLeft: -30, margin: "auto", paddingRight: 44 }}
           >
             { titleText ? `${titleText}` : "Панель управления" }
           </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={ classes.drawer } aria-label="mailbox folders">
+      <nav className = { classes.drawer } aria-label="mailbox folders">
         <Hidden smUp implementation="css">
           <Drawer
-            container={ container }
-            variant="temporary"
-            anchor={ theme.direction === "rtl" ? "right" : "left" }
-            open={ mobileOpen }
-            onClose={ handleDrawerToggle }
-            classes={{ paper: classes.drawerPaper }}
-            ModalProps={{ keepMounted: true }}
+            container = { container }
+            variant = "temporary"
+            anchor = { theme.direction === "rtl" ? "right" : "left" }
+            open = { mobileOpen }
+            onClose = { handleDrawerToggle }
+            classes = {{ paper: classes.drawerPaper }}
+            ModalProps = {{ keepMounted: true }}
           >
             { drawer }
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
-            classes={{ paper: classes.drawerPaper }}
-            variant="permanent"
+            classes = {{ paper: classes.drawerPaper }}
+            variant = "permanent"
             open
           >
             { drawer }
           </Drawer>
         </Hidden>
       </nav>
-      <main className={ classes.content }>
-        <div className={ classes.toolbar } />
+      <main className = { classes.content }>
+        <div className = { classes.toolbar } />
         { uploadDiv ? (
-          <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
+          <Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
             <UploadFileComponent url={ uploadDiv } />
           </Grid>
         ) : null }
-        { operatorDiv ? <ListOperators users= { users }/> : null}
+        { operatorDiv ? <ListOperators users= { users }/> : null }
         { spinnerDiv ? (
-          <Grid item xs={12} lg={2} sm={4} md={4} style={{ marginBottom: 20 }}>
-            <div style={{ marginLeft: "130px" }}>
+          <Grid item xs = { 12 } lg = { 2 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
+            <div style = {{ marginLeft: "130px" }}>
               <SpinnerComponent />
             </div>
-            <div style={{ fontSize: "18px", marginTop: "-10px" }}>
+            <div style = {{ fontSize: "18px", marginTop: "-10px" }}>
               Отчет формируется
             </div>
           </Grid>
         ) : null }
         { reportDiv ? (
-          <Grid item xs={12} lg={3} sm={4} md={4} style={{ marginBottom: 20 }}>
+          <Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
             <Button
-              href="http://localhost/komus_new/report.xlsx"
-              variant="outlined"
-              color="primary"
-              style={{
+              href = "http://localhost/komus_new/report.xlsx"
+              variant = "outlined"
+              color = "primary"
+              style = {{
                 width: "100%",
                 margin: "auto",
                 height: 55,
