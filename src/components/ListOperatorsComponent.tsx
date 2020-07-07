@@ -3,22 +3,22 @@ import Autocomplete from "@material-ui/lab/Autocomplete"
 import { Button, TextField, Grid } from "@material-ui/core"
 import { ajaxAction } from '../services'
 
-async function setStOperator( operator ) {
-  if ( operator ) {
-    let resp : any = ''
-    const url : string = 'user'
-    const method : string = 'PATCH'
-    resp = await ajaxAction( url, method , operator.operators )
-    return resp
-  }
-}
-
 export default function ListOperators( operator ) {
   
   const [oper, setOperator] = React.useState( "" )
   
   function ChooseStOperator( operator ){
     setOperator( operator )
+  }
+
+  async function setStOperator( operator ) {
+    if ( operator ) {
+      let resp : any = ''
+      const url : string = 'user'
+      const method : string = 'PATCH'
+      resp = await ajaxAction( url, method , operator.operators )
+      return resp
+    }
   }
 
   const users = Object.keys( operator.users ).map(function( key ) {

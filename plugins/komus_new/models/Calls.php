@@ -5,6 +5,7 @@ namespace Komus;
 class Calls
 {
     private $db;
+    private $resp;
     public function __construct($db)
     {
         $this->db = $db;
@@ -20,16 +21,16 @@ class Calls
      */
     public function read()
     {
-        $all_calls = $this->db->prepare("SELECT * from contacts
-        /*LEFT JOIN calls on calls.contacts_id=contacts.id where contacts.id=441*/");
         try {
+            $all_calls = $this->db->prepare("SELECT * from contacts
+        /*LEFT JOIN calls on calls.contacts_id=contacts.id where contacts.id=441*/");
             $all_calls->execute();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборке звонков ' . $th->getMessage());
+            echo 'Произошла ошибка при выборке звонков ' . $th->getMessage();
         }
-        $calls = $all_calls->fetchAll();
+        $this->resp = $all_calls->fetchAll();
         //$fn_data = (array) json_decode(file_get_contents('./columns_name.json'));
-        return json_encode($calls);
+        return json_encode($this->resp);
     }
     /**
      * Update

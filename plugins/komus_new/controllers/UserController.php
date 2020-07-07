@@ -37,7 +37,7 @@ class UserController
         try {
             $operator = json_decode($request->getBody());
             $this->resp = $this->user->setStOperator($operator->data);
-            if(!$this->resp){
+            if($this->resp == false){
                 $this->resp = $response->withStatus(500);
                 $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . PHP_EOL);
             }

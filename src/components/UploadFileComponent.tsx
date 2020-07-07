@@ -20,8 +20,8 @@ class UploadFileComponent extends React.Component<
   UploadFileComponentProps,
   UploadFileComponentState
 > {
-  constructor(props: UploadFileComponentProps) {
-    super(props)
+  constructor( props: UploadFileComponentProps ) {
+    super( props )
     this.state = { file: null, err : true , text : 'Выберете файл для загрузки' , spinner : false }
     this.handleFileChange = this.handleFileChange.bind(this)
     this.manageUploadedFile = this.manageUploadedFile.bind(this)
@@ -31,7 +31,7 @@ class UploadFileComponent extends React.Component<
     const formData = new FormData()
     if (this.state.err!=true) {
       let fn: string = "upload_file"
-      formData.append(fn, this.state.file)
+      formData.append( fn, this.state.file )
       this.setState({ text : '', spinner : true, file : null })
       temp = 20
       const response = await fetch(
