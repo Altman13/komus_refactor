@@ -17,6 +17,7 @@ class User
     public function create($files)
     {
         //TODO: Реализовать подгрузку пользователей сразу из центрального проекта
+        try {
         $directory = __DIR__ . '/../files/';
         foreach ($files as $f) {
             move_uploaded_file($f, $directory . "operators.xlsx");
@@ -28,7 +29,6 @@ class User
         if ($inputFileType == 'OOCalc') {
             $objReader->setLoadSheetsOnly('Операторы');
         }
-        try {
             $objPHPExcel = $objReader->load($uploadfile);
         } catch (\Throwable $th) {
             die('Произошла ошибка при попытке чтения файла с операторами ' . $th->getMessage() . PHP_EOL);
@@ -37,8 +37,8 @@ class User
         foreach ($operators as $operator) {
             $operator_fist_name = $operator['C'];
             $operator_last_name = $operator['B'];
-            $operator_login = $operator['E'];
-            $operator_depass = $operator['F'];
+            $operator_login     = $operator['E'];
+            $operator_depass    = $operator['F'];
 
             $payload = [
                 "user" => $operator_login,
@@ -84,8 +84,8 @@ class User
     public function setStOperator($operator)
     {
         $fio = explode(" ", $operator);
-        $first_name=$fio[0]; 
-        $last_name = $fio[1];
+        $first_name = $fio[0]; 
+        $last_name  = $fio[1];
         $update_role_user = $this->db->prepare("UPDATE `users` SET `groups_id`='2' 
             WHERE users.firstname =:first_name AND users.lastname =:last_name");
         $update_role_user->bindParam(':first_name', $first_name, \PDO::PARAM_STR);
@@ -96,7 +96,7 @@ class User
             $this->resp = false;
         }
         else {
-            $this->resp=true;
+            $this->resp = true;
         }
         return $this->resp;
     }
