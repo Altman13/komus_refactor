@@ -1,19 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { AppActions } from "../models/actions"
-import { ThunkDispatch } from "redux-thunk"
 import { connect } from "react-redux"
-import { AppState } from "../store"
+import { ThunkDispatch } from "redux-thunk"
 import { bindActionCreators } from "redux"
 
+import { AppState } from "../store"
+import { AppActions } from "../models/actions"
 import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/"
 import { Contact } from "../models"
 
-import {
-  Button, TextField, Grid, FormControlLabel,
-  Checkbox, NativeSelect, InputLabel, TextareaAutosize,
-  Hidden, Container
-} from "@material-ui/core"
+import * as core from "@material-ui/core"
 
 import InfoTextBlock from "./InfoComponent"
 import SearchComponent from "./SearchComponent"
@@ -184,13 +180,13 @@ export class FormComponent extends React.Component<Props, State> {
 
   render() {
     return (
-      <Container component="main">
+      <core.Container component="main">
         <div style = {{ fontSize: 30, textAlign: "center" }}>
           "Название проекта"
         </div>
-        <Grid container spacing = { 3 } style = {{ marginTop: 5 }}>
-          <Hidden only = { ["sm", "xs"] }>
-            <Grid item xs style = {{ border: "2px solid" }} md = { 3 }>
+        <core.Grid container spacing = { 3 } style = {{ marginTop: 5 }}>
+          <core.Hidden only = { ["sm", "xs"] }>
+            <core.Grid item xs style = {{ border: "2px solid" }} md = { 3 }>
               <div
                 style={{
                   fontSize: 20,
@@ -221,12 +217,12 @@ export class FormComponent extends React.Component<Props, State> {
                   ))}
                 </div>
               </div>
-            </Grid>
-          </Hidden>
-          <Grid item lg = { 6 } md = { 9 } sm = { 12 }>
+            </core.Grid>
+          </core.Hidden>
+          <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
             <form className = "form" noValidate>
               <InfoTextBlock />
-              <TextField
+              <core.TextField
                 variant = "outlined"
                 margin = "normal"
                 required
@@ -237,7 +233,7 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.naimenovanie }
                 onChange = { this.handleChange }
               />
-              <TextField
+              <core.TextField
                 variant = "outlined"
                 margin = "normal"
                 required
@@ -248,7 +244,7 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.fio }
                 onChange = { this.handleChange }
               />
-              <TextField
+              <core.TextField
                 variant = "outlined"
                 margin = "normal"
                 required
@@ -260,7 +256,7 @@ export class FormComponent extends React.Component<Props, State> {
                 onChange = { this.handleChange }
               />
               <RadioBtnComponent />
-              <TextField
+              <core.TextField
                 variant = "outlined"
                 margin = "normal"
                 required
@@ -271,8 +267,8 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.email || "" }
                 onChange = { this.handleChange }
               />
-              <InputLabel id = "request_call-label">Статус обращения</InputLabel>
-              <NativeSelect
+              <core.InputLabel id = "request_call-label">Статус обращения</core.InputLabel>
+              <core.NativeSelect
                 style = {{ width: "215px" }}
                 id = "request_call"
                 name = "request_call"
@@ -283,9 +279,9 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value = { "Суть обращения" }>Суть обращения</option>
                 <option value = { "Статус обращения" }>Статус обращения</option>
                 <option value = { "Результат обращения" }>Результат обращения</option>
-              </NativeSelect>
-              <InputLabel id="status_call-label">Статус звонка</InputLabel>
-              <NativeSelect
+              </core.NativeSelect>
+              <core.InputLabel id="status_call-label">Статус звонка</core.InputLabel>
+              <core.NativeSelect
                 style = {{ width: "215px" }}
                 id = "status_call"
                 name = "status_call"
@@ -297,10 +293,10 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value = { "Перезвон2" }>Перезвон2</option>
                 <option value = { "Перезвон3" }>Перезвон3</option>
                 <option value = { "Недозвон" }>Недозвон</option>
-              </NativeSelect>
+              </core.NativeSelect>
               <br/>
               
-              <TextField
+              <core.TextField
                 id = "datetime-local"
                 label = "Выбрать дату"
                 type = "datetime-local"
@@ -313,17 +309,17 @@ export class FormComponent extends React.Component<Props, State> {
               />
               <br />
 
-              <FormControlLabel
+              <core.FormControlLabel
                 className = "custom-control-input"
                 id = "customSwitches"
                 checked = { this.state.send_mail_kp }
                 onChange = { this.sendMailKp }
                 value = "end"
-                control = { <Checkbox color="primary" /> }
+                control = { <core.Checkbox color="primary" /> }
                 label = "Отправить коммерческое предложение"
                 labelPlacement = "end"
               />
-              <TextareaAutosize
+              <core.TextareaAutosize
                 aria-label = "minimum height"
                 rowsMin = { 3 }
                 placeholder = "Комментарий оператора"
@@ -333,7 +329,7 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.comment }
                 onChange = { this.onChange.bind(this) }
               />
-              <Button
+              <core.Button
                 type = "submit"
                 variant = "contained"
                 color = "primary"
@@ -341,18 +337,18 @@ export class FormComponent extends React.Component<Props, State> {
                 onClick = { this.makeCallHandler }
               >
                 Продолжить
-              </Button>
+              </core.Button>
             </form>
             { this.state.notice ? <DefaultNotice err = { this.state.err } /> : null }
-          </Grid>
-          <Hidden only = { ["md", "sm", "xs"] }>
-            <Grid item xs style = {{ border: "2px solid" }}>
+          </core.Grid>
+          <core.Hidden only = { ["md", "sm", "xs"] }>
+            <core.Grid item xs style = {{ border: "2px solid" }}>
               <SearchComponent />
               <InfoTextBlock />
-            </Grid>
-          </Hidden>
-        </Grid>
-      </Container>
+            </core.Grid>
+          </core.Hidden>
+        </core.Grid>
+      </core.Container>
     )
   }
 }

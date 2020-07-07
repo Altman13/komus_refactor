@@ -1,8 +1,5 @@
 import * as React from "react"
-import Container from "@material-ui/core/Container"
-import { Button, TextField, CssBaseline, 
-  FormControlLabel, Checkbox 
-} from "@material-ui/core"
+import * as core from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
 import { ajaxAction } from '../services'
 
@@ -79,8 +76,8 @@ class LoginComponent extends React.Component<Props, State> {
   render() {
 
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      <core.Container component="main" maxWidth="xs">
+        <core.CssBaseline />
         <div>
           {this.state.failure && (
             <Alert variant="outlined" severity="error">
@@ -91,7 +88,7 @@ class LoginComponent extends React.Component<Props, State> {
             noValidate
             onSubmit={this.handleSubmit.bind(this)}
           >
-            <TextField
+            <core.TextField
               variant="outlined"
               margin="normal"
               required
@@ -105,7 +102,7 @@ class LoginComponent extends React.Component<Props, State> {
             {this.state.submitted && !this.state.username && (
               <div>Требуется логин оператора</div>
             )}
-            <TextField
+            <core.TextField
               variant="outlined"
               margin="normal"
               required
@@ -120,18 +117,18 @@ class LoginComponent extends React.Component<Props, State> {
             {this.state.submitted && !this.state.password && (
               <div>Требуется пароль</div>
             )}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+            <core.FormControlLabel
+              control={<core.Checkbox value="remember" color="primary" />}
               label="Запомнить меня"
               name="persistent"
               value={true}
             />
-            <Button type="submit" fullWidth variant="contained" color="primary">
+            <core.Button type="submit" fullWidth variant="contained" color="primary">
               Вход
-            </Button>
+            </core.Button>
           </form>
         </div>
-      </Container>
+      </core.Container>
     )
   }
 }
