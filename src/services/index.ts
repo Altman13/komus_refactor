@@ -1,7 +1,7 @@
 export async function ajaxAction( url : string, method : string, data : any = undefined ) {
     var ret=""
     try {
-        if( data ){
+        if(data){
             data = JSON.stringify({ data })
         }
             await fetch("http://localhost/komus_new/api/" + url, {
@@ -22,8 +22,8 @@ export async function ajaxAction( url : string, method : string, data : any = un
         .then((data) => {
             ret = data
         })
-        } catch ( err ) {
-            console.log( err )
+        } catch ( err)  {
+            console.log( err );
         }
         return ret
     }

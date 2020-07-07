@@ -1,62 +1,80 @@
-import React from "react"
-// import CSS from "csstype"
+import * as React from "react"
+import CSS from "csstype"
 import { Button } from "@material-ui/core"
-//import SpinnerComponent from './SpinnerComponent'
-import { ajaxAction } from '../services'
+import SpinnerComponent from './SpinnerComponent'
 
-// const inputUploadFile: CSS.Properties = {
-//   display: "none",
-// }
-// var temp = 0
-// export interface UploadFileComponentProps {
-//   url: string
-// }
-// export interface UploadFileComponentState {
-//   file: any
-//   text: string
-//   err : boolean
-//   spinner : boolean
-// }
-// class UploadFileComponent extends React.Component<
-//   UploadFileComponentProps,
-//   UploadFileComponentState
-// > {
-//   constructor( props: UploadFileComponentProps ) {
-//     super( props )
-//     this.state = { file: null, err : true , text : 'Выберете файл для загрузки' , spinner : false }
-//     this.handleFileChange = this.handleFileChange.bind(this)
-//     this.manageUploadedFile = this.manageUploadedFile.bind(this)
-//   }
+const inputUploadFile: CSS.Properties = {
+  display: "none",
+}
+var temp = 0
+export interface UploadFileComponentProps {
+  url: string
+}
+export interface UploadFileComponentState {
+  file: any
+  text: string
+  err : boolean
+  spinner : boolean
+}
+class UploadFileComponent extends React.Component<
+  UploadFileComponentProps,
+  UploadFileComponentState
+> {
+  constructor(props: UploadFileComponentProps) {
+    super(props)
+    this.state = { file: null, err : true , text : '' , spinner : false }
+    this.handleFileChange = this.handleFileChange.bind(this)
+    this.manageUploadedFile = this.manageUploadedFile.bind(this)
+  }
 
+  async manageUploadedFile() {
+    const formData = new FormData()
+    if (this.state.err!=true) {
+      let fn: string = "upload_file"
+      formData.append(fn, this.state.file)
+      this.setState({ text : '', spinner : true, file : null })
+      temp = 20
+      const response = await fetch(
+        "http://localhost/komus_new/api/" + this.props.url,
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then(( response ) => {
+        if ( response.status === 200 ) {
+          console.log( "SUCCESSS" )
+          temp = 0
+          this.setState({ spinner : false, file: null, text : '' })
+        } else if ( response.status === 500 ) {
+          this.setState({ spinner : false })
+          console.log( "SOMETHING WENT WRONG" )
+        }
+      })
+    }
+  }
 
-export default function UploadFileComponent( url : string ){
-  
-  function handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
+componentWillReceiveProps (){
+    this.setState({ file: null , err : true })
+}
+
+handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
     event.persist()
     if ( event.target.files ) {
       console.log( event.target.files[0] )
       this.setState({ file: event.target.files[0], err :false })
     }
   }
-  
-  async function manageUploadedFile( file : any ) {
-    const formData = new FormData()
-    if (this.state.err!=true) {
-      let fn: string = "upload_file"
-      formData.append( fn, file )
-      let resp: any = ''
-      const method: string = 'POST'
-      resp = await ajaxAction( url, method, file )
-  } 
+
+  render(): JSX.Element {
     return (
       <div>
         <input
           accept=".xls,.xlsx"
-          style={{ display : 'none' }}
+          style={ inputUploadFile }
           id="file"
           multiple={true}
           type="file"
-          onChange={ handleFileChange }
+          onChange={ this.handleFileChange }
         />
         <label htmlFor="file">
           <Button
@@ -74,15 +92,22 @@ export default function UploadFileComponent( url : string ){
             Выбрать файл
           </Button>
         </label>
-
         <Button
           variant="outlined"
           color="primary"
           style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
-          onClick={ () => manageUploadedFile( file ='test' ) }
+          onClick={ this.manageUploadedFile }
         >Загрузить
         </Button>
+
+        <div style={{ width: "100%", textAlign: "center", fontSize: 18, padding: temp }}>
+          { this.state.file ? this.state.file.name : null }
+          { this.state.err ? this.state.text : null }
+          { this.state.spinner ? <SpinnerComponent /> : null }
+        </div>
+
       </div>
     )
   }
 }
+export default UploadFileComponent

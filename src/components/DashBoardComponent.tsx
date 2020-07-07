@@ -93,23 +93,18 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setVisibleNoticeModal( false )
   }
 
-  const getReport = async () => {
+  const getReport = () => {
     setTitleText( "Выгрузка отчета" )
-    setVisibleSpinnerDiv( true )
     setVisibleOperatorDiv( false )
     setVisibleUploadDiv( "" )
-    // const url : string = 'report'
-    // const method : string = 'GET'
-    // const resp = await ajaxAction( url, method )
-    // setSpinner( false )
-    // setReportBlock( true )
+    setVisibleSpinnerDiv( true )
     try {
       fetch("http://localhost/komus_new/api/report")
         .then(( response ) => {
           setVisibleNoticeModal( true )
         })
         .then(( data ) => {
-          setVisibleSpinnerDiv( false )
+          //setVisibleSpinnerDiv( false )
           setVisibleReportDiv( true )
         });
     } catch ( err ) {
@@ -275,9 +270,6 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           <core.Grid item xs = { 12 } lg = { 2 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
             <div style = {{ marginLeft: "130px" }}>
               <SpinnerComponent />
-            </div>
-            <div style = {{ fontSize: "18px", marginTop: "-10px" }}>
-              Отчет формируется
             </div>
           </core.Grid>
         ) : null }
