@@ -1,45 +1,26 @@
 import React from "react"
 import { Button } from "@material-ui/core"
+import { ajaxActionUploadFile } from '../services'
 
-//import { ajaxAction } from '../services'
-
-var file
 export default function UploadFileComponent( urlApi : any ){
 
-  //const [fileData, setFileData] = React.useState<File | null>();
+  const [data, setFormData] = React.useState<FormData | null>()
   
   function setFileToUpload( event: React.ChangeEvent<HTMLInputElement> ) {
     event.persist()
     if(event.target.files){
-    //setFileData(event.target.files[0])
-    file=event.target.files[0]
-    }
+    const file = event.target.files[0]
+    const formData = new FormData()
+    formData.append( 'upload_file', file, file.name )
+    setFormData(formData)
   }
+}
   
   async function UploadFile( ) {
-    const formData = new FormData()
-    formData.append( "file_upload", file )
     const { url } = urlApi
-    fetch('http://localhost/komus_new/api/'+ url, { 
-    method : "POST",
-    body : formData ,
-    mode : "cors",
-    cache : "no-cache",
-    credentials : "same-origin",
-    headers: {
-      "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Accept": "application/json",
-      "type": "formData"
-    },
-    redirect : "follow",
-    referrerPolicy : "no-referrer",
-  }).then(
-    response => response.json()
-  ).then(
-    success => console.log(success)
-  ).catch(
-    error => console.log(error)
-  )
+    const method: string ='POST'
+    let ret: any = await ajaxActionUploadFile( url, method, data )
+    // return ret
 }
     return (
       <div>
