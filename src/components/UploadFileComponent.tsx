@@ -1,80 +1,55 @@
-import * as React from "react"
-import CSS from "csstype"
+import React from "react"
 import { Button } from "@material-ui/core"
-import SpinnerComponent from './SpinnerComponent'
 
-const inputUploadFile: CSS.Properties = {
-  display: "none",
-}
-var temp = 0
-export interface UploadFileComponentProps {
-  url: string
-}
-export interface UploadFileComponentState {
-  file: any
-  text: string
-  err : boolean
-  spinner : boolean
-}
-class UploadFileComponent extends React.Component<
-  UploadFileComponentProps,
-  UploadFileComponentState
-> {
-  constructor(props: UploadFileComponentProps) {
-    super(props)
-    this.state = { file: null, err : true , text : '' , spinner : false }
-    this.handleFileChange = this.handleFileChange.bind(this)
-    this.manageUploadedFile = this.manageUploadedFile.bind(this)
-  }
+//import { ajaxAction } from '../services'
 
-  async manageUploadedFile() {
-    const formData = new FormData()
-    if (this.state.err!=true) {
-      let fn: string = "upload_file"
-      formData.append(fn, this.state.file)
-      this.setState({ text : '', spinner : true, file : null })
-      temp = 20
-      const response = await fetch(
-        "http://localhost/komus_new/api/" + this.props.url,
-        {
-          method: "POST",
-          body: formData,
-        }
-      ).then(( response ) => {
-        if ( response.status === 200 ) {
-          console.log( "SUCCESSS" )
-          temp = 0
-          this.setState({ spinner : false, file: null, text : '' })
-        } else if ( response.status === 500 ) {
-          this.setState({ spinner : false })
-          console.log( "SOMETHING WENT WRONG" )
-        }
-      })
-    }
-  }
+var file
+export default function UploadFileComponent( urlApi : any ){
 
-componentWillReceiveProps (){
-    this.setState({ file: null , err : true })
-}
-
-handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
+  //const [fileData, setFileData] = React.useState<File | null>();
+  
+  function setFileToUpload( event: React.ChangeEvent<HTMLInputElement> ) {
     event.persist()
-    if ( event.target.files ) {
-      console.log( event.target.files[0] )
-      this.setState({ file: event.target.files[0], err :false })
+    if(event.target.files){
+    //setFileData(event.target.files[0])
+    file=event.target.files[0]
     }
   }
-
-  render(): JSX.Element {
+  
+  async function UploadFile( ) {
+    const formData = new FormData()
+    formData.append( "file_upload", file )
+    const { url } = urlApi
+    fetch('http://localhost/komus_new/api/'+ url, { 
+    method : "POST",
+    body : formData ,
+    mode : "cors",
+    cache : "no-cache",
+    credentials : "same-origin",
+    headers: {
+      "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "Accept": "application/json",
+      "type": "formData"
+    },
+    redirect : "follow",
+    referrerPolicy : "no-referrer",
+  }).then(
+    response => response.json()
+  ).then(
+    success => console.log(success)
+  ).catch(
+    error => console.log(error)
+  )
+}
     return (
       <div>
         <input
           accept=".xls,.xlsx"
-          style={ inputUploadFile }
+          style={{ display : 'none' }}
           id="file"
           multiple={true}
           type="file"
-          onChange={ this.handleFileChange }
+          onChange={ setFileToUpload }
         />
         <label htmlFor="file">
           <Button
@@ -92,22 +67,14 @@ handleFileChange( event: React.ChangeEvent<HTMLInputElement> ) {
             Выбрать файл
           </Button>
         </label>
+
         <Button
           variant="outlined"
           color="primary"
           style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
-          onClick={ this.manageUploadedFile }
+          onClick={ UploadFile }
         >Загрузить
         </Button>
-
-        <div style={{ width: "100%", textAlign: "center", fontSize: 18, padding: temp }}>
-          { this.state.file ? this.state.file.name : null }
-          { this.state.err ? this.state.text : null }
-          { this.state.spinner ? <SpinnerComponent /> : null }
-        </div>
-
       </div>
     )
   }
-}
-export default UploadFileComponent

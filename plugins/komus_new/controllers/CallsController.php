@@ -12,7 +12,7 @@ class CallsController
     }
     public function show()
     {
-        echo $this->calls->read();
+        return $this->calls->read();
     }
     public function make()
     {
