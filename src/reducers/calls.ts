@@ -14,6 +14,8 @@ export const CallReducer = (
     return state.filter(({ id }) => id !== action.id)
     case "RECEIVE_CALL":
       return [...state, action.contact]
+    case "SPINNER_ACTION":
+      return [...state, action.is_visible]
     default:
       return state
   }

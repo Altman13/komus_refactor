@@ -1,7 +1,7 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import { AppState } from '../store'
-import { MAKE_CALL, RECEIVE_CALL, GET_CONTACTS } from './../models/actions'
+import { MAKE_CALL, RECEIVE_CALL, GET_CONTACTS, SPINNER_ACTION } from './../models/actions'
 import { ajaxAction } from './../services'
 
 const create = actionCreatorFactory()
@@ -35,6 +35,16 @@ export const make_calls = createAsync<any, any>(
     const { id } = contact
     await ajaxAction( url, method, contact )
     return dispatch({ type: MAKE_CALL, id })
+  }
+)
+
+export const set_spinner = createAsync<any, any>(
+  "SPINNER_ACTION", 
+  async(params, dispatch) => {
+    const is_visible = {
+      spinner_visible : true
+    }
+    return dispatch({ type : SPINNER_ACTION, is_visible })
   }
 )
 

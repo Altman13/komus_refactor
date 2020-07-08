@@ -4,6 +4,7 @@ export const MAKE_CALL = "MAKE_CALL";
 export const RECEIVE_CALL = "RECEIVE_CALL";
 export const GET_CONTACTS = "GET_CONTACTS";
 export const SET_FILTER_ON_CONTACTS = "SET_FILTER_ON_CONTACTS";
+export const SPINNER_ACTION = "SPINNER_ACTION"
 
 export interface MakeCallAction {
   type: typeof MAKE_CALL;
@@ -25,10 +26,16 @@ export interface SetFilterOnContactsAction {
   contact: Contact;
 }
 
+export interface SpinnerAction {
+  type: typeof SPINNER_ACTION
+  is_visible : boolean
+}
+
 export type CallActionTypes =
   | ReceiveCallAction
   | MakeCallAction
   | GetContactsAction
   | SetFilterOnContactsAction
+  | SpinnerAction
 
   export type AppActions = CallActionTypes;
