@@ -57,7 +57,7 @@ export class FormComponent extends React.Component<Props, State> {
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : "",
       date_recall : ""
-    };
+    }
     this.inputHandleChange = this.inputHandleChange.bind( this )
     this.makeCallHandler = this.makeCallHandler.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
@@ -131,8 +131,9 @@ export class FormComponent extends React.Component<Props, State> {
         status_call: "",
         send_mail_kp: false,
       })
-      //this.noticeVisibleToggle()
-     // this.setAdditionalInfoBlock( contact )
+      this.noticeVisibleToggle()
+      this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
+    
     }
   
   noticeVisibleToggle() {
@@ -145,12 +146,12 @@ export class FormComponent extends React.Component<Props, State> {
   setAdditionalInfoBlock( contact: any ) {
     var key_contact = Object.keys( this.state )
     var html_element: any = []
-    for (let [key, value] of Object.entries( contact )) {
+    for (var key in contact ) {
       var el_main_form = key_contact.indexOf( key )
-      if ( el_main_form == -1 && value ) {
+      if ( el_main_form == -1 && contact[key] ) {
         html_element.push(
           <div id = { key } style = {{ fontSize: 18 }} key = { key }>
-            { key }: { value }
+            { key }: { contact[key] }
           </div>
         )
       }
