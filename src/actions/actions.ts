@@ -41,9 +41,7 @@ export const makeCalls = createAsync<any, any>(
 export const switchSpinnerVisible = createAsync<any, any>(
   "SPINNER_ACTION", 
   async(params, dispatch) => {
-    const is_visible = {
-      spinner_visible : true
-    }
+    const is_visible: boolean = true
     return dispatch({ type : SPINNER_ACTION, is_visible })
   }
 )

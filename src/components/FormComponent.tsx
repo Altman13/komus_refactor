@@ -14,7 +14,7 @@ import * as core from "@material-ui/core"
 import InfoTextBlock from "./InfoComponent"
 import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
-import NoticeModal from "../components/NoticeComponent"
+import NoticeModal from "./NoticeComponent"
 
 interface State {
   id: number

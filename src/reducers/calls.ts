@@ -1,8 +1,8 @@
 import { Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
 
-const callsReducerDefaultState : Contact [] = []
-
+let spinner_visible:boolean =false
+const callsReducerDefaultState = { Contact : [], spinner_visible }
 export const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes
@@ -11,11 +11,11 @@ export const CallReducer = (
     case "GET_CONTACTS":
       return action.contacts
     case "MAKE_CALL":
-    return state.filter(({ id }) => id !== action.id)
+    return state.Contact.filter(({ id }) => id !== action.id)
     case "RECEIVE_CALL":
-      return [...state, action.contact]
+      return [...state.Contact, action.contact]
     case "SPINNER_ACTION":
-      return [...state, action.is_visible]
+        return { ...state, spinner_visible: action.is_visible }
     default:
       return state
   }

@@ -8,7 +8,7 @@ import * as icon from '@material-ui/icons'
 import ListOperators from "./ListOperatorsComponent"
 import SetUploadFile from "./UploadFileComponent"
 import SpinnerComponent from "./SpinnerComponent"
-import DefaultNotice from "./NoticeComponent"
+import NoticeModal from "./NoticeComponent"
 
 import { ajaxAction } from '../services/index'
 
@@ -115,15 +115,16 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     const getUsers = async () => {
 
     setTitleText( "Назначить старшего оператора" )
-    setVisibleOperatorDiv( true )
-    const url : string = 'user'
-    const method : string = 'GET'
-    const operators = await ajaxAction( url, method )
-    setUsers( operators )
     setVisibleSpinnerDiv( false )
     setVisibleReportDiv( false )
     setVisibleUploadDiv( "" )
     setVisibleNoticeModal( false )
+    const url : string = 'user'
+    const method : string = 'GET'
+    const operators = await ajaxAction( url, method )
+    setUsers( operators )
+    setVisibleOperatorDiv( true )
+    
   }
   const drawer = (
     <div>
@@ -291,7 +292,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
             </core.Button>
           </core.Grid>
         ) : null }
-        { noticeModal ? <DefaultNotice /> : null }
+        { noticeModal ? <NoticeModal /> : null }
       </main>
     </div>
   )
