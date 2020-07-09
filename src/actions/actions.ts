@@ -11,9 +11,9 @@ export const getContacts = createAsync<any, any>(
   "GET_CONTACTS",
   async ( params, dispatch ) => {
     const url: string = 'calls'
-    const resp = await ajaxAction( url, 'GET' )
+    const contacts = await ajaxAction( url, 'GET' )
     
-    return dispatch({ type: GET_CONTACTS, contacts: resp })
+    return dispatch({ type: GET_CONTACTS, contacts })
   }
 )
 

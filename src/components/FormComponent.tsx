@@ -117,28 +117,24 @@ export class FormComponent extends React.Component<Props, State> {
   
   componentWillReceiveProps( nextProps ) {
     var contact
-    Object.keys( nextProps.contacts ).forEach( function eachKey( key ) {
-      contact = nextProps.contacts[key]
-    })
-
-    if ( contact ) {
+    console.log(nextProps.contacts.Contact[0])
+    
       this.setState({
-        id: contact.id,
-        naimenovanie: contact.naimenovanie,
-        fio: contact.fio,
-        nomer: contact.nomer,
-        email: contact.email,
+        id: nextProps.contacts.Contact[0].id || "",
+        naimenovanie: nextProps.contacts.Contact[0].naimenovanie || "",
+        fio: nextProps.contacts.Contact[0].fio || "",
+        nomer: nextProps.contacts.Contact[0].nomer || "",
+        email: nextProps.contacts.Contact[0].email || "",
         st_operator: true,
         notice: true,
         request_call: "",
         status_call: "",
         send_mail_kp: false,
       })
-      this.noticeVisibleToggle()
-      this.setAdditionalInfoBlock( contact )
+      //this.noticeVisibleToggle()
+     // this.setAdditionalInfoBlock( contact )
     }
-  }
-
+  
   noticeVisibleToggle() {
     setTimeout(() => {
       this.setState({ notice: false })
@@ -360,7 +356,7 @@ interface LinkDispatchProps {
   make_calls: ( data : any ) => void
   receive_calls: () => void
 }
-const mapStateToProps = ( state: AppState ): LinkStateProps => ({
+const mapStateToProps = ( state: AppState ) => ({
   contacts: state.contacts,
 })
 

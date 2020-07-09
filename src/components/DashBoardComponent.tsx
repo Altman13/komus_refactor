@@ -98,15 +98,15 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setTitleText( "Выгрузка отчета" )
     setVisibleOperatorDiv( false )
     setVisibleUploadDiv( "" )
-    setVisibleSpinnerDiv( true )
+    //setVisibleSpinnerDiv( true )
     try {
       fetch("http://localhost/komus_new/api/report")
         .then(( response ) => {
           setVisibleNoticeModal( true )
         })
         .then(( data ) => {
-          setVisibleSpinnerDiv( false )
-          //setVisibleReportDiv( true )
+          //setVisibleSpinnerDiv( false )
+          setVisibleReportDiv( true )
         });
     } catch ( err ) {
       console.log( "Ошибка при формировании отчета " + err )
