@@ -6,7 +6,7 @@ import * as style from "@material-ui/core/styles"
 import * as icon from '@material-ui/icons'
 
 import ListOperators from "./ListOperatorsComponent"
-import UploadFileComponent from "./UploadFileComponent"
+import SetUploadFile from "./UploadFileComponent"
 import SpinnerComponent from "./SpinnerComponent"
 import DefaultNotice from "./NoticeComponent"
 
@@ -86,11 +86,12 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
 
   const setUploadUser = () => {
     setTitleText( "Загрузить пользователей" )
-    setVisibleUploadDiv( "user" )
     setVisibleOperatorDiv( false )
     setVisibleSpinnerDiv( false )
     setVisibleReportDiv( false )
     setVisibleNoticeModal( false )
+    setVisibleUploadDiv( "user" )
+    
   }
 
   const getReport = () => {
@@ -104,8 +105,8 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           setVisibleNoticeModal( true )
         })
         .then(( data ) => {
-          //setVisibleSpinnerDiv( false )
-          setVisibleReportDiv( true )
+          setVisibleSpinnerDiv( false )
+          //setVisibleReportDiv( true )
         });
     } catch ( err ) {
       console.log( "Ошибка при формировании отчета " + err )
@@ -262,7 +263,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
         <div className = { classes.toolbar } />
         { uploadDiv ? (
           <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
-            <UploadFileComponent url={ uploadDiv } />
+            <SetUploadFile url={ uploadDiv } />
           </core.Grid>
         ) : null }
         { operatorDiv ? <ListOperators users= { users }/> : null }

@@ -2,8 +2,8 @@ import React from "react"
 import { Snackbar } from "@material-ui/core"
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert"
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" { ...props } />
+function Alert( props: AlertProps ) {
+  return <MuiAlert elevation={ 6 } variant="filled" { ...props } />
 }
 export default function DefaultNotice( err: any ) {
   const [open, setOpen] = React.useState( true )
@@ -23,7 +23,7 @@ export default function DefaultNotice( err: any ) {
           anchorOrigin = {{ vertical: "top", horizontal: "center" }}
           key = { "vertical" + "horizontal" }
         >
-          <Alert onClose = { handleClose } severity="error">
+          <Alert onClose = { handleClose } severity = "error">
             Произошла ошибка при выполнеии действия!
           </Alert>
         </Snackbar>
@@ -35,7 +35,7 @@ export default function DefaultNotice( err: any ) {
           anchorOrigin = {{ vertical: "top", horizontal: "center" }}
           key = { "vertical" + "horizontal" }
         >
-          <Alert onClose = { handleClose } severity="success">
+          <Alert onClose = { handleClose } severity = "success">
             Действие выполнено успешно!
           </Alert>
         </Snackbar>

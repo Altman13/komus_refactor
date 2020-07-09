@@ -1,13 +1,14 @@
 import React from "react"
-import { Button } from "@material-ui/core"
-import { ajaxActionUploadFile } from '../services'
+import { useDispatch } from "react-redux"
 
-import { useDispatch } from "react-redux";
-import { get_contacts, make_calls, receive_calls, send_mails, set_spinner } from "../actions"
+import { Button } from "@material-ui/core"
+
+import { switchSpinnerVisible } from "../actions"
+import { ajaxActionUploadFile } from '../services'
 
 export default function UploadFileComponent( urlApi : any ){
   
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [data, setFormData] = React.useState<FormData | null>()
   
   function setFileToUpload( event: React.ChangeEvent<HTMLInputElement> ) {
@@ -58,7 +59,7 @@ export default function UploadFileComponent( urlApi : any ){
           color="primary"
           style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
           //onClick={ UploadFile }
-          onClick={() => dispatch(set_spinner())}
+          onClick={() => dispatch( switchSpinnerVisible() )}
         >Загрузить
         </Button>
       </div>

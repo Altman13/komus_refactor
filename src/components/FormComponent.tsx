@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux"
 
 import { AppState } from "../store"
 import { AppActions } from "../models/actions"
-import { get_contacts, make_calls, receive_calls, send_mails } from "../actions/"
+import { getContacts, makeCalls, receiveCalls, sendMails } from "../actions"
 import { Contact } from "../models"
 
 import * as core from "@material-ui/core"
@@ -14,7 +14,7 @@ import * as core from "@material-ui/core"
 import InfoTextBlock from "./InfoComponent"
 import SearchComponent from "./SearchComponent"
 import RadioBtnComponent from "./RadioBtnComponent"
-import DefaultNotice from "../components/NoticeComponent"
+import NoticeModal from "../components/NoticeComponent"
 
 interface State {
   id: number
@@ -58,7 +58,7 @@ export class FormComponent extends React.Component<Props, State> {
       date : "",
       date_recall : ""
     };
-    this.handleChange = this.handleChange.bind( this )
+    this.inputHandleChange = this.inputHandleChange.bind( this )
     this.makeCallHandler = this.makeCallHandler.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
   }
@@ -67,7 +67,7 @@ export class FormComponent extends React.Component<Props, State> {
     this.setState({ comment: e.target.value })
   }
 
-  handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
+  inputHandleChange( e: React.ChangeEvent<HTMLInputElement> ) {
     const { name, value } = e.target
     switch ( name ) {
       case "company_name":
@@ -107,7 +107,7 @@ export class FormComponent extends React.Component<Props, State> {
       mail : this.state.email,
     }
     if ( this.state.send_mail_kp ) {
-      send_mails( 'mail', 'POST', data )
+      sendMails( 'mail', 'POST', data )
     }
   }
 
@@ -231,7 +231,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label = "Наименование организации"
                 name = "company_name"
                 value = { this.state.naimenovanie }
-                onChange = { this.handleChange }
+                onChange = { this.inputHandleChange }
               />
               <core.TextField
                 variant = "outlined"
@@ -242,7 +242,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label = "ФИО ЛПР"
                 name = "fio_lpr"
                 value = { this.state.fio }
-                onChange = { this.handleChange }
+                onChange = { this.inputHandleChange }
               />
               <core.TextField
                 variant = "outlined"
@@ -253,7 +253,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label = "телефон организации"
                 name = "company_phone"
                 value = { this.state.nomer }
-                onChange = { this.handleChange }
+                onChange = { this.inputHandleChange }
               />
               <RadioBtnComponent />
               <core.TextField
@@ -265,7 +265,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label = "почта организации"
                 name = "company_mail"
                 value = { this.state.email || "" }
-                onChange = { this.handleChange }
+                onChange = { this.inputHandleChange }
               />
               <core.InputLabel id = "request_call-label">Статус обращения</core.InputLabel>
               <core.NativeSelect
@@ -302,7 +302,7 @@ export class FormComponent extends React.Component<Props, State> {
                 type = "datetime-local"
                 name = "date_recall"
                 defaultValue = { this.state.date }
-                onChange = { this.handleChange }
+                onChange = { this.inputHandleChange }
                 InputLabelProps = {{
                   shrink: true,
                 }}
@@ -339,7 +339,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </core.Button>
             </form>
-            { this.state.notice ? <DefaultNotice err = { this.state.err } /> : null }
+            { this.state.notice ? <NoticeModal err = { this.state.err } /> : null }
           </core.Grid>
           <core.Hidden only = { ["md", "sm", "xs"] }>
             <core.Grid item xs style = {{ border: "2px solid" }}>
@@ -357,7 +357,7 @@ interface LinkStateProps {
 }
 interface LinkDispatchProps {
   get_contacts: () => void
-  make_calls: ( data: any ) => void
+  make_calls: ( data : any ) => void
   receive_calls: () => void
 }
 const mapStateToProps = ( state: AppState ): LinkStateProps => ({
@@ -367,9 +367,9 @@ const mapStateToProps = ( state: AppState ): LinkStateProps => ({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  get_contacts: bindActionCreators( get_contacts, dispatch ),
-  make_calls: bindActionCreators( make_calls, dispatch ),
-  receive_calls: bindActionCreators( receive_calls, dispatch ),
+  get_contacts: bindActionCreators( getContacts, dispatch ),
+  make_calls: bindActionCreators( makeCalls, dispatch ),
+  receive_calls: bindActionCreators( receiveCalls, dispatch ),
 })
 
 export default connect( mapStateToProps, mapDispatchToProps )( FormComponent )

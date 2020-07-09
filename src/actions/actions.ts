@@ -7,7 +7,7 @@ import { ajaxAction } from './../services'
 const create = actionCreatorFactory()
 const createAsync = asyncFactory<AppState>( create )
 
-export const get_contacts = createAsync<any, any>(
+export const getContacts = createAsync<any, any>(
   "GET_CONTACTS",
   async ( params, dispatch ) => {
     const url: string = 'calls'
@@ -17,7 +17,7 @@ export const get_contacts = createAsync<any, any>(
   }
 )
 
-export const receive_calls = createAsync<any, any>(
+export const receiveCalls = createAsync<any, any>(
   "RECEIVE_CALL",
   async ( params, dispatch ) => {
     const url: string = 'contacts'
@@ -27,7 +27,7 @@ export const receive_calls = createAsync<any, any>(
   }
 )
 
-export const make_calls = createAsync<any, any>(
+export const makeCalls = createAsync<any, any>(
   "MAKE_CALL",
   async ( contact, dispatch ) => {
     const url : string = 'contact'
@@ -38,7 +38,7 @@ export const make_calls = createAsync<any, any>(
   }
 )
 
-export const set_spinner = createAsync<any, any>(
+export const switchSpinnerVisible = createAsync<any, any>(
   "SPINNER_ACTION", 
   async(params, dispatch) => {
     const is_visible = {
@@ -48,7 +48,7 @@ export const set_spinner = createAsync<any, any>(
   }
 )
 
-export async function send_mails ( url: string, method: string, data: any ) {
+export async function sendMails ( url: string, method: string, data: any ) {
     const resp = await ajaxAction( url, method, data )
     return resp
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import PacmanLoader from "react-spinners/PacmanLoader"
 
-export default function SpinnerComponent(){
+export default function SpinnerComponent() {
     return(
         <div className="sweet-loading" >
         <PacmanLoader
