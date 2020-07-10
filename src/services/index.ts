@@ -1,27 +1,27 @@
 const ret = {
-    data: "",
-    status_code: "",
-    error: "",
+    data: '',
+    status_code: '',
+    error: '',
 }
 //TODO: дописать отправку сообщения об ошибке на почту 
-export async function ajaxAction( url: string, method: string, data: any = undefined ) {
+export async function ajaxAction( url : string, method : string, data : any = undefined ) {
     try {
-        if (data) {
+        if ( data ) {
             data = JSON.stringify({ data })
         }
-        await fetch("http://localhost/komus_new/api/" + url, {
+        await fetch('http://localhost/komus_new/api/' + url, {
             method: method,
             body: data,
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
         })
-            .then((response) => {
+            .then(( response ) => {
                 if ( response.status === 200 ) {
                     ret.status_code = response.status.toString()
                     return response.json()        
@@ -34,29 +34,29 @@ export async function ajaxAction( url: string, method: string, data: any = undef
             })
     } catch (err) {
         ret.error = err
-    console.log(err)
+        console.log(err)
     }
     return ret
 }
 
-export async function ajaxActionUploadFile( url: string, method: string, data: any = undefined ) {
+export async function ajaxActionUploadFile( url : string, method : string, data : any = undefined ) {
     try {
-        await fetch("http://localhost/komus_new/api/" + url, {
-            method: "POST",
+        await fetch('http://localhost/komus_new/api/' + url, {
+            method: 'POST',
             body: data,
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
-            "Content-Type":
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            Accept: "application/json",
-            type: "formData",
+            'Content-Type':
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            Accept: 'application/json',
+            type: 'formData',
             },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
         })
-        .then((response) => {
+        .then(( response ) => {
             if ( response.status === 200 ) {
                 ret.status_code = response.status.toString()
                 return response.json()        
@@ -64,12 +64,12 @@ export async function ajaxActionUploadFile( url: string, method: string, data: a
                 ret.status_code = response.status.toString()
             }
         })
-        .then((data) => {
+        .then(( data ) => {
             ret.data = data
         })
-    } catch (err) {
-    ret.error = err
-    console.log(err)
+    } catch ( err ) {
+        ret.error = err
+        console.log( err )
     }
     return ret
     }

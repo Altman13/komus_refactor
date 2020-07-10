@@ -5,38 +5,38 @@ export enum Users {
   administrator
 }
 interface IUsers {
-  Category: Users;
+  Category: Users
 }
 abstract class User implements IUsers {
-  Category: Users;
-  private user_role: number;
+  Category: Users
+  private user_role: number
   constructor(user_role: number) {
-    this.user_role = user_role;
+    this.user_role = user_role
     this.Category = Users.guest
   }
 }
 export class Guest extends User {
   constructor(user_role: number) {
-    super(user_role);
-    this.Category = Users.guest;
+    super(user_role)
+    this.Category = Users.guest
   }
 }
 export class Operator extends User {
   constructor(user_role: number) {
-    super(user_role);
-    this.Category = Users.operator;
+    super(user_role)
+    this.Category = Users.operator
   }
 }
 class St_operator extends User {
   constructor(user_role: number) {
-    super(user_role);
-    this.Category = Users.st_operator;
+    super(user_role)
+    this.Category = Users.st_operator
   }
 }
 class Administrator extends User {
   constructor(user_role: number) {
-    super(user_role);
-    this.Category = Users.administrator;
+    super(user_role)
+    this.Category = Users.administrator
   }
 }
 export class UserFactory {
@@ -45,13 +45,13 @@ export class UserFactory {
       return new Guest(user_role)
     }
     if (user_role == 1) {
-      return new Operator(user_role);
+      return new Operator(user_role)
     }
     if (user_role == 2) {
-      return new St_operator(user_role);
+      return new St_operator(user_role)
     }
     if (user_role == 3) {
-      return new Administrator(user_role);
+      return new Administrator(user_role)
     }
   }
 }

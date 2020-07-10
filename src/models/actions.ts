@@ -1,16 +1,15 @@
-import { Contact, Contacts, Call } from "./contact";
+import { Contact, Contacts, Call } from './contact'
 
-export const MAKE_CALL = "MAKE_CALL";
-export const RECEIVE_CALL = "RECEIVE_CALL";
-export const GET_CONTACTS = "GET_CONTACTS";
-export const SET_FILTER_ON_CONTACTS = "SET_FILTER_ON_CONTACTS";
-export const SPINNER_ACTION = "SPINNER_ACTION"
+export const MAKE_CALL = 'MAKE_CALL'
+export const RECEIVE_CALL = 'RECEIVE_CALL'
+export const GET_CONTACTS = 'GET_CONTACTS'
+export const SET_FILTER_ON_CONTACTS = 'SET_FILTER_ON_CONTACTS'
+export const SPINNER_ACTION = 'SPINNER_ACTION'
 
 export interface MakeCallAction {
-  type: typeof MAKE_CALL;
+  type: typeof MAKE_CALL
   call : Call
   id : number
-  // status_call : string
 }
 
 export interface ReceiveCallAction {
@@ -18,12 +17,12 @@ export interface ReceiveCallAction {
   contact: Contact;
 }
 export interface GetContactsAction {
-  type: typeof GET_CONTACTS;
-  data: Contacts;
+  type: typeof GET_CONTACTS
+  data: Contacts
 }
 export interface SetFilterOnContactsAction {
-  type: typeof SET_FILTER_ON_CONTACTS;
-  contact: Contact;
+  type: typeof SET_FILTER_ON_CONTACTS
+  contact: Contact
 }
 
 export interface SpinnerAction {

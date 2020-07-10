@@ -1,9 +1,9 @@
-import React from "react"
-import { useDispatch } from "react-redux"
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
-import { Button } from "@material-ui/core"
+import { Button } from '@material-ui/core'
 
-import { switchSpinnerVisible } from "../actions"
+import { switchSpinnerVisible } from '../actions'
 import { ajaxActionUploadFile } from '../services'
 
 export default function UploadFileComponent( urlApi : any ){
@@ -24,30 +24,30 @@ export default function UploadFileComponent( urlApi : any ){
   async function UploadFile( ) {
     const { url } = urlApi
     const method: string ='POST'
-    let ret: any = await ajaxActionUploadFile( url, method, data )
-    // return ret
+    const ret : any = await ajaxActionUploadFile( url, method, data )
+    return ret
 }
     return (
       <div>
         <input
-          accept = ".xls,.xlsx"
+          accept = '.xls,.xlsx'
           style = {{ display : 'none' }}
-          id = "file"
+          id = 'file'
           multiple = {true}
-          type = "file"
+          type = 'file'
           onChange = { setFileToUpload }
         />
-        <label htmlFor = "file">
+        <label htmlFor = 'file'>
           <Button
-            variant = "outlined"
-            color = "primary"
-            aria-label = "upload file"
-            component = "span"
+            variant = 'outlined'
+            color = 'primary'
+            aria-label = 'upload file'
+            component = 'span'
             style = {{
-              width: "100%",
-              margin: "auto",
+              width: '100%',
+              margin: 'auto',
               height: 55,
-              marginBottom: "5",
+              marginBottom: '5',
             }}
           >
             Выбрать файл
@@ -55,9 +55,9 @@ export default function UploadFileComponent( urlApi : any ){
         </label>
 
         <Button
-          variant = "outlined"
-          color = "primary"
-          style = {{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
+          variant = 'outlined'
+          color = 'primary'
+          style = {{ width: '100%', margin: 'auto', height: 55, marginTop: 5 }}
           onClick = { UploadFile }
           //onClick={() => dispatch( switchSpinnerVisible() )}
         >Загрузить
