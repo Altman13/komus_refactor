@@ -10,7 +10,7 @@ import SetUploadFile from "./UploadFileComponent"
 import SpinnerComponent from "./SpinnerComponent"
 import NoticeModal from "./NoticeComponent"
 
-import { ajaxAction } from '../services/index'
+import { ajaxAction } from '../services'
 
 const drawerWidth = 240
 
@@ -122,7 +122,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     const url : string = 'user'
     const method : string = 'GET'
     const operators = await ajaxAction( url, method )
-    setUsers( operators )
+    setUsers( operators.data )
     setVisibleOperatorDiv( true )
     
   }
@@ -154,10 +154,10 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           <core.ListItemText primary = "Загрузить базу" />
         </core.ListItem>
 
-        <core.ListItem button key = { "Загрузить пользователей" } onClick={ setUploadUser }>
+        <core.ListItem button key = { "Загрузить пользователей" } onClick = { setUploadUser }>
           <core.ListItemIcon>
             <core.IconButton
-              color="primary"
+              color = "primary"
               aria-label = "upload picture"
               component = "span"
             >
@@ -263,20 +263,20 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
       <main className = { classes.content }>
         <div className = { classes.toolbar } />
         { uploadDiv ? (
-          <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
-            <SetUploadFile url={ uploadDiv } />
+          <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style = {{ marginBottom: 20 }}>
+            <SetUploadFile url = { uploadDiv } />
           </core.Grid>
         ) : null }
         { operatorDiv ? <ListOperators users= { users }/> : null }
         { spinnerDiv ? (
-          <core.Grid item xs = { 12 } lg = { 2 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
+          <core.Grid item xs = { 12 } lg = { 2 } sm = { 4 } md = { 4 } style = {{ marginBottom: 20 }}>
             <div style = {{ marginLeft: "130px" }}>
               <SpinnerComponent />
             </div>
           </core.Grid>
         ) : null }
         { reportDiv ? (
-          <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style={{ marginBottom: 20 }}>
+          <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 } style = {{ marginBottom: 20 }}>
             <core.Button
               href = "http://localhost/komus_new/report.xlsx"
               variant = "outlined"

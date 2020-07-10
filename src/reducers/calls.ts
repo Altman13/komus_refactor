@@ -1,4 +1,3 @@
-//import { Contact } from './../models/contact';
 import { Contact} from "./../models/contact"
 import { CallActionTypes } from "./../models/actions"
 
@@ -9,8 +8,7 @@ export const CallReducer = (
 ) => {
   switch (action.type) {
     case "GET_CONTACTS":
-    return  {...state, Contact: action.contacts }
-    // return{ ...state, contacts: action.contacts }
+    return  {...state, Contact: action.data }
     case "MAKE_CALL":
     return { Contact : state.Contact.filter(({ id }) => id !== action.id) }
     case "RECEIVE_CALL":

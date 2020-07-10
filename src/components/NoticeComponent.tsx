@@ -13,7 +13,7 @@ export default function DefaultNotice( err: any ) {
     }
     setOpen( false )
   }
-  return (
+    return (
     <div>
       { err.err ? (
         <Snackbar

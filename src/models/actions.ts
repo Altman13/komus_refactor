@@ -19,7 +19,7 @@ export interface ReceiveCallAction {
 }
 export interface GetContactsAction {
   type: typeof GET_CONTACTS;
-  contacts: Contacts;
+  data: Contacts;
 }
 export interface SetFilterOnContactsAction {
   type: typeof SET_FILTER_ON_CONTACTS;

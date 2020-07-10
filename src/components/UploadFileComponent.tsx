@@ -30,20 +30,20 @@ export default function UploadFileComponent( urlApi : any ){
     return (
       <div>
         <input
-          accept=".xls,.xlsx"
-          style={{ display : 'none' }}
-          id="file"
-          multiple={true}
-          type="file"
-          onChange={ setFileToUpload }
+          accept = ".xls,.xlsx"
+          style = {{ display : 'none' }}
+          id = "file"
+          multiple = {true}
+          type = "file"
+          onChange = { setFileToUpload }
         />
-        <label htmlFor="file">
+        <label htmlFor = "file">
           <Button
-            variant="outlined"
-            color="primary"
-            aria-label="upload file"
-            component="span"
-            style={{
+            variant = "outlined"
+            color = "primary"
+            aria-label = "upload file"
+            component = "span"
+            style = {{
               width: "100%",
               margin: "auto",
               height: 55,
@@ -55,11 +55,11 @@ export default function UploadFileComponent( urlApi : any ){
         </label>
 
         <Button
-          variant="outlined"
-          color="primary"
-          style={{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
-          //onClick={ UploadFile }
-          onClick={() => dispatch( switchSpinnerVisible() )}
+          variant = "outlined"
+          color = "primary"
+          style = {{ width: "100%", margin: "auto", height: 55, marginTop: 5 }}
+          onClick = { UploadFile }
+          //onClick={() => dispatch( switchSpinnerVisible() )}
         >Загрузить
         </Button>
       </div>

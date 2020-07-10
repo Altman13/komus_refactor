@@ -116,10 +116,8 @@ export class FormComponent extends React.Component<Props, State> {
   }
   
   componentWillReceiveProps( nextProps ) {
-    var contact
-    console.log(nextProps.contacts.Contact[0])
-    
-      this.setState({
+
+    this.setState({
         id: nextProps.contacts.Contact[0].id || "",
         naimenovanie: nextProps.contacts.Contact[0].naimenovanie || "",
         fio: nextProps.contacts.Contact[0].fio || "",

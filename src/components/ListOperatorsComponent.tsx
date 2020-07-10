@@ -14,10 +14,9 @@ export default function ListOperators( operator ) {
 
   async function setStOperator( operator ) {
     if ( operator ) {
-      let resp : any = ''
       const url : string = 'user'
       const method : string = 'PATCH'
-      resp = await ajaxAction( url, method , operator.operators )
+      const resp : any = await ajaxAction( url, method , operator.operators )
       return resp
     }
   }

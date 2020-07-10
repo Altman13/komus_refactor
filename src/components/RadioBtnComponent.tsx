@@ -10,28 +10,27 @@ export default function RadioButtons() {
   return (
     <div>
       <FormControlLabel
-        value="start"
-        control={
+        value = "start"
+        control = {
           <Radio
-            checked={ selectedValue === "a" }
-            onChange={ handleChange }
-            value="a"
-            name="radio-button-demo"
-            inputProps={{ "aria-label": "A" }}
-            color="primary"
+            checked = { selectedValue === "a" }
+            onChange = { handleChange }
+            value = "a"
+            name = "radio-button-demo"
+            inputProps = {{ "aria-label": "A" }}
+            color = "primary"
           />
         }
-        label="Значение 1"
-        labelPlacement="start"
+        label = "Значение 1"
+        labelPlacement ="start"
       />
       <Radio
-        checked={ selectedValue === "b" }
-        onChange={ handleChange }
-        value="b"
-        name="radio-button-demo"
-        inputProps={{ "aria-label": "B" }}
+        checked = { selectedValue === "b" }
+        onChange = { handleChange }
+        value = "b"
+        name = "radio-button-demo"
+        inputProps = {{ "aria-label": "B" }}
       />
-
     </div>
   )
 }

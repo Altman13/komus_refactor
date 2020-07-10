@@ -68,11 +68,11 @@ class Base
                 echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
             }
         }
+
         $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
         $fn = "columns_name.json";
-        
-
         file_put_contents($fn, $data_json);
+
         $str_q_tables_n = substr_replace($str_q_tables_n, ',`regions_id`, `users_id`)', -2, -1);
         for ($i = 1; $i < $totalRows; $i++) {
             $str_q_values = 'VALUES (';
