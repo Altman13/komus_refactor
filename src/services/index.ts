@@ -4,20 +4,24 @@ const ret = {
     error: '',
 }
 //TODO: дописать отправку сообщения об ошибке на почту 
-export async function ajaxAction( url : string, method : string, data? : any ) {
+export async function ajaxAction( url : string, method : string, data? : FormData | any ) {
     try {
-        if ( data ) {
-            data = JSON.stringify({ data })
+        var d
+        var headers
+        if(data instanceof FormData){
+            d = data
+        }
+        else if ( data ) {
+            d = JSON.stringify({ data }),
+            headers ={ 'Content-Type': 'application/json' }
         }
         await fetch('http://localhost/komus_new/api/' + url, {
             method: method,
-            body: data,
+            body: d,
             mode: 'cors',
             cache: 'no-cache',
             credentials: 'same-origin',
-            headers: {
-            'Content-Type': 'application/json',
-            },
+            headers: headers,
             redirect: 'follow',
             referrerPolicy: 'no-referrer',
         })
@@ -38,27 +42,3 @@ export async function ajaxAction( url : string, method : string, data? : any ) {
     }
     return ret
 }
-
-export async function ajaxActionUploadFile( url : string, method : string, data? : FormData | null ) {
-    try {
-        await fetch('http://localhost/komus_new/api/' + url, {
-            method: 'POST',
-            body: data,
-        })
-        .then(( response ) => {
-            if ( response.status === 200 ) {
-                ret.status_code = response.status.toString()
-                return response.json()        
-            } else if ( response.status === 500 ) {
-                ret.status_code = response.status.toString()
-            }
-        })
-        .then(( data ) => {
-            ret.data = data
-        })
-    } catch ( err ) {
-        ret.error = err
-        console.log( err )
-    }
-    return ret
-    }

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@material-ui/core'
 
 import { switchSpinnerVisible } from '../actions'
-import { ajaxActionUploadFile } from '../services'
+import { ajaxAction } from '../services'
 
 export default function UploadFileComponent( urlApi : any ){
   
@@ -25,7 +25,7 @@ export default function UploadFileComponent( urlApi : any ){
   async function UploadFile( ) {
     const { url } = urlApi
     const method: string ='POST'
-    const ret : any = await ajaxActionUploadFile( url, method, data )
+    const ret : any = await ajaxAction( url, method, data )
     return ret
 }
     return (
