@@ -39,7 +39,7 @@ export async function ajaxAction( url : string, method : string, data? : any ) {
     return ret
 }
 
-export async function ajaxActionUploadFile( url : string, method : string, data? : any ) {
+export async function ajaxActionUploadFile( url : string, method : string, data? : FormData | null ) {
     try {
         await fetch('http://localhost/komus_new/api/' + url, {
             method: 'POST',
