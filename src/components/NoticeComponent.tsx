@@ -5,7 +5,9 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
 function Alert( props: AlertProps ) {
   return <MuiAlert elevation = { 6 } variant ='filled' { ...props } />
 }
-export default function DefaultNotice( err: any ) {
+export default function DefaultNotice( props ) {
+  const { err } = props
+  const { err_text } = props
   const [open, setOpen] = React.useState( true )
   const handleClose = ( event?: React.SyntheticEvent, reason?: string ) => {
     if ( reason === 'clickaway' ) {
@@ -15,7 +17,7 @@ export default function DefaultNotice( err: any ) {
   }
     return (
     <div>
-      { err.err ? (
+      { err ? (
         <Snackbar
           open = { open }
           autoHideDuration = { 6000 }
@@ -24,9 +26,10 @@ export default function DefaultNotice( err: any ) {
           key = { 'vertical' + 'horizontal' }
         >
           <Alert onClose = { handleClose } severity = 'error'>
-            Произошла ошибка при выполнеии действия!
+            { err_text } 
           </Alert>
         </Snackbar>
+        
       ) : (
         <Snackbar
           open = { open }

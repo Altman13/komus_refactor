@@ -23,11 +23,12 @@ interface State {
   nomer: string
   email: string
   comment: string
-  //submitted: boolean
+  submitted: boolean
   additional_info_block: HTMLElement[]
   st_operator: boolean
   notice: boolean
   err: boolean
+  err_text: string
   status_call: string
   request_call: string
   send_mail_kp: boolean
@@ -46,11 +47,12 @@ export class FormComponent extends React.Component<Props, State> {
       nomer: '',
       email: '',
       comment: '',
-      //submitted: false,
+      submitted: false,
       additional_info_block: [],
       st_operator: false,
       notice: false,
       err: false,
+      err_text : '',
       status_call: '',
       request_call: '',
       send_mail_kp: false,
@@ -99,12 +101,21 @@ export class FormComponent extends React.Component<Props, State> {
     const call = {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
+
       id : this.state.id
+    }
+    // Проверка на заполнение обязательных полей
+    this.setState({ submitted: true })
+    if ( !this.state.status_call || !this.state.request_call ) {
+      this.setState({err : true })
+      this.setState({err_text : 'Не все обязательные поля заполненны!' })
+      return
     }
     this.props.make_calls( call )
     const data = {
       id : this.state.id,
       mail : this.state.email,
+      naimenovanie: this.state.naimenovanie
     }
     if ( this.state.send_mail_kp ) {
       sendMails( 'mail', 'POST', data )
@@ -128,6 +139,9 @@ export class FormComponent extends React.Component<Props, State> {
         request_call: '',
         status_call: '',
         send_mail_kp: false,
+        submitted: false,
+        err: false,
+        err_text: ''
       })
       this.noticeVisibleToggle()
       this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
@@ -215,12 +229,12 @@ export class FormComponent extends React.Component<Props, State> {
             </core.Grid>
           </core.Hidden>
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
-            <form className = 'form' noValidate>
+            <form className = 'form'>
               <InfoTextBlock />
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
-                required
+                required={true}
                 fullWidth
                 id = 'name'
                 label = 'Наименование организации'
@@ -231,7 +245,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
-                required
+                required={true}
                 fullWidth
                 id = 'fio_lpr'
                 label = 'ФИО ЛПР'
@@ -242,7 +256,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
-                required
+                required={true}
                 fullWidth
                 id = 'phone'
                 label = 'телефон организации'
@@ -254,7 +268,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
-                required
+                required={true}
                 fullWidth
                 id = 'mail'
                 label = 'почта организации'
@@ -335,6 +349,10 @@ export class FormComponent extends React.Component<Props, State> {
               </core.Button>
             </form>
             { this.state.notice ? <NoticeModal err = { this.state.err } /> : null }
+            { 
+              this.state.submitted && !this.state.request_call && (
+              <NoticeModal err = { this.state.err } err_text = { this.state.err_text } />
+            )}
           </core.Grid>
           <core.Hidden only = { ['md', 'sm', 'xs'] }>
             <core.Grid item xs style = {{ border: '2px solid' }}>
@@ -345,6 +363,7 @@ export class FormComponent extends React.Component<Props, State> {
         </core.Grid>
       </core.Container>
     )
+    
   }
 }
 interface LinkStateProps {

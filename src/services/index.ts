@@ -8,7 +8,7 @@ export async function ajaxAction( url : string, method : string, data? : FormDat
     try {
         var d
         var headers
-        if(data instanceof FormData){
+        if( data instanceof FormData ){
             d = data
         }
         else if ( data ) {
@@ -26,12 +26,8 @@ export async function ajaxAction( url : string, method : string, data? : FormDat
             referrerPolicy: 'no-referrer',
         })
             .then(( response ) => {
-                if ( response.status === 200 ) {
-                    ret.status_code = response.status.toString()
-                    return response.json()        
-                } else if ( response.status === 500 ) {
-                    ret.status_code = response.status.toString()
-                }
+                ret.status_code = response.status.toString()
+                return response.json()        
             })
             .then((data) => {
             ret.data = data
