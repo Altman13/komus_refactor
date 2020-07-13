@@ -98,18 +98,17 @@ export class FormComponent extends React.Component<Props, State> {
     if (project_type == 'INCOMING') {
       //this.props.receive_calls()
     }
-    const call = {
-      status_call : this.state.status_call,
-      requst_call : this.state.request_call,
-
-      id : this.state.id
-    }
     // Проверка на заполнение обязательных полей
     this.setState({ submitted: true })
     if ( !this.state.status_call || !this.state.request_call ) {
       this.setState({ err : true })
       this.setState({ err_text : 'Не все обязательные поля заполненны!' })
       return
+    }
+    const call = {
+      status_call : this.state.status_call,
+      requst_call : this.state.request_call,
+      id : this.state.id
     }
     this.props.make_calls( call )
     const data = {
