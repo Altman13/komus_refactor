@@ -1,7 +1,7 @@
 import { Contact} from './../models/contact'
 import { CallActionTypes } from './../models/actions'
 
-const callsReducerDefaultState = {  Contact: [] }
+const callsReducerDefaultState = { Contact: [] }
 export const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes

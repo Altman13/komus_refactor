@@ -4,7 +4,7 @@ const ret = {
     error: '',
 }
 //TODO: дописать отправку сообщения об ошибке на почту 
-export async function ajaxAction( url : string, method : string, data : any = undefined ) {
+export async function ajaxAction( url : string, method : string, data? : any ) {
     try {
         if ( data ) {
             data = JSON.stringify({ data })
@@ -39,22 +39,11 @@ export async function ajaxAction( url : string, method : string, data : any = un
     return ret
 }
 
-export async function ajaxActionUploadFile( url : string, method : string, data : any = undefined ) {
+export async function ajaxActionUploadFile( url : string, method : string, data? : any ) {
     try {
         await fetch('http://localhost/komus_new/api/' + url, {
             method: 'POST',
             body: data,
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-            'Content-Type':
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            Accept: 'application/json',
-            type: 'formData',
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
         })
         .then(( response ) => {
             if ( response.status === 200 ) {

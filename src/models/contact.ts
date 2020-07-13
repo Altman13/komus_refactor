@@ -19,7 +19,6 @@ export interface Login {
   login: string
 }
 export interface Call {
-  //id : number
   status_call: string
   date_call?: number
   count_calls?: number

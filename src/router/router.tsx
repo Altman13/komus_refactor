@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   BrowserRouter as Router, 
   Link,
@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import {  Location } from 'history';
 import  LoginComponent  from '../components/LoginComponent'
-import FormComponent from "../components/FormComponent";
+import FormComponent from '../components/FormComponent';
 import  { DashBoardComponent }   from '../components/DashBoardComponent'
 
 const fakeAuth = {
@@ -88,12 +88,12 @@ export default function App () {
         <AuthButton />
 
         <ul>
-          <li><Link to="/public">Public Page</Link></li>
-          <li><Link to="/protected">Protected Page</Link></li>
+          <li><Link to='/public'>Public Page</Link></li>
+          <li><Link to='/protected'>Protected Page</Link></li>
         </ul>
         
-        <Route path="/public" component={Public} />
-        <Route path="/login" component={Login} />
+        <Route path='/public' component={Public} />
+        <Route path='/login' component={Login} />
         <PrivateRoute path='/protected' component={Protected} />
       </div>
     </Router>

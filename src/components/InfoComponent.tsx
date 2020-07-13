@@ -1,11 +1,11 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 export default function InfoTextBlock() {
   return (
-    <Typography component="div" variant="body1">
-      <Box bgcolor="info.main" color="warning.main">
+    <Typography component = 'div' variant = 'body1'>
+      <Box bgcolor = 'info.main' color = 'warning.main'>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
         ducimus in maiores quae amet? Doloremque beatae mollitia et quis ab
         nulla autem quos nemo dolores reiciendis. Cum, reiciendis, ipsa ratione

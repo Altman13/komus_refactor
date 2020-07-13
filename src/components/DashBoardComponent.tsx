@@ -52,7 +52,7 @@ interface DashBoardComponentProps {
   container?: Element
 }
 
-export function DashBoardComponent(props: DashBoardComponentProps) {
+export function DashBoardComponent( props: DashBoardComponentProps ) {
   const { container } = props
   const classes = useStyles()
   const theme = style.useTheme()
@@ -100,7 +100,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
     setVisibleUploadDiv( '' )
     //setVisibleSpinnerDiv( true )
     try {
-      fetch('http://localhost/komus_new/api/report')
+      fetch( 'http://localhost/komus_new/api/report' )
         .then(( response ) => {
           setVisibleNoticeModal( true )
         })
@@ -234,7 +234,7 @@ export function DashBoardComponent(props: DashBoardComponentProps) {
           </core.Typography>
         </core.Toolbar>
       </core.AppBar>
-      <nav className = { classes.drawer } aria-label='mailbox folders'>
+      <nav className = { classes.drawer } aria-label = 'mailbox folders'>
         <core.Hidden smUp implementation='css'>
           <core.Drawer
             container = { container }

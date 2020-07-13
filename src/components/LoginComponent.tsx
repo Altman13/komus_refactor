@@ -1,6 +1,6 @@
-import * as React from "react"
-import * as core from "@material-ui/core"
-import Alert from "@material-ui/lab/Alert"
+import * as React from 'react'
+import * as core from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 import { ajaxAction } from '../services'
 
 interface Props {
@@ -19,8 +19,8 @@ class LoginComponent extends React.Component<Props, State> {
   constructor( props: Props ) {
     super( props )
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       submitted: false,
       failure: false,
       token : ''
@@ -30,10 +30,10 @@ class LoginComponent extends React.Component<Props, State> {
   handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
     const { name, value } = e.target
     switch (name) {
-      case "username":
+      case 'username':
         this.setState({ username: value })
         break;
-      case "password":
+      case 'password':
         this.setState({ password: value })
         break;
     }
@@ -68,7 +68,7 @@ class LoginComponent extends React.Component<Props, State> {
 
     if(localStorage.getItem('token')){
       const { history } = this.props
-        history.push("/main")  
+        history.push('/main')  
         window.location.reload()
       }
   }
@@ -76,54 +76,54 @@ class LoginComponent extends React.Component<Props, State> {
   render() {
 
     return (
-      <core.Container component="main" maxWidth="xs">
+      <core.Container component = 'main' maxWidth = 'xs'>
         <core.CssBaseline />
         <div>
           {this.state.failure && (
-            <Alert variant="outlined" severity="error">
+            <Alert variant = 'outlined' severity = 'error'>
               Введены некорректные данные для авторизации
             </Alert>
           )}
           <form
             noValidate
-            onSubmit={this.handleSubmit.bind(this)}
+            onSubmit = { this.handleSubmit.bind(this) }
           >
             <core.TextField
-              variant="outlined"
-              margin="normal"
+              variant = 'outlined'
+              margin = 'normal'
               required
               fullWidth
-              id="username"
-              label="Логин оператора"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleChange.bind(this)}
+              id = 'username'
+              label = 'Логин оператора'
+              name = 'username'
+              value = { this.state.username }
+              onChange = { this.handleChange.bind(this) }
             />
             {this.state.submitted && !this.state.username && (
               <div>Требуется логин оператора</div>
             )}
             <core.TextField
-              variant="outlined"
-              margin="normal"
+              variant = 'outlined'
+              margin = 'normal'
               required
               fullWidth
-              name="password"
-              label="Пароль оператора"
-              type="password"
-              id="password"
-              value={this.state.password}
-              onChange={this.handleChange.bind(this)}
+              name = 'password'
+              label = 'Пароль оператора'
+              type = 'password'
+              id = 'password'
+              value = { this.state.password }
+              onChange = { this.handleChange.bind(this) }
             />
             {this.state.submitted && !this.state.password && (
               <div>Требуется пароль</div>
             )}
             <core.FormControlLabel
-              control={<core.Checkbox value="remember" color="primary" />}
-              label="Запомнить меня"
-              name="persistent"
-              value={true}
+              control = { <core.Checkbox value='remember' color='primary' /> }
+              label = 'Запомнить меня'
+              name = 'persistent'
+              value = { true }
             />
-            <core.Button type="submit" fullWidth variant="contained" color="primary">
+            <core.Button type = 'submit' fullWidth variant = 'contained' color = 'primary'>
               Вход
             </core.Button>
           </form>

@@ -6,7 +6,7 @@ import { MainRouter } from './router'
 // import App from './router/router'
 
 ReactDOM.render(
-    <Provider store={ store }>
+    <Provider store = { store }>
         {/* <App/> */}
         <MainRouter/>
     </Provider>,

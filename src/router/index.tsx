@@ -1,10 +1,10 @@
-import React from "react"
+import React from 'react'
 import { BrowserRouter as Router,
         Switch, Route, Redirect
-} from "react-router-dom"
+} from 'react-router-dom'
 
 import  LoginComponent  from '../components/LoginComponent'
-import FormComponent from "../components/FormComponent"
+import FormComponent from '../components/FormComponent'
 import  { DashBoardComponent }   from '../components/DashBoardComponent'
 
 import { UserFactory } from '../components/UserFactory'
@@ -40,15 +40,15 @@ export function MainRouter() {
     return (
             <Router>
                 <Switch>
-                    <Route exact path="/" component= { PrivateRoute } />
-                    <Route path="/login" component= { LoginComponent } />
-                    { auth ? (<Route path="/main" component= { FormComponent } />) :
-                    // (<Route path="/" component= { LoginComponent } />)}
-                    (<Route path="/" component= { PrivateRoute } />)}
-                    { auth ? (<Route path="/dashboard" component= { DashBoardComponent } />) :
-                    // (<Route path="/login" component= { PrivateRoute } />)}
-                    (<Route path="/" component= { PrivateRoute } />)}
-                    <Route path="*" component= { PrivateRoute } />
+                    <Route exact path = '/' component = { PrivateRoute } />
+                    <Route path = '/login' component = { LoginComponent } />
+                    { auth ? (<Route path = '/main' component = { FormComponent } />) :
+                    // (<Route path='/' component= { LoginComponent } />)}
+                    (<Route path = '/' component = { PrivateRoute } />)}
+                    { auth ? (<Route path = '/dashboard' component = { DashBoardComponent } />) :
+                    // (<Route path='/login' component= { PrivateRoute } />)}
+                    (<Route path = '/' component = { PrivateRoute } />)}
+                    <Route path = '*' component = { PrivateRoute } />
                 </Switch>
             </Router>
         )
@@ -57,11 +57,11 @@ function PrivateRoute() {
 
     return (
         <Route
-            render={ () =>
+            render = { () =>
                 auth ? (
-                    <Redirect to="/main"/>
+                    <Redirect to = '/main'/>
                 ) : (
-                    <Redirect to="/login"/>
+                    <Redirect to = '/login'/>
                 )
             }
         />
