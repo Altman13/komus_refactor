@@ -6,8 +6,7 @@ function Alert( props: AlertProps ) {
   return <MuiAlert elevation = { 6 } variant ='filled' { ...props } />
 }
 export default function DefaultNotice( props ) {
-  const { err } = props
-  const { err_text } = props
+  const { err, err_text } = props
   const [open, setOpen] = React.useState( true )
   const handleClose = ( event?: React.SyntheticEvent, reason?: string ) => {
     if ( reason === 'clickaway' ) {

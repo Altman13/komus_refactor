@@ -107,8 +107,8 @@ export class FormComponent extends React.Component<Props, State> {
     // Проверка на заполнение обязательных полей
     this.setState({ submitted: true })
     if ( !this.state.status_call || !this.state.request_call ) {
-      this.setState({err : true })
-      this.setState({err_text : 'Не все обязательные поля заполненны!' })
+      this.setState({ err : true })
+      this.setState({ err_text : 'Не все обязательные поля заполненны!' })
       return
     }
     this.props.make_calls( call )
@@ -231,6 +231,9 @@ export class FormComponent extends React.Component<Props, State> {
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
             <form className = 'form'>
               <InfoTextBlock />
+              { this.state.submitted && !this.state.request_call && (
+                <div style ={{color : 'red'}}>Обязательное поле</div>
+              )}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -242,6 +245,9 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.naimenovanie }
                 onChange = { this.inputHandleChange }
               />
+              { this.state.submitted && !this.state.request_call && (
+                <div style ={{color : 'red'}}>Обязательное поле</div>
+              )}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -253,6 +259,9 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.fio }
                 onChange = { this.inputHandleChange }
               />
+              { this.state.submitted && !this.state.request_call && (
+                <div style ={{color : 'red'}}>Обязательное поле</div>
+              )}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -276,6 +285,9 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.email || '' }
                 onChange = { this.inputHandleChange }
               />
+              { this.state.submitted && !this.state.request_call && (
+                <div style ={{color : 'red'}}>Обязательное поле</div>
+              )}
               <core.InputLabel id = 'request_call-label'>Статус обращения</core.InputLabel>
               <core.NativeSelect
                 style = {{ width: '215px' }}
@@ -289,6 +301,9 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value = { 'Статус обращения' }>Статус обращения</option>
                 <option value = { 'Результат обращения' }>Результат обращения</option>
               </core.NativeSelect>
+              { this.state.submitted && !this.state.request_call && (
+                <div style ={{color : 'red'}}>Обязательное поле</div>
+              )}
               <core.InputLabel id='status_call-label'>Статус звонка</core.InputLabel>
               <core.NativeSelect
                 style = {{ width: '215px' }}
@@ -348,7 +363,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </core.Button>
             </form>
-            { this.state.notice ? <NoticeModal err = { this.state.err } /> : null }
+            { this.state.notice ? <NoticeModal /> : null }
             { 
               this.state.submitted && !this.state.request_call && (
               <NoticeModal err = { this.state.err } err_text = { this.state.err_text } />
