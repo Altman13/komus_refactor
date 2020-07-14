@@ -6,11 +6,11 @@ export const CallReducer = (
   state = callsReducerDefaultState,
   action: CallActionTypes
 ) => {
-  switch (action.type) {
+  switch ( action.type ) {
     case 'GET_CONTACTS':
     return  { ...state, Contact: action.data }
     case 'MAKE_CALL':
-    return { Contact : state.Contact.filter(({ id }) => id !== action.id) }
+    return { Contact : state.Contact.filter(({ id }) => id !== action.id ) }
     case 'RECEIVE_CALL':
       return [...state.Contact, action.contact]
     case 'SPINNER_ACTION':

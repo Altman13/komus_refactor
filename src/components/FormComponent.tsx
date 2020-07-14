@@ -34,6 +34,7 @@ interface State {
   send_mail_kp: boolean
   date : string
   date_recall : string
+  border : React.CSSProperties['border']
 }
 
 type Props = LinkStateProps & LinkDispatchProps;
@@ -58,10 +59,11 @@ export class FormComponent extends React.Component<Props, State> {
       send_mail_kp: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
-      date_recall : ''
+      date_recall : '',
+      border : ''
     }
     this.inputHandleChange = this.inputHandleChange.bind( this )
-    this.makeCallHandler = this.makeCallHandler.bind( this )
+    this.CallHandler = this.CallHandler.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
   }
 
@@ -91,7 +93,23 @@ export class FormComponent extends React.Component<Props, State> {
     }
   }
 
-  makeCallHandler( event ) {
+  selectHandleChange( event: React.ChangeEvent<HTMLSelectElement> ) {
+    const { name, value } = event.target
+    switch ( name ) {
+      case 'status_call':
+        this.setState({ status_call: value })
+        break
+      case 'request_call':
+        this.setState({ request_call: value })
+        break
+    }
+  }
+
+  sendMailKp = () => {
+    this.setState({ send_mail_kp: !this.state.send_mail_kp })
+  }
+
+  CallHandler( event ) {
     event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
     let project_type: string = 'INCOMING'
@@ -103,14 +121,17 @@ export class FormComponent extends React.Component<Props, State> {
     if ( !this.state.status_call || !this.state.request_call ) {
       this.setState({ err : true })
       this.setState({ err_text : 'Не все обязательные поля заполненны!' })
+      this.setState({ border : '2px solid red' })
       return
     }
+    
     const call = {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
       id : this.state.id
     }
     this.props.make_calls( call )
+    
     const data = {
       id : this.state.id,
       mail : this.state.email,
@@ -140,7 +161,8 @@ export class FormComponent extends React.Component<Props, State> {
         send_mail_kp: false,
         submitted: false,
         err: false,
-        err_text: ''
+        err_text: '',
+        border : ''
       })
       this.noticeVisibleToggle()
       this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
@@ -170,22 +192,6 @@ export class FormComponent extends React.Component<Props, State> {
     this.setState({ additional_info_block: html_element })
   }
 
-  selectHandleChange( event: React.ChangeEvent<HTMLSelectElement> ) {
-    const { name, value } = event.target
-    switch ( name ) {
-      case 'status_call':
-        this.setState({ status_call: value })
-        break
-      case 'request_call':
-        this.setState({ request_call: value })
-        break
-    }
-  }
-
-  sendMailKp = () => {
-    this.setState({ send_mail_kp: !this.state.send_mail_kp })
-  }
-
   render() {
     return (
       <core.Container component='main'>
@@ -211,7 +217,7 @@ export class FormComponent extends React.Component<Props, State> {
                 )}
                 <div
                   className = 'additional_info'
-                  style={{
+                  style = {{
                     background: 'darkseagreen',
                     lineHeight: '22px',
                     marginTop: '15px',
@@ -230,9 +236,9 @@ export class FormComponent extends React.Component<Props, State> {
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
             <form className = 'form'>
               <InfoTextBlock />
-              { this.state.submitted && !this.state.request_call && (
+              {/* { this.state.submitted && !this.state.request_call && (
                 <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )}
+              )} */}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -243,10 +249,8 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_name'
                 value = { this.state.naimenovanie }
                 onChange = { this.inputHandleChange }
+                style = {{ border : this.state.border }}
               />
-              { this.state.submitted && !this.state.request_call && (
-                <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -258,9 +262,6 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.fio }
                 onChange = { this.inputHandleChange }
               />
-              { this.state.submitted && !this.state.request_call && (
-                <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )}
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -284,9 +285,6 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.email || '' }
                 onChange = { this.inputHandleChange }
               />
-              { this.state.submitted && !this.state.request_call && (
-                <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )}
               <core.InputLabel id = 'request_call-label'>Статус обращения</core.InputLabel>
               <core.NativeSelect
                 style = {{ width: '215px' }}
@@ -300,9 +298,6 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value = { 'Статус обращения' }>Статус обращения</option>
                 <option value = { 'Результат обращения' }>Результат обращения</option>
               </core.NativeSelect>
-              { this.state.submitted && !this.state.request_call && (
-                <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )}
               <core.InputLabel id = 'status_call-label' >Статус звонка</core.InputLabel>
               <core.NativeSelect
                 style = {{ width: '215px' }}
@@ -338,7 +333,7 @@ export class FormComponent extends React.Component<Props, State> {
                 checked = { this.state.send_mail_kp }
                 onChange = { this.sendMailKp }
                 value = 'end'
-                control = { <core.Checkbox color='primary' /> }
+                control = { <core.Checkbox color = 'primary' /> }
                 label = 'Отправить коммерческое предложение'
                 labelPlacement = 'end'
               />
@@ -350,14 +345,14 @@ export class FormComponent extends React.Component<Props, State> {
                 id = 'operator_comment'
                 name = 'operator_comment'
                 value = { this.state.comment }
-                onChange = { this.onChange.bind(this) }
+                onChange = { this.onChange.bind( this ) }
               />
               <core.Button
                 type = 'submit'
                 variant = 'contained'
                 color = 'primary'
                 className = 'submit'
-                onClick = { this.makeCallHandler }
+                onClick = { this.CallHandler }
               >
                 Продолжить
               </core.Button>

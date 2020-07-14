@@ -32,9 +32,9 @@ export async function ajaxAction( url : string, method : string, data? : FormDat
             .then((data) => {
             ret.data = data
             })
-    } catch (err) {
+    } catch ( err ) {
         ret.error = err
-        console.log(err)
+        console.log( err )
     }
     return ret
 }
