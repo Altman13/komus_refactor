@@ -28,19 +28,29 @@ export default function UploadFileComponent( props ) {
   async function UploadFile() {
     const { url } = props
     const method: string = 'POST'
+    const check : boolean = checkFileIsReadyForLoad()
+    if ( check ) {
+      setSpinnerVisible( true )
+      const ret: any = await ajaxAction( url, method, data )
+      if ( ret ) {
+        setSpinnerVisible( false )
+        return ret
+      }
+    }
+  }
+  function checkFileIsReadyForLoad(){
+    let ret
     if( data == null ){
       setError( true )
       setTimeout(() => {
         setError( false )
       }, 2000 )
-      return
+      ret = false
     }
-    setSpinnerVisible( true )
-    const ret: any = await ajaxAction( url, method, data )
-    if ( ret ) {
-      setSpinnerVisible( false )
-      return ret
+    else {
+      ret = true
     }
+    return ret
   }
 
   return (
