@@ -31,7 +31,7 @@ interface State {
   err_text: string
   status_call: string
   request_call: string
-  send_mail_kp: boolean
+  needMailSend: boolean
   date : string
   date_recall : string
   border : React.CSSProperties['border']
@@ -56,19 +56,19 @@ export class FormComponent extends React.Component<Props, State> {
       err_text : '',
       status_call: '',
       request_call: '',
-      send_mail_kp: false,
+      needMailSend: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
       date_recall : '',
       border : ''
     }
+    this.textAreaHandleChange = this.textAreaHandleChange.bind( this )
     this.inputHandleChange = this.inputHandleChange.bind( this )
-    this.CallHandler = this.CallHandler.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
-    this.TextAreaHandleChange = this.TextAreaHandleChange.bind( this )
+    this.CallHandler = this.CallHandler.bind( this )
   }
 
-  TextAreaHandleChange( e ) {
+  textAreaHandleChange( e ) {
     this.setState({ comment: e.target.value })
   }
 
@@ -106,10 +106,6 @@ export class FormComponent extends React.Component<Props, State> {
     }
   }
 
-  sendMailKp = () => {
-    this.setState({ send_mail_kp: !this.state.send_mail_kp })
-  }
-
   CallHandler( event ) {
     event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
@@ -138,9 +134,14 @@ export class FormComponent extends React.Component<Props, State> {
       mail : this.state.email,
       naimenovanie: this.state.naimenovanie
     }
-    if ( this.state.send_mail_kp ) {
-      sendMails( 'mail', 'POST', data )
+    if ( this.state.needMailSend ) {
+      const url : string = 'mail'
+      const method : string ='POST'
+      sendMails( url, method, data )
     }
+  }
+  needMailSend = () => {
+    this.setState({ needMailSend: !this.state.needMailSend })
   }
 
   componentDidMount() {
@@ -159,7 +160,7 @@ export class FormComponent extends React.Component<Props, State> {
         notice: true,
         request_call: '',
         status_call: '',
-        send_mail_kp: false,
+        needMailSend: false,
         submitted: false,
         err: false,
         err_text: '',
@@ -334,8 +335,8 @@ export class FormComponent extends React.Component<Props, State> {
               <core.FormControlLabel
                 className = 'custom-control-input'
                 id = 'customSwitches'
-                checked = { this.state.send_mail_kp }
-                onChange = { this.sendMailKp }
+                checked = { this.state.needMailSend }
+                onChange = { this.needMailSend }
                 value = 'end'
                 control = { <core.Checkbox color = 'primary' /> }
                 label = 'Отправить коммерческое предложение'
@@ -349,7 +350,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id = 'operator_comment'
                 name = 'operator_comment'
                 value = { this.state.comment }
-                onChange = { this.TextAreaHandleChange }
+                onChange = { this.textAreaHandleChange }
               />
               <core.Button
                 type = 'submit'
