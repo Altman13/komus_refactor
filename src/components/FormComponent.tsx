@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import { AppState } from '../store'
 import { AppActions } from '../models/actions'
-import { getContacts, makeCalls, receiveCalls, sendMails } from '../actions'
+import { getContacts, makeCalls, receiveCalls, sendMails as sendMail } from '../actions'
 import { Contact } from '../models'
 
 import * as core from '@material-ui/core'
@@ -31,7 +31,7 @@ interface State {
   err_text: string
   status_call: string
   request_call: string
-  needMailSend: boolean
+  needSendMail: boolean
   date : string
   date_recall : string
   border : React.CSSProperties['border']
@@ -56,7 +56,7 @@ export class FormComponent extends React.Component<Props, State> {
       err_text : '',
       status_call: '',
       request_call: '',
-      needMailSend: false,
+      needSendMail: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
       date_recall : '',
@@ -134,14 +134,14 @@ export class FormComponent extends React.Component<Props, State> {
       mail : this.state.email,
       naimenovanie: this.state.naimenovanie
     }
-    if ( this.state.needMailSend ) {
+    if ( this.state.needSendMail ) {
       const url : string = 'mail'
       const method : string ='POST'
-      sendMails( url, method, data )
+      sendMail( url, method, data )
     }
   }
   needMailSend = () => {
-    this.setState({ needMailSend: !this.state.needMailSend })
+    this.setState({ needSendMail: !this.state.needSendMail })
   }
 
   componentDidMount() {
@@ -160,7 +160,7 @@ export class FormComponent extends React.Component<Props, State> {
         notice: true,
         request_call: '',
         status_call: '',
-        needMailSend: false,
+        needSendMail: false,
         submitted: false,
         err: false,
         err_text: '',
@@ -236,7 +236,7 @@ export class FormComponent extends React.Component<Props, State> {
             </core.Grid>
           </core.Hidden>
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
-            <form className = 'form'>
+            <form className = 'form' onSubmit = { this.CallHandler }>
               <InfoTextBlock />
               {/* { this.state.submitted && !this.state.request_call && (
                 <div style = {{ color : 'red' }}>Обязательное поле</div>
@@ -251,7 +251,6 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_name'
                 value = { this.state.naimenovanie }
                 onChange = { this.inputHandleChange }
-                style = {{ border : this.state.border }}
               />
               <core.TextField
                 variant = 'outlined'
@@ -263,7 +262,6 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'fio_lpr'
                 value = { this.state.fio }
                 onChange = { this.inputHandleChange }
-                style = {{ border : this.state.border }}
               />
               <core.TextField
                 variant = 'outlined'
@@ -275,7 +273,6 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_phone'
                 value = { this.state.nomer }
                 onChange = { this.inputHandleChange }
-                style = {{ border : this.state.border }}
               />
               <RadioBtnComponent />
               <core.TextField
@@ -288,7 +285,6 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_mail'
                 value = { this.state.email || '' }
                 onChange = { this.inputHandleChange }
-                style = {{ border : this.state.border }}
               />
               <core.InputLabel id = 'request_call-label'>Статус обращения</core.InputLabel>
               <core.NativeSelect
@@ -305,7 +301,7 @@ export class FormComponent extends React.Component<Props, State> {
               </core.NativeSelect>
               <core.InputLabel id = 'status_call-label' >Статус звонка</core.InputLabel>
               <core.NativeSelect
-                style = {{ width: '215px' }}
+                style = {{ width: '215px', border : this.state.border }}
                 id = 'status_call'
                 name = 'status_call'
                 onChange = { this.selectHandleChange }
@@ -335,7 +331,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.FormControlLabel
                 className = 'custom-control-input'
                 id = 'customSwitches'
-                checked = { this.state.needMailSend }
+                checked = { this.state.needSendMail }
                 onChange = { this.needMailSend }
                 value = 'end'
                 control = { <core.Checkbox color = 'primary' /> }
@@ -357,10 +353,11 @@ export class FormComponent extends React.Component<Props, State> {
                 variant = 'contained'
                 color = 'primary'
                 className = 'submit'
-                onClick = { this.CallHandler }
+                //onClick = { this.CallHandler }
               >
                 Продолжить
               </core.Button>
+              onSubmit = 
             </form>
             { 
               this.state.notice ? <NoticeModal /> : null 

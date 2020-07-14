@@ -29,22 +29,16 @@ class LoginComponent extends React.Component<Props, State> {
   
   handleChange( e: React.ChangeEvent<HTMLInputElement> ) {
     const { name, value } = e.target
-    switch (name) {
+    switch ( name ) {
       case 'username':
         this.setState({ username: value })
-        break;
+        break
       case 'password':
         this.setState({ password: value })
-        break;
+        break
     }
   }
-
-  //TODO: tokenExpiry
-  async login( url: string, method: string, data : any ){
-      let resp: any
-      resp  = await ajaxAction( url, method, data )
-      return resp
-  }
+    
   async handleSubmit( e: React.FormEvent<HTMLFormElement> ) {
     e.preventDefault()
     this.setState({ submitted: true })
@@ -54,24 +48,35 @@ class LoginComponent extends React.Component<Props, State> {
     const data = {
       username: this.state.username,
       userpassword: this.state.password,
-    };
-    const url = 'login'
-    const method = 'POST'
-    let resp : any
-    resp = await this.login( url, method, data )
-    const { user_token , token_exp, user_group } = resp
-    if( user_token ){
-      localStorage.setItem( 'token', user_token )
-      localStorage.setItem( 'token_exp', token_exp )
-      localStorage.setItem( 'user_group', user_group )
     }
-
-    if(localStorage.getItem('token')){
-      const { history } = this.props
-        history.push('/main')  
-        window.location.reload()
+    const url : string = 'login'
+    const method : string = 'POST'
+    const resp : any = await ajaxAction( url, method, data )
+    if ( resp ) {
+      const { data } = resp
+      console.log( data )
+      const { user_token , token_exp, user_group } = data
+      console.log( user_token )
+      if( user_token ) {
+        localStorage.setItem( 'token', user_token )
+        localStorage.setItem( 'token_exp', token_exp )
+        localStorage.setItem( 'user_group', user_group )
+          console.log('token')
+          const { history } = this.props
+          history.push('/main')  
+          window.location.reload()
+        }
       }
   }
+  
+componentWillMount () {
+  if(localStorage.getItem ( 'token' )) {
+    console.log('token')
+    const { history } = this.props
+    history.push('/main')  
+    window.location.reload()
+  }
+}
 
   render() {
 
