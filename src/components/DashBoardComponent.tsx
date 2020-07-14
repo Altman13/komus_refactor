@@ -94,22 +94,16 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
     
   }
 
-  const getReport = () => {
+  const getReport = async () => {
     setTitleText( 'Выгрузка отчета' )
     setVisibleOperatorDiv( false )
     setVisibleUploadDiv( '' )
-    //setVisibleSpinnerDiv( true )
-    try {
-      fetch( 'http://localhost/komus_new/api/report' )
-        .then(( response ) => {
-          setVisibleNoticeModal( true )
-        })
-        .then(( data ) => {
-          //setVisibleSpinnerDiv( false )
-          setVisibleReportDiv( true )
-        });
-    } catch ( err ) {
-      console.log( 'Ошибка при формировании отчета ' + err )
+    const url : string = 'report'
+    const method : string = 'GET'
+    const ret : any = await ajaxAction( url, method )
+    if ( ret ) {
+      setVisibleNoticeModal( true )
+      setVisibleReportDiv( true )
     }
   }
     const getUsers = async () => {

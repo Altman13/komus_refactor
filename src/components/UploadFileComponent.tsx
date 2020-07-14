@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { Button } from '@material-ui/core'
 
@@ -9,7 +8,6 @@ import NoticeModal from './NoticeComponent'
 import { ajaxAction } from '../services'
 
 export default function UploadFileComponent( props ) {
-  const dispatch = useDispatch()
   const [data, setFormData] = React.useState<FormData | null>()
   const [spinner, setSpinnerVisible] = React.useState( false )
   const [error , setError] = React.useState( false )
@@ -25,20 +23,20 @@ export default function UploadFileComponent( props ) {
     }
   }
 
-  async function UploadFile() {
+  async function uploadFile() {
     const { url } = props
-    const method: string = 'POST'
+    const method : string = 'POST'
     const check : boolean = checkFileIsReadyForLoad()
     if ( check ) {
       setSpinnerVisible( true )
-      const ret: any = await ajaxAction( url, method, data )
+      const ret : any = await ajaxAction( url, method, data )
       if ( ret ) {
         setSpinnerVisible( false )
         return ret
       }
     }
   }
-  function checkFileIsReadyForLoad(){
+  function checkFileIsReadyForLoad() {
     let ret
     if( data == null ){
       setError( true )
@@ -89,8 +87,7 @@ export default function UploadFileComponent( props ) {
             variant = 'outlined'
             color = 'primary'
             style = {{ width: '100%', margin: 'auto', height: 55, marginTop: 5 }}
-            onClick = { UploadFile }
-            //onClick={() => dispatch( switchSpinnerVisible() )}
+            onClick = { uploadFile }
           >
             Загрузить
           </Button>
