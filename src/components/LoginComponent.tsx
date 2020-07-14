@@ -54,24 +54,20 @@ class LoginComponent extends React.Component<Props, State> {
     const resp : any = await ajaxAction( url, method, data )
     if ( resp ) {
       const { data } = resp
-      console.log( data )
       const { user_token , token_exp, user_group } = data
-      console.log( user_token )
       if( user_token ) {
         localStorage.setItem( 'token', user_token )
         localStorage.setItem( 'token_exp', token_exp )
         localStorage.setItem( 'user_group', user_group )
-          console.log('token')
-          const { history } = this.props
-          history.push('/main')  
-          window.location.reload()
+        const { history } = this.props
+        history.push('/main')  
+        window.location.reload()
         }
       }
   }
   
 componentWillMount () {
   if(localStorage.getItem ( 'token' )) {
-    console.log('token')
     const { history } = this.props
     history.push('/main')  
     window.location.reload()
@@ -91,7 +87,7 @@ componentWillMount () {
           )}
           <form
             noValidate
-            onSubmit = { this.handleSubmit.bind(this) }
+            onSubmit = { this.handleSubmit.bind( this ) }
           >
             <core.TextField
               variant = 'outlined'
@@ -102,7 +98,7 @@ componentWillMount () {
               label = 'Логин оператора'
               name = 'username'
               value = { this.state.username }
-              onChange = { this.handleChange.bind(this) }
+              onChange = { this.handleChange.bind( this ) }
             />
             {this.state.submitted && !this.state.username && (
               <div>Требуется логин оператора</div>
@@ -117,7 +113,7 @@ componentWillMount () {
               type = 'password'
               id = 'password'
               value = { this.state.password }
-              onChange = { this.handleChange.bind(this) }
+              onChange = { this.handleChange.bind( this ) }
             />
             {this.state.submitted && !this.state.password && (
               <div>Требуется пароль</div>

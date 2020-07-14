@@ -100,8 +100,10 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
     setVisibleUploadDiv( '' )
     const url : string = 'report'
     const method : string = 'GET'
+    setVisibleSpinnerDiv( true )
     const ret : any = await ajaxAction( url, method )
     if ( ret ) {
+      setVisibleSpinnerDiv( false )
       setVisibleNoticeModal( true )
       setVisibleReportDiv( true )
     }

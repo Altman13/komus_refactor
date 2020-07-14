@@ -237,10 +237,8 @@ export class FormComponent extends React.Component<Props, State> {
           </core.Hidden>
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
             <form className = 'form' onSubmit = { this.CallHandler }>
-              <InfoTextBlock />
-              {/* { this.state.submitted && !this.state.request_call && (
-                <div style = {{ color : 'red' }}>Обязательное поле</div>
-              )} */}
+              <InfoTextBlock 
+              />
               <core.TextField
                 variant = 'outlined'
                 margin = 'normal'
@@ -314,7 +312,6 @@ export class FormComponent extends React.Component<Props, State> {
                 <option value = { 'Недозвон' }>Недозвон</option>
               </core.NativeSelect>
               <br/>
-              
               <core.TextField
                 id = 'datetime-local'
                 label = 'Выбрать дату'
@@ -327,7 +324,6 @@ export class FormComponent extends React.Component<Props, State> {
                 }}
               />
               <br />
-
               <core.FormControlLabel
                 className = 'custom-control-input'
                 id = 'customSwitches'
@@ -353,7 +349,6 @@ export class FormComponent extends React.Component<Props, State> {
                 variant = 'contained'
                 color = 'primary'
                 className = 'submit'
-                //onClick = { this.CallHandler }
               >
                 Продолжить
               </core.Button>
