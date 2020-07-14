@@ -65,9 +65,10 @@ export class FormComponent extends React.Component<Props, State> {
     this.inputHandleChange = this.inputHandleChange.bind( this )
     this.CallHandler = this.CallHandler.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
+    this.TextAreaHandleChange = this.TextAreaHandleChange.bind( this )
   }
 
-  onChange( e ) {
+  TextAreaHandleChange( e ) {
     this.setState({ comment: e.target.value })
   }
 
@@ -202,7 +203,7 @@ export class FormComponent extends React.Component<Props, State> {
           <core.Hidden only = { ['sm', 'xs'] }>
             <core.Grid item xs style = {{ border: '2px solid' }} md = { 3 }>
               <div
-                style={{
+                style = {{
                   fontSize: 20,
                   border: '2px solid black',
                   width: '100%',
@@ -348,7 +349,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id = 'operator_comment'
                 name = 'operator_comment'
                 value = { this.state.comment }
-                onChange = { this.onChange.bind( this ) }
+                onChange = { this.TextAreaHandleChange }
               />
               <core.Button
                 type = 'submit'
