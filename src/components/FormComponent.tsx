@@ -357,7 +357,6 @@ export class FormComponent extends React.Component<Props, State> {
               >
                 Продолжить
               </core.Button>
-              onSubmit = 
             </form>
             { 
               this.state.notice ? <NoticeModal /> : null 
