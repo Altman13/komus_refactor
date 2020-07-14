@@ -4,12 +4,15 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@material-ui/core'
 
 import SpinnerComponent from './SpinnerComponent'
+import NoticeModal from './NoticeComponent'
+
 import { ajaxAction } from '../services'
 
 export default function UploadFileComponent( props ) {
   const dispatch = useDispatch()
   const [data, setFormData] = React.useState<FormData | null>()
   const [spinner, setSpinnerVisible] = React.useState( false )
+  const [error , setError] = React.useState( false )
 
   function setFileToUpload(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist()
@@ -25,6 +28,13 @@ export default function UploadFileComponent( props ) {
   async function UploadFile() {
     const { url } = props
     const method: string = 'POST'
+    if( data == null ){
+      setError( true )
+      setTimeout(() => {
+        setError( false )
+      }, 2000 )
+      return
+    }
     setSpinnerVisible( true )
     const ret: any = await ajaxAction( url, method, data )
     if ( ret ) {
@@ -35,6 +45,7 @@ export default function UploadFileComponent( props ) {
 
   return (
     <div>
+      { error ? <NoticeModal err = { error } err_text = 'Выберете файл'/> : null }
       { spinner ? (
         <SpinnerComponent />
       ) : (

@@ -261,6 +261,7 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'fio_lpr'
                 value = { this.state.fio }
                 onChange = { this.inputHandleChange }
+                style = {{ border : this.state.border }}
               />
               <core.TextField
                 variant = 'outlined'
@@ -272,6 +273,7 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_phone'
                 value = { this.state.nomer }
                 onChange = { this.inputHandleChange }
+                style = {{ border : this.state.border }}
               />
               <RadioBtnComponent />
               <core.TextField
@@ -284,10 +286,11 @@ export class FormComponent extends React.Component<Props, State> {
                 name = 'company_mail'
                 value = { this.state.email || '' }
                 onChange = { this.inputHandleChange }
+                style = {{ border : this.state.border }}
               />
               <core.InputLabel id = 'request_call-label'>Статус обращения</core.InputLabel>
               <core.NativeSelect
-                style = {{ width: '215px' }}
+                style = {{ width: '215px', border : this.state.border }}
                 id = 'request_call'
                 name = 'request_call'
                 onChange = { this.selectHandleChange }
