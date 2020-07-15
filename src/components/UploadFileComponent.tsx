@@ -11,6 +11,7 @@ export default function UploadFileComponent( props ) {
   const [data, setFormData] = React.useState<FormData | null>()
   const [spinner, setSpinnerVisible] = React.useState( false )
   const [error , setError] = React.useState( false )
+  const [noticeModal, setVisibleNoticeModal] = React.useState( false )
 
   function setFileToUpload(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist()
@@ -32,6 +33,10 @@ export default function UploadFileComponent( props ) {
       const ret : any = await ajaxAction( url, method, data )
       if ( ret ) {
         setSpinnerVisible( false )
+        setVisibleNoticeModal( true )
+        setTimeout( () => {
+          setVisibleNoticeModal( false )
+        }, 6000 )
         return ret
       }
     }
@@ -40,7 +45,7 @@ export default function UploadFileComponent( props ) {
     let ret
     if( data == null ){
       setError( true )
-      setTimeout(() => {
+      setTimeout( () => {
         setError( false )
       }, 2000 )
       ret = false
@@ -53,6 +58,7 @@ export default function UploadFileComponent( props ) {
 
   return (
     <div>
+      { noticeModal ? <NoticeModal /> : null }
       { error ? <NoticeModal err = { error } err_text = 'Выберете файл'/> : null }
       { spinner ? (
         <SpinnerComponent />
