@@ -16,7 +16,7 @@ import SearchComponent from './SearchComponent'
 import RadioBtnComponent from './RadioBtnComponent'
 import NoticeModal from './NoticeComponent'
 
-import user_type  from './CheckRoleUser'
+import user_type  from '../users/CheckRoleUser'
 
 interface State {
   id: number
@@ -27,7 +27,6 @@ interface State {
   comment: string
   submitted: boolean
   additional_info_block: HTMLElement[]
-  st_operator: boolean
   notice: boolean
   err: boolean
   err_text: string
@@ -52,7 +51,6 @@ export class FormComponent extends React.Component<Props, State> {
       comment: '',
       submitted: false,
       additional_info_block: [],
-      st_operator: false,
       notice: false,
       err: false,
       err_text : '',
@@ -148,18 +146,15 @@ export class FormComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.get_contacts()
-    console.log( user_type )
   }
   
   componentWillReceiveProps( nextProps ) {
-
     this.setState({
         id: nextProps.contacts.Contact[0].id || '',
         naimenovanie: nextProps.contacts.Contact[0].naimenovanie || '',
         fio: nextProps.contacts.Contact[0].fio || '',
         nomer: nextProps.contacts.Contact[0].nomer || '',
         email: nextProps.contacts.Contact[0].email || '',
-        st_operator: true,
         notice: true,
         request_call: '',
         status_call: '',
@@ -171,7 +166,6 @@ export class FormComponent extends React.Component<Props, State> {
       })
       this.noticeVisibleToggle()
       this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
-    
     }
   
   noticeVisibleToggle() {
@@ -189,7 +183,7 @@ export class FormComponent extends React.Component<Props, State> {
       if ( el_main_form == -1 && contact[key] ) {
         html_element.push(
           <div id = { key } style = {{ fontSize: 18 }} key = { key }>
-            { key }: { contact[key] }
+            { key } : { contact[key] }
           </div>
         )
       }
@@ -357,9 +351,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </core.Button>
             </form>
-            { 
-              this.state.notice ? <NoticeModal /> : null 
-            }
+            { this.state.notice ? <NoticeModal /> : null }
             { 
               this.state.submitted && this.state.err && (
               <NoticeModal err = { this.state.err } err_text = { this.state.err_text } />
@@ -374,7 +366,6 @@ export class FormComponent extends React.Component<Props, State> {
         </core.Grid>
       </core.Container>
     )
-    
   }
 }
 interface LinkStateProps {

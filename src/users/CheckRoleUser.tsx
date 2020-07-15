@@ -1,4 +1,4 @@
-import { UserFactory, Guest } from './UserFactory'
+import { UserFactory } from './UserFactory'
 
 let factory = new UserFactory()
 let user_group = JSON.parse(localStorage.getItem( 'user_group' ) || '{}' )
