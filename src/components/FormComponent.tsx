@@ -16,6 +16,8 @@ import SearchComponent from './SearchComponent'
 import RadioBtnComponent from './RadioBtnComponent'
 import NoticeModal from './NoticeComponent'
 
+import user_type  from './CheckRoleUser'
+
 interface State {
   id: number
   naimenovanie: string
@@ -146,6 +148,7 @@ export class FormComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.get_contacts()
+    console.log( user_type )
   }
   
   componentWillReceiveProps( nextProps ) {
@@ -203,19 +206,20 @@ export class FormComponent extends React.Component<Props, State> {
         <core.Grid container spacing = { 3 } style = {{ marginTop: 5 }}>
           <core.Hidden only = { ['sm', 'xs'] }>
             <core.Grid item xs style = {{ border: '2px solid' }} md = { 3 }>
-              <div
-                style = {{
-                  fontSize: 20,
-                  border: '2px solid black',
-                  width: '100%',
-                  background: '#2196f3',
-                  textAlign: 'center',
-                  height: 56,
-                  lineHeight: '56px',
-                }}
-              >
-                { this.state.st_operator === true && (
+                { user_type !== 'Operator' && (
+                  <div
+                  style = {{
+                    fontSize: 20,
+                    border: '2px solid black',
+                    width: '100%',
+                    background: '#2196f3',
+                    textAlign: 'center',
+                    height: 56,
+                    lineHeight: '56px',
+                  }}
+                >
                   <Link to = '/dashboard'>Панель управления</Link>
+                  </div>
                 )}
                 <div
                   className = 'additional_info'
@@ -231,7 +235,7 @@ export class FormComponent extends React.Component<Props, State> {
                   { this.state.additional_info_block.map(( element, key ) => (
                     <div key = { key }>{ element }</div>
                   ))}
-                </div>
+                
               </div>
             </core.Grid>
           </core.Hidden>

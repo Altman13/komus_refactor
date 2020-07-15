@@ -1,49 +1,45 @@
 export enum Users {
-  guest,
   operator,
   st_operator,
   administrator
 }
 interface IUsers {
-  Category: Users
+  category: Users
 }
 abstract class User implements IUsers {
-  Category: Users
+  category: Users
   private user_role: number
   constructor( user_role: number ) {
     this.user_role = user_role
-    this.Category = Users.guest
+    this.category = Users.operator
   }
 }
 export class Guest extends User {
   constructor( user_role: number ) {
     super( user_role )
-    this.Category = Users.guest
+    this.category = Users.operator
   }
 }
 export class Operator extends User {
   constructor( user_role: number ) {
     super( user_role )
-    this.Category = Users.operator
+    this.category = Users.operator
   }
 }
 class St_operator extends User {
   constructor( user_role: number ) {
     super( user_role )
-    this.Category = Users.st_operator
+    this.category = Users.st_operator
   }
 }
 class Administrator extends User {
   constructor( user_role: number ) {
     super( user_role )
-    this.Category = Users.administrator
+    this.category = Users.administrator
   }
 }
 export class UserFactory {
   getUserRole( user_role: number ) : IUsers | undefined {
-    if( user_role == 0 ) {
-      return new Guest( user_role )
-    }
     if ( user_role == 1 ) {
       return new Operator( user_role )
     }
