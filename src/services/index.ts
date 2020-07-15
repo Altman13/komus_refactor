@@ -29,7 +29,7 @@ export async function ajaxAction( url : string, method : string, data? : FormDat
                 ret.status_code = response.status.toString()
                 return response.json()        
             })
-            .then((data) => {
+            .then(( data ) => {
             ret.data = data
             })
     } catch ( err ) {

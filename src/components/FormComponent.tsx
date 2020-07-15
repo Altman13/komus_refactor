@@ -31,13 +31,13 @@ interface State {
   err_text: string
   status_call: string
   request_call: string
-  needSendMail: boolean
+  needMailSend: boolean
   date : string
   date_recall : string
   border : React.CSSProperties['border']
 }
 
-type Props = LinkStateProps & LinkDispatchProps;
+type Props = LinkStateProps & LinkDispatchProps
 export class FormComponent extends React.Component<Props, State> {
   constructor( props: Props ) {
     super( props )
@@ -56,7 +56,7 @@ export class FormComponent extends React.Component<Props, State> {
       err_text : '',
       status_call: '',
       request_call: '',
-      needSendMail: false,
+      needMailSend: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
       date_recall : '',
@@ -65,7 +65,7 @@ export class FormComponent extends React.Component<Props, State> {
     this.textAreaHandleChange = this.textAreaHandleChange.bind( this )
     this.inputHandleChange = this.inputHandleChange.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
-    this.CallHandler = this.CallHandler.bind( this )
+    this.callHandler = this.callHandler.bind( this )
   }
 
   textAreaHandleChange( e ) {
@@ -106,7 +106,7 @@ export class FormComponent extends React.Component<Props, State> {
     }
   }
 
-  CallHandler( event ) {
+  callHandler( event ) {
     event.preventDefault()
     //TODO: заменить на .env OUTGOING/INCOMING/APC
     let project_type: string = 'INCOMING'
@@ -134,14 +134,14 @@ export class FormComponent extends React.Component<Props, State> {
       mail : this.state.email,
       naimenovanie: this.state.naimenovanie
     }
-    if ( this.state.needSendMail ) {
+    if ( this.state.needMailSend ) {
       const url : string = 'mail'
       const method : string ='POST'
       sendMail( url, method, data )
     }
   }
   needMailSend = () => {
-    this.setState({ needSendMail: !this.state.needSendMail })
+    this.setState({ needMailSend: !this.state.needMailSend })
   }
 
   componentDidMount() {
@@ -160,7 +160,7 @@ export class FormComponent extends React.Component<Props, State> {
         notice: true,
         request_call: '',
         status_call: '',
-        needSendMail: false,
+        needMailSend: false,
         submitted: false,
         err: false,
         err_text: '',
@@ -236,7 +236,7 @@ export class FormComponent extends React.Component<Props, State> {
             </core.Grid>
           </core.Hidden>
           <core.Grid item lg = { 6 } md = { 9 } sm = { 12 }>
-            <form className = 'form' onSubmit = { this.CallHandler }>
+            <form className = 'form' onSubmit = { this.callHandler }>
               <InfoTextBlock 
               />
               <core.TextField
@@ -281,7 +281,7 @@ export class FormComponent extends React.Component<Props, State> {
                 id = 'mail'
                 label = 'почта организации'
                 name = 'company_mail'
-                value = { this.state.email || '' }
+                value = { this.state.email }
                 onChange = { this.inputHandleChange }
               />
               <core.InputLabel id = 'request_call-label'>Статус обращения</core.InputLabel>
@@ -327,7 +327,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.FormControlLabel
                 className = 'custom-control-input'
                 id = 'customSwitches'
-                checked = { this.state.needSendMail }
+                checked = { this.state.needMailSend }
                 onChange = { this.needMailSend }
                 value = 'end'
                 control = { <core.Checkbox color = 'primary' /> }
@@ -376,11 +376,13 @@ export class FormComponent extends React.Component<Props, State> {
 interface LinkStateProps {
   contacts: Contact
 }
+
 interface LinkDispatchProps {
   get_contacts: () => void
   make_calls: ( data : any ) => void
   receive_calls: () => void
 }
+
 const mapStateToProps = ( state: AppState ) => ({
   contacts: state.contacts,
 })

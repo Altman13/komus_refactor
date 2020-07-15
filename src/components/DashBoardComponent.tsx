@@ -108,7 +108,7 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
       setVisibleReportDiv( true )
     }
   }
-    const getUsers = async () => {
+  const getUsers = async () => {
     setTitleText( 'Назначить старшего оператора' )
     setVisibleSpinnerDiv( false )
     setVisibleReportDiv( false )

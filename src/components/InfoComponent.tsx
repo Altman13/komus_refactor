@@ -1,6 +1,6 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 
 export default function InfoTextBlock() {
   return (
@@ -20,5 +20,5 @@ export default function InfoTextBlock() {
         dignissimos, perspiciatis at aperiam?
       </Box>
     </Typography>
-  );
+  )
 }
