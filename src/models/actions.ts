@@ -37,4 +37,4 @@ export type CallActionTypes =
   | SetFilterOnContactsAction
   | SpinnerAction
 
-  export type AppActions = CallActionTypes;
+  export type AppActions = CallActionTypes
