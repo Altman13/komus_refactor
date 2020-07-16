@@ -24,6 +24,8 @@ class ReportController
          
         // $return=json_encode($ret, JSON_UNESCAPED_UNICODE);
         // return $return;
+        // die();
+        //TODO: сформировать рамку у отчета и шапку отчета
         $this->obj_php_excel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
         $row_num = 1;
@@ -62,8 +64,21 @@ class ReportController
                     $clm_num++;
                 } else {
                     $even = is_float($row_num/2);
+                    $border = array(
+                        'borders' => array(
+                            'allborders' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                                'color' => array('rgb' => 'DDDDDD')
+                            )
+                        ),
+                        'alignment' => array(
+                            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                        ),
+                    );
                     if($even){
                         $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
+                        $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->applyFromArray($border);
                         $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->getFill()->applyFromArray(array(
                             'type' => PHPExcel_Style_Fill::FILL_SOLID,
                             'startcolor' => array(
@@ -73,6 +88,7 @@ class ReportController
                     }
                     else{
                         $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
+                        $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->applyFromArray($border);
                         $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->getFill()->applyFromArray(array(
                             'type' => PHPExcel_Style_Fill::FILL_SOLID,
                             'startcolor' => array(
