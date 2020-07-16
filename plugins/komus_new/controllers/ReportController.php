@@ -27,19 +27,55 @@ class ReportController
         foreach ($data_for_xls as $key => $data_row) {
             $clm_num = 0;
             foreach ($data_row as $key => $column_val) {
+                $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
                 if ($row_num == 1) {
+                    echo 'ok';
                     $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $key);
-                    $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
-                    echo $string_value_column.PHP_EOL;
+                    $this->obj_php_excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(false);
+                    $this->obj_php_excel->getActiveSheet()->getColumnDimension($string_value_column)->setWidth("30");
+                    $this->obj_php_excel->getActiveSheet()->getRowDimension("1")->setRowHeight(50);
+                    $styleArray = array(
+                        'font' => array(
+                            'bold' => true,
+                            'color' => array('rgb' => '2F4F4F')
+                        ),
+                        'alignment' => array(
+                            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                        ),
+                        'borders' => array(
+                            'allborders' => array(
+                                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                                'color' => array('rgb' => 'DDDDDD')
+                            )
+                        ));
+                    $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->applyFromArray($styleArray);
                     $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->getFill()->applyFromArray(array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
                         'startcolor' => array(
-                            'rgb' => 'F28A8C'
-                        )
-                        ));
+                            'rgb' => '0000FF'
+                        )));
                     $clm_num++;
                 } else {
-                    $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
+                    $even = is_float($row_num/2);
+                    if($even){
+                        $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
+                        $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->getFill()->applyFromArray(array(
+                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                            'startcolor' => array(
+                                'rgb' => 'FAEBD7'
+                            )
+                            ));
+                    }
+                    else{
+                        $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
+                        $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->getFill()->applyFromArray(array(
+                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                            'startcolor' => array(
+                                'rgb' => 'F5F5F5'
+                            )
+                            ));
+                    }
                     $clm_num++;
                 }
             }
