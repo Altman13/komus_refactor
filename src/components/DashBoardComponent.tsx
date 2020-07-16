@@ -96,6 +96,7 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
 
   const getReport = async () => {
     setTitleText( 'Выгрузка отчета' )
+    setVisibleReportDiv( false )
     setVisibleOperatorDiv( false )
     setVisibleUploadDiv( '' )
     const url : string = 'report'

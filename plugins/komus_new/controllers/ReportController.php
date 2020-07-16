@@ -21,11 +21,8 @@ class ReportController
         //set_time_limit(1800);
         // $ret =array('data' =>'', 'error' => '', 'error_text'=> '');
         // $ret['error'] = 'error_ocurred';
-
         // $return=json_encode($ret, JSON_UNESCAPED_UNICODE);
-        // return $return;
-        // die();
-        //TODO: сформировать рамку у отчета и шапку отчета
+
         $this->obj_php_excel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
         $row_num = 1;
@@ -33,16 +30,15 @@ class ReportController
         foreach ($data_for_xls as $key => $data_row) {
             $clm_num = 0;
             foreach ($data_row as $key => $column_val) {
-                $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
                 if ($row_num == 1) {
-                    $this->headerReportFormat($clm_num, $row_num, $key, $string_value_column);
+                    $this->headerReportFormat($clm_num, $row_num, $key);
                     $clm_num++;
                 } else {
                     $even_row = is_float($row_num / 2);
                     if ($even_row) {
-                        $this->bodyReportFormat($rgb = 'FAEBD7', $clm_num, $row_num, $column_val, $string_value_column);
+                        $this->bodyReportFormat($rgb = 'FAEBD7', $clm_num, $row_num, $column_val);
                     } else {
-                        $this->bodyReportFormat($rgb = 'F5F5F5', $clm_num, $row_num, $column_val, $string_value_column);
+                        $this->bodyReportFormat($rgb = 'F5F5F5', $clm_num, $row_num, $column_val);
                     }
                     $clm_num++;
                 }
@@ -51,11 +47,9 @@ class ReportController
         }
         $this->obj_writer->save('report.xlsx');
     }
-    public function headerReportFormat($clm_num, $row_num, $key, $string_value_column)
+    public function headerReportFormat($clm_num, $row_num, $key)
     {
-        $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $key);
-        $this->obj_php_excel->getActiveSheet()->getColumnDimension($string_value_column)->setWidth("30");
-        $this->obj_php_excel->getActiveSheet()->getRowDimension("1")->setRowHeight(50);
+        $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
         $styleArray = array(
             'font' => array(
                 'bold' => true,
@@ -72,6 +66,9 @@ class ReportController
                 )
             )
         );
+        $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $key);
+        $this->obj_php_excel->getActiveSheet()->getColumnDimension($string_value_column)->setWidth("30");
+        $this->obj_php_excel->getActiveSheet()->getRowDimension("1")->setRowHeight(50);
         $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column" . "1")->applyFromArray($styleArray);
         $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column" . "1")->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -80,8 +77,9 @@ class ReportController
             )
         ));
     }
-    public function bodyReportFormat($rgb, $clm_num, $row_num, $column_val, $string_value_column)
+    public function bodyReportFormat($rgb, $clm_num, $row_num, $column_val)
     {
+        $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
         $border = array(
             'borders' => array(
                 'allborders' => array(
