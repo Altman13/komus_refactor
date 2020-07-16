@@ -19,7 +19,11 @@ class ReportController
     public function show()
     {
         //set_time_limit(1800);
-        //TODO: сформировать рамку у отчета и шапку отчета
+        // $ret =array('data' =>'', 'error' => '', 'error_text'=> '');
+        // $ret['error'] = 'error_ocurred';
+         
+        // $return=json_encode($ret, JSON_UNESCAPED_UNICODE);
+        // return $return;
         $this->obj_php_excel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
         $row_num = 1;
@@ -29,9 +33,7 @@ class ReportController
             foreach ($data_row as $key => $column_val) {
                 $string_value_column = PHPExcel_Cell::stringFromColumnIndex($clm_num);
                 if ($row_num == 1) {
-                    echo 'ok';
                     $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $key);
-                    $this->obj_php_excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(false);
                     $this->obj_php_excel->getActiveSheet()->getColumnDimension($string_value_column)->setWidth("30");
                     $this->obj_php_excel->getActiveSheet()->getRowDimension("1")->setRowHeight(50);
                     $styleArray = array(
@@ -48,13 +50,15 @@ class ReportController
                                 'style' => PHPExcel_Style_Border::BORDER_THIN,
                                 'color' => array('rgb' => 'DDDDDD')
                             )
-                        ));
+                        )
+                    );
                     $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->applyFromArray($styleArray);
                     $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->getFill()->applyFromArray(array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
                         'startcolor' => array(
-                            'rgb' => '0000FF'
-                        )));
+                            'rgb' => 'ebffdd'
+                        )
+                        ));
                     $clm_num++;
                 } else {
                     $even = is_float($row_num/2);
@@ -69,7 +73,7 @@ class ReportController
                     }
                     else{
                         $this->obj_php_excel->getActiveSheet()->setCellValueByColumnAndRow($clm_num, $row_num, $column_val);
-                        $this->obj_php_excel->getActiveSheet()->getStyle("A1:$string_value_column"."1")->getFill()->applyFromArray(array(
+                        $this->obj_php_excel->getActiveSheet()->getStyle("A".$row_num.":$string_value_column".$row_num)->getFill()->applyFromArray(array(
                             'type' => PHPExcel_Style_Fill::FILL_SOLID,
                             'startcolor' => array(
                                 'rgb' => 'F5F5F5'
