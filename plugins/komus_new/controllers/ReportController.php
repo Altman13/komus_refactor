@@ -26,7 +26,6 @@ class ReportController
         $this->obj_php_excel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
         $row_num = 1;
-
         foreach ($data_for_xls as $key => $data_row) {
             $clm_num = 0;
             foreach ($data_row as $key => $column_val) {

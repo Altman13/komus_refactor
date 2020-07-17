@@ -27,12 +27,12 @@ interface State {
   comment: string
   submitted: boolean
   additional_info_block: HTMLElement[]
-  notice: boolean
+  show_modal_notice: boolean
   err: boolean
   err_text: string
   status_call: string
   request_call: string
-  needMailSend: boolean
+  need_mail_send: boolean
   date : string
   date_recall : string
   border : React.CSSProperties['border']
@@ -51,12 +51,12 @@ export class FormComponent extends React.Component<Props, State> {
       comment: '',
       submitted: false,
       additional_info_block: [],
-      notice: false,
+      show_modal_notice: false,
       err: false,
       err_text : '',
       status_call: '',
       request_call: '',
-      needMailSend: false,
+      need_mail_send: false,
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
       date_recall : '',
@@ -134,14 +134,14 @@ export class FormComponent extends React.Component<Props, State> {
       mail : this.state.email,
       naimenovanie: this.state.naimenovanie
     }
-    if ( this.state.needMailSend ) {
+    if ( this.state.need_mail_send ) {
       const url : string = 'mail'
       const method : string ='POST'
       sendMail( url, method, data )
     }
   }
   needMailSend = () => {
-    this.setState({ needMailSend: !this.state.needMailSend })
+    this.setState({ need_mail_send: !this.state.need_mail_send })
   }
 
   componentDidMount() {
@@ -155,10 +155,10 @@ export class FormComponent extends React.Component<Props, State> {
         fio: nextProps.contacts.Contact[0].fio || '',
         nomer: nextProps.contacts.Contact[0].nomer || '',
         email: nextProps.contacts.Contact[0].email || '',
-        notice: true,
+        show_modal_notice: true,
         request_call: '',
         status_call: '',
-        needMailSend: false,
+        need_mail_send: false,
         submitted: false,
         err: false,
         err_text: '',
@@ -170,7 +170,7 @@ export class FormComponent extends React.Component<Props, State> {
   
   noticeVisibleToggle() {
     setTimeout(() => {
-      this.setState({ notice: false })
+      this.setState({ show_modal_notice: false })
     }, 6000 )
   }
 
@@ -325,7 +325,7 @@ export class FormComponent extends React.Component<Props, State> {
               <core.FormControlLabel
                 className = 'custom-control-input'
                 id = 'customSwitches'
-                checked = { this.state.needMailSend }
+                checked = { this.state.need_mail_send }
                 onChange = { this.needMailSend }
                 value = 'end'
                 control = { <core.Checkbox color = 'primary' /> }
@@ -351,7 +351,7 @@ export class FormComponent extends React.Component<Props, State> {
                 Продолжить
               </core.Button>
             </form>
-            { this.state.notice ? <NoticeModal /> : null }
+            { this.state.show_modal_notice ? <NoticeModal /> : null }
             { 
               this.state.submitted && this.state.err && (
               <NoticeModal err = { this.state.err } err_text = { this.state.err_text } />

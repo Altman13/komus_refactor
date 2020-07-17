@@ -86,9 +86,9 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
 
   const setUploadUser = () => {
     setTitleText( 'Загрузить пользователей' )
+    setVisibleReportDiv( false )
     setVisibleOperatorDiv( false )
     setVisibleSpinnerDiv( false )
-    setVisibleReportDiv( false )
     setVisibleNoticeModal( false )
     setVisibleUploadDiv( 'user' )
     
@@ -103,7 +103,7 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
     const method : string = 'GET'
     setVisibleSpinnerDiv( true )
     const ret : any = await ajaxAction( url, method )
-    if ( ret ) {
+    if ( ret  ) {
       setVisibleSpinnerDiv( false )
       setVisibleNoticeModal( true )
       setVisibleReportDiv( true )
