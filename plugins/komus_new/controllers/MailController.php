@@ -8,23 +8,43 @@ class MailController
 {
     private $mail;
     private $resp;
+    static $transport;
+    static $mailer;
+    static $message;
     public function __construct(Container $container)
     {
         $this->mail = $container['mail'];
+        $this::$transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
+            ->setUsername('xxx@mail.ru')
+            ->setPassword('xxx')
+            ->setEncryption('SSL');
+        $this::$mailer = new Swift_Mailer($this::$transport);
     }
     public function send(Request $request, Response $response)
     {
         try {
-            $data = $this->getData();
-            $mail_build = $this->getTemplate($data);
+            $this->mailBuild();
+            $result = $this::$mailer->send($this::$message);
+            if ($result) {
+                $this->resp = 'Почта отправлена';
+            } else {
+                $this->resp = 'Почта не отправлена';
+            }
         } catch (\Throwable $th) {
             $response->getBody()->write('Произошла ошибка при попытке отправить почту' . $th->getMessage() . PHP_EOL);
             $this->resp = $response->withStatus(500);
         }
+        return $this->resp;
     }
-    public function getTemplate($data)
+
+    public function mailBuild()
     {
-        $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        $this->getTemplate()->getData()->getFiles();
+    }
+    public function getTemplate()
+    {
+        $html = '
+                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
                     <html xmlns="http://www.w3.org/1999/xhtml">
                         <head>
                             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -48,19 +68,24 @@ class MailController
                                 Хорошего дня!
                         </body>
                     </html>';
-        return $html;
+        // Create a message
+        $this::$message = (new Swift_Message($html))
+            ->setFrom(['xxx@mail.ru' => 'xxx'])
+            ->setTo(['xxx'])
+            ->setBody('xxx');
+
+        return $this;
     }
     public function getData()
     {
-            //if resp != false
-            $this->resp = $this->mail->getData();
-            return $this->resp;
+        //$this->mail->show();
+        return $this;
     }
     public function getFiles()
     {
         //TODO : добавить загрузку атачей в автоматическом режиме
         // $path       = 'datas/users/';
         // $fileArr = array("Акция ИБП. Наличие на складе.pdf", "Акция ДГУ. Наличие на складе.pdf");
-
+        return $this;
     }
 }
