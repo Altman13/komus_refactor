@@ -13,7 +13,7 @@ class MailController
     static $message;
     public function __construct(Container $container)
     {
-        $this->mail = $container['mail'];
+        //$this->mail = $container['mail'];
         $this::$transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
             ->setUsername('xxx@mail.ru')
             ->setPassword('xxx')
@@ -23,23 +23,28 @@ class MailController
     public function send(Request $request, Response $response)
     {
         try {
-            $this->mailBuild();
-            $result = $this::$mailer->send($this::$message);
-            if ($result) {
-                $this->resp = 'Почта отправлена';
-            } else {
-                $this->resp = 'Почта не отправлена';
-            }
+        $this->mailBuild();
+        $result = $this::$mailer->send($this::$message);
+        if ($result) {
+            echo 'Почта Отправлена';
+        } else {
+            echo 'Почта не отправлена';
+        }
         } catch (\Throwable $th) {
             $response->getBody()->write('Произошла ошибка при попытке отправить почту' . $th->getMessage() . PHP_EOL);
             $this->resp = $response->withStatus(500);
         }
         return $this->resp;
     }
-
     public function mailBuild()
     {
-        $this->getTemplate()->getData()->getFiles();
+        $this->getData()->getTemplate()->getFiles();
+    }
+    public function getData()
+    {
+        //if resp != false
+        // $this::$message['data'] = $this->mail->show();
+        return $this;
     }
     public function getTemplate()
     {
@@ -68,24 +73,20 @@ class MailController
                                 Хорошего дня!
                         </body>
                     </html>';
-        // Create a message
-        $this::$message = (new Swift_Message($html))
+        $this::$message = (new Swift_Message('Проверка'))
             ->setFrom(['xxx@mail.ru' => 'xxx'])
-            ->setTo(['xxx'])
-            ->setBody('xxx');
-
-        return $this;
-    }
-    public function getData()
-    {
-        //$this->mail->show();
+            ->setTo(['xxx@gmail.com'])
+            ->setBody($html);
         return $this;
     }
     public function getFiles()
     {
-        //TODO : добавить загрузку атачей в автоматическом режиме
-        // $path       = 'datas/users/';
-        // $fileArr = array("Акция ИБП. Наличие на складе.pdf", "Акция ДГУ. Наличие на складе.pdf");
+        $dir = __DIR__.'/../files/';
+        $files = array_diff(scandir($dir), array('..', '.'));
+        foreach ($files as $file) {
+        $this::$message->attach(
+            Swift_Attachment::fromPath($dir.'/'.$file)->setFilename($file));
+        }
         return $this;
     }
 }

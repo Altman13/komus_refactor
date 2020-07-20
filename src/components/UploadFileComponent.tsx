@@ -16,9 +16,9 @@ export default function UploadFileComponent( props ) {
   function setFileToUpload(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist()
     if ( event.target.files ) {
-      const file: File = event.target.files[0]
+      const file : File = event.target.files[0]
       const formData = new FormData()
-      let fn: string = 'upload_file'
+      let fn : string = 'upload_file'
       formData.append( fn, file )
       setFormData( formData )
     }
