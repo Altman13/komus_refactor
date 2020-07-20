@@ -13,7 +13,7 @@ class MailController
     static $message;
     public function __construct(Container $container)
     {
-        //$this->mail = $container['mail'];
+        $this->mail = $container['mail'];
         $this::$transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
             ->setUsername('xxx@mail.ru')
             ->setPassword('xxx')
@@ -23,12 +23,13 @@ class MailController
     public function send(Request $request, Response $response)
     {
         try {
-            $this->mailBuild();
+            $data = $request->getBody();
+            $this->mailBuild($data);
             $result = $this::$mailer->send($this::$message);
             if ($result) {
-                echo 'Почта Отправлена';
+                $this->resp = 'Почта отправлена';
             } else {
-                echo 'Почта не отправлена';
+                $this->resp = 'Почта не отправлена';
             }
         } catch (\Throwable $th) {
             $response->getBody()->write('Произошла ошибка при попытке отправить почту' . $th->getMessage() . PHP_EOL);
@@ -36,14 +37,14 @@ class MailController
         }
         return $this->resp;
     }
-    public function mailBuild()
+    public function mailBuild($data)
     {
-        $this->getData()->getTemplate()->getFiles();
+        $this->getData($data)->getTemplate()->getFiles();
     }
-    public function getData()
+    public function getData($data)
     {
-        //if resp != false
-        // $this::$message['data'] = $this->mail->show();
+        //echo $data;
+        //$contact_info = $this->mail->show();
         return $this;
     }
     public function getTemplate()
