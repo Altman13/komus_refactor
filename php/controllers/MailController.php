@@ -26,7 +26,7 @@ class MailController
         try {
             $data = $request->getBody();
             $this->mailBuild($data);
-            $result = $this::$mailer->send($this::$message);
+            $result = $this->mailer->send($this::$message);
             if ($result) {
                 $this->resp = 'Почта отправлена';
             } else {
