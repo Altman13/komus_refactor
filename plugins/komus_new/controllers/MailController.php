@@ -23,13 +23,13 @@ class MailController
     public function send(Request $request, Response $response)
     {
         try {
-        $this->mailBuild();
-        $result = $this::$mailer->send($this::$message);
-        if ($result) {
-            echo 'Почта Отправлена';
-        } else {
-            echo 'Почта не отправлена';
-        }
+            $this->mailBuild();
+            $result = $this::$mailer->send($this::$message);
+            if ($result) {
+                echo 'Почта Отправлена';
+            } else {
+                echo 'Почта не отправлена';
+            }
         } catch (\Throwable $th) {
             $response->getBody()->write('Произошла ошибка при попытке отправить почту' . $th->getMessage() . PHP_EOL);
             $this->resp = $response->withStatus(500);
@@ -76,16 +76,17 @@ class MailController
         $this::$message = (new Swift_Message('Проверка'))
             ->setFrom(['xxx@mail.ru' => 'xxx'])
             ->setTo(['xxx@gmail.com'])
-            ->setBody($html);
+            ->addPart($html, 'text/html');
         return $this;
     }
     public function getFiles()
     {
-        $dir = __DIR__.'/../files/';
+        $dir = __DIR__ . '/../files/';
         $files = array_diff(scandir($dir), array('..', '.'));
         foreach ($files as $file) {
-        $this::$message->attach(
-            Swift_Attachment::fromPath($dir.'/'.$file)->setFilename($file));
+            $this::$message->attach(
+                Swift_Attachment::fromPath($dir . '/' . $file)->setFilename($file)
+            );
         }
         return $this;
     }
