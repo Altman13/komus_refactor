@@ -44,7 +44,7 @@ class MailController
     public function getData($data)
     {
         //echo $data;
-        //$contact_info = $this->mail->show();
+        //$contact_info = $this->mail->read();
         return $this;
     }
     public function getTemplate()
