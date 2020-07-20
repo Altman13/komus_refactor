@@ -8,17 +8,18 @@ class MailController
 {
     private $mail;
     private $resp;
-    static $transport;
-    static $mailer;
+    private $transport;
+    private $mailer;
     static $message;
+    static $contact_info;
     public function __construct(Container $container)
     {
         $this->mail = $container['mail'];
-        $this::$transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
+        $this->transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
             ->setUsername('xxx@mail.ru')
             ->setPassword('xxx')
             ->setEncryption('SSL');
-        $this::$mailer = new Swift_Mailer($this::$transport);
+        $this->mailer = new Swift_Mailer($this::$transport);
     }
     public function send(Request $request, Response $response)
     {
@@ -44,7 +45,7 @@ class MailController
     public function getData($data)
     {
         //echo $data;
-        //$contact_info = $this->mail->read();
+        //$this::$contact_info = $this->mail->read();
         return $this;
     }
     public function getTemplate()
