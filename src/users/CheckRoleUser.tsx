@@ -4,8 +4,7 @@ let factory = new UserFactory()
 let user_group = JSON.parse(localStorage.getItem( 'user_group' ) || '{}' )
 let user = factory.getUserRole(parseInt( user_group ))
 let user_type
-if(user)
-{
+
     switch (user!.constructor.name) {
         case 'Operator':
             user_type = 'Operator'
@@ -17,9 +16,9 @@ if(user)
             user_type = 'Administrator'
             break
         default:
+            user_type=''
             break
     }
-}
-user_type=''
+
 export default user_type
     
