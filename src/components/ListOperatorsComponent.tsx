@@ -4,17 +4,19 @@ import * as core from "@material-ui/core"
 
 import { ajaxAction } from '../services'
 
-export default function ListOperators( users : any ) {
-
+export default function ListOperators( data : any ) {
+  const [oper, setOperator] = React.useState( "" )
+  const { users } = data
   function ChooseStOperator( operator ){
-    //setOperator( users )
+    setOperator( operator )
   }
 
-  async function setStOperator( operator ) {
-    if ( operator ) {
+  async function setStOperator( ) {
+    console.log('test')
+    if ( oper ) {
       const url : string = 'user'
       const method : string = 'PATCH'
-      const resp : any = await ajaxAction( url, method , operator.operators )
+      const resp : any = await ajaxAction( url, method , oper )
       return resp
     }
   }
@@ -22,9 +24,10 @@ export default function ListOperators( users : any ) {
     <div>
       <core.Grid item xs = { 12 } lg = { 3 } sm = { 4 } md = { 4 }>
       <Autocomplete
-        id="free-solo-demo"
+        id="operators"
         freeSolo
-        options={users.users.map((option) => option.operators)}
+        onChange = {( event, value ) => ChooseStOperator( value )}
+        options={ users.map(( option)  => option.operators )}
         renderInput={(params) => (
           <core.TextField {...params} label="Выбрать оператора" margin="normal" variant="outlined" />
         )}
@@ -33,7 +36,7 @@ export default function ListOperators( users : any ) {
         variant = "outlined"
         color = "primary"
         style = {{ width: '100%', margin: 'auto', height: 55, marginBottom: 20 }}
-        // onClick = { () => setStOperator( users ) }
+        onClick = { () => setStOperator( ) }
       >
         Назначить
       </core.Button>
