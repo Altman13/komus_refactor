@@ -10,7 +10,8 @@ export const CallReducer = (
     case 'GET_CONTACTS':
     return  { ...state, Contact: action.data }
     case 'MAKE_CALL':
-    return { Contact : state.Contact.filter(({ id }) => id !== action.id ) }
+    return { ...state, end_base_contact : 'test' }
+    //return { Contact : state.Contact.filter(({ id }) => id !== action.id )}
     case 'RECEIVE_CALL':
       return [...state.Contact, action.contact]
     case 'SPINNER_ACTION':

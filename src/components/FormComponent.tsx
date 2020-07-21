@@ -36,6 +36,7 @@ interface State {
   date : string
   date_recall : string
   border : React.CSSProperties['border']
+  end_base : boolean
 }
 
 type Props = LinkStateProps & LinkDispatchProps
@@ -60,7 +61,8 @@ export class FormComponent extends React.Component<Props, State> {
       //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
       date : '',
       date_recall : '',
-      border : ''
+      border : '',
+      end_base: false
     }
     this.textAreaHandleChange = this.textAreaHandleChange.bind( this )
     this.inputHandleChange = this.inputHandleChange.bind( this )
@@ -149,24 +151,33 @@ export class FormComponent extends React.Component<Props, State> {
   }
   
   componentWillReceiveProps( nextProps ) {
-    this.setState({
-        id: nextProps.contacts.Contact[0].id || '',
-        naimenovanie: nextProps.contacts.Contact[0].naimenovanie || '',
-        fio: nextProps.contacts.Contact[0].fio || '',
-        nomer: nextProps.contacts.Contact[0].nomer || '',
-        email: nextProps.contacts.Contact[0].email || '',
-        show_modal_notice: true,
-        request_call: '',
-        status_call: '',
-        need_mail_send: false,
-        submitted: false,
-        err: false,
-        err_text: '',
-        border : ''
-      })
-      this.noticeVisibleToggle()
-      this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
-    }
+
+    if( nextProps.contacts.end_base_contact == undefined ) {
+      this.setState({
+          id: nextProps.contacts.Contact[0].id || 0,
+          naimenovanie: nextProps.contacts.Contact[0].naimenovanie || '',
+          fio: nextProps.contacts.Contact[0].fio || '',
+          nomer: nextProps.contacts.Contact[0].nomer || '',
+          email: nextProps.contacts.Contact[0].email || '',
+          show_modal_notice: true,
+          request_call: '',
+          status_call: '',
+          need_mail_send: false,
+          submitted: false,
+          err: false,
+          err_text: '',
+          border : '',
+          end_base : false
+        })
+        this.noticeVisibleToggle()
+        this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
+      } else {
+        this.setState({ end_base : true })
+        console.log('нет контактов для работы')
+        alert('нет контактов для работы')  
+      }
+      
+  }
   
   noticeVisibleToggle() {
     setTimeout(() => {
@@ -342,6 +353,7 @@ export class FormComponent extends React.Component<Props, State> {
                 value = { this.state.comment }
                 onChange = { this.textAreaHandleChange }
               />
+              { this.state.end_base ? null :
               <core.Button
                 type = 'submit'
                 variant = 'contained'
@@ -349,7 +361,8 @@ export class FormComponent extends React.Component<Props, State> {
                 className = 'submit'
               >
                 Продолжить
-              </core.Button>
+              </core.Button>}
+              
             </form>
             { this.state.show_modal_notice ? <NoticeModal /> : null }
             { 
