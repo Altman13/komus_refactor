@@ -22,15 +22,17 @@ class ReportController
         // $ret =array('data' =>'', 'error' => '', 'error_text'=> '');
         // $ret['error'] = 'error_ocurred';
         // $return=json_encode($ret, JSON_UNESCAPED_UNICODE);
-
+        //TODO: переделать формирование заголовка отчета на react sortable
+        $rus_column_name_header = array('Попыток звонка','статус','Идентификатор','телефон','ФИО','Наименование','Организация');
         $this->obj_php_excel->setActiveSheetIndex(0);
         $data_for_xls = $this->report->read();
         $row_num = 1;
+
         foreach ($data_for_xls as $key => $data_row) {
             $clm_num = 0;
             foreach ($data_row as $key => $column_val) {
                 if ($row_num == 1) {
-                    $this->headerReportFormat($clm_num, $row_num, $key);
+                    $this->headerReportFormat($clm_num, $row_num, $rus_column_name_header[$clm_num]);
                     $clm_num++;
                 } else {
                     $even_row = is_float($row_num / 2);

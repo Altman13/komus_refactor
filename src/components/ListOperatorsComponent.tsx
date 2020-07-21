@@ -10,7 +10,7 @@ import { ajaxAction } from '../services'
 export default function ListOperators( data : any ) {
   
   const { users } = data
-  
+
   const [oper, setOperator] = React.useState( "" )
   const [spinner, setSpinnerVisible] = React.useState( false )
   const [error , setError] = React.useState( false )
@@ -26,7 +26,7 @@ export default function ListOperators( data : any ) {
       const method : string = 'PATCH'
       setSpinnerVisible( true )
       const resp : any = await ajaxAction( url, method , oper )
-      if(resp){
+      if( resp ) {
         setSpinnerVisible( false )
         setVisibleNoticeModal( true )
       //return resp
