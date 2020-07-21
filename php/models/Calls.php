@@ -6,9 +6,12 @@ class Calls
 {
     private $db;
     private $resp;
+    //private $ret;
     public function __construct($db)
     {
         $this->db = $db;
+        //$this->ret =array('data' =>'', 'error' => '', 'error_text'=> '');
+        //$return=json_encode($ret, JSON_UNESCAPED_UNICODE);
     }
     public function create()
     {
@@ -22,14 +25,14 @@ class Calls
     public function read()
     {
         try {
-            $all_calls = $this->db->prepare("SELECT * from contacts
-        /*LEFT JOIN calls on calls.contacts_id=contacts.id where contacts.id=441*/");
-            $all_calls->execute();
+            $all_contacts = $this->db->prepare("SELECT * FROM contacts WHERE contacts.allow_call='1' LIMIT 3");
+            $all_contacts->execute();
+            $contacts = $all_contacts->fetchAll();
+            $this->resp = $contacts;
+            //$this->lockContacts($contacts);
         } catch (\Throwable $th) {
-            echo 'Произошла ошибка при выборке звонков ' . $th->getMessage();
+            $this->resp= 'Произошла ошибка при выборке контактов ' . $th->getMessage();
         }
-        $this->resp = $all_calls->fetchAll();
-        //$fn_data = (array) json_decode(file_get_contents('./columns_name.json'));
         return json_encode($this->resp);
     }
     /**
