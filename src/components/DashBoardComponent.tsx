@@ -62,7 +62,7 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
   }
   
   const [titleText, setTitleText] = React.useState( '' )
-  const [users, setUsers] = React.useState( '' )
+  const [users, setUsers] = React.useState([])
   
   const [operatorDiv, setVisibleOperatorDiv] = React.useState( false )
   const [spinnerDiv, setVisibleSpinnerDiv] = React.useState( false )
@@ -117,8 +117,9 @@ export function DashBoardComponent( props: DashBoardComponentProps ) {
     setVisibleNoticeModal( false )
     const url : string = 'user'
     const method : string = 'GET'
-    const operators = await ajaxAction( url, method )
-    setUsers( operators.data )
+    const operators: any = await ajaxAction( url, method )
+    const { data } = operators
+    setUsers( data )
     setVisibleOperatorDiv( true )
   }
   const drawer = (
