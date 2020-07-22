@@ -23,7 +23,7 @@ class ContactController
     {
         try {
             $call = json_decode($request->getBody());
-            $this->resp = $this->contact->updateStatusCall($call->data->id, $call->data->status_call);
+            $this->resp = $this->contact->updateStatusCall($call->data->id, $call->data->status_call, $call->data->date_recall);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при добавлении результата звонка "
                 . $th->getMessage() . PHP_EOL);

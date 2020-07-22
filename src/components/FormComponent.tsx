@@ -90,7 +90,9 @@ export class FormComponent extends React.Component<Props, State> {
         this.setState({ email: value })
         break
       case 'date_recall':
-        this.setState({ date_recall: value })
+        let t : string = value
+        t = t.replace('T', ' ');
+        this.setState({ date_recall: t })
         break
       
     }
@@ -127,6 +129,7 @@ export class FormComponent extends React.Component<Props, State> {
     const call = {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
+      date_recall : this.state.date_recall,
       id : this.state.id
     }
     this.props.make_calls( call )

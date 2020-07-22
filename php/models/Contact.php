@@ -54,16 +54,17 @@ class Contact
         return $this->resp;
     }
     
-    public function updateStatusCall($id, $status_call)
+    public function updateStatusCall($id, $status_call, $date_recall)
     {
         //TODO: begin_time, recall_time, end_time
         try {
             $call_insert = $this->db->prepare("INSERT INTO `calls` (`begin_time`, `end_time`, `recall_time`, 
                                                                     `status`, `contacts_id`) 
-                                        VALUES (NOW(), NOW(), NOW(), 
+                                        VALUES (NOW(), NOW(), :date_recall, 
                                                                     :status_call, :id);");
             $call_insert->bindParam(':id', $id, PDO::PARAM_STR);
             $call_insert->bindParam(':status_call', $status_call, PDO::PARAM_STR);
+            $call_insert->bindParam(':date_recall', $date_recall, PDO::PARAM_STR);
             $call_insert->execute();
             $this->resp = $call_insert;
         } catch (\Throwable $th) {
