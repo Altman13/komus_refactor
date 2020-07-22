@@ -54,19 +54,22 @@ class LoginComponent extends React.Component<Props, State> {
     const resp : any = await ajaxAction( url, method, data )
     if ( resp ) {
       const { data } = resp
-      const { user_token , token_exp, user_group, user_fio } = data
+      const { user_id, user_token , token_exp, user_group, user_fio } = data
       if( user_token ) {
+
+        localStorage.setItem( 'user_id', user_id )
+        localStorage.setItem( 'user_fio', user_fio )
+        localStorage.setItem( 'user_group', user_group )
         localStorage.setItem( 'token', user_token )
         localStorage.setItem( 'token_exp', token_exp )
-        localStorage.setItem( 'user_group', user_group )
-        localStorage.setItem( 'user_fio', user_fio )
+        
         const { history } = this.props
         history.push('/main')  
         window.location.reload()
         }
       }
   }
-//TODO: пофиксить ошибку при входе
+//TODO: пофиксить ошибку при входе 
 componentWillMount () {
   if(localStorage.getItem ( 'token' )) {
   const { history } = this.props
