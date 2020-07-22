@@ -27,7 +27,6 @@ interface State {
   status_call: string
   request_call: string
   date_recall : string
-  date : string
   email: string
   need_mail_send: boolean
   submitted: boolean
@@ -48,19 +47,17 @@ export class FormComponent extends React.Component<Props, State> {
       naimenovanie: '',
       fio: '',
       nomer: '',
-      email: '',
       comment: '',
+      status_call: '',
+      request_call: '',
+      date_recall : '',
+      email: '',
+      need_mail_send: false,
       submitted: false,
       additional_info_block: [],
       show_modal_notice: false,
       err: false,
       err_text : '',
-      status_call: '',
-      request_call: '',
-      need_mail_send: false,
-      //new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0],
-      date : '',
-      date_recall : '',
       border : '',
       end_base: false
     }
@@ -329,7 +326,7 @@ export class FormComponent extends React.Component<Props, State> {
                 label = 'Выбрать дату'
                 type = 'datetime-local'
                 name = 'date_recall'
-                defaultValue = { this.state.date }
+                defaultValue = { this.state.date_recall }
                 onChange = { this.inputHandleChange }
                 InputLabelProps = {{
                   shrink: true,
