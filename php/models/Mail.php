@@ -36,11 +36,11 @@ class MailLog
                 $contact_info = $this->db->prepare("SELECT * FROM contact WHERE id =:id");
                 $contact_info->bindParam(':id', $data['id'], PDO::PARAM_STR);
                 $contact_info->execute();
+                $this->ret = $contact_info->fetchAll();
+                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             } catch (\Throwable $th) {
-                echo 'Произошла ошибка при выборке почтовых отправлений ' . $th->getMessage();
+                $this->ret = 'Произошла ошибка при выборке почтовых отправлений ' . $th->getMessage();
             }
-            $this->ret = $contact_info->fetchAll();
-            $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
         }
         return $this->ret;
     }

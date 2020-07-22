@@ -23,18 +23,18 @@ interface State {
   naimenovanie: string
   fio: string
   nomer: string
-  email: string
   comment: string
+  status_call: string
+  request_call: string
+  date_recall : string
+  date : string
+  email: string
+  need_mail_send: boolean
   submitted: boolean
   additional_info_block: HTMLElement[]
   show_modal_notice: boolean
   err: boolean
   err_text: string
-  status_call: string
-  request_call: string
-  need_mail_send: boolean
-  date : string
-  date_recall : string
   border : React.CSSProperties['border']
   end_base : boolean
 }
