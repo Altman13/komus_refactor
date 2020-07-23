@@ -1,7 +1,9 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import { AppState } from '../store'
-import { MAKE_CALL, RECEIVE_CALL, GET_CONTACTS, SPINNER_ACTION } from './../models/actions'
+import { MAKE_CALL, RECEIVE_CALL, 
+          GET_CONTACTS, UNLOCK_CONTACTS,
+  SPINNER_ACTION } from './../models/actions'
 import { ajaxAction } from './../services'
 
 const create = actionCreatorFactory()
@@ -15,6 +17,17 @@ export const getContacts = createAsync<any, any>(
     const contacts = await ajaxAction( url, method )
     const { data } = contacts
     return dispatch({ type: GET_CONTACTS, data })
+  }
+)
+
+export const unlockContacts = createAsync<any, any>(
+  "UNLOCK_CONTACTS",
+  async ( params, dispatch ) => {
+    const url: string = 'contacts'
+    const method : string = 'PATCH'
+    const contacts = await ajaxAction( url, method )
+    const { data } = contacts
+    return dispatch({ type: UNLOCK_CONTACTS, data })
   }
 )
 

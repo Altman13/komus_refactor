@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { AppState } from '../store'
 import { AppActions } from '../models/actions'
-import { getContacts, makeCalls, receiveCalls, sendMails as sendMail } from '../actions'
+import { getContacts, makeCalls, receiveCalls, 
+        sendMails as sendMail, unlockContacts } from '../actions'
 import { Contact } from '../models'
 
 import * as core from '@material-ui/core'
@@ -149,8 +150,14 @@ export class FormComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.get_contacts()
+    //Выгрузка не отработанных контактов из хранилища 
+    window.addEventListener("beforeunload", (ev) => 
+    {  
+          ev.preventDefault();
+          this.props.unlock_contacts(this.props.contacts)
+          return ev.returnValue = 'Are you sure you want to close?';
+    });
   }
-  
   componentWillReceiveProps( nextProps ) {
 
     if( nextProps.contacts.end_base_contact == undefined ) {
@@ -388,6 +395,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   get_contacts: () => void
+  unlock_contacts: ( data: any) => void
   make_calls: ( data : any ) => void
   receive_calls: () => void
 }
@@ -400,6 +408,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   get_contacts: bindActionCreators( getContacts, dispatch ),
+  unlock_contacts: bindActionCreators(unlockContacts, dispatch),
   make_calls: bindActionCreators( makeCalls, dispatch ),
   receive_calls: bindActionCreators( receiveCalls, dispatch ),
 })
