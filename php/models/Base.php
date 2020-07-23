@@ -7,11 +7,50 @@ use Slim\Http\UploadedFile;
 class Base
 {
     private $db;
+    private $obj_php_excel;
+    private $obj_reader;
+    private $input_file_type;
     public function __construct($db)
     {
         $this->db = $db;
+        $this->obj_php_excel = new \PHPExcel();
+        $this->obj_writer = new \PHPExcel_Writer_Excel2007($this->obj_php_excel);
+        $this->input_file_type = new \PHPExcel_IOFactory();
     }
     public function create($files)
+    {
+        $uploadfile = $this->uploadFile($files);
+        $tota_rows = $this->setSettingsXls($uploadfile);
+
+        //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
+        //!иначе загрузка произойдет до первого пустого столбца заголовка
+        $columns_name = array();
+        $query_insert_columns_name = "INSERT INTO contacts (";
+        $data = array();
+        for ($i = 0;; $i++) {
+            $column_name_rus = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
+            if ($column_name_rus != NULL) {
+                $column_name_temp = $this->translitColumn($column_name_rus);
+                $column_name_translit = explode('-', $column_name_temp, 2);
+                $column_name_translit = preg_replace("/[^a-zA-ZА\s]/", '', $column_name_translit[0]);
+                array_push($columns_name, $column_name_translit);
+                $query_insert_columns_name .= '`' . $column_name_translit . '`, ';
+                $data[$column_name_translit] = strval($column_name_rus);
+            } else {
+                break;
+            }
+            $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $column_name_translit VARCHAR(255)");
+            try {
+                $alter_table_contacts->execute();
+            } catch (\Throwable $th) {
+                echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
+            }
+        }
+        $this->saveArrayToFile($data);
+        $this->insertDb($query_insert_columns_name, $tota_rows, $columns_name);
+
+    }
+    public function uploadFile($files)
     {
         $directory = __DIR__ . '/../files/';
         //TODO: дописать загрузку нескольких файлов
@@ -21,67 +60,55 @@ class Base
             $i++;
         }
         $uploadfile = $directory . '1.xlsx';
-        $obj_php_excel = new \PHPExcel();
-        $input_file_type = \PHPExcel_IOFactory::identify($uploadfile);
-        $obj_reader = \PHPExcel_IOFactory::createReader($input_file_type);
-        if ($input_file_type == 'OOCalc') {
-            $obj_reader->setLoadSheetsOnly('Лист1');
-        }
-        $obj_php_excel = $obj_reader->load($uploadfile);
-        $worksheetData = $obj_reader->listWorksheetInfo($uploadfile);
-        $totalRows = $worksheetData[0]['totalRows'];
-        function translit($s)
-        {
-            $s = (string) $s; // преобразуем в строковое значение
-            $s = strip_tags($s); // убираем HTML-теги
-            $s = str_replace(array("\n", "\r"), " ", $s); // убираем перевод каретки
-            $s = preg_replace("/\s+/", ' ', $s); // удаляем повторяющие пробелы
-            $s = trim($s); // убираем пробелы в начале и конце строки
-            $s = function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s); // переводим строку в нижний регистр (иногда надо задать локаль)
-            $s = strtr($s, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'shch', 'ы' => 'y', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya', 'ъ' => '', 'ь' => ''));
-            $s = preg_replace("/[^0-9a-z-_ ]/i", "", $s); // очищаем строку от недопустимых символов
-            $s = str_replace(" ", "-", $s); // заменяем пробелы знаком минус
-            return $s; // возвращаем результат
-        }
-        //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
-        //иначе загрузка произойдет до первого пустого столбца заголовка
-        //номер строки в excel файле 
-        $for_sortable = array();
-        $str_q_tables_n = "INSERT INTO contacts (";
-        $data = array();
-        for ($i = 0;; $i++) {
-            $column_name = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
-            if ($column_name != NULL) {
-                $column_name_translit = translit($column_name);
-                $one_word_column_name = explode('-', $column_name_translit, 2);
-                $one_word_column_name = preg_replace("/[^a-zA-ZА\s]/", '', $one_word_column_name[0]);
-                array_push($for_sortable, $one_word_column_name);
-                $str_q_tables_n .= '`' . $one_word_column_name . '`, ';
-                $data[$one_word_column_name] = strval($column_name);
-            } else {
-                break;
-            }
-            $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $one_word_column_name VARCHAR(255)");
-            try {
-                $alter_table_contacts->execute();
-            } catch (\Throwable $th) {
-                echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
-            }
-        }
+        return $uploadfile;
+    }
+    public function setSettingsXls($uploadfile)
+    {
+        $this->input_file_type::identify($uploadfile);
+        $this->obj_reader::createReader($this->input_file_type);
 
-        $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
-        $fn = "columns_name.json";
-        file_put_contents($fn, $data_json);
-
-        $str_q_tables_n = substr_replace($str_q_tables_n, ',`regions_id`, `users_id`)', -2, -1);
-        for ($i = 1; $i < $totalRows; $i++) {
+        if ($this->input_file_type == 'OOCalc') {
+            $this->obj_reader->setLoadSheetsOnly('Лист1');
+        }
+        $this->obj_php_excel = $this->obj_reader->load($uploadfile);
+        $worksheetData = $this->obj_reader->listWorksheetInfo($uploadfile);
+        $tota_rows = $worksheetData[0]['tota_rows'];
+        return $tota_rows;
+    }
+    public function saveArrayToFile($data)
+    {
+            $data_json = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $fn = "columns_name.json";
+            file_put_contents($fn, $data_json);    
+    }
+    public function translitColumn($column_name_rus)
+    {
+        $column_name_rus = (string) $column_name_rus; 
+        $column_name_rus = strip_tags($column_name_rus); 
+        $column_name_rus = str_replace(array("\n", "\r"), " ", $column_name_rus); 
+        $column_name_rus = preg_replace("/\s+/", ' ', $column_name_rus);
+        $column_name_rus = trim($column_name_rus); 
+        $column_name_rus = function_exists('mb_strtolower') ? mb_strtolower($column_name_rus) : strtolower($column_name_rus); 
+        $column_name_rus = strtr($column_name_rus, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 
+        'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 
+        'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 
+        'ш' => 'sh', 'щ' => 'shch', 'ы' => 'y', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya', 'ъ' => '', 'ь' => ''));
+        // очищаем строку от недопустимых символов
+        $column_name_rus = preg_replace("/[^0-9a-z-_ ]/i", "", $column_name_rus); 
+        $column_name_translit = str_replace(" ", "-", $column_name_rus);
+        return $column_name_translit;
+    }
+    public function insertDb($query_insert_columns_name, $tota_rows, $columns_name)
+    {
+        $query_insert_columns_name = substr_replace($query_insert_columns_name, ',`regions_id`, `users_id`)', -2, -1);
+        for ($i = 1; $i < $tota_rows; $i++) {
             $str_q_values = 'VALUES (';
-            for ($column_num = 0; $column_num < count($for_sortable); $column_num++) {
-                $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
+            for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
+                $columns_value = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
                 $str_q_values .= '\'' . $columns_value . '\', ';
             }
             $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
-            $insert_row = $this->db->prepare($str_q_tables_n . $str_q_values);
+            $insert_row = $this->db->prepare($query_insert_columns_name . $str_q_values);
             try {
                 $insert_row->execute();
             } catch (\Throwable $th) {

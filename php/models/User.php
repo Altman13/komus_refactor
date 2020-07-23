@@ -71,8 +71,8 @@ class User
      */
     public function getAllOperators()
     {
-        $all_users = $this->db->prepare("SELECT CONCAT(users.firstname,' ', users.lastname) as operators FROM users");
         try {
+            $all_users = $this->db->prepare("SELECT CONCAT(users.firstname,' ', users.lastname) as operators FROM users");
             $all_users->execute();
         } catch (\Throwable $th) {
             die('Произошла ошибка при выборке контактов ' . $th->getMessage());
