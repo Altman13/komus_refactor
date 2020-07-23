@@ -19,36 +19,32 @@ class Base
     }
     public function create($files)
     {
-        $uploadfile = $this->uploadFile($files);
-        $total_rows = $this->setSettingsXls($uploadfile);
-
-        //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
-        //!иначе загрузка произойдет до первого пустого столбца заголовка
-        $columns_name = array();
-        $query_insert_columns_name = "INSERT INTO contacts (";
-        $data = array();
-        for ($i = 0;; $i++) {
-            $column_name_rus = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
-            if ($column_name_rus != NULL) {
-                $column_name_temp = $this->translitColumn($column_name_rus);
-                $column_name_translit = explode('-', $column_name_temp, 2);
-                $column_name_translit = preg_replace("/[^a-zA-ZА\s]/", '', $column_name_translit[0]);
-                array_push($columns_name, $column_name_translit);
-                $query_insert_columns_name .= '`' . $column_name_translit . '`, ';
-                $data[$column_name_translit] = strval($column_name_rus);
-            } else {
-                break;
+        try {
+            $uploadfile = $this->uploadFile($files);
+            $total_rows = $this->setSettingsXls($uploadfile);
+            //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
+            //!иначе загрузка произойдет до первого пустого столбца заголовка
+            $columns_name = array();
+            $query_insert_columns_name = "INSERT INTO contacts (";
+            $data = array();
+            for ($i = 0;; $i++) {
+                $column_name_rus = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
+                if ($column_name_rus != NULL) {
+                    $column_name_temp = $this->translitColumn($column_name_rus);
+                    $column_name_translit = explode('-', $column_name_temp, 2);
+                    $column_name_translit = preg_replace("/[^a-zA-ZА\s]/", '', $column_name_translit[0]);
+                    array_push($columns_name, $column_name_translit);
+                    $query_insert_columns_name .= '`' . $column_name_translit . '`, ';
+                    $data[$column_name_translit] = strval($column_name_rus);
+                    $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $column_name_translit VARCHAR(255)");
+                    $alter_table_contacts->execute();
+                }
             }
-            $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $column_name_translit VARCHAR(255)");
-            try {
-                $alter_table_contacts->execute();
-            } catch (\Throwable $th) {
-                echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
-            }
+            $this->saveArrayToFile($data);
+            $this->insertDb($query_insert_columns_name, $total_rows, $columns_name);
+        } catch (\Throwable $th) {
+            echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
-        $this->saveArrayToFile($data);
-        $this->insertDb($query_insert_columns_name, $total_rows, $columns_name);
-
     }
     public function uploadFile($files)
     {

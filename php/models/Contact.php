@@ -21,7 +21,7 @@ class Contact
         foreach ($new_contacts as $ct) {
         }
     }
-    
+
     //TODO: дописать запрос на выборку контактов + условия на перезвон ограничения по времени
     public function read()
     {
@@ -32,7 +32,7 @@ class Contact
             $this->resp = $contacts;
             //$this->lockContacts($contacts);
         } catch (\Throwable $th) {
-            $this->resp= 'Произошла ошибка при выборке контактов ' . $th->getMessage();
+            $this->resp = 'Произошла ошибка при выборке контактов ' . $th->getMessage();
         }
         return json_encode($this->resp);
     }
@@ -41,19 +41,19 @@ class Contact
     // по одним и тем же контактам одновременно работают несколько операторов
     public function lockContacts($contacts)
     {
-        foreach ($contacts as $contact) {
-            try {
+        try {
+            foreach ($contacts as $contact) {
                 $contacts = $this->db->prepare("UPDATE contacts SET allow_call='0' WHERE contacts.id=:id");
                 $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
                 $contacts->execute();
                 $this->resp = $contacts;
-            } catch (\Throwable $th) {
-                $this->resp = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
             }
+        } catch (\Throwable $th) {
+            $this->resp = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
         }
         return $this->resp;
     }
-    
+
     public function updateStatusCall($call)
     {
         //TODO: подключить новую базу, где привязка оператора к контакту идет через таблицу звонок,
