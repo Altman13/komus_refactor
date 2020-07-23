@@ -127,6 +127,7 @@ export class FormComponent extends React.Component<Props, State> {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
       date_recall : this.state.date_recall,
+      operarator_id : localStorage.getItem('user_id'),
       id : this.state.id
     }
     this.props.make_calls( call )

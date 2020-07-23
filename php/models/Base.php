@@ -20,7 +20,7 @@ class Base
     public function create($files)
     {
         $uploadfile = $this->uploadFile($files);
-        $tota_rows = $this->setSettingsXls($uploadfile);
+        $total_rows = $this->setSettingsXls($uploadfile);
 
         //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
         //!иначе загрузка произойдет до первого пустого столбца заголовка
@@ -47,7 +47,7 @@ class Base
             }
         }
         $this->saveArrayToFile($data);
-        $this->insertDb($query_insert_columns_name, $tota_rows, $columns_name);
+        $this->insertDb($query_insert_columns_name, $total_rows, $columns_name);
 
     }
     public function uploadFile($files)
@@ -72,8 +72,8 @@ class Base
         }
         $this->obj_php_excel = $this->obj_reader->load($uploadfile);
         $worksheetData = $this->obj_reader->listWorksheetInfo($uploadfile);
-        $tota_rows = $worksheetData[0]['tota_rows'];
-        return $tota_rows;
+        $total_rows = $worksheetData[0]['total_rows'];
+        return $total_rows;
     }
     public function saveArrayToFile($data)
     {
@@ -98,10 +98,10 @@ class Base
         $column_name_translit = str_replace(" ", "-", $column_name_rus);
         return $column_name_translit;
     }
-    public function insertDb($query_insert_columns_name, $tota_rows, $columns_name)
+    public function insertDb($query_insert_columns_name, $total_rows, $columns_name)
     {
         $query_insert_columns_name = substr_replace($query_insert_columns_name, ',`regions_id`, `users_id`)', -2, -1);
-        for ($i = 1; $i < $tota_rows; $i++) {
+        for ($i = 1; $i < $total_rows; $i++) {
             $str_q_values = 'VALUES (';
             for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
                 $columns_value = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();

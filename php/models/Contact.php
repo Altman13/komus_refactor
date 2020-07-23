@@ -54,17 +54,20 @@ class Contact
         return $this->resp;
     }
     
-    public function updateStatusCall($id, $status_call, $date_recall)
+    public function updateStatusCall($call)
     {
-        //TODO: begin_time, recall_time, end_time
+        //TODO: подключить новую базу, где привязка оператора к контакту идет через таблицу звонок,
+        // кроме того перенести обновление статуса звонка на api call, а не contacts
+        //TODO: begin_time, end_time
         try {
             $call_insert = $this->db->prepare("INSERT INTO `calls` (`begin_time`, `end_time`, `recall_time`, 
                                                                     `status`, `contacts_id`) 
                                         VALUES (NOW(), NOW(), :date_recall, 
                                                                     :status_call, :id);");
-            $call_insert->bindParam(':id', $id, PDO::PARAM_STR);
-            $call_insert->bindParam(':status_call', $status_call, PDO::PARAM_STR);
-            $call_insert->bindParam(':date_recall', $date_recall, PDO::PARAM_STR);
+            $call_insert->bindParam(':id', $call->data->id, PDO::PARAM_STR);
+            $call_insert->bindParam(':status_call', $call->data->status_call, PDO::PARAM_STR);
+            $call_insert->bindParam(':date_recall', $call->data->date_recall, PDO::PARAM_STR);
+            //$call_insert->bindParam(':operator_id', $call->data->operator_id, PDO::PARAM_STR);
             $call_insert->execute();
             $this->resp = $call_insert;
         } catch (\Throwable $th) {
