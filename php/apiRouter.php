@@ -8,7 +8,6 @@ require './controllers/UserController.php';
 require './controllers/LoginController.php';
 require './controllers/CallsController.php';
 require './controllers/ReportController.php';
-require './controllers/HomeController.php';
 require './controllers/BaseController.php';
 require './controllers/ContactController.php';
 

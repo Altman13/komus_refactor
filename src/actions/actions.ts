@@ -23,7 +23,7 @@ export const getContacts = createAsync<any, any>(
 export const unlockContacts = createAsync<any, any>(
   "UNLOCK_CONTACTS",
   async ( contact, dispatch ) => {
-    const url: string = 'contacts'
+    const url: string = 'contact'
     const method : string = 'PATCH'
     const resp = await ajaxAction( url, method, contact )
     const { data } = resp
@@ -34,7 +34,7 @@ export const unlockContacts = createAsync<any, any>(
 export const receiveCalls = createAsync<any, any>(
   "RECEIVE_CALL",
   async ( params, dispatch ) => {
-    const url: string = 'contacts'
+    const url: string = 'contact'
     const method : string = 'POST'
     const resp = await ajaxAction( url, method )
     return dispatch({ type: RECEIVE_CALL, contacts: resp })
