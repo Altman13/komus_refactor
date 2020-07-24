@@ -151,12 +151,12 @@ export class FormComponent extends React.Component<Props, State> {
   componentDidMount() {
     this.props.get_contacts()
     //Выгрузка не отработанных контактов из хранилища 
-    window.addEventListener("beforeunload", (ev) => 
+    window.addEventListener("beforeunload", ( ev ) => 
     {  
           ev.preventDefault();
-          this.props.unlock_contacts(this.props.contacts)
-          return ev.returnValue = 'Are you sure you want to close?';
-    });
+          this.props.unlock_contacts( this.props.contacts )
+          return ev.returnValue = 'Are you sure you want to close?'
+    })
   }
   componentWillReceiveProps( nextProps ) {
 

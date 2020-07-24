@@ -53,6 +53,20 @@ class Contact
         }
         return $this->resp;
     }
+    public function unlockContacts($contacts)
+    {
+        try {
+            foreach ($contacts as $contact) {
+                $contacts = $this->db->prepare("UPDATE contacts SET allow_call='1' WHERE contacts.id=:id");
+                $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
+                $contacts->execute();
+                $this->resp = $contacts;
+            }
+        } catch (\Throwable $th) {
+            $this->resp = 'Произошла ошибка при разблокировании контактов для обзвона ' . $th->getMessage();
+        }
+        return $this->resp;
+    }
 
     public function updateStatusCall($call)
     {

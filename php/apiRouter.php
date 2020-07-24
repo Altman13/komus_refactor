@@ -30,6 +30,7 @@ $app->post('/api/user', UserController::class . ':create');
 $app->get('/api/user', UserController::class . ':show');
 $app->get('/api/report', ReportController::class . ':show');
 $app->post('/api/contact', ContactController::class . ':update');
+$app->patch('/api/contact', ContactController::class . ':unlock');
 
 //xml, json, html, 
 $app->get('/api/get', ApiController::class . ':show');

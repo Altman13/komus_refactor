@@ -31,4 +31,16 @@ class ContactController
         }
         return $this->resp;
     }
+    public function unlock(Request $request, Response $response)
+    {
+        try {
+            $contacts = json_decode($request->getBody());
+            $this->resp = $this->contact->unlockContact($contacts);
+        } catch (\Throwable $th) {
+            $response->getBody()->write("Произошла ошибка при добавлении результата звонка "
+                . $th->getMessage() . PHP_EOL);
+            $this->resp = $response->withStatus(500);
+        }
+        return $this->resp;
+    }
 }
