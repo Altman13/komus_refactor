@@ -10,6 +10,7 @@ class Base
     private $obj_php_excel;
     private $obj_reader;
     private $input_file_type;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
@@ -21,14 +22,13 @@ class Base
     {
         //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
         //!иначе загрузка произойдет до первого пустого столбца заголовка
-
         try {
             $uploadfile = $this->uploadFile($files);
             $total_rows = $this->setSettingsXls($uploadfile);
             $columns_name = array();
-            $query_insert_columns_name = "INSERT INTO contacts (";
             $data = array();
-            $i=0;
+            $query_insert_columns_name = "INSERT INTO contacts (";
+            $i = 0;
             do {
                 $column_name_rus = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
                 $column_name_temp = $this->translitColumn($column_name_rus);
@@ -42,11 +42,12 @@ class Base
                 $alter_table_contacts->execute();
                 $i++;
             } while ($column_name_rus != NULL);
+            $this->ret = $this->insertDb($query_insert_columns_name, $total_rows, $columns_name);
             $this->saveArrayToFile($data);
-            $this->insertDb($query_insert_columns_name, $total_rows, $columns_name);
         } catch (\Throwable $th) {
-            echo 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
+            $this->ret = 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
+        return $this->ret;
     }
     public function uploadFile($files)
     {
@@ -101,47 +102,33 @@ class Base
 
     public function insertDb($query_insert_columns_name, $total_rows, $columns_name)
     {
-        for ($i = 1; $i < $total_rows; $i++) {
-            $str_q_values = 'VALUES (';
-            for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
-                $columns_value = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
-                $str_q_values .= '\'' . $columns_value . '\', ';
-            }
-            $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
-            $insert_row = $this->db->prepare($query_insert_columns_name . $str_q_values);
-            try {
+        try {
+            for ($i = 1; $i < $total_rows; $i++) {
+                $str_q_values = 'VALUES (';
+                for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
+                    $columns_value = $this->obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
+                    $str_q_values .= '\'' . $columns_value . '\', ';
+                }
+                $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
+                $insert_row = $this->db->prepare($query_insert_columns_name . $str_q_values);
                 $insert_row->execute();
-            } catch (\Throwable $th) {
-                echo 'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
             }
+        } catch (\Throwable $th) {
+            $this->ret =  'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
+        return $this->ret;
     }
-    /**
-     * Read
-     *
-     * @return void
-     */
+    
     public function read()
     {
+        # code...
     }
-    /**
-     * Update
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function update($id)
     {
         # code...
     }
-    /**
-     * Delete
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function delete($id)
     {
         # code...
