@@ -7,9 +7,6 @@ use Slim\Http\UploadedFile;
 class Base
 {
     private $db;
-    // private $obj_php_excel;
-    // private $obj_reader;
-    // private $input_file_type;
     private $total_rows;
     private $ret;
     public function __construct($db)
@@ -104,14 +101,14 @@ class Base
             $query_insert_columns_name = substr($query_insert_columns_name, 0, -4);
             $query_insert_columns_name = $query_insert_columns_name . '`regions_id`' . ',' . '`users_id`' . ')';
             for ($i = 1; $i < $total_rows; $i++) {
-                $str_q_values = 'VALUES (';
+                $query_insert_columns_values = 'VALUES (';
                 for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
                     $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
-                    $str_q_values .= '\'' . $columns_value . '\', ';
+                    $query_insert_columns_values .= '\'' . $columns_value . '\', ';
                 }
-                $str_q_values = substr($str_q_values, 0, -4);
-                $str_q_values = substr_replace($str_q_values, ',\'1\',\'1\')', -2, -1);
-                $insert_row = $this->db->prepare($query_insert_columns_name . $str_q_values);
+                $query_insert_columns_values = substr($query_insert_columns_values, 0, -4);
+                $query_insert_columns_values = substr_replace($query_insert_columns_values, ',\'1\',\'1\')', -2, -1);
+                $insert_row = $this->db->prepare($query_insert_columns_name . $query_insert_columns_values);
                 $insert_row->execute();
             }
         } catch (\Throwable $th) {
