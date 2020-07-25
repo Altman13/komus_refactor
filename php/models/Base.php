@@ -40,7 +40,7 @@ class Base
             $this->ret = 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
         $this->saveArrayToFile($data);
-        $this->ret = $this->insertDb($query_insert_columns_name, $this->total_rows, $columns_name, $upload_file);
+        $this->insertDb($query_insert_columns_name, $columns_name, $upload_file);
         return $this->ret;
     }
     public function uploadFile($files)
@@ -94,13 +94,13 @@ class Base
         file_put_contents($fn, $data_json);
     }
 
-    public function insertDb($query_insert_columns_name, $total_rows, $columns_name, $uploadfile)
+    public function insertDb($query_insert_columns_name, $columns_name, $uploadfile)
     {
         try {
             $obj_php_excel = $this->objectXls($uploadfile);
             $query_insert_columns_name = substr($query_insert_columns_name, 0, -4);
             $query_insert_columns_name = $query_insert_columns_name . '`regions_id`' . ',' . '`users_id`' . ')';
-            for ($i = 1; $i < $total_rows; $i++) {
+            for ($i = 1; $i < $this->total_rows; $i++) {
                 $query_insert_columns_values = 'VALUES (';
                 for ($column_num = 0; $column_num < count($columns_name); $column_num++) {
                     $columns_value = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($column_num, $i)->getValue();
