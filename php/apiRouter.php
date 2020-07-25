@@ -27,6 +27,7 @@ $app->post('/api/calls', CallsController::class . ':make');
 $app->get('/api/calls', CallsController::class . ':show');
 $app->post('/api/user', UserController::class . ':create');
 $app->get('/api/user', UserController::class . ':show');
+$app->patch('/api/user', UserController::class . ':update');
 $app->get('/api/report', ReportController::class . ':show');
 $app->post('/api/contact', ContactController::class . ':update');
 $app->patch('/api/contact', ContactController::class . ':unlock');

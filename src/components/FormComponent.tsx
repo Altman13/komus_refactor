@@ -236,7 +236,7 @@ export class FormComponent extends React.Component<Props, State> {
                     lineHeight: '56px',
                   }}
                 >
-                  <Link to = '/dashboard'>Панель управления</Link>
+                  <Link to = '/kkk/dashboard'>Панель управления</Link>
                   </div>
                 )}
                 <div

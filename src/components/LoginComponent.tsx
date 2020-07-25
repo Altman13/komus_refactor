@@ -64,7 +64,7 @@ class LoginComponent extends React.Component<Props, State> {
         localStorage.setItem( 'token_exp', token_exp )
         
         const { history } = this.props
-        history.push('/main')  
+        history.push('/kkk/')  
         window.location.reload()
         }
       }
@@ -73,7 +73,7 @@ class LoginComponent extends React.Component<Props, State> {
 componentWillMount () {
   if(localStorage.getItem ( 'token' )) {
   const { history } = this.props
-  history.push('/main')  
+  history.push('/kkk/')  
   window.location.reload()
   }
 }
