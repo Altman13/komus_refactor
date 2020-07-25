@@ -16,7 +16,7 @@ class BaseController
     {
         try {
             $get_file = $request->getUploadedFiles();
-            $uploaded_file = $get_file['base_operator'];
+            $uploaded_file = $get_file['upload_file'];
             $this->base->create($uploaded_file);
         } catch (\Throwable $th) {
             $response->getBody()->write("Произошла ошибка при загрузке базы " . $th->getMessage() . PHP_EOL);
