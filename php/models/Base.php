@@ -10,6 +10,7 @@ class Base
     // private $obj_php_excel;
     // private $obj_reader;
     // private $input_file_type;
+    private $total_rows;
     private $ret;
     public function __construct($db)
     {
@@ -21,8 +22,7 @@ class Base
         //!иначе загрузка произойдет до первого пустого столбца заголовка
         try {
                 $upload_file = $this->uploadFile($files);
-                $obj_php_excel = $this->objeXls($upload_file);
-                $total_rows = $this->setSettingsXls($upload_file);
+                $obj_php_excel = $this->objectXls($upload_file);
                 $columns_name = array();
                 $data = array();
                 $query_insert_columns_name = "INSERT INTO contacts (";
@@ -43,7 +43,7 @@ class Base
             $this->ret = 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
         $this->saveArrayToFile($data);
-        $this->ret = $this->insertDb($query_insert_columns_name, $total_rows, $columns_name, $upload_file);
+        $this->ret = $this->insertDb($query_insert_columns_name, $this->total_rows, $columns_name, $upload_file);
         return $this->ret;
     }
     public function uploadFile($files)
@@ -57,7 +57,7 @@ class Base
         $uploadfile = $directory . '1.xlsx';
         return $uploadfile;
     }
-    public function objeXls($upload_file)
+    public function objectXls($upload_file)
     {
         $obj_php_excel = new \PHPExcel();
         $input_file_type = \PHPExcel_IOFactory::identify($upload_file);
@@ -66,25 +66,11 @@ class Base
             $obj_reader->setLoadSheetsOnly('Лист1');
         }
         $obj_php_excel = $obj_reader->load($upload_file);
+        $worksheetData = $obj_reader->listWorksheetInfo($upload_file);
+        $this->total_rows = $worksheetData[0]['totalRows'];
         return $obj_php_excel;
     }
-    public function setSettingsXls($uploadfile)
-    {
-        $obj_php_excel = new \PHPExcel();
-        $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($uploadfile);
-        $objReader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
-        if ($inputFileType == 'OOCalc') {
-            $objReader->setLoadSheetsOnly('Лист1');
-        }
-        try {
-            $worksheetData = $objReader->listWorksheetInfo($uploadfile);
-            $total_rows = $worksheetData[0]['totalRows'];
-            return $total_rows;
-        } catch (\Throwable $th) {
-        $this->ret = 'Произошла ошибка при попытке чтения файла с операторами ' . $th->getMessage() . PHP_EOL;
-        }
-        return $this->ret;
-    }
+
     public function translitColumn($column_name_rus)
     {
         $column_name_rus = (string) $column_name_rus;
@@ -114,7 +100,7 @@ class Base
     public function insertDb($query_insert_columns_name, $total_rows, $columns_name, $uploadfile)
     {
         try {
-            $obj_php_excel = $this->objeXls($uploadfile);
+            $obj_php_excel = $this->objectXls($uploadfile);
             $query_insert_columns_name = substr($query_insert_columns_name, 0, -4);
             $query_insert_columns_name = $query_insert_columns_name . '`regions_id`' . ',' . '`users_id`' . ')';
             for ($i = 1; $i < $total_rows; $i++) {
