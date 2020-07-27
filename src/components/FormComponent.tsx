@@ -149,11 +149,11 @@ export class FormComponent extends React.Component<Props, State> {
     this.setState({ need_mail_send: !this.state.need_mail_send })
   }
   exit = ()  => {
-      localStorage.removeItem('id')
-      localStorage.removeItem('iuser_groupd')
+      localStorage.removeItem('user_id')
+      localStorage.removeItem('user_group')
       localStorage.removeItem('user_fio')
       localStorage.removeItem('token')
-      localStorage.removeItem('token_ex')
+      localStorage.removeItem('token_exp')
       const { history } = this.props
       history.push('/')  
       window.location.reload()
