@@ -66,6 +66,7 @@ export class FormComponent extends React.Component<Props, State> {
     this.inputHandleChange = this.inputHandleChange.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
     this.callHandler = this.callHandler.bind( this )
+    this.exit = this.exit.bind(this)
   }
 
   textAreaHandleChange( e ) {
@@ -147,7 +148,16 @@ export class FormComponent extends React.Component<Props, State> {
   needMailSend = () => {
     this.setState({ need_mail_send: !this.state.need_mail_send })
   }
-
+  exit = ()  => {
+      localStorage.removeItem('id')
+      localStorage.removeItem('iuser_groupd')
+      localStorage.removeItem('user_fio')
+      localStorage.removeItem('token')
+      localStorage.removeItem('token_ex')
+      const { history } = this.props
+      history.push('/')  
+      window.location.reload()
+  }
   componentDidMount() {
     this.props.get_contacts()
     console.log(this.props)
@@ -221,6 +231,10 @@ export class FormComponent extends React.Component<Props, State> {
         <div style = {{ fontSize: 30, textAlign: 'center' }}>
           'Название проекта'
         </div>
+        <span>Вы зашли как :{ localStorage.getItem('user_fio')}</span>
+          <core.Button variant="outlined" color="secondary" onClick = { this.exit } style ={{ marginLeft: 5, width: 115 }}>
+            Выход
+          </core.Button>
         <core.Grid container spacing = { 3 } style = {{ marginTop: 5 }}>
           <core.Hidden only = { ['sm', 'xs'] }>
             <core.Grid item xs style = {{ border: '2px solid' }} md = { 3 }>
@@ -236,7 +250,7 @@ export class FormComponent extends React.Component<Props, State> {
                     lineHeight: '56px',
                   }}
                 >
-                  <Link to = '/kkk/dashboard'>Панель управления</Link>
+                  <Link to = '/dashboard'>Панель управления</Link>
                   </div>
                 )}
                 <div
@@ -396,6 +410,7 @@ export class FormComponent extends React.Component<Props, State> {
 }
 interface LinkStateProps {
   contacts: Contact
+  history: any
 }
 
 interface LinkDispatchProps {
