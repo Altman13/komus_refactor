@@ -38,12 +38,14 @@ interface State {
   err_text: string
   border : React.CSSProperties['border']
   end_base : boolean
+  rus_block : any
 }
 
 type Props = LinkStateProps & LinkDispatchProps
 export class FormComponent extends React.Component<Props, State> {
   constructor( props: Props ) {
     super( props )
+    
     this.state = {
       id: 0,
       naimenovanie: '',
@@ -61,7 +63,8 @@ export class FormComponent extends React.Component<Props, State> {
       err: false,
       err_text : '',
       border : '',
-      end_base: false
+      end_base: false,
+      rus_block : ''
     }
     this.textAreaHandleChange = this.textAreaHandleChange.bind( this )
     this.inputHandleChange = this.inputHandleChange.bind( this )
@@ -179,11 +182,10 @@ export class FormComponent extends React.Component<Props, State> {
     const resp : any = await ajaxAction( url, method )
     if ( resp ) {
       const { data } = resp
-      console.log ( data )
-    } 
-  }
-  componentWillUnmount(){
-    
+      this.setState({ rus_block : data })
+      //console.log ( this.state.rus_block )
+
+    }
   }
   
   componentWillReceiveProps( nextProps ) {
@@ -228,11 +230,17 @@ export class FormComponent extends React.Component<Props, State> {
     for (var key in contact ) {
       var el_main_form = key_contact.indexOf( key )
       if ( el_main_form == -1 && contact[key] ) {
-        html_element.push(
-          <div id = { key } style = {{ fontSize: 18 }} key = { key }>
-            { key } : { contact[key] }
-          </div>
-        )
+        for (const [key_rus_block, value_rus] of Object.entries( this.state.rus_block )) {
+          if( key_rus_block == key ){
+            html_element.push(
+              <div id = { key } style = {{ fontSize: 18 }} key = { key }>
+                { value_rus } : { contact[key] }
+              </div>
+            )
+          }
+        }         
+        
+        
       }
     }
     this.setState({ additional_info_block: html_element })
