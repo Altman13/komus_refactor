@@ -18,6 +18,7 @@ import RadioBtnComponent from './RadioBtnComponent'
 import NoticeModal from './NoticeComponent'
 
 import user_type  from '../users/CheckRoleUser'
+import { ajaxAction } from '../services'
 
 interface State {
   id: number
@@ -67,6 +68,7 @@ export class FormComponent extends React.Component<Props, State> {
     this.selectHandleChange = this.selectHandleChange.bind( this )
     this.callHandler = this.callHandler.bind( this )
     this.exit = this.exit.bind(this)
+    this.getContactRusInfo = this.getContactRusInfo.bind(this)
   }
 
   textAreaHandleChange( e ) {
@@ -160,19 +162,30 @@ export class FormComponent extends React.Component<Props, State> {
   }
   componentDidMount() {
     this.props.get_contacts()
-    console.log(this.props)
+    this.getContactRusInfo()
+    ///console.log(this.props)
     //Выгрузка не отработанных контактов из хранилища 
     window.addEventListener("beforeunload", ( ev ) => 
     {  
           ev.preventDefault()
-          console.log(this.props)
+          //console.log(this.props)
           this.props.unlock_contacts( this.props.contacts )
-          return ev.returnValue = 'Are you sure you want to close?'
+          //return ev.returnValue = 'Are you sure you want to close?'
     })
+  }
+  async getContactRusInfo() {
+    const url = 'contact'
+    const method = 'GET'
+    const resp : any = await ajaxAction( url, method )
+    if ( resp ) {
+      const { data } = resp
+      console.log ( data )
+    } 
   }
   componentWillUnmount(){
     
   }
+  
   componentWillReceiveProps( nextProps ) {
 
     if( nextProps.contacts.end_base_contact == undefined ) {

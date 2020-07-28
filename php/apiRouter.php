@@ -31,6 +31,7 @@ $app->patch('/api/user', UserController::class . ':update');
 $app->get('/api/report', ReportController::class . ':show');
 $app->post('/api/contact', ContactController::class . ':update');
 $app->patch('/api/contact', ContactController::class . ':unlock');
+$app->get('/api/contact', ContactController::class . ':getContactRusInfo');
 
 //xml, json, html, 
 $app->get('/api/get', ApiController::class . ':show');
