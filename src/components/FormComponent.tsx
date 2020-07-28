@@ -33,12 +33,12 @@ interface State {
   need_mail_send: boolean
   submitted: boolean
   additional_info_block: HTMLElement[]
+  rus_block : any
   show_modal_notice: boolean
   err: boolean
   err_text: string
   border : React.CSSProperties['border']
   end_base : boolean
-  rus_block : any
 }
 
 type Props = LinkStateProps & LinkDispatchProps
@@ -59,12 +59,12 @@ export class FormComponent extends React.Component<Props, State> {
       need_mail_send: false,
       submitted: false,
       additional_info_block: [],
+      rus_block : '',
       show_modal_notice: false,
       err: false,
       err_text : '',
       border : '',
-      end_base: false,
-      rus_block : ''
+      end_base: false
     }
     this.textAreaHandleChange = this.textAreaHandleChange.bind( this )
     this.inputHandleChange = this.inputHandleChange.bind( this )
@@ -150,9 +150,11 @@ export class FormComponent extends React.Component<Props, State> {
       sendMail( url, method, data )
     }
   }
+  
   needMailSend = () => {
     this.setState({ need_mail_send: !this.state.need_mail_send })
   }
+  
   exit = ()  => {
       localStorage.removeItem('user_id')
       localStorage.removeItem('user_group')
@@ -163,6 +165,7 @@ export class FormComponent extends React.Component<Props, State> {
       history.push('/')  
       window.location.reload()
   }
+  
   componentDidMount() {
     this.props.get_contacts()
     this.getContactRusInfo()
@@ -174,6 +177,7 @@ export class FormComponent extends React.Component<Props, State> {
           //return ev.returnValue = 'Are you sure you want to close?'
     })
   }
+  
   async getContactRusInfo() {
     const url = 'contact'
     const method = 'GET'
@@ -185,34 +189,59 @@ export class FormComponent extends React.Component<Props, State> {
   }
   
   componentWillReceiveProps( nextProps ) {
-
-    if( nextProps.contacts.end_base_contact == undefined ) {
+    if( this.state.end_base == false ) {
+    //Если в локальном хранилище закончились контакты
+    // пробуем подгрузить еще 
+    if( nextProps.contacts.Contact.length == 0 ) {
+        this.props.get_contacts()
+        console.log( this.props.contacts.Contact )
+        //Если после попытки загрузки контаков с сервера
+        //контактов нет - значит закончилась база для обзвона
+        if( this.props.contacts.Contact.id == undefined ){
+          this.setState({ end_base : true })
+          console.log( 'end base true' )
+        }
+        else {
+          this.setState({
+            id: this.props.contacts.Contact[0].id || 0,
+            naimenovanie: this.props.contacts.Contact[0].naimenovanie || '',
+            fio: this.props.contacts.Contact[0].fio || '',
+            nomer: this.props.contacts.Contact[0].nomer || '',
+            email: this.props.contacts.Contact[0].email || '',
+            show_modal_notice: true,
+            request_call: '',
+            status_call: '',
+            need_mail_send: false,
+            submitted: false,
+            err: false,
+            err_text: '',
+            border : '',
+            end_base : false
+        })    
+        }
+    //Если в локальном хранилище есть контакты для работы
+    } else {
       this.setState({
-          id: nextProps.contacts.Contact[0].id || 0,
-          naimenovanie: nextProps.contacts.Contact[0].naimenovanie || '',
-          fio: nextProps.contacts.Contact[0].fio || '',
-          nomer: nextProps.contacts.Contact[0].nomer || '',
-          email: nextProps.contacts.Contact[0].email || '',
-          show_modal_notice: true,
-          request_call: '',
-          status_call: '',
-          need_mail_send: false,
-          submitted: false,
-          err: false,
-          err_text: '',
-          border : '',
-          end_base : false
-        })
-        this.noticeVisibleToggle()
-        this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
-      } else {
-        this.setState({ end_base : true })
-        console.log('нет контактов для работы')
-        alert('нет контактов для работы')  
-      }
-      
+        id: nextProps.contacts.Contact[0].id || 0,
+        naimenovanie: nextProps.contacts.Contact[0].naimenovanie || '',
+        fio: nextProps.contacts.Contact[0].fio || '',
+        nomer: nextProps.contacts.Contact[0].nomer || '',
+        email: nextProps.contacts.Contact[0].email || '',
+        show_modal_notice: true,
+        request_call: '',
+        status_call: '',
+        need_mail_send: false,
+        submitted: false,
+        err: false,
+        err_text: '',
+        border : '',
+        end_base : false
+      })
+      this.noticeVisibleToggle()
+      this.setAdditionalInfoBlock( nextProps.contacts.Contact[0] )
+    }
   }
-  
+}
   noticeVisibleToggle() {
     setTimeout(() => {
       this.setState({ show_modal_notice: false })
@@ -226,8 +255,8 @@ export class FormComponent extends React.Component<Props, State> {
     for (var key in contact ) {
       var el_main_form = key_contact.indexOf( key )
       if ( el_main_form == -1 && contact[key] ) {
-        for (const [key_rus_block, value_rus] of Object.entries( this.state.rus_block )) {
-          if( key_rus_block == key ){
+        for (const [key_rus, value_rus] of Object.entries( this.state.rus_block )) {
+          if( key_rus == key ){
             html_element.push(
               <div id = { key } style = {{ fontSize: 18 }} key = { key }>
                 { value_rus } : { contact[key] }
@@ -424,7 +453,7 @@ export class FormComponent extends React.Component<Props, State> {
   }
 }
 interface LinkStateProps {
-  contacts: Contact
+  contacts: any
   history: any
 }
 
@@ -437,6 +466,7 @@ interface LinkDispatchProps {
 
 const mapStateToProps = ( state: AppState ) => ({
   contacts: state.contacts,
+
 })
 
 const mapDispatchToProps = (

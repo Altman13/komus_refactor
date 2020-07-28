@@ -46,7 +46,7 @@ class ContactController
     public function getContactRusInfo(Request $request, Response $response)
     {
         try {
-            $fn = __DIR__.'/file/columns_name.json';
+            $fn = 'columns_name.json';
             $this->resp = file_get_contents($fn);
         } catch (\Throwable $th) {
             $this->resp = "Произошла ошибка при чтении файла $fn " . $th->getMessage().PHP_EOL;
