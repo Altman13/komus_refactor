@@ -166,12 +166,10 @@ export class FormComponent extends React.Component<Props, State> {
   componentDidMount() {
     this.props.get_contacts()
     this.getContactRusInfo()
-    ///console.log(this.props)
     //Выгрузка не отработанных контактов из хранилища 
     window.addEventListener("beforeunload", ( ev ) => 
     {  
           ev.preventDefault()
-          //console.log(this.props)
           this.props.unlock_contacts( this.props.contacts )
           //return ev.returnValue = 'Are you sure you want to close?'
     })
@@ -183,8 +181,6 @@ export class FormComponent extends React.Component<Props, State> {
     if ( resp ) {
       const { data } = resp
       this.setState({ rus_block : data })
-      //console.log ( this.state.rus_block )
-
     }
   }
   
@@ -239,8 +235,6 @@ export class FormComponent extends React.Component<Props, State> {
             )
           }
         }         
-        
-        
       }
     }
     this.setState({ additional_info_block: html_element })

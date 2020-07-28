@@ -17,11 +17,7 @@ class Calls
     {
         # code...
     }
-    /**
-     * Read
-     *
-     * @return void
-     */
+
     public function read()
     {
         try {
@@ -35,24 +31,12 @@ class Calls
         }
         return json_encode($this->resp);
     }
-    /**
-     * Update
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+
     public function update($id)
     {
         # code...
     }
-    /**
-     * Delete
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+
     public function delete($id)
     {
         # code...

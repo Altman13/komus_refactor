@@ -2,8 +2,6 @@
 
 namespace Komus;
 
-use Slim\Http\UploadedFile;
-
 class Base
 {
     private $db;
@@ -18,24 +16,24 @@ class Base
         //TODO : убедиться в том, что не может быть пропущенных пустых столбцов в файле для импорта базы,
         //!иначе загрузка произойдет до первого пустого столбца заголовка
         try {
-                $upload_file = $this->uploadFile($files);
-                $obj_php_excel = $this->objectXls($upload_file);
-                $columns_name = array();
-                $data = array();
-                $query_insert_columns_name = "INSERT INTO contacts (";
-                $i = 0;
-                do {
-                    $column_name_rus = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
-                    $column_name_temp = $this->translitColumn($column_name_rus);
-                    $column_name_translit = explode('-', $column_name_temp, 2);
-                    $column_name_translit = preg_replace("/[^a-zA-ZА\s]/", '', $column_name_translit[0]);
-                    array_push($columns_name, $column_name_translit);
-                    $query_insert_columns_name .= '`' . $column_name_translit . '`, ';
-                    $data[$column_name_translit] = (string)$column_name_rus;
-                    $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $column_name_translit VARCHAR(255)");
-                    $alter_table_contacts->execute();
-                    $i++;
-                } while ($column_name_rus != NULL);
+            $upload_file = $this->uploadFile($files);
+            $obj_php_excel = $this->objectXls($upload_file);
+            $columns_name = array();
+            $data = array();
+            $query_insert_columns_name = "INSERT INTO contacts (";
+            $i = 0;
+            do {
+                $column_name_rus = $obj_php_excel->getActiveSheet()->getCellByColumnAndRow($i, 1)->getValue();
+                $column_name_temp = $this->translitColumn($column_name_rus);
+                $column_name_translit = explode('-', $column_name_temp, 2);
+                $column_name_translit = preg_replace("/[^a-zA-ZА\s]/", '', $column_name_translit[0]);
+                array_push($columns_name, $column_name_translit);
+                $query_insert_columns_name .= '`' . $column_name_translit . '`, ';
+                $data[$column_name_translit] = (string)$column_name_rus;
+                $alter_table_contacts = $this->db->prepare("ALTER TABLE contacts ADD IF NOT EXISTS $column_name_translit VARCHAR(255)");
+                $alter_table_contacts->execute();
+                $i++;
+            } while ($column_name_rus != NULL);
         } catch (\Throwable $th) {
             $this->ret = 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
@@ -115,20 +113,5 @@ class Base
             $this->ret =  'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
         return $this->ret;
-    }
-
-    public function read()
-    {
-        # code...
-    }
-
-    public function update($id)
-    {
-        # code...
-    }
-
-    public function delete($id)
-    {
-        # code...
     }
 }

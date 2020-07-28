@@ -46,9 +46,4 @@ class Login
         }
         return $this->ret;
     }
-    public function signOut($user)
-    {
-        if ($user) {
-        }
-    }
 }
