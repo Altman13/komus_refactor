@@ -7,9 +7,11 @@
 class ApiController
 {
     private $db;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
+        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function GetXml()
     {

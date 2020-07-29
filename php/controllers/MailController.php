@@ -8,27 +8,27 @@ class MailController
 {
     private $mail;
     private $resp;
+    private $ret;
     private $transport;
     private $mailer;
     static $message;
-    static $contact_info;
     public function __construct(Container $container)
     {
-        $this->mail = $container['mail'];
+        //$this->mail = $container['mail'];
         $this->transport = (new Swift_SmtpTransport('smtp.mail.ru', 465))
-            ->setUsername('xxx@mail.ru')
+            ->setUsername('xxx.00@mail.ru')
             ->setPassword('xxx')
             ->setEncryption('SSL');
-        $this->mailer = new Swift_Mailer($this::$transport);
+        $this->mailer = new Swift_Mailer($this->transport);
+        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function send(Request $request, Response $response)
     {
         try {
-            $data = $request->getBody();
-            $this->mailBuild($data);
+            $this->mailBuild();
             $result = $this->mailer->send($this::$message);
             if ($result) {
-                $this->resp = 'Почта отправлена';
+                $this->resp = 'Почта Отправлена';
             } else {
                 $this->resp = 'Почта не отправлена';
             }
@@ -38,14 +38,14 @@ class MailController
         }
         return $this->resp;
     }
-    public function mailBuild($data)
+    public function mailBuild()
     {
-        $this->getData($data)->getTemplate()->getFiles();
+        $this->getData()->getTemplate()->getFiles();
     }
-    public function getData($data)
+    public function getData()
     {
-        //echo $data;
-        //$this::$contact_info = $this->mail->read();
+        //if resp != false
+        // $this::$message['data'] = $this->mail->show();
         return $this;
     }
     public function getTemplate()
@@ -76,8 +76,9 @@ class MailController
                         </body>
                     </html>';
         $this::$message = (new Swift_Message('Проверка'))
-            ->setFrom(['xxx@mail.ru' => 'xxx'])
-            ->setTo(['xxx@gmail.com'])
+            ->setFrom(['xxx@mail.ru' => 'obukhov yevgeniy'])
+            ->setTo(['xxx'])
+            //->setBody($html)
             ->addPart($html, 'text/html');
         return $this;
     }

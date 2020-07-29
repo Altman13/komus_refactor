@@ -9,10 +9,12 @@ class ContactController
 {
     private $contact;
     private $resp;
+    private $ret;
 
     public function __construct(Container $container)
     {
         $this->contact = $container['contact'];
+        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function show()
     {
