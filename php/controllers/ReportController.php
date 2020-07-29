@@ -21,9 +21,6 @@ class ReportController
     public function show()
     {
         //set_time_limit(1800);
-        // $ret =array('data' =>'', 'error' => '', 'error_text'=> '');
-        // $ret['error'] = 'error_ocurred';
-        // $return=json_encode($ret, JSON_UNESCAPED_UNICODE);
         //TODO: переделать формирование заголовка отчета на react sortable
         $rus_column_name_header = array('Попыток звонка','статус','Идентификатор','телефон','ФИО','Наименование','Организация');
         $this->obj_php_excel->setActiveSheetIndex(0);
@@ -49,6 +46,7 @@ class ReportController
             $row_num++;
         }
         $this->obj_writer->save('report.xlsx');
+        // $return=json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function headerReportFormat($clm_num, $row_num, $key)
     {

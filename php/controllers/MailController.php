@@ -77,7 +77,7 @@ class MailController
                     </html>';
         $this::$message = (new Swift_Message('Проверка'))
             ->setFrom(['xxx@mail.ru' => 'obukhov yevgeniy'])
-            ->setTo(['xxx'])
+            ->setTo(['xxx']);
         return $this;
     }
     public function getFiles()
