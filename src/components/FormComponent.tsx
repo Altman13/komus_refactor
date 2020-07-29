@@ -8,7 +8,6 @@ import { AppState } from '../store'
 import { AppActions } from '../models/actions'
 import { getContacts, makeCalls, receiveCalls, 
         sendMails as sendMail, unlockContacts } from '../actions'
-import { Contact } from '../models'
 
 import * as core from '@material-ui/core'
 

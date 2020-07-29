@@ -14,8 +14,9 @@ export const getContacts = createAsync<any, any>(
   async ( params, dispatch ) => {
     const url: string = 'calls'
     const method : string = 'GET'
-    const contacts = await ajaxAction( url, method )
-    const { data } = contacts
+    const resp : any = await ajaxAction( url, method )
+    //TODO: поправить
+    const { data } = resp.data
     return dispatch({ type: GET_CONTACTS, data })
   }
 )
@@ -25,8 +26,9 @@ export const unlockContacts = createAsync<any, any>(
   async ( contact, dispatch ) => {
     const url: string = 'contact'
     const method : string = 'PATCH'
-    const resp = await ajaxAction( url, method, contact )
+    const resp : any = await ajaxAction( url, method, contact )
     const { data } = resp
+    console.log( data )
     return dispatch({ type: UNLOCK_CONTACTS, data })
   }
 )
