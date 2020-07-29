@@ -10,9 +10,11 @@ class UserController
 {
     private $user;
     private $resp;
+    private $ret;
     public function __construct(Container $container)
     {
         $this->user = $container['user'];
+        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function show()
     {

@@ -70,8 +70,8 @@ export class FormComponent extends React.Component<Props, State> {
     this.inputHandleChange = this.inputHandleChange.bind( this )
     this.selectHandleChange = this.selectHandleChange.bind( this )
     this.callHandler = this.callHandler.bind( this )
-    this.exit = this.exit.bind(this)
-    this.getContactRusInfo = this.getContactRusInfo.bind(this)
+    this.exit = this.exit.bind( this )
+    this.getContactRusInfo = this.getContactRusInfo.bind( this )
   }
 
   textAreaHandleChange( e ) {
@@ -134,7 +134,7 @@ export class FormComponent extends React.Component<Props, State> {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
       date_recall : this.state.date_recall,
-      operarator_id : localStorage.getItem('user_id'),
+      operator_id : localStorage.getItem( 'user_id' ),
       id : this.state.id
     }
     this.props.make_calls( call )
@@ -156,13 +156,13 @@ export class FormComponent extends React.Component<Props, State> {
   }
   
   exit = ()  => {
-      localStorage.removeItem('user_id')
-      localStorage.removeItem('user_group')
-      localStorage.removeItem('user_fio')
-      localStorage.removeItem('token')
-      localStorage.removeItem('token_exp')
+      localStorage.removeItem( 'user_id' )
+      localStorage.removeItem( 'user_group' )
+      localStorage.removeItem( 'user_fio' )
+      localStorage.removeItem( 'token' )
+      localStorage.removeItem( 'token_exp' )
       const { history } = this.props
-      history.push('/')  
+      history.push( '/' )  
       window.location.reload()
   }
   
@@ -186,7 +186,7 @@ export class FormComponent extends React.Component<Props, State> {
       const { data } = resp
       this.setState({ rus_block : data })
     }
-  }
+  } 
   
   componentWillReceiveProps( nextProps ) {
     if( this.state.end_base == false ) {
@@ -197,11 +197,12 @@ export class FormComponent extends React.Component<Props, State> {
         console.log( this.props.contacts.Contact )
         //Если после попытки загрузки контаков с сервера
         //контактов нет - значит закончилась база для обзвона
-        if( this.props.contacts.Contact.id == undefined ){
+      if( this.props.contacts.Contact.id == undefined ){
           this.setState({ end_base : true })
           console.log( 'end base true' )
-        }
-        else {
+      }
+        //Если удалось подгрузить контакты с сервера
+      else {
           this.setState({
             id: this.props.contacts.Contact[0].id || 0,
             naimenovanie: this.props.contacts.Contact[0].naimenovanie || '',
@@ -218,7 +219,7 @@ export class FormComponent extends React.Component<Props, State> {
             border : '',
             end_base : false
         })    
-        }
+      }
     //Если в локальном хранилище есть контакты для работы
     } else {
       this.setState({
@@ -466,7 +467,6 @@ interface LinkDispatchProps {
 
 const mapStateToProps = ( state: AppState ) => ({
   contacts: state.contacts,
-
 })
 
 const mapDispatchToProps = (

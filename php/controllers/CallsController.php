@@ -6,13 +6,16 @@ use Slim\Container;
 class CallsController
 {
     private $calls;
+    private $ret;
     public function __construct(Container $container)
     {
         $this->calls = $container['calls'];
+        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function show()
     {
-        return $this->calls->read();
+        $this->ret = $this->calls->read();
+        return $this->ret;
     }
     public function make()
     {
