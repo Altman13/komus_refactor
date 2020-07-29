@@ -25,11 +25,9 @@ class CallsController
                 $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             }
         } catch (\Throwable $th) {
-            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
                 $this->ret->error_text = "Произошла ошибка в CallsController " . $th->getMessage() . PHP_EOL;
                 $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
                 $this->ret = $response->withStatus(500);
-            }
         }
         return $this->ret;
     }
