@@ -10,7 +10,7 @@ class Base
     public function __construct($db)
     {
         $this->db = $db;
-        $this->ret =array('data' =>'', 'error_text'=> '');
+        $this->ret = array('data' => '', 'error_text' => '');
     }
     public function create($files)
     {
@@ -35,12 +35,12 @@ class Base
                 $alter_table_contacts->execute();
                 $i++;
             } while ($column_name_rus != NULL);
+            $this->saveArrayToFile($data);
+            $this->insertDb($query_insert_columns_name, $columns_name, $upload_file);
         } catch (\Throwable $th) {
-            $this->ret = 'Произошла ошибка при добавлении поля в таблицу contacts ' . $th->getMessage() . PHP_EOL;
+            $this->ret['error_text'] = 'Произошла ошибка при добавлении полей в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
-        $this->saveArrayToFile($data);
-        $this->insertDb($query_insert_columns_name, $columns_name, $upload_file);
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function uploadFile($files)
     {
@@ -111,8 +111,8 @@ class Base
                 $insert_row->execute();
             }
         } catch (\Throwable $th) {
-            $this->ret =  'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
+            $this->ret['error_text'] =  'Произошла ошибка при добавлении записи в таблицу contacts ' . $th->getMessage() . PHP_EOL;
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
 }

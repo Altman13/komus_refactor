@@ -93,9 +93,7 @@ export class FormComponent extends React.Component<Props, State> {
         this.setState({ email: value })
         break
       case 'date_recall':
-        let t : string = value
-        t = t.replace('T', ' ');
-        this.setState({ date_recall: t })
+        this.setState({ date_recall: value })
         break
       
     }
@@ -128,11 +126,12 @@ export class FormComponent extends React.Component<Props, State> {
       this.setState({ border : '2px solid red' })
       return
     }
-    
+    let date_recall : string = this.state.date_recall
+    date_recall = date_recall.replace('T', ' ');
     const call = {
       status_call : this.state.status_call,
       requst_call : this.state.request_call,
-      date_recall : this.state.date_recall,
+      date_recall : date_recall,
       operator_id : localStorage.getItem( 'user_id' ),
       id : this.state.id
     }
@@ -148,6 +147,7 @@ export class FormComponent extends React.Component<Props, State> {
       const method : string ='POST'
       sendMail( url, method, data )
     }
+    
   }
   
   needMailSend = () => {
@@ -209,6 +209,7 @@ export class FormComponent extends React.Component<Props, State> {
             nomer: this.props.contacts.Contact[0].nomer || '',
             email: this.props.contacts.Contact[0].email || '',
             show_modal_notice: true,
+            date_recall: '',
             request_call: '',
             status_call: '',
             need_mail_send: false,
@@ -228,6 +229,7 @@ export class FormComponent extends React.Component<Props, State> {
         nomer: nextProps.contacts.Contact[0].nomer || '',
         email: nextProps.contacts.Contact[0].email || '',
         show_modal_notice: true,
+        date_recall: '',
         request_call: '',
         status_call: '',
         need_mail_send: false,
@@ -397,7 +399,8 @@ export class FormComponent extends React.Component<Props, State> {
                 label = 'Выбрать дату'
                 type = 'datetime-local'
                 name = 'date_recall'
-                defaultValue = { this.state.date_recall }
+                value = { this.state.date_recall }
+                // defaultValue = { this.state.date_recall }
                 onChange = { this.inputHandleChange }
                 InputLabelProps = {{
                   shrink: true,
