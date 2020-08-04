@@ -12,7 +12,6 @@ class BaseController
     public function __construct(Container $container)
     {
         $this->base = $container['base'];
-        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function upload(Request $request, Response $response)
     {

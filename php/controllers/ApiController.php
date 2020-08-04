@@ -1,9 +1,5 @@
 <?php
-// header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Headers: *");
-/**
- * undocumented class
- */
+
 class ApiController
 {
     private $db;
@@ -11,7 +7,6 @@ class ApiController
     public function __construct($db)
     {
         $this->db = $db;
-        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function GetXml()
     {

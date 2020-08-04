@@ -9,9 +9,11 @@ class User
 {
     private $db;
     private $resp;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
+        $this->ret =array('data' =>'', 'error_text'=> '');
     }
 
     public function create($files)

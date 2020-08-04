@@ -11,6 +11,7 @@ class Contact
     public function __construct($db)
     {
         $this->db = $db;
+        $this->ret =array('data' =>'', 'error_text'=> '');
     }
 
     public function create($contact)

@@ -5,26 +5,18 @@ namespace Komus;
 class Region
 {
     private $db;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
+        $this->ret =array('data' =>'', 'error_text'=> '');
     }
-    /**
-     * Create
-     *
-     * @param  mixed $region
-     *
-     * @return void
-     */
+    
     public function create($regions)
     {
         # code...
     }
-    /**
-     * Read
-     *
-     * @return void
-     */
+
     public function read()
     {
         $all_regions = $this->db->prepare("SELECT * FROM regions");
@@ -37,24 +29,12 @@ class Region
         //echo json_encode($regions);
         return json_encode($regions);
     }
-    /**
-     * Update
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function update($id)
     {
         # code...
     }
-    /**
-     * Delete
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function delete($id)
     {
         # code...

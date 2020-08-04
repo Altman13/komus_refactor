@@ -13,21 +13,14 @@ class MailLog
     {
         $this->db = $db;
         $this->ret = false;
+        $this->ret =array('data' =>'', 'error_text'=> '');
     }
-    /**
-     * Create
-     *
-     * @return void
-     */
+
     public function create()
     {
         # code...
     }
-    /**
-     * Read
-     *
-     * @return void
-     */
+
     public function read($data)
     {
         //TODO: дописать выборку необходимых данных для формирования сообщения

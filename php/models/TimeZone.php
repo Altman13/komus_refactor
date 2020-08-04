@@ -5,17 +5,13 @@ namespace Komus;
 class TimeZone
 {
     private $db;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
+        $this->ret =array('data' =>'', 'error_text'=> '');
     }
-    /**
-     * Create
-     *
-     * @param  mixed $timezone
-     *
-     * @return void
-     */
+    
     public function Create($timezone)
     {
         $timezones = json_decode($timezone);
@@ -23,11 +19,7 @@ class TimeZone
         $this->db->prepare("INSERT INTO ");
         foreach ($timezones as $tz) { }
     }
-    /**
-     * Read
-     *
-     * @return void
-     */
+    
     public function Read()
     {
         $all_time_zones = $this->db->prepare("SELECT * FROM timezone");
@@ -40,24 +32,12 @@ class TimeZone
         //echo json_encode($timezone);
         return json_encode($timezone);
     }
-    /**
-     * Update
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function Update($id)
     {
         # code...
     }
-    /**
-     * Delete
-     *
-     * @param  mixed $id
-     *
-     * @return void
-     */
+    
     public function Delete($id)
     {
         # code...

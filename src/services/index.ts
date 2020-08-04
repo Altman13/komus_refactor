@@ -15,6 +15,7 @@ export async function ajaxAction( url : string, method : string, data? : FormDat
             d = JSON.stringify({ data }),
             headers ={ 'Content-Type': 'application/json' }
         }
+        
         await fetch('http://localhost/komus_new/api/' + url, {
             method: method,
             body: d,

@@ -8,7 +8,6 @@ export const CallReducer = (
 ) => {
   switch ( action.type ) {
     case 'GET_CONTACTS':
-      console.log( action.data)
     return  { ...state, Contact: action.data }
     case 'MAKE_CALL':
     return { Contact : state.Contact.filter(({ id }) => id !== action.id )}

@@ -48,6 +48,11 @@ class MailController
         // $this::$message['data'] = $this->mail->show();
         return $this;
     }
+    //TODO: реализовать запись логов по оправленным сообщениям
+    public function setData()
+    {
+        return $this;
+    }
     public function getTemplate()
     {
         $html = '
@@ -76,7 +81,7 @@ class MailController
                         </body>
                     </html>';
         $this::$message = (new Swift_Message('Проверка'))
-            ->setFrom(['xxx@mail.ru' => 'obukhov yevgeniy'])
+            ->setFrom(['xxx@mail.ru' => 'xxx'])
             ->setTo(['xxx']);
         return $this;
     }
