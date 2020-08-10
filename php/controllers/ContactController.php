@@ -8,51 +8,77 @@ use Slim\Container;
 class ContactController
 {
     private $contact;
-    private $resp;
     private $ret;
 
     public function __construct(Container $container)
     {
         $this->contact = $container['contact'];
-        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
-    public function show()
+    public function show(Request $request, Response $response)
     {
-        return $this->contact->read();
+        try {
+            $this->ret = $this->contact->read();
+            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
+                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $this->ret = $response->withStatus(500);
+            } else {
+                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
+            }
+        } catch (\Throwable $th) {
+            $this->ret['error_text'] = "Произошла ошибка при чтении контактов " . $th->getMessage() . PHP_EOL;
+            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $this->ret = $response->withStatus(500);
+        }
+        return $this->ret;
     }
 
     public function update(Request $request, Response $response)
     {
         try {
             $call = json_decode($request->getBody());
-            $this->resp = $this->contact->updateStatusCall($call);
+            $this->ret = $this->contact->updateStatusCall($call);
+            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
+                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $this->ret = $response->withStatus(500);
+            } else {
+                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
+            }
         } catch (\Throwable $th) {
-            $response->getBody()->write("Произошла ошибка при добавлении результата звонка "
-                . $th->getMessage() . PHP_EOL);
-            $this->resp = $response->withStatus(500);
+            $this->ret['error_text'] = "Произошла ошибка при добавлении результата звонка " . $th->getMessage() . PHP_EOL;
+            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $this->ret = $response->withStatus(500);
         }
-        return $this->resp;
+        return $this->ret;
     }
     public function unlock(Request $request, Response $response)
     {
         try {
             $contacts = json_decode($request->getBody());
-            $this->resp = $this->contact->unlockContact($contacts);
+            $this->ret = $this->contact->unlockContact($contacts);
+            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
+                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $this->ret = $response->withStatus(500);
+            } else {
+                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
+            }
         } catch (\Throwable $th) {
-            $response->getBody()->write("Произошла ошибка при добавлении результата звонка "
-                . $th->getMessage() . PHP_EOL);
-            $this->resp = $response->withStatus(500);
+            $this->ret['error_text'] = "Произошла ошибка при разблокировке контаков " . $th->getMessage() . PHP_EOL;
+            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $this->ret = $response->withStatus(500);
         }
-        return $this->resp;
+        return $this->ret;
     }
     public function getContactRusInfo(Request $request, Response $response)
     {
         try {
             $fn = 'columns_name.json';
-            $this->resp = file_get_contents($fn);
+            $this->ret = file_get_contents($fn);
+            //$this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
         } catch (\Throwable $th) {
-            $this->resp = "Произошла ошибка при чтении файла $fn " . $th->getMessage().PHP_EOL;
+            $this->ret['error_text'] = "Произошла ошибка при чтении файла $fn " . $th->getMessage() . PHP_EOL;
+            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $this->ret = $response->withStatus(500);
         }
-        return $this->resp;
+        return $this->ret;
     }
 }

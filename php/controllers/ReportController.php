@@ -16,7 +16,6 @@ class ReportController
         $this->obj_php_excel = new PHPExcel();
         $this->obj_writer = new PHPExcel_Writer_Excel2007($this->obj_php_excel);
         $this->report = $container['report'];
-        $this->ret = array('data' => '', 'error' => '', 'error_text' => '');
     }
     public function show()
     {

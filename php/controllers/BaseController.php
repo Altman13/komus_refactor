@@ -7,7 +7,6 @@ use Slim\Container;
 class BaseController
 {
     private $base;
-    private $resp;
     private $ret;
     public function __construct(Container $container)
     {
@@ -18,11 +17,18 @@ class BaseController
         try {
             $get_file = $request->getUploadedFiles();
             $uploaded_file = $get_file['upload_file'];
-            $this->base->create($uploaded_file);
+            $this->ret = json_decode($this->base->create($uploaded_file));
+            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
+                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $this->ret = $response->withStatus(500);
+            } else {
+                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
+            }
         } catch (\Throwable $th) {
-            $response->getBody()->write("Произошла ошибка при загрузке базы " . $th->getMessage() . PHP_EOL);
-            $this->resp = $response->withStatus(500);
+            $this->ret['error_text'] = "Произошла ошибка в BaseController " . $th->getMessage() . PHP_EOL;
+            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $this->ret = $response->withStatus(500);
         }
-        return $this->resp;
+        return $this->ret;
     }
 }

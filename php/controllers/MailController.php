@@ -6,12 +6,11 @@ use Slim\Container;
 
 class MailController
 {
-    private $mail;
-    private $resp;
-    private $ret;
     private $transport;
     private $mailer;
     static $message;
+    private $ret;
+
     public function __construct(Container $container)
     {
         //$this->mail = $container['mail'];
@@ -28,15 +27,15 @@ class MailController
             $this->mailBuild();
             $result = $this->mailer->send($this::$message);
             if ($result) {
-                $this->resp = 'Почта Отправлена';
+                $this->ret = 'Почта Отправлена';
             } else {
-                $this->resp = 'Почта не отправлена';
+                $this->ret = 'Почта не отправлена';
             }
         } catch (\Throwable $th) {
             $response->getBody()->write('Произошла ошибка при попытке отправить почту' . $th->getMessage() . PHP_EOL);
-            $this->resp = $response->withStatus(500);
+            $this->ret = $response->withStatus(500);
         }
-        return $this->resp;
+        return $this->ret;
     }
     public function mailBuild()
     {

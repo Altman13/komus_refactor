@@ -47,10 +47,10 @@ class Contact
                 $contacts = $this->db->prepare("UPDATE contacts SET allow_call='0' WHERE contacts.id=:id");
                 $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
                 $contacts->execute();
-                $this->resp = $contacts;
+                $this->resp['data'] = $contacts;
             }
         } catch (\Throwable $th) {
-            $this->resp = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
+            $this->resp['error_text'] = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
         }
         return $this->resp;
     }
@@ -61,10 +61,10 @@ class Contact
                 $contacts = $this->db->prepare("UPDATE contacts SET allow_call='1' WHERE contacts.id=:id");
                 $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
                 $contacts->execute();
-                $this->resp = $contacts;
+                $this->resp['data'] = $contacts;
             }
         } catch (\Throwable $th) {
-            $this->resp = 'Произошла ошибка при разблокировании контактов для обзвона ' . $th->getMessage();
+            $this->resp['error_text'] = 'Произошла ошибка при разблокировании контактов для обзвона ' . $th->getMessage();
         }
         return $this->resp;
     }
@@ -84,9 +84,9 @@ class Contact
             $call_insert->bindParam(':date_recall', $call->data->date_recall, PDO::PARAM_STR);
             //$call_insert->bindParam(':operator_id', $call->data->operator_id, PDO::PARAM_STR);
             $call_insert->execute();
-            $this->resp = $call_insert;
+            $this->resp['data'] = $call_insert;
         } catch (\Throwable $th) {
-            echo ('Произошла ошибка при добавлении статуса звонка ' . $th->getMessage());
+            $this->resp['error_text']= 'Произошла ошибка при добавлении статуса звонка ' . $th->getMessage();
         }
         return $this->resp;
     }
