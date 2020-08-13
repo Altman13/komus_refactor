@@ -12,13 +12,13 @@ class UserGroup
         $this->ret =array('data' =>'', 'error_text'=> '');      
     }
     
-    public function Create($group_users)
+    public function create($group_users)
     {
         //TODO: дописать запрос на инсерт групп пользователей
         $this->db->prepare("INSERT INTO ");
     }
     
-    public function Read()
+    public function read()
     {
         $all_groups_users = $this->db->prepare("SELECT * FROM groups_users");
         try {
@@ -31,12 +31,12 @@ class UserGroup
         return json_encode($groups_users);
     }
     
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
     
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }

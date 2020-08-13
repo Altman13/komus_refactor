@@ -30,7 +30,7 @@ class Login
             $users_data->execute();
             $user_data = $users_data->fetch();
         } catch (\Throwable $th) {
-            $this->ret = 'Произошла ошибка при выборе пользователя из базы ' . $th->getMessage();
+            $this->ret['error_text'] = 'Произошла ошибка при выборе пользователя из базы ' . $th->getMessage();
         }
         if ($token == $user_data['token']) {
             $user_id = $user_data['id'];
@@ -40,10 +40,9 @@ class Login
             $token_exp  = date("Y-m-d H:i:s", strtotime("+9 hours"));
             $u = array('user_id', 'user_group', 'user_token', 'token_exp', 'user_fio');
             $user = compact($u);
-            $user_data = json_encode($user);
-            $this->ret = $user_data;
+            $this->ret = $user;
         } else {
-            $this->ret = 'Введенны некорректные данные для авторизации';
+            $this->ret['error_text'] = 'Введенны некорректные данные для авторизации';
         }
         return $this->ret;
     }

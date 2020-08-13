@@ -12,7 +12,7 @@ class TimeZone
         $this->ret =array('data' =>'', 'error_text'=> '');
     }
     
-    public function Create($timezone)
+    public function create($timezone)
     {
         $timezones = json_decode($timezone);
         //TODO: дописать запрос на инсерт временных зон
@@ -20,7 +20,7 @@ class TimeZone
         foreach ($timezones as $tz) { }
     }
     
-    public function Read()
+    public function read()
     {
         $all_time_zones = $this->db->prepare("SELECT * FROM timezone");
         try {
@@ -33,12 +33,12 @@ class TimeZone
         return json_encode($timezone);
     }
     
-    public function Update($id)
+    public function update($id)
     {
         # code...
     }
     
-    public function Delete($id)
+    public function delete($id)
     {
         # code...
     }
