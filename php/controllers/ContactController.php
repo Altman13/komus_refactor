@@ -19,17 +19,15 @@ class ContactController
         try {
             $this->ret = $this->contact->read();
             if (isset($this->ret->error_text) && ($this->ret->error_text)) {
-                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $response->getBody()->write($this->ret);
                 $this->ret = $response->withStatus(500);
-            } else {
-                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             }
         } catch (\Throwable $th) {
             $this->ret['error_text'] = "Произошла ошибка при чтении контактов " . $th->getMessage() . PHP_EOL;
-            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request, Response $response)
@@ -38,17 +36,15 @@ class ContactController
             $call = json_decode($request->getBody());
             $this->ret = $this->contact->updateStatusCall($call);
             if (isset($this->ret->error_text) && ($this->ret->error_text)) {
-                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $response->getBody()->write($this->ret);
                 $this->ret = $response->withStatus(500);
-            } else {
-                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             }
         } catch (\Throwable $th) {
             $this->ret['error_text'] = "Произошла ошибка при добавлении результата звонка " . $th->getMessage() . PHP_EOL;
-            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function unlock(Request $request, Response $response)
     {
@@ -56,24 +52,21 @@ class ContactController
             $contacts = json_decode($request->getBody());
             $this->ret = $this->contact->unlockContact($contacts);
             if (isset($this->ret->error_text) && ($this->ret->error_text)) {
-                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $response->getBody()->write($this->ret);
                 $this->ret = $response->withStatus(500);
-            } else {
-                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             }
         } catch (\Throwable $th) {
             $this->ret['error_text'] = "Произошла ошибка при разблокировке контаков " . $th->getMessage() . PHP_EOL;
-            $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+            $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function getContactRusInfo(Request $request, Response $response)
     {
         try {
             $fn = 'columns_name.json';
             $this->ret = file_get_contents($fn);
-            //$this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
         } catch (\Throwable $th) {
             $this->ret['error_text'] = "Произошла ошибка при чтении файла $fn " . $th->getMessage() . PHP_EOL;
             $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));

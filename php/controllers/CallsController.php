@@ -19,17 +19,15 @@ class CallsController
         try {
             $this->ret = json_decode($this->calls->read());
             if (isset($this->ret->error_text) && ($this->ret->error_text)) {
-                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $response->getBody()->write($this->ret);
                 $this->ret = $response->withStatus(500);
-            } else {
-                $this->ret = json_encode($this->ret, JSON_UNESCAPED_UNICODE);
             }
         } catch (\Throwable $th) {
                 $this->ret['error_text'] = "Произошла ошибка в CallsController " . $th->getMessage() . PHP_EOL;
-                $response->getBody()->write(json_encode($this->ret, JSON_UNESCAPED_UNICODE));
+                $response->getBody()->write($this->ret);
                 $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function make()
     {
