@@ -11,7 +11,6 @@ interface State {
   username: string
   password: string
   submitted: boolean
-  failure: boolean
   error_text: string
   token : string
 }
@@ -23,7 +22,6 @@ class LoginComponent extends React.Component<Props, State> {
       username: '',
       password: '',
       submitted: false,
-      failure: false,
       error_text : '',
       token : ''
     }
@@ -57,24 +55,20 @@ class LoginComponent extends React.Component<Props, State> {
     if ( resp ) {
       const { data } = resp
       const { user_id, user_token , token_exp, user_group, user_fio, error_text } = data
-      console.log(error_text)
       if ( error_text != undefined ){
         this.setState({ error_text : error_text })
         return
       }
       else if ( user_token ) {
-        console.log('token')
         localStorage.setItem( 'user_id', user_id )
         localStorage.setItem( 'user_fio', user_fio )
         localStorage.setItem( 'user_group', user_group )
         localStorage.setItem( 'token', user_token )
         localStorage.setItem( 'token_exp', token_exp )
-        
         const { history } = this.props
         history.push('/')  
         window.location.reload()
         }
-        
       }
   }
 //TODO: пофиксить ошибку при входе 
@@ -92,12 +86,7 @@ componentWillMount () {
       <core.Container component = 'main' maxWidth = 'xs'>
         <core.CssBaseline />
         <div>
-          {this.state.failure && (
-            <Alert variant = 'outlined' severity = 'error'>
-              Введены некорректные данные для авторизации
-            </Alert>
-          )}
-          {this.state.error_text && (
+          { this.state.error_text && (
             <Alert variant = 'outlined' severity = 'error'>
               { this.state.error_text }
             </Alert>
