@@ -23,11 +23,10 @@ class Region
         try {
             $all_regions->execute();
         } catch (\Throwable $th) {
-            die('Произошла ошибка при выборке регионов ' . $th->getMessage());
+            $this->ret = 'Произошла ошибка при выборке регионов ' . $th->getMessage();
         }
-        $regions = $all_regions->fetchAll();
-        //echo json_encode($regions);
-        return json_encode($regions);
+        $this->ret['data'] = $all_regions->fetchAll();
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     
     public function update($id)

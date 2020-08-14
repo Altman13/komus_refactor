@@ -7,7 +7,7 @@ use PDO;
 class Contact
 {
     private $db;
-    private $resp;
+    private $ret;
     public function __construct($db)
     {
         $this->db = $db;
@@ -30,12 +30,12 @@ class Contact
             $all_contacts = $this->db->prepare("SELECT * FROM contacts WHERE contacts.allow_call='1' LIMIT 3");
             $all_contacts->execute();
             $contacts = $all_contacts->fetchAll();
-            $this->resp = $contacts;
+            $this->ret['data'] = $contacts;
             //$this->lockContacts($contacts);
         } catch (\Throwable $th) {
-            $this->resp = 'Произошла ошибка при выборке контактов ' . $th->getMessage();
+            $this->ret['error_text'] = 'Произошла ошибка при выборке контактов ' . $th->getMessage();
         }
-        return json_encode($this->resp);
+        return json_encode($this->ret);
     }
 
     //Лочим контакты, которые выбрали для обзвона, чтобы не было состояния гонки,
@@ -47,12 +47,12 @@ class Contact
                 $contacts = $this->db->prepare("UPDATE contacts SET allow_call='0' WHERE contacts.id=:id");
                 $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
                 $contacts->execute();
-                $this->resp['data'] = $contacts;
+                $this->ret['data'] = $contacts;
             }
         } catch (\Throwable $th) {
-            $this->resp['error_text'] = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
+            $this->ret['error_text'] = 'Произошла ошибка при блокировки контактов для обзвона ' . $th->getMessage();
         }
-        return $this->resp;
+        return $this->ret;
     }
     public function unlockContacts($contacts)
     {
@@ -61,12 +61,12 @@ class Contact
                 $contacts = $this->db->prepare("UPDATE contacts SET allow_call='1' WHERE contacts.id=:id");
                 $contacts->bindParams(':id', $contact['id'], PDO::PARAM_STR);
                 $contacts->execute();
-                $this->resp['data'] = $contacts;
+                $this->ret['data'] = $contacts;
             }
         } catch (\Throwable $th) {
-            $this->resp['error_text'] = 'Произошла ошибка при разблокировании контактов для обзвона ' . $th->getMessage();
+            $this->ret['error_text'] = 'Произошла ошибка при разблокировании контактов для обзвона ' . $th->getMessage();
         }
-        return $this->resp;
+        return $this->ret;
     }
 
     public function updateStatusCall($call)
@@ -84,11 +84,11 @@ class Contact
             $call_insert->bindParam(':date_recall', $call->data->date_recall, PDO::PARAM_STR);
             //$call_insert->bindParam(':operator_id', $call->data->operator_id, PDO::PARAM_STR);
             $call_insert->execute();
-            $this->resp['data'] = $call_insert;
+            $this->ret['data'] = $call_insert;
         } catch (\Throwable $th) {
-            $this->resp['error_text']= 'Произошла ошибка при добавлении статуса звонка ' . $th->getMessage();
+            $this->ret['error_text']= 'Произошла ошибка при добавлении статуса звонка ' . $th->getMessage();
         }
-        return $this->resp;
+        return $this->ret;
     }
 
     public function delete($id)

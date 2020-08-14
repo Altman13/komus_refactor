@@ -9,7 +9,7 @@ class Report
     public function __construct($db)
     {
         $this->db = $db;
-        $this->ret =array('data' =>'', 'error_text'=> '');
+        $this->ret =array('data' =>'', 'error_text'=>'');
     }
     public function read()
     {
@@ -22,10 +22,10 @@ class Report
                                             GROUP BY calls.contacts_id");
             $get_report->execute();
         } catch (\Throwable $th) {
-            echo ('Произошла ошибка при выборе истории звонков и попыток дозвона ' . $th->getMessage());
+            $this->ret['error_text'] = 'Произошла ошибка при выборе истории звонков и попыток дозвона ' . $th->getMessage();
         }
-        $report_calls = $get_report->fetchAll(\PDO::FETCH_ASSOC);
-        return $report_calls;
+        $this->ret['data'] = $get_report->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->ret;
     }
     public function update($id)
     {

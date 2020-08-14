@@ -14,10 +14,20 @@ class UserController
     {
         $this->user = $container['user'];
     }
-    public function show()
+    public function show(Request $request, Response $response)
     {
-        $this->ret = $this->user->getAllOperators();
-        return $this->ret;
+        try {
+            $this->ret = json_decode($this->user->getAllOperators());
+            if (isset($this->ret->error_text) && ($this->ret->error_text)) {
+                $response->getBody()->write($this->ret);
+                $this->ret = $response->withStatus(500);
+            }
+        } catch (\Throwable $th) {
+            $this->ret['error_text'] = 'Произошла ошибка при выборе операторов ' . $th->getMessage();
+            $response->getBody()->write($this->ret);
+            $this->ret = $response->withStatus(500);
+        }
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
     public function create(Request $request, Response $response)
     {
@@ -26,7 +36,8 @@ class UserController
             $uploaded_file = $get_file['upload_file'];
             $this->ret = $this->user->create($uploaded_file, $response);
         } catch (\Throwable $th) {
-            $response->getBody()->write("Произошла ошибка при добавлении операторов " . $th->getMessage() . PHP_EOL);
+            $this->ret['error_text'] = 'Произошла ошибка при добавлении операторов ' . $th->getMessage();
+            $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
         return $this->ret;
@@ -37,15 +48,15 @@ class UserController
         try {
             $operator = json_decode($request->getBody());
             $this->ret = $this->user->setStOperator($operator->data);
-            if($this->ret == false){
+            if ($this->ret == false) {
+                $this->ret['error_text'] = 'Произошла ошибка при назначении старшего оператора ';
                 $this->ret = $response->withStatus(500);
-                $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . PHP_EOL);
             }
-        } catch (\Throwable $th ) {
-            $response->getBody()->write("Произошла ошибка при назначении старшего оператора " . $th->getMessage() . PHP_EOL);
+        } catch (\Throwable $th) {
+            $this->ret['error_text'] = 'Произошла ошибка при назначении старшего оператора ' . $th->getMessage();
+            $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
-        
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
 }
