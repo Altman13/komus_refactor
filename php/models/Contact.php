@@ -11,7 +11,7 @@ class Contact
     public function __construct($db)
     {
         $this->db = $db;
-        $this->ret =array('data' =>'', 'error_text'=> '');
+        $this->ret = array('data' => '', 'error_text' => '');
     }
 
     public function create($contact)
@@ -86,7 +86,7 @@ class Contact
             $call_insert->execute();
             $this->ret['data'] = $call_insert;
         } catch (\Throwable $th) {
-            $this->ret['error_text']= 'Произошла ошибка при добавлении статуса звонка ' . $th->getMessage();
+            $this->ret['error_text'] = 'Произошла ошибка при добавлении статуса звонка ' . $th->getMessage();
         }
         return $this->ret;
     }

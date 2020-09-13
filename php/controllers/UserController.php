@@ -40,7 +40,7 @@ class UserController
             $response->getBody()->write($this->ret);
             $this->ret = $response->withStatus(500);
         }
-        return $this->ret;
+        return json_encode($this->ret, JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request, Response $response)

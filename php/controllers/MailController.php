@@ -47,7 +47,7 @@ class MailController
         // $this::$message['data'] = $this->mail->show();
         return $this;
     }
-    //TODO: реализовать запись логов по оправленным сообщениям
+    //TODO: реализовать запись логов по отправленным сообщениям
     public function setData()
     {
         return $this;
